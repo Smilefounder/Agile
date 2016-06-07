@@ -1,8 +1,0 @@
-﻿<Window x:Class="KeyUpDisplay.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="KeyUpDisplay" Height="350" Width="525" MinHeight="350" MinWidth="525">
-    <Grid>
-        <WrapPanel x:Name="_wrapPanel1" Orientation="Horizontal"></WrapPanel>
-    </Grid>
-</Window>

@@ -262,7 +262,7 @@ namespace Agile.Helpers
             }
         }
 
-        public static List<T> GetList<T>(QueryOptions options)
+        public static List<T> GetList<T>(TopQueryOptions options)
         {
             var ttype = typeof(T);
             var sb = new StringBuilder();
@@ -516,9 +516,13 @@ namespace Agile.Helpers
         public int PageSize { get; set; }
     }
 
-    public class QueryOptions : UpdateOptions
+    public class TopQueryOptions : QueryOptions
     {
         public int? TopNum { get; set; }
+    }
+
+    public class QueryOptions : UpdateOptions
+    {
 
         public List<Expression> OrderByAscExpList { get; set; }
 

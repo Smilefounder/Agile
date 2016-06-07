@@ -1,0 +1,48 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.taskbar {
+    background-color: #000;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+}
+
+.flex1 {
+    flex: 1;
+}
+
+.flex2 {
+    flex: 2;
+}
+
+.flex3 {
+    flex: 3;
+}
+
+.flex4 {
+    flex: 4;
+}
+
+.flex5 {
+    flex: 5;
+}
+
+.icon {
+    background-color: #000;
+    color: #fff;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    width: 48px;
+}

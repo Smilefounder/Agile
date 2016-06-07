@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>随机字符串生成</title>
+    <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="panel">
+            <div class="panel-body">
+                <form id="form1">
+                    <div class="form-group">
+                        <label style="color:#22b14c;" for="minlength">最小长度</label>
+                        <input class="form-control" id="minlength" name="minlength" type="text" data-regex="(^[1-9]$)|(^10$)" data-description="请输入1-10的整数" />
+                    </div>
+                    <div class="form-group">
+                        <label style="color:#22b14c;" for="maxlength">最大长度</label>
+                        <input class="form-control" id="maxlength" name="maxlength" type="text" data-regex="(^[1-9]$)|(^1[0-9]$)|(^2[0-9]$)|(^3[0-9]$)|(^4[0-9]$)|(^50$)" data-description="请输入1-50的整数" />
+                    </div>
+                    <div class="form-group">
+                        <label style="color:#22b14c;" for="texttype">选择可能出现的字符类型</label>
+                        <ul class="list-group" id="typeul">
+                            <li class="list-group-item" data-type="1" onclick="selecttype(this)">数字</li>
+                            <li class="list-group-item" data-type="2" onclick="selecttype(this)">小写字母</li>
+                            <li class="list-group-item" data-type="4" onclick="selecttype(this)">大写字母</li>
+                            <li class="list-group-item" data-type="8" onclick="selecttype(this)">特殊字符</li>
+                        </ul>
+                    </div>
+                </form>
+                <button class="btn btn-success btn-block" onclick="trygetrandstr(this)">生成</button>
+                <div style="text-align:center;color:#22b14c;margin-top:10px;">
+                    <h1 id="strh3"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../Scripts/jquery-1.8.2.min.js"></script>
+<script type="text/javascript">
+    function selecttype(sender, type) {
+        var iclass = $(sender).attr("class");
+        if (iclass.indexOf("active") < 0) {
+            $(sender).attr("class", "list-group-item active");
+            return;
+        }
+
+        $(sender).attr("class", "list-group-item");
+    }
+
+    var numbers = "1234567890";
+
+    var letters = "qwertyuiopasdfghjklzxcvbnm";
+
+    var symbols = "~`!@#$%^&*()-=_+[]{}\\|;':\",./<>?"
+
+    function trygetrandstr(sender) {
+        var minlength = $("#minlength").val();
+        if (!minlength || isNaN(minlength)) {
+            alert("请设置最小长度");
+            return;
+        }
+
+        var maxlength = $("#maxlength").val();
+        if (!maxlength || isNaN(maxlength)) {
+            alert("请设置最大长度");
+            return;
+        }
+
+        minlength = parseInt(minlength);
+        maxlength = parseInt(maxlength);
+
+        if (minlength > maxlength) {
+            alert("最小长度不能大于最大长度");
+            return;
+        }
+
+        var stringtype = 0;
+        var typelis = $("#typeul li");
+        for (var i = 0; i < typelis.length; i++) {
+            var item = typelis[i];
+            var iclass = $(item).attr("class");
+            if (iclass.indexOf("active") < 0) {
+                continue;
+            }
+
+            var ttype = $(item).attr("data-type");
+            if (!ttype || isNaN(ttype)) {
+                continue;
+            }
+
+            ttype = parseInt(ttype);
+            stringtype += ttype;
+        }
+
+        if (stringtype <= 0) {
+            alert("请选择至少一种字符类型");
+            return;
+        }
+
+        var texttype = stringtype;
+        var pattern = "";
+        if (texttype > 15) {
+            pattern = numbers + letters + letters.toUpperCase() + symbols;
+        }
+
+        var valueOfSymbol = 8;
+        if (texttype >= valueOfSymbol) {
+            texttype = texttype % 8;
+            pattern += symbols;
+        }
+
+        var valueOfUpperCaseLetter = 4;
+        if (texttype >= 4) {
+            texttype = texttype % 4;
+            pattern += letters.toUpperCase();
+        }
+
+        var valueOfLowerCaseLetter = 2;
+        if (texttype >= valueOfLowerCaseLetter) {
+            texttype = texttype % 2;
+            pattern += letters;
+        }
+
+        var valueOfNumber = 1;
+        if (texttype >= 1) {
+            texttype = texttype % 1;
+            pattern += numbers;
+        }
+
+        var less = maxlength - minlength;
+        var length = Math.ceil(Math.random() * less + minlength);
+
+        var tempstr = "";
+        for (var i = 1; i <= length; i++) {
+            var idx = Math.ceil(Math.random() * (pattern.length - 1));
+            tempstr += pattern[idx];
+        }
+
+        $("#strh3").html(tempstr);
+    }
+</script>

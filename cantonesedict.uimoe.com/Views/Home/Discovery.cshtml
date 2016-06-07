@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div class="weui_cells weui_cells_access">
+    <a href="@Url.Content("~/Home/CantoneseTest")" class="weui_cell">
+        <div class="weui_cell_bd weui_cell_primary">
+            <p>粤语水平测试</p>
+        </div>
+        <div class="weui_cell_ft">
+        </div>
+    </a>
+    <a href="@Url.Content("~/Home/TranslateLyric")" class="weui_cell">
+        <div class="weui_cell_bd weui_cell_primary">
+            <p>歌词翻译</p>
+        </div>
+        <div class="weui_cell_ft">
+        </div>
+    </a>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem3");
+    }
+</script>

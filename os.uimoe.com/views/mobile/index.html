@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <link href="../../css/reset.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="div_index">
+        <div id="div_taskbar"></div>
+        <div id="div_container"></div>
+        <div style="position: fixed; bottom: 0; height: 70px; width: 100%; background-color: #e7e7e7; border-top:1px solid #f0f0f0;">
+            <div style="display: flex; width: 100%;">
+                <div class="flex1">
+                    <div class="icon" style="margin-left:50%;margin-top:11px;">电话</div>
+                </div>
+                <div class="flex1">
+                    <div class="icon" style="margin-left:50%;margin-top:11px;">短信</div>
+                </div>
+                <div class="flex1">
+                    <div class="icon" style="margin-left:50%;margin-top:11px;">微信</div>
+                </div>
+                <div class="flex1">
+                    <div class="icon" data-url="http://baidu.com" style="margin-left:50%;margin-top:11px;">微博</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../js/jquery-1.8.2.js"></script>
+<script type="text/javascript">
+    $.get('taskbar.html', {}, function (html) {
+        $("#div_taskbar").html(html);
+    }, 'html');
+
+    function loadpage(url) {
+        $.get(url, {}, function (html) {
+            var div = document.createElement("div");
+            div.innerHTML = html;
+            document.body.appendChild(div);
+        }, 'html')
+    }
+
+    function loadpagex(xurl) {
+        var url = '../../ajax.ashx?action=x10000';
+        $.get(url, { xurl: xurl }, function (html) {
+            var div1 = document.createElement("div");
+            div1.innerHTML = html;
+            document.body.appendChild(div1);
+        }, 'text')
+    }
+
+    $(function () {
+        $(".icon").click(function () {
+            var url = $(this).attr("data-url");
+            if (url.indexOf("http://") < 0) {
+                loadpage(url);
+                return;
+            }
+
+            loadpagex(url);
+        });
+    });
+</script>

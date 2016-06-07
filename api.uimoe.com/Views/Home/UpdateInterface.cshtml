@@ -1,0 +1,40 @@
+﻿@model api.uimoe.com.ViewModels.UpdateInterfaceVM
+@{
+    ViewBag.Title = "修改接口";
+}
+
+<form id="form1">
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group">
+        @Html.DisplayNameFor(m => m.Code)
+        @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(m => m.Description)
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+    </div>
+</form>
+<button class="btn btn-success" onclick="trycreatenew()"><span class="glyphicon glyphicon-ok"></span>&nbsp;修改</button>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function trycreatenew() {
+            var url = '@Url.Content("~/Home/UpdateInterface")';
+            $.post(url, $("#form1").serialize(), function (response) {
+                if (response.error != 0) {
+                    alert(response.message);
+                    return;
+                }
+
+                if (window.opener) {
+                    window.opener.location.reload();
+                }
+            }, "json");
+        }
+    </script>
+}

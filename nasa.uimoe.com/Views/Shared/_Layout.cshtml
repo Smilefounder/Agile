@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>NASA图片精选</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+    <style type="text/css">
+        .splitter-d, .splitter-s {
+            width: 100%;
+            height: 2px;
+        }
+
+        .splitter-d {
+            border-top: 1px dotted #d5d5d5;
+        }
+
+        .splitter-s {
+            border-top: 1px solid #d5d5d5;
+        }
+
+        .newline, .newline2, .newline5 {
+            width: 100%;
+        }
+
+        .newline {
+            height: 10px;
+        }
+
+        .newline2 {
+            height: 2px;
+        }
+
+        .newline5 {
+            height: 2px;
+        }
+    </style>
+</head>
+<body>
+    @RenderBody()
+
+    <div id="usertabmaskdiv1" style="display:none;position:fixed;height:100%;width:100%;background-color:#fff;opacity:0.6;left:0;top:0;z-index:10010;"></div>
+    <div id="usertabdiv1" style="display:none;width:400px;height:440px;position:fixed;left:50%;top:50%;margin-left:-200px;margin-top:-220px;background-color:#fff;z-index:10020;border-radius:5px;border:1px solid #d5d5d5;box-shadow:0 0 2px #d5d5d5;">
+        <div style="margin:10px;">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="javascript:void(0)" onclick="switchusertab(this)">登录</a></li>
+                <li role="presentation"><a href="javascript:void(0)" onclick="switchusertab(this,1)">注册</a></li>
+            </ul>
+        </div>
+        <div style="margin:10px;" id="logindiv1">
+            <form id="loginform1">
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input id="username1" class="form-control" type="text" />
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input id="userpass1" class="form-control" type="password" />
+                </div>
+            </form>
+            <button class="btn btn-success" onclick="trylogin()">登录</button>
+            <button class="btn btn-default" onclick="hideusertab()">取消</button>
+            <div style="color: #ff0000; padding: 10px 0;" id="loginerror"></div>
+        </div>
+        <div style="margin:10px; display:none;" id="registerdiv1">
+            <form id="registerform1">
+                <div class="form-group">
+                    <label>邮箱</label>
+                    <input id="useremail2" class="form-control" type="email" />
+                </div>
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input id="username2" class="form-control" type="text" />
+                </div>
+                <div class="form-group">
+                    <label>密码</label>
+                    <input id="userpass2" class="form-control" type="password" />
+                </div>
+                <div class="form-group">
+                    <label>密码确认</label>
+                    <input id="userpass3" class="form-control" type="password" />
+                </div>
+            </form>
+            <button class="btn btn-warning" onclick="tryregister()">注册</button>
+            <button class="btn btn-default" onclick="hideusertab()">取消</button>
+            <div class="form-group" style="color: #ff0000; padding: 10px 0;" id="registererror"></div>
+        </div>
+    </div>
+
+    <div id="loadingdiv" style="display:none;z-index:10030;text-align:center;height:15px;width:150px;position:fixed;left:50%;top:50%;margin-left:-75px;margin-top:-8px;color:#00a2e8;"></div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        function linkto(url, target, features, replace) {
+            switch (target) {
+                default: {
+                    window.location.href = url;
+                    break;
+                }
+                case "newtab": {
+                    window.open(url);
+                    break;
+                }
+                case "newwindow": {
+                    window.open(url, "newwindow", features, replace);
+                    break;
+                }
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function switchusertab(sender, tab) {
+            $(sender).parent().siblings().removeClass("active");
+            $(sender).parent().addClass("active");
+
+            if (tab) {
+                $("#logindiv1").hide();
+                $("#registerdiv1").show();
+                return;
+            }
+
+            $("#logindiv1").show();
+            $("#registerdiv1").hide();
+        }
+
+        function showusertab() {
+            $("#usertabmaskdiv1").show();
+            $("#usertabdiv1").show();
+        }
+
+        function hideusertab() {
+            $("#usertabmaskdiv1").hide();
+            $("#usertabdiv1").hide();
+        }
+
+        function trylogin() {
+            var username = $("#username1").val();
+            if ($.trim(username).length == 0) {
+                loginerroralert("请输入用户名");
+                return;
+            }
+
+            var userpass = $("#userpass1").val();
+            if ($.trim(userpass).length == 0) {
+                loginerroralert("请输入密码");
+                return;
+            }
+
+            var url = '@Url.Content("~/User/Login")';
+            $.post(url, { username: username, userpass: userpass }, function (response) {
+                if (response.error == 0) {
+                    var url = '@Url.Content("~/Home/PostImg")';
+                    linkto(url, 'newwindow');
+                    hideusertab();
+                    return;
+                }
+
+                loginerroralert(response.message);
+            }, "json");
+        }
+
+        function tryregister() {
+            var useremail = $("#useremail2").val();
+            if ($.trim(useremail).length == 0) {
+                registererroralert("请输入邮箱");
+                return;
+            }
+
+            var emailrgx = /\w+[@@]\w+/;
+            if (!emailrgx.test(useremail)) {
+                registererroralert("邮箱格式不正确");
+                return;
+            }
+
+            var username = $("#username2").val();
+            if ($.trim(username).length == 0) {
+                registererroralert("请输入用户名");
+                return;
+            }
+
+            var usernamergx = /\w{5,15}/;
+            if (!usernamergx.test(username)) {
+                registererroralert("用户名不正确，请输入5~15位数字字母中文字符组成的用户名");
+                return;
+            }
+
+            var userpass2 = $("#userpass2").val();
+            var userpass3 = $("#userpass3").val();
+
+            if (userpass2 != userpass3) {
+                registererroralert("两次输入密码不一致");
+                return;
+            }
+
+            var userpassrgx = /.{5,15}/;
+            if (!userpassrgx.test(userpass2)) {
+                registererroralert("密码长度要求5~15位");
+                return;
+            }
+
+            var url = '@Url.Content("~/User/Register")';
+            $.post(url, { email: useremail, username: username, userpass: userpass2 }, function (response) {
+                registererroralert(response.message);
+                if (response.error == 0) {
+                    hideusertab();
+                    return;
+                }
+            }, "json");
+        }
+
+        function loginerroralert(message) {
+            $("#loginerror").html(message).show();
+            setTimeout(function () {
+                $("#loginerror").hide();
+            }, 1500);
+        }
+
+        function registererroralert(message) {
+            $("#registererror").html(message).show();
+            setTimeout(function () {
+                $("#registererror").hide();
+            }, 1500);
+        }
+    </script>
+
+</body>
+</html>

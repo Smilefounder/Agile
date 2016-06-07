@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div class="weui_tab_bd">
+    <div class="weui_cells weui_cells_form">
+        <form id="form1">
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">账号</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input type="text" class="weui_input" pattern="*" placeholder="账号" id="username" name="username">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">密码</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input type="password" class="weui_input" pattern="*" placeholder="密码" id="userpass" name="userpass">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="weui_btn_area">
+        <a onclick="trytologin(this)" class="weui_btn weui_btn_primary" href="javascript:void(0);">登录</a>
+    </div>
+    <div class="weui_btn_area">
+        <a class="weui_btn weui_btn_warn" href="@Url.Content("~/Home/Register")">还没有账号？点此注册</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem4");
+    }
+
+    function trytologin() {
+        var username = $("#username").val();
+        if (!username || username.length < 1 || username.length > 14) {
+            weuialert("账号不能为空，且最少1位，最多14位的数字字母组合");
+            return;
+        }
+
+        var usernamergx = /[a-zA-Z0-9]{1,14}/;
+        if (!usernamergx.test(username)) {
+            weuialert("账号只能由数字字母组成");
+            return;
+        }
+
+        var userpass = $("#userpass").val();
+        if (!userpass || userpass.length < 6 || userpass.length > 14) {
+            weuialert("密码不能为空，且最少6位，最多14位");
+            return;
+        }
+
+        var url = '@Url.Content("~/Home/Login")';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#form1").serialize(),
+            dataType: "json",
+            success: function (response) {
+                if (response.error != 0) {
+                    weuialert(response.message);
+                    return;
+                }
+     
+                window.location.href = '@Url.Content("~/Home/Me")';
+            },
+            error: function () {
+                weuialert("登录失败，请稍后重试");
+            }
+        });
+    }
+</script>

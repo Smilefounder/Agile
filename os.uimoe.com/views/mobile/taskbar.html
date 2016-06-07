@@ -1,0 +1,24 @@
+﻿<div class="taskbar">
+    <div class="flex4" style="text-align: left; margin-left: 10px;">
+        <span>信号</span>
+        <span>网络</span>
+    </div>
+    <div class="flex2" style="text-align:center;">
+        <span id="span_datetime">时间</span>
+    </div>
+    <div class="flex4" style="text-align: right; margin-right: 10px;">
+        <span>锁定</span>
+        <span>闹钟</span>
+        <span>电量</span>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        setInterval(function () {
+            var dt = new Date();
+            var dtstr = dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds();
+            $("#span_datetime").html(dtstr);
+        }, 500);
+    });
+</script>

@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div class="weui_tab_bd">
+    <div class="weui_cells weui_cells_access">
+        <a href="@Url.Content("~/Home/Word")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>普通话常用字</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        <a href="@Url.Content("~/Home/Term")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>普通话常用词</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        <a href="@Url.Content("~/Home/Sentence")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>普通话常用句</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    </div>
+    <div class="weui_cells weui_cells_access">
+        <a href="@Url.Content("~/Home/CanWord")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>粤语常用字</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    </div>
+    <div class="weui_cells weui_cells_access">
+        <a href="@Url.Content("~/Home/Scene")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>情景分类</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    </div>
+    <div class="weui_cells weui_cells_access">
+        <a href="@Url.Content("~/Home/Initials")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>声母</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        <a href="@Url.Content("~/Home/Finals")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>韵母</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        <a href="@Url.Content("~/Home/FinalsM")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>韵腹</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        <a href="@Url.Content("~/Home/FinalsE")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>韵尾</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        <a href="@Url.Content("~/Home/FinalsN")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>鼻音</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        <a href="@Url.Content("~/Home/Tones")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>音调</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem2");
+    }
+</script>

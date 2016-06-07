@@ -1,0 +1,26 @@
+﻿@model Agile.Dtos.API.H10008Response
+@{
+    Layout = "~/Views/Shared/_WithNavigatorLayout.cshtml";
+}
+
+<div style="width:1000px;margin:0 auto;">
+    <div style="float:left;width:700px;">
+        <ul class="list-group">
+            <li class="list-group-item active">
+                @Model.data.title
+            </li>
+            <li class="list-group-item">
+                <div>发布于<span>@Model.data.createdat.GetValueOrDefault().ToString("yyyy-MM-dd")</span></div>
+                <div class="newline"></div>
+                <div class="splitter-d"></div>
+                <div class="newline"></div>
+                <div>@Html.Raw(Model.data.content)</div>
+            </li>
+        </ul>
+    </div>
+    <div style="margin-left:720px;">
+        @Html.Action("LeaveComment", "Home", new { id = Model.data.id })
+        @Html.Action("RecentCommentList", "Home", new { id = Model.data.id })
+    </div>
+    <div style="clear:both;"></div>
+</div>

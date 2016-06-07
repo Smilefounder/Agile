@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Execute";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        function tryexecute(sender) {
+            $.post('@Url.Content("~/Home/Execute")', $("#form1").serialize(), function (response) {
+                if (response.error != 0) {
+                    alert(response.message);
+                    return;
+                }
+
+                $("#resultdiv").html(response.data);
+            }, "json");
+        }
+    </script>
+}
+
+<div class="container">
+    <div class="panel">
+        <div class="panel-body">
+            <form id="form1">
+                <div class="form-group">
+                    <label>输入要执行的SQL语句</label>
+                    <textarea name="sqlstr" class="form-control" style="height:30px"></textarea>
+                </div>
+            </form>
+            <input type="submit" class="btn btn-success" value="执行" onclick="tryexecute(this)" />
+            <div style="height:10px;"></div>
+            <div id="resultdiv"></div>
+        </div>
+    </div>
+</div>

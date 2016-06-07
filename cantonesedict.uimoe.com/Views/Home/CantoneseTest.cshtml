@@ -1,0 +1,145 @@
+﻿@model cantonesedict.uimoe.com.ViewModels.Home.CantoneseTestVM
+@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div id="testdiv1" class="weui_msg">
+    <div class="weui_text_area">
+        <h2 class="weui_msg_title">粤语水平测试</h2>
+        <p class="weui_msg_desc">答对加10分，答错结束测试</p>
+    </div>
+    <div class="weui_opr_area">
+        <p class="weui_btn_area">
+            <a class="weui_btn weui_btn_primary" href="javascript:void(0);" onclick="begintest()">现在开始</a>
+            <a class="weui_btn weui_btn_default" href="@Url.Content("~/Home/Discovery")">我不玩了</a>
+        </p>
+    </div>
+    <div class="weui_extra_area">
+        <a href="">查看详情</a>
+    </div>
+</div>
+
+<div id="testdiv2" style="display:none;">
+    <div class="container js_container">
+        <div class="page slideIn home">
+            <div class="hd">
+                <h1 class="page_title">得分：<span id="scoresp">0</span></h1>
+                <p class="page_desc"></p>
+            </div>
+            <div class="bd">
+                @if (Model.Items == null || Model.Items.Count == 0)
+                {
+                    <div class="weui_cells weui_cells_access">
+                        <a href="javascript:void(0);" class="weui_cell">
+                            <div class="weui_cell_bd weui_cell_primary">
+                                <p>
+                                    额，出错了，没找到试题。
+                                </p>
+                            </div>
+                            <div class="weui_cell_ft">
+                            </div>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    for (var i = 0; i < Model.Items.Count; i++)
+                    {
+                        var item = Model.Items[i];
+                        var idisplay = "display:none;";
+                        if (i == 0)
+                        {
+                            idisplay = "";
+                        }
+
+                        <div id="testitem@(i)" style="@idisplay">
+                            <div class="weui_cells weui_cells_access">
+                                <a href="javascript:void(0);" class="weui_cell">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <p>
+                                            @item.Title
+                                        </p>
+                                    </div>
+                                    <div class="weui_cell_ft">
+                                    </div>
+                                </a>
+                            </div>
+
+                            @if (item.Options == null && item.Options.Count == 0)
+                            {
+                                <div class="weui_cells weui_cells_access">
+                                    <a href="javascript:void(0);" class="weui_cell">
+                                        <div class="weui_cell_bd weui_cell_primary">
+                                            <p>
+                                                额，出错了，这题没有选项。
+                                            </p>
+                                        </div>
+                                        <div class="weui_cell_ft">
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="weui_cells weui_cells_access">
+                                    @foreach (var op in item.Options)
+                                    {
+                                        <a href="javascript:void(0);" onclick="changeitem(this,'@op.InnerValue','@i')" class="weui_cell">
+                                            <div class="weui_cell_bd weui_cell_primary">
+                                                <p>
+                                                    @op.DisplayText
+                                                </p>
+                                            </div>
+                                            <div class="weui_cell_ft">
+                                            </div>
+                                        </a>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem3");
+    }
+
+    function begintest() {
+        $("#testdiv1").hide();
+        $("#testdiv2").show();
+    }
+
+    var score = 0;
+
+    function changeitem(sender, ivalue, i) {
+        var url = '@Url.Content("~/Home/Discovery")';
+        if (!ivalue || ivalue == 0) {
+            weuialert("得分：" + score, "抱歉，失败了~", function () {
+                window.location.href = url;
+            });
+            return;
+        }
+
+        i = parseInt(i);
+        ivalue = parseInt(ivalue);
+        score += ivalue;
+        $("#scoresp").html(score);
+
+        var next = i + 1;
+        var testitem = document.getElementById("testitem" + next);
+        if (!testitem) {
+            weuialert("得分：" + score, "恭喜，通关了~", function () {
+                window.location.href = url;
+            });
+            return;
+        }
+
+        $("#testitem" + i).hide();
+        $("#testitem" + next).show();
+    }
+</script>

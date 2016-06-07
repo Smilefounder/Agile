@@ -1,0 +1,53 @@
+﻿@model Agile.Dtos.API.H10033Response
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.data.RecordList == null || Model.data.RecordList.Count == 0)
+{
+    <div style="height:2px;border-bottom:1px solid #dddddd;"></div>
+    <div style="padding:10px;">什么都没有。。。</div>
+    <div style="height:10px;border-top:1px solid #dddddd;"></div>
+    <div style="padding:10px;">
+        <a href="@Url.Content("~/Home/Index?page=1&pagesize=5")" class="btn btn-success btn-block">返回首页</a>
+    </div>
+}
+else
+{
+    foreach (var item in Model.data.RecordList)
+    {
+        <div style="padding-left:10px;"><h3>@item.title</h3></div>
+        <div style="padding:10px;">
+            <img style="max-width:100%;" src="@Url.Content("~/Uploads/" + item.filename)" />
+        </div>
+        <div style="height:2px;border-bottom:1px solid #dddddd;"></div>
+        <div style="display: flex; height: 40px;">
+            <div style="flex: 1; height: 40px; line-height: 40px; text-align: center;" onclick="trytodownload(this)">
+                <span class="glyphicon glyphicon-download-alt"></span>&nbsp;下载
+            </div>
+            <div style="flex: 1; height: 40px; line-height: 40px; text-align: center;" onclick="trytolike(this,'@ViewBag.loged')">
+                <span class="glyphicon glyphicon-heart"></span>&nbsp;喜欢
+            </div>
+        </div>
+        <div style="height:10px;border-top:1px solid #dddddd;"></div>
+    }
+
+    <div style="padding:10px;">
+        <a href="@Url.Content("~/Home/Index?page="+(Model.data.Page+1)+"&pagesize="+Model.data.PageSize)" class="btn btn-success btn-block">下一页</a>
+    </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        function trytodownload(sender) {
+        }
+
+        function trytolike(sender, loged) {
+            if (loged != "1") {
+                showusertab();
+                return;
+            }
+        }
+    </script>
+}

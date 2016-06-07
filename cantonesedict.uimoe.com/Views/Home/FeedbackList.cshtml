@@ -1,0 +1,53 @@
+﻿@model cantonesedict.uimoe.com.ViewModels.Home.FeedbackListVM
+@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div class="weui_cells_title">我的反馈（浅绿色背景的反馈表示已处理）</div>
+<div class="weui_cells_title"><a href="@Url.Content("~/Home/Feedback")">我要反馈...</a></div>
+<div class="weui_cells weui_cells_access">
+    @if (Model.Data == null || Model.Data.Count == 0)
+    {
+        <a href="javascript:void(0);" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>
+                    没有查询到相关记录
+                </p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    }
+    else
+    {
+        foreach (var item in Model.Data)
+        {
+            if (item.Status.GetValueOrDefault(1) == 0)
+            {
+                <a href="@Url.Content("~/Home/Index?input=" + Server.UrlEncode(item.ChnText))" class="weui_cell" style="background-color:#f0fff0;">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>
+                            <div>@item.CreatedAt.GetValueOrDefault().ToString("yyyy-MM-dd")</div>
+                            <div>@item.ChnText</div>
+                        </p>
+                    </div>
+                    <div class="weui_cell_ft">
+                    </div>
+                </a>
+            }
+            else
+            {
+                <a href="javascript:void(0);" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>
+                            <div>@item.CreatedAt.GetValueOrDefault().ToString("yyyy-MM-dd")</div>
+                            <div>@item.ChnText</div>
+                        </p>
+                    </div>
+                    <div class="weui_cell_ft">
+                    </div>
+                </a>
+            }
+        }
+    }
+</div>

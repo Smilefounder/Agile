@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Agile.Dtos.API.H10037ResponseListItem>
+@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div class="weui_tab_bd">
+    <div class="weui_cells weui_cells_access">
+        @if (Model == null || Model.Count() == 0)
+        {
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>未找到相关记录</p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <a href="@Url.Content("~/Home/SceneVocabulary?sceneid=" + item.id)" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                <p>@item.name</p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+                </a>
+            }
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem2");
+    }
+</script>

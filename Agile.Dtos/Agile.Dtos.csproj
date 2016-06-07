@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{40BAE020-6862-4B12-989C-754055DE1561}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Agile.Dtos</RootNamespace>
+    <AssemblyName>Agile.Dtos</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\H10000Request.cs" />
+    <Compile Include="API\H10000Response.cs" />
+    <Compile Include="API\H10001Request.cs" />
+    <Compile Include="API\H10001Response.cs" />
+    <Compile Include="API\H10002Request.cs" />
+    <Compile Include="API\H10002Response.cs" />
+    <Compile Include="API\H10003Request.cs" />
+    <Compile Include="API\H10003Response.cs" />
+    <Compile Include="API\H10004Request.cs" />
+    <Compile Include="API\H10004Response.cs" />
+    <Compile Include="API\H10005Request.cs" />
+    <Compile Include="API\H10005Response.cs" />
+    <Compile Include="API\H10006Request.cs" />
+    <Compile Include="API\H10006Response.cs" />
+    <Compile Include="API\H10007Request.cs" />
+    <Compile Include="API\H10007Response.cs" />
+    <Compile Include="API\H10008Request.cs" />
+    <Compile Include="API\H10008Response.cs" />
+    <Compile Include="API\H10009Request.cs" />
+    <Compile Include="API\H10009Response.cs" />
+    <Compile Include="API\H10010Request.cs" />
+    <Compile Include="API\H10010Response.cs" />
+    <Compile Include="API\H10011Request.cs" />
+    <Compile Include="API\H10011Response.cs" />
+    <Compile Include="API\H10012Request.cs" />
+    <Compile Include="API\H10012Response.cs" />
+    <Compile Include="API\H10013Request.cs" />
+    <Compile Include="API\H10013Response.cs" />
+    <Compile Include="API\H10014Request.cs" />
+    <Compile Include="API\H10014Response.cs" />
+    <Compile Include="API\H10015Request.cs" />
+    <Compile Include="API\H10015Response.cs" />
+    <Compile Include="API\H10016Request.cs" />
+    <Compile Include="API\H10016Response.cs" />
+    <Compile Include="API\H10017Request.cs" />
+    <Compile Include="API\H10017Response.cs" />
+    <Compile Include="API\H10018Request.cs" />
+    <Compile Include="API\H10018Response.cs" />
+    <Compile Include="API\H10019Request.cs" />
+    <Compile Include="API\H10019Response.cs" />
+    <Compile Include="API\H10020Request.cs" />
+    <Compile Include="API\H10020Response.cs" />
+    <Compile Include="API\H10021Request.cs" />
+    <Compile Include="API\H10021Response.cs" />
+    <Compile Include="API\H10022Request.cs" />
+    <Compile Include="API\H10022Response.cs" />
+    <Compile Include="API\H10023Request.cs" />
+    <Compile Include="API\H10023Response.cs" />
+    <Compile Include="API\H10024Request.cs" />
+    <Compile Include="API\H10024Response.cs" />
+    <Compile Include="API\H10025Request.cs" />
+    <Compile Include="API\H10025Response.cs" />
+    <Compile Include="API\H10026Request.cs" />
+    <Compile Include="API\H10026Response.cs" />
+    <Compile Include="API\H10027Request.cs" />
+    <Compile Include="API\H10027Response.cs" />
+    <Compile Include="API\H10028Request.cs" />
+    <Compile Include="API\H10028Response.cs" />
+    <Compile Include="API\H10029Request.cs" />
+    <Compile Include="API\H10029Response.cs" />
+    <Compile Include="API\H10030Request.cs" />
+    <Compile Include="API\H10030Response.cs" />
+    <Compile Include="API\H10031Request.cs" />
+    <Compile Include="API\H10031Response.cs" />
+    <Compile Include="API\H10032Request.cs" />
+    <Compile Include="API\H10032Response.cs" />
+    <Compile Include="API\H10033Request.cs" />
+    <Compile Include="API\H10033Response.cs" />
+    <Compile Include="API\H10034Request.cs" />
+    <Compile Include="API\H10034Response.cs" />
+    <Compile Include="API\H10035Request.cs" />
+    <Compile Include="API\H10035Response.cs" />
+    <Compile Include="API\H10036Request.cs" />
+    <Compile Include="API\H10036Response.cs" />
+    <Compile Include="API\H10037Request.cs" />
+    <Compile Include="API\H10037Response.cs" />
+    <Compile Include="API\H10038Request.cs" />
+    <Compile Include="API\H10038Response.cs" />
+    <Compile Include="API\H10039Request.cs" />
+    <Compile Include="API\H10039Response.cs" />
+    <Compile Include="API\H10040Request.cs" />
+    <Compile Include="API\H10040Response.cs" />
+    <Compile Include="API\H10041Request.cs" />
+    <Compile Include="API\H10041Response.cs" />
+    <Compile Include="API\H10042Request.cs" />
+    <Compile Include="API\H10042Response.cs" />
+    <Compile Include="API\H10043Request.cs" />
+    <Compile Include="API\H10043Response.cs" />
+    <Compile Include="API\HBaseResponse.cs" />
+    <Compile Include="API\HPagedListRequest.cs" />
+    <Compile Include="GroupItemDto.cs" />
+    <Compile Include="KeyValueDto.cs" />
+    <Compile Include="KeyValueTypeDto.cs" />
+    <Compile Include="PagedListDto.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

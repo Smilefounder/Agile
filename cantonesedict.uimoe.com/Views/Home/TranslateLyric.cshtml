@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div class="weui_cells weui_cells_form">
+    <div class="weui_cell">
+        <div class="weui_cell_hd"><label class="weui_label">歌曲</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+            <input id="titleinput" type="text" placeholder="必须填" pattern="*" class="weui_input">
+        </div>
+    </div>
+    <div class="weui_cell">
+        <div class="weui_cell_hd"><label class="weui_label">歌手</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+            <input id="artistsinput" type="text" placeholder="可不填" pattern="*" class="weui_input">
+        </div>
+    </div>
+</div>
+
+<div class="weui_btn_area">
+    <a href="javascript:" class="weui_btn weui_btn_primary" onclick="tryquery(this)">查询</a>
+</div>
+
+<div id="lyriclistdiv" style="display:none;" class="weui_cells weui_cells_access">
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem3");
+    }
+
+    function tryquery() {
+        var title = $("#titleinput").val();
+        if (!title) {
+            weuialert("歌曲标题必须填写");
+            return;
+        }
+
+        var artists = $("#artistsinput").val();
+        var url = '@Url.Content("~/Home/GetLyricList")';
+        $.post(url, { title: title, artists: artists }, function (response) {
+            var html = '';
+            if (!response.result) {
+                html += '<a href="javascript:void(0);" class="weui_cell">';
+                html += '<div class="weui_cell_bd weui_cell_primary">';
+                html += '<p>';
+                html += '未找到相关记录';
+                html += '</p>';
+                html += '</div>';
+                html += '<div class="weui_cell_ft">';
+                html += '</div>';
+                html += '</a>';
+
+                $("#lyriclistdiv").html(html).show();
+                return;
+            }
+
+            for (var i = 0; i < response.result.length; i++) {
+                var item = response.result[i];
+                html += '<a href="@Url.Content("~/Home/LyricResult?lrc=")' + encodeURI(item.lrc) + '&title=' + title + '&artist=' + artists + '" class="weui_cell">';
+                html += '<div class="weui_cell_bd weui_cell_primary">';
+                html += '<p>';
+                html += item.song;
+                html += '</p>';
+                html += '</div>';
+                html += '<div class="weui_cell_ft">';
+                html += '</div>';
+                html += '</a>';
+            }
+
+            $("#lyriclistdiv").html(html).show();
+        }, "json");
+    }
+</script>

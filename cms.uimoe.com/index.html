@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="/css/reset.css" rel="stylesheet" />
+</head>
+<body>
+    <div style="height: 100px;line-height:100px; background-color: #000; color: #fff;">
+        CMS
+    </div>
+    <div style="height:10px;"></div>
+    <div>
+        <div style="width: 200px; float: left; background-color: #e7e7e7;">
+            <ul>
+                <li class="menuitem" data-href="404.html">
+                    页面
+                </li>
+                <li class="menuitem" data-href="htmls/user.html">
+                    页面1
+                </li>
+            </ul>
+        </div>
+        <div style="margin-left:200px;">
+            <div id="tabheader" style="overflow:auto;height:40px;"></div>
+            <div id="tabbody"></div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+</body>
+</html>
+<script src="/js/jquery-1.8.2.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".menuitem").on("click", function () {
+            var title = $(this).html();
+            var href = $(this).attr("data-href");
+            var target = $(this).attr("data-target");
+            if (target == "newtab") {
+                window.open(href);
+                return;
+            }
+
+            if (target == "newwindow") {
+                window.open(href);
+                return;
+            }
+
+            openorshowtab(href, title);
+        });
+    });
+
+    function tabitemclicked(sender) {
+        var title = $(sender).html();
+        var href = $(sender).attr("data-href");
+        openorshowtab(href, title);
+    }
+
+    function openorshowtab(href, title) {
+        var tabitems = $("#tabheader").children();
+        for (var i = 0; i < tabitems.length; i++) {
+            var tabitem = tabitems[i];
+            var id = tabitem.getAttribute("id");
+            var idstr = replaceidstr(href);
+            if (id == idstr + "tab") {
+                $("#tabbody").children().hide();
+                $("#" + idstr + "div").show();
+                return;
+            }
+        }
+
+        $.ajax({
+            url: href,
+            type: 'GET',
+            dataType: 'html',
+            complete: function (xhr, status) {
+                if (status == "success") {
+                    $("#tabbody").children().hide();
+                    var tab1 = document.createElement("div");
+                    tab1.setAttribute("id", replaceidstr(href) + "tab");
+                    tab1.setAttribute("class", "tabitem");
+                    tab1.setAttribute("data-href", href);
+                    tab1.setAttribute("onclick", "tabitemclicked(this)");
+                    tab1.innerHTML = title;
+                    document.getElementById("tabheader").appendChild(tab1);
+
+                    var div1 = document.createElement("div");
+                    div1.setAttribute("id", replaceidstr(href) + "div");
+                    div1.innerHTML = xhr.responseText;
+                    document.getElementById("tabbody").appendChild(div1);
+                }
+            }
+        });
+    }
+
+    function replaceidstr(str) {
+        var filters = './-_';
+        var sb = "";
+        for (var i = 0; i < str.length; i++) {
+            var ch = str[i];
+            if (filters.indexOf(ch) < 0) {
+                sb += ch;
+            }
+        }
+
+        return sb;
+    }
+</script>

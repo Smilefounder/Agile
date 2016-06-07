@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="sharp.mobile.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="page">
+        <div class="border" style="width:200px;float:left;">
+            <ul class="listbox">
+                <li class="selected">通用组件</li>
+                <li>文本框</li>
+                <li>按钮</li>
+                <li class="selected">js组件</li>
+                <li>alert</li>
+                <li>prompt</li>
+                <li class="selected">数据组件</li>
+                <li>listview</li>
+            </ul>
+        </div>
+        <div class="border" style="margin-left:220px;">
+            <form class="form">
+                <input class="form_element text" type="text" />
+                <input class="form_element text-red" type="text" />
+                <input class="form_element text-green" type="text" />
+                <input class="form_element text-blue" type="text" />
+                <input class="form_element text-purple" type="text" />
+            </form>
+            <div class="block">
+                <input class="button" type="button" value="按钮" />
+                <input class="button-red" type="button" value="按钮" />
+                <input class="button-green" type="button" value="按钮" />
+                <input class="button-blue" type="button" value="按钮" />
+                <input class="button-purple" type="button" value="按钮" />
+                <input class="button strech" type="button" value="按钮" />
+            </div>
+            <div class="block">
+                <input class="button-red strech" type="button" value="按钮" />
+                <input class="button-green strech" type="button" value="按钮" />
+                <input class="button-blue strech" type="button" value="按钮" />
+                <input class="button-purple strech" type="button" value="按钮" />
+            </div>
+            <div class="block">
+                <input class="button-red" type="button" value="按钮" onclick="view.alert();" />
+                <input class="button-green" type="button" value="按钮" onclick="view.alert();" />
+                <input class="button-blue" type="button" value="按钮" onclick="view.alert();" />
+                <input class="button-purple" type="button" value="按钮" onclick="view.alert();" />
+            </div>
+            <div class="block">
+                <input class="button-red strech" type="button" value="按钮" onclick="view.prompt();" />
+                <input class="button-green strech" type="button" value="按钮" onclick="view.prompt();" />
+                <input class="button-blue strech" type="button" value="按钮" onclick="view.prompt();" />
+                <input class="button-purple strech" type="button" value="按钮" onclick="view.prompt();" />
+            </div>
+            <div class="block">
+                <div id="listview1" data-url="data/listview.html" data-showpager="1" data-pagerid="pager1">
+                    <div class="border" style="margin-bottom:5px;">
+                        <span>@Name</span>
+                        <span>@Age</span>
+                    </div>
+                </div>
+            </div>
+            <div class="block">
+                <div id="pager1"></div>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+</body>
+</html>
+<script src="sharp.mobile.js"></script>
+<script type="text/javascript">
+    window.view = {
+        alert: function () {
+            $.control.alert("哈哈", "测试标题");
+        },
+        prompt: function () {
+            $.control.prompt("请输入一个数字", "20");
+        }
+    };
+
+    window.onload = function () {
+        $.control.listview.show("listview1");
+    }
+</script>

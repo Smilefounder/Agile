@@ -1,0 +1,136 @@
+﻿@{
+    Layout = "~/Views/Shared/_WithNavigatorLayout.cshtml";
+}
+
+<div style="width:400px;margin:0 auto;">
+    <div>
+        <h3><span class="glyphicon glyphicon-plus">投稿</span></h3>
+        <h4>上传你的图片，我们审核后会在首页显示</h4>
+    </div>
+    <div class="newline"></div>
+    <div class="splitter-d"></div>
+    <div class="newline"></div>
+    <form id="form1">
+        <div class="form-group">
+            <label>标题</label>
+            <textarea id="imgtitle" name="imgtitle" maxlength="200" style="height:50px;" class="form-control"></textarea>
+        </div>
+        <input id="imgfile" name="imgfile" type="hidden" />
+    </form>
+    <div class="form-group">
+        <label>上传图片</label>
+        <input id="imgfileinput" onchange="filechanged(this)" class="form-control" type="file" />
+    </div>
+    <div id="imgpreviewdiv" style="display:none;">
+        <img id="img1" style="max-width:100%;" src="#" />
+        <div class="newline"></div>
+        <div class="splitter-d"></div>
+        <div class="newline"></div>
+    </div>
+    <button class="btn btn-success" onclick="trytopost()">投递</button>
+</div>
+
+<script type="text/javascript">
+    function trytopost() {
+        var title = $("#imgtitle").val();
+        if ($.trim(title).length == 0) {
+            alert("必须输入标题");
+            return;
+        }
+
+        if ($.trim(title).length > 200) {
+            alert("标题不能超过200字");
+            return;
+        }
+
+        var file1 = document.getElementById("imgfileinput");
+        if (file1.files.length === 0) {
+            alert("请选择要上传的图片");
+            return;
+        }
+
+        $("#usertabmaskdiv1").show();
+        $("#loadingdiv").html('<span class="loading"></span> 正在上传，稍等哦').show();
+
+        var url = '@Url.Content("~/Home/UpdateFile")';
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = null;
+                try {
+                    response = JSON.parse(xhr.responseText);
+                }
+                catch (e) {
+
+                }
+
+                if (response) {
+                    if (response.error != 0) {
+                        $("#usertabmaskdiv1").hide();
+                        $("#loadingdiv").html('').hide();
+                        alert(response.message);
+                    }
+                    else {
+                        //将上传后的文件名放到隐藏域
+                        $("#imgfile").val(response.data);
+
+                        //上传文件成功后再发一次请求去保存记录
+                        var url2 = '@Url.Content("~/Home/PostImg")';
+                        $.post(url2, $("#form1").serialize(), function (response2) {
+                            $("#usertabmaskdiv1").hide();
+                            $("#loadingdiv").html('').hide();
+                            alert(response2.message);
+                            if (response2.error == 0) {
+                                $("#imgtitle").val("");
+                                $("#imgdescription").val("");
+                                $("#imgfile").val("");
+                                $("#imgpreviewdiv").hide();
+                            }
+                        }, "json")
+                    }
+                }
+                else {
+                    $("#usertabmaskdiv1").hide();
+                    $("#loadingdiv").html('').hide();
+                    alert("操作失败，请稍后重试");
+                }
+            }
+        }
+
+        var data = new FormData();
+        data.append("file1", file1.files[0]);
+        xhr.send(data);
+    }
+
+    function filechanged(sender) {
+        if (sender.files.length === 0) {
+            alert("请选择文件");
+            return;
+        }
+
+        var uploadexts = '.jpg,.png';
+        var filename = sender.value;
+        var fileext = filename.substr(filename.lastIndexOf(".")).toLowerCase();
+        var idx = uploadexts.indexOf(fileext);
+        if (idx < 0) {
+            alert("不支持的格式，只支持.jpg,.png，当前文件格式：" + fileext);
+            return;
+        }
+
+
+        var file1 = sender.files[0];
+        var kbsize = 1.0 * file1.size / 1024;
+        if (kbsize > 320) {
+            alert("很抱歉，最多只能上传320KB大小的图片,当前文件大小:" + kbsize + "KB");
+            return;
+        };
+
+        var reader1 = new FileReader();
+        reader1.readAsDataURL(file1);
+        reader1.onload = function (e) {
+            document.getElementById("img1").src = e.target.result;
+            $("#imgpreviewdiv").show();
+        };
+    };
+</script>

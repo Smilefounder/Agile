@@ -1,0 +1,100 @@
+﻿@model cantonesedict.uimoe.com.ViewModels.Home.IndexVM
+@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div class="weui_cells weui_cells_form">
+    <div class="weui_cell">
+        <div class="weui_cell_hd"><label class="weui_label">字词</label></div>
+        <div class="weui_cell_bd weui_cell_primary">
+            <input id="queryinput" type="text" placeholder="请输入要翻译的字词（最多20字）" pattern="*" class="weui_input" value="@Model.Input">
+        </div>
+    </div>
+</div>
+<div class="weui_btn_area">
+    <a href="javascript:" class="weui_btn weui_btn_primary" onclick="tryquery(this)">查询</a>
+</div>
+
+@if (Model.IsNoneMatched)
+{
+    if (!String.IsNullOrEmpty(Model.Input))
+    {
+        <div class="weui_cells weui_cells_access">
+            <a href="@Url.Content("~/Home/Feedback")" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>
+                        没有查询到相关记录,你可以点此反馈
+                    </p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+        </div>
+    }
+}
+else
+{
+    if (Model.IsAllMatched)
+    {
+        <div class="weui_cells weui_cells_access">
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>
+                        <div>【普】<span>@Model.AllMatched.ChnText</span></div>
+                        <div class="newline5"></div>
+                        <div>【粤】<span>@Model.AllMatched.CanText</span></div>
+                        <div class="newline5"></div>
+                        <div>【音】<span>@Model.AllMatched.CanPronounce</span></div>
+                        @if (Model.Input.Length == 1)
+                        {
+                            <div class="newline"></div>
+                            <div>
+                                <audio src="http://yueyv.cn/voice/@(Model.AllMatched.CanVoice)" controls="controls">你的浏览器不支持播放此音频</audio>
+                            </div>
+                        }
+                    </p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+        </div>
+    }
+
+    <div class="weui_cells weui_cells_access">
+        @foreach (var item in Model.OneMatches)
+        {
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>
+                        <div>
+                            <span>@item.ChnText</span>&nbsp;&#58;&nbsp;
+                            <span>@item.CanPronounce</span>
+                        </div>
+                        <div class="newline"></div>
+                        <div>
+                            <audio src="http://yueyv.cn/voice/@(item.CanVoice)" controls="controls">你的浏览器不支持播放此音频</audio>
+                        </div>
+                    </p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+        }
+    </div>
+}
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem1");
+    }
+
+    function tryquery(sender) {
+        var input = $("#queryinput").val();
+        if (!input) {
+            weuialert("请输入要翻译的字词（最多20字）");
+            return;
+        }
+
+        window.location.href = '@Url.Content("~/")' + 'Home/Index?input=' + encodeURI(input);
+    }
+</script>

@@ -1,0 +1,94 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .weui_bar_item_on {
+        background-color: #e7e7e7;
+    }
+</style>
+
+<div class="weui_tab">
+    <div class="weui_tab_bd">
+        @RenderBody()
+    </div>
+    <div class="weui_tabbar">
+        <a id="appbaritem1" class="weui_tabbar_item" href="@Url.Content("~/Home/Index")">
+            <div class="weui_tabbar_icon">
+                <img alt="" src="@Url.Content("~/Assets/icon_nav_search_bar.png")">
+            </div>
+            <p class="weui_tabbar_label">查询</p>
+        </a>
+        <a id="appbaritem2" class="weui_tabbar_item" href="@Url.Content("~/Home/Vocabulary")">
+            <div class="weui_tabbar_icon">
+                <img alt="" src="@Url.Content("~/Assets/icon_nav_tab.png")">
+            </div>
+            <p class="weui_tabbar_label">词库</p>
+        </a>
+        <a id="appbaritem3" class="weui_tabbar_item" href="@Url.Content("~/Home/Discovery")">
+            <div class="weui_tabbar_icon">
+                <img alt="" src="@Url.Content("~/Assets/icon_nav_cell.png")">
+            </div>
+            <p class="weui_tabbar_label">发现</p>
+        </a>
+        <a id="appbaritem4" class="weui_tabbar_item" href="@Url.Content("~/Home/Me")">
+            <div class="weui_tabbar_icon">
+                <img alt="" src="@Url.Content("~/Assets/icon_nav_actionSheet.png")">
+            </div>
+            <p class="weui_tabbar_label">我</p>
+        </a>
+    </div>
+</div>
+
+<div style="display: none;" id="dialog1" class="weui_dialog_confirm">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">弹窗标题</strong></div>
+        <div class="weui_dialog_bd">自定义弹窗内容，居左对齐显示，告知需要确认的信息等</div>
+        <div class="weui_dialog_ft">
+            <a class="weui_btn_dialog default" href="javascript:;">取消</a>
+            <a class="weui_btn_dialog primary" href="javascript:;">确定</a>
+        </div>
+    </div>
+</div>
+<div style="display: none;" id="dialog2" class="weui_dialog_alert">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">弹窗标题</strong></div>
+        <div class="weui_dialog_bd">弹窗内容，告知当前页面信息等</div>
+        <div class="weui_dialog_ft">
+            <a class="weui_btn_dialog primary" href="javascript:void(0);" onclick="weuialertreset()">确定</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function showhighlight(id) {
+        $("#" + id).addClass("weui_bar_item_on");
+    }
+
+    function weuialert(message, title,callback) {
+        if (!title) {
+            title = "提示";
+        }
+
+        if (!message) {
+            message = "并没有什么提示→_→";
+        }
+
+        $("#dialog2 .weui_dialog_hd").html(title);
+        $("#dialog2 .weui_dialog_bd").html(message);
+        $("#dialog2").show();
+
+        weuialertcallback = callback;
+    }
+
+    var weuialertcallback = null;
+
+    function weuialertreset() {
+        $("#dialog2").hide();
+        if (weuialertcallback != null && typeof (weuialertcallback) == "function") {
+            weuialertcallback();
+            weuialertcallback = null;
+        }
+    }
+</script>

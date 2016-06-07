@@ -1,0 +1,70 @@
+﻿@model Agile.Dtos.API.H10013Response
+@{
+    Layout = "~/Views/Shared/_WithFrameLayout.cshtml";
+}
+
+@{
+    var app = Model.data.FirstOrDefault();
+    if (app == null)
+    {
+        app = new Agile.Dtos.API.H10013ResponseListItem();
+    }
+}
+
+<div id="layoutdiv1" style="height: 100%; width: 100%; overflow-x: hidden;" onclick="linkto('@Url.Content("~/Assets/Htmls/" + app.href)','newtab')">
+    <img style="max-height:100%;margin-left:-372px;" src="@Url.Content("~/Assets/Images/" + app.cover)" />
+</div>
+<div id="labeldiv1" style="height: 55px; background-color: #fff; margin-top: -55px; opacity: 0.7;">
+    <div class="newline5"></div>
+    <div style="margin-left: 10px; color: #00a2e8; font-size: 18px;">
+        <a href="javascript:void(0)" onclick="openlink('@app.href')">@(app.title)&nbsp;<span class="glyphicon glyphicon-arrow-right"></span></a>
+    </div>
+    <div style="margin-left: 10px;">
+        <a href="javascript:void(0)" onclick="switchlayout(1)">查看所有应用...</a>
+    </div>
+</div>
+
+<div id="layoutdiv2" style="height: 100%; width: 100%;background-color:#f0f0f0; display: none;">
+    <div class="list-group">
+        <a class="list-group-item active" href="javascript:void(0)" onclick="switchlayout()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;返回</a>
+        @if (Model.data == null || Model.data.Count == 0)
+        {
+            <a class="list-group-item">未找到相关记录</a>
+        }
+        else
+        {
+            foreach (var item in Model.data)
+            {
+                <a class="list-group-item" href="javascript:void(0)" onclick="openlink('@item.href')">
+                    @item.title
+                </a>
+            }
+        }
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function openlink(link) {
+        if (link && link.indexOf("http://") >= 0) {
+            linkto(link, 'newtab');
+            return;
+        }
+
+        var url = '@Url.Content("~/")' + 'Assets/Htmls/' + link;
+        linkto(url, 'newtab');
+    }
+
+    function switchlayout(tab) {
+        if (tab) {
+            $("#layoutdiv1").hide();
+            $("#labeldiv1").hide();
+            $("#layoutdiv2").show();
+            return;
+        }
+
+        $("#layoutdiv2").hide();
+        $("#layoutdiv1").show();
+        $("#labeldiv1").show();
+    }
+</script>

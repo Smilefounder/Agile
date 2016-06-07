@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>颜色辨别</title>
+    <link href="../sharp.css" rel="stylesheet" />
+    <style type="text/css">
+        .col, .col-x {
+            width: 20px;
+            height: 20px;
+        }
+
+        .col-x {
+            margin-left: 1px;
+        }
+
+        .row {
+            width: 100%;
+        }
+
+        .row-x {
+            margin-top: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div id="containerdiv" style="text-align: center; height: 400px; width: 400px; ">
+        <div id="resultdiv" style="display:none;height:40px;line-height:40px;">
+            <div style="float:left;margin-left:5px;">得分：<span id="scorespan">0</span></div>
+            <div style="float:right;margin-right:10px;">剩余时间：<span id="timespan">60</span>秒</div>
+            <div style="clear:both;"></div>
+        </div>
+        <div id="borderdiv"></div>
+    </div>
+</body>
+</html>
+<script src="../sharp.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        sharp.center("containerdiv");
+
+        var borderdiv = sharp.id("borderdiv");
+        if (!borderdiv) {
+            return;
+        }
+
+        for (var i = 1; i <= 19; i++) {
+            var row = document.createElement("div");
+            if (i == 1) {
+                row.setAttribute("class", "row");
+            }
+            else {
+                row.setAttribute("class", "row-x");
+            }
+
+            for (var k = 1; k <= 19; k++) {
+                var col = document.createElement("div");
+                if (k == 1) {
+                    col.setAttribute("class", "col");
+                }
+                else {
+                    col.setAttribute("class", "col-x");
+                }
+
+                col.setAttribute("id", "ceil" + i + "x" + k);
+                col.setAttribute("onclick", "choosecolor()");
+                col.style.float = "left";
+                row.appendChild(col);
+            }
+
+            borderdiv.appendChild(row);
+
+            var clearfix = document.createElement("div");
+            clearfix.style.clear = "left";
+            borderdiv.appendChild(clearfix);
+        }
+
+        //模拟第一次点击
+        choosecolor(1);
+    }
+
+    var colors = ["#000", "#7f7f7f", "#880015", "#ed1c24", "#ff7f27", "#22b14c", "#00a2e8", "#3f48cc", "#a349a4"];
+    var opacity = 0;
+
+    function choosecolor(ischecked) {
+        if (!ischecked) {
+            if (count > 0) {
+                count -= 5;
+            }
+
+            return;
+        }
+
+        if (count <= 0) {
+            return;
+        }
+
+        if (opacity == 0.1) {
+            var resultdiv = sharp.id("resultdiv");
+            if (resultdiv) {
+                resultdiv.style.display = "block";
+            }
+
+            setInterval(function () {
+                if (count > 0) {
+                    count -= 1;
+                    showtime();
+                    return;
+                }
+
+                var resultdiv2 = sharp.id("resultdiv");
+                if (resultdiv2) {
+                    resultdiv2.style.display = "none";
+                }
+
+                var borderdiv = sharp.id("borderdiv");
+                if (borderdiv) {
+                    borderdiv.style.textAlign = "center";
+                    borderdiv.innerHTML = '得分：<span style="font-size:48px;">' + score + '</span>';
+                }
+            }, 1000);
+        }
+
+        if (opacity > 0) {
+            score += 1;
+            if (opacity > 0.7) {
+                count += 8;
+            }
+            else {
+                count += (10 * opacity);
+            }
+
+            showscore();
+        }
+
+        var borderdiv = sharp.id("borderdiv");
+        if (!borderdiv) {
+            return;
+        }
+
+        var cidx = Math.floor(Math.random() * colors.length);
+        var colorstr = colors[cidx];
+        var rows = borderdiv.childNodes;
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            if (!row.getAttribute) {
+                continue;
+            }
+
+            var cols = row.childNodes;
+            for (var k = 0; k < cols.length; k++) {
+                var col = cols[k];
+                if (!col.getAttribute) {
+                    continue;
+                }
+
+                col.setAttribute("onclick", "choosecolor()");
+                col.style.backgroundColor = colorstr;
+                col.style.opacity = 1;
+            }
+        }
+
+        var c = Math.floor(Math.random() * 19) + 1;
+        var r = Math.floor(Math.random() * 19) + 1;
+
+        var ceil = sharp.id("ceil" + c + "x" + r);
+        if (ceil) {
+            ceil.setAttribute("onclick", "choosecolor(1)");
+            ceil.style.opacity = opacity;
+
+            if (opacity < 0.7) {
+                opacity += 0.1;
+                return;
+            }
+
+            if (opacity < 0.8) {
+                opacity += 0.05;
+                return;
+            }
+
+            if (opacity < 0.9) {
+                opacity += 0.02;
+                return;
+            }
+
+            if (opacity < 0.99) {
+                opacity += 0.01;
+                return;
+            }
+        }
+    }
+
+    var score = 0;
+    var count = 60;
+
+    function showscore() {
+        var scorespan = sharp.id("scorespan");
+        if (scorespan) {
+            scorespan.innerHTML = score;
+        }
+    }
+
+    function showtime() {
+        var timespan = sharp.id("timespan");
+        if (timespan) {
+            timespan.innerHTML = count;
+        }
+    }
+</script>

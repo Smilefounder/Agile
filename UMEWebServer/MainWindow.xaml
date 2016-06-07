@@ -1,0 +1,41 @@
+﻿<Window x:Class="UMEWebServer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="UMEWebServer"  Height="500" Width="800" MinHeight="500" MinWidth="800">
+    <Grid>
+        <Grid x:Name="_mainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Button Margin="5" x:Name="_createNewWebsiteButton" Click="_createNewWebsiteButton_Click">新增站点</Button>
+                    <Button Margin="5">全部启动</Button>
+                    <Button Margin="5">全部停止</Button>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <ScrollViewer>
+                    <StackPanel x:Name="_websiteListStackPanel"></StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <Border x:Name="_backgroundMaskBorder" Visibility="Collapsed" Background="#000" Opacity="0.2"></Border>
+        <Border x:Name="_saveOrUpdateWebsiteBorder" Visibility="Collapsed" Margin="10,50,20,10" Background="#fff" BorderBrush="#d5d5d5" BorderThickness="1">
+            <StackPanel Margin="5">
+                <TextBlock Margin="5">站点名</TextBlock>
+                <TextBox x:Name="_websiteNameTextBox" Margin="5"></TextBox>
+                <TextBlock Margin="5">站点目录</TextBlock>
+                <TextBox x:Name="_websiteDirectoryTextBox" Margin="5"></TextBox>
+                <TextBlock Margin="5">IP地址</TextBlock>
+                <TextBox x:Name="_websiteIPAddressTextBox" Margin="5"></TextBox>
+                <TextBlock Margin="5">端口号</TextBlock>
+                <TextBox x:Name="_websitePortTextBox" Margin="5"></TextBox>
+                <TextBlock Margin="5">绑定域名</TextBlock>
+                <TextBox x:Name="_websiteDomainTextBox" Margin="5"></TextBox>
+                <Button x:Name="_saveOrUpdateButton" Click="_saveOrUpdateButton_Click" Margin="5">新增</Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Action("Tables", "Home")
+
+<div id="tablediv"></div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function trygetitemlist(sender) {
+            var tableselect = $("#tableselect");
+            var tablename = $(tableselect).val();
+            $.post('@Url.Content("~/Home/ItemList")', { tablename: tablename }, function (html) {
+                $("#tablediv").html(html);
+            });
+        }
+
+        function changepage(tablename, page, pagesize) {
+            $.post('@Url.Content("~/Home/ItemList")', { tablename: tablename, page: page, pagesize: pagesize }, function (html) {
+                $("#tablediv").html(html);
+            });
+        }
+
+        function tryinsert(sender, tablename) {
+            var container = document.getElementById("insertdiv");
+            if (!container) {
+                container = document.createElement("div");
+                container.setAttribute("id", "insertdiv");
+            }
+            else {
+                container.innerHTML = "";
+            }
+
+            var ht = document.documentElement.clientHeight;
+            var ht2 = 480;
+            var wt = document.documentElement.clientWidth;
+            var wt2 = 800;
+
+            container.style.position = "fixed";
+            container.style.height = ht2 + "px";
+            container.style.width = wt2 + "px";
+            container.style.left = 0.5 * (wt - wt2) + "px";
+            container.style.top = 0.5 * (ht - ht2) + "px";
+            container.style.borderRadius = "5px";
+            container.style.border = "1px solid #22b14c";
+            container.style.boxShadow = "0 0 2px #22b14c";
+            container.style.backgroundColor = "#fff";
+            container.style.opacity = 0.85;
+
+            document.body.appendChild(container);
+
+            $.post('@Url.Content("~/Home/TryInsert")', { tablename: tablename }, function (html) {
+                var div = document.createElement("div");
+                div.style.height = (ht2 - 40) + "px";
+                div.style.overflowY = "auto";
+                div.style.padding = "20px";
+                div.innerHTML = html;
+                container.appendChild(div);
+
+                var yesa = document.createElement("input");
+                yesa.value = "确定"
+                yesa.style.marginLeft = "20px";
+                yesa.setAttribute("class", "btn btn-success");
+                yesa.setAttribute("onclick", "insert(this,'" + tablename + "')");
+                container.appendChild(yesa);
+
+                var noa = document.createElement("input");
+                noa.value = "取消";
+                noa.style.marginLeft = "20px";
+                noa.setAttribute("class", "btn btn-danger");
+                noa.setAttribute("onclick", "resetinsert(this)");
+                container.appendChild(noa);
+
+            });
+        }
+
+        function resetinsert(sender) {
+            var container = document.getElementById("insertdiv");
+            if (container) {
+                document.body.removeChild(container);
+            }
+        }
+
+        function insert(sender, tablename) {
+            $.ajax({
+                url: '@Url.Content("~/Home/Insert")',
+                type: "POST",
+                data: $("#insertform").serialize(),
+                beforeSend: function () {
+                    $(sender).attr("disabled", "disabled");
+                },
+                success: function (response) {
+                    $(sender).removeAttr("disabled");
+                    if (response.error != 0) {
+                        alert(response.message);
+                        return;
+                    }
+
+                    changepage(tablename);
+                    resetinsert();
+                },
+                error: function () {
+                    $(sender).removeAttr("disabled");
+                    resetinsert();
+                }
+            });
+        }
+
+        function tryupdate(sender, tablename, id) {
+            var container = document.getElementById("updatediv");
+            if (!container) {
+                container = document.createElement("div");
+                container.setAttribute("id", "updatediv");
+            }
+            else {
+                container.innerHTML = "";
+            }
+
+            var ht = document.documentElement.clientHeight;
+            var ht2 = 480;
+            var wt = document.documentElement.clientWidth;
+            var wt2 = 800;
+
+            container.style.position = "fixed";
+            container.style.height = ht2 + "px";
+            container.style.width = wt2 + "px";
+            container.style.left = 0.5 * (wt - wt2) + "px";
+            container.style.top = 0.5 * (ht - ht2) + "px";
+            container.style.borderRadius = "5px";
+            container.style.border = "1px solid #22b14c";
+            container.style.boxShadow = "0 0 2px #22b14c";
+            container.style.backgroundColor = "#fff";
+            container.style.opacity = 0.85;
+
+            document.body.appendChild(container);
+
+            $.post('@Url.Content("~/Home/TryUpdate")', { tablename: tablename, id: id }, function (html) {
+                var div = document.createElement("div");
+                div.style.height = (ht2 - 40) + "px";
+                div.style.overflowY = "auto";
+                div.style.padding = "20px";
+                div.innerHTML = html;
+                container.appendChild(div);
+
+                var yesa = document.createElement("input");
+                yesa.value = "确定"
+                yesa.style.marginLeft = "20px";
+                yesa.setAttribute("class", "btn btn-success");
+                yesa.setAttribute("onclick", "update(this,'" + tablename + "')");
+                container.appendChild(yesa);
+
+                var noa = document.createElement("input");
+                noa.value = "取消";
+                noa.style.marginLeft = "20px";
+                noa.setAttribute("class", "btn btn-danger");
+                noa.setAttribute("onclick", "resetupdate(this)");
+                container.appendChild(noa);
+
+            });
+        }
+
+        function resetupdate() {
+            var container = document.getElementById("updatediv");
+            if (container) {
+                document.body.removeChild(container);
+            }
+        }
+
+        function update(sender, tablename) {
+            $.ajax({
+                url: '@Url.Content("~/Home/Update")',
+                type: "POST",
+                data: $("#updateform").serialize(),
+                beforeSend: function () {
+                    $(sender).attr("disabled", "disabled");
+                },
+                success: function (response) {
+                    $(sender).removeAttr("disabled");
+                    if (response.error != 0) {
+                        alert(response.message);
+                        return;
+                    }
+
+                    changepage(tablename);
+                    resetupdate();
+                },
+                error: function () {
+                    $(sender).removeAttr("disabled");
+                    resetupdate();
+                }
+            });
+        }
+
+        function trydelete(sender, tablename, id) {
+            if (!confirm("确定要删除吗，该操作不可恢复")) {
+                return;
+            }
+
+            $.post('@Url.Content("~/Home/Delete")', { tablename: tablename, id: id }, function (response) {
+                if (response.error != 0) {
+                    alert(response.message);
+                    return;
+                }
+
+                changepage(tablename);
+            }, "json");
+        }
+    </script>
+}

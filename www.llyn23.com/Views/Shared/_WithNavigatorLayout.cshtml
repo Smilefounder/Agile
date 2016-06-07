@@ -1,0 +1,171 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav class="navbar navbar-default">
+    <div style="width:1000px;margin:0 auto;">
+        <div style="float:left;">
+            <a class="navbar-brand" href="@Url.Content("~/Home/Index")">棱境 - design &amp; develop</a>
+        </div>
+        <div style="float:right;">
+            <a class="navbar-brand" href="@Url.Content("~/Home/Note")">各种坑</a>
+            <a class="navbar-brand" target="_blank" href="http://weibo.com/ssitmo">微博</a>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+</nav>
+
+@RenderBody()
+
+<div style="height:40px;width:100%;"></div>
+<div style="position:fixed;bottom:0;border-top:1px solid #d5d5d5;background-color:#f0f0f0;width:100%;">
+    <div style="text-align:center;height:32px;line-height:32px;width:1000px;margin:0 auto;">
+        <a target="_blank" href="http://www.uimoe.com">uimoe design</a> all rights reserved.
+        <a target="_blank" href="http://www.miitbeian.gov.cn">赣ICP备16000344号</a>
+    </div>
+</div>
+
+<div id="usertabmaskdiv1" style="display:none;position:fixed;height:100%;width:100%;background-color:#000;opacity:0.6;left:0;top:0;z-index:10010;"></div>
+<div id="usertabdiv1" style="display:none;width:440px;height:480px;position:fixed;left:50%;top:50%;margin-left:-220px;margin-top:-240px;background-color:#fff;z-index:10020;border-radius:5px;border:1px solid #d5d5d5;box-shadow:0 0 2px #d5d5d5;">
+    <div style="margin:10px;">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="javascript:void(0)" onclick="switchusertab(this)">登录</a></li>
+            <li role="presentation"><a href="javascript:void(0)" onclick="switchusertab(this,1)">注册</a></li>
+        </ul>
+    </div>
+    <div style="margin:10px;" id="logindiv1">
+        <form id="loginform1">
+            <div class="form-group">
+                <label>用户名</label>
+                <input id="username1" class="form-control" type="text" />
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input id="userpass1" class="form-control" type="password" />
+            </div>
+        </form>
+        <button class="btn btn-success" onclick="trylogin()">登录</button>
+        <button class="btn btn-default" onclick="hideusertab()">取消</button>
+    </div>
+    <div style="margin:10px; display:none;" id="registerdiv1">
+        <form id="registerform1">
+            <div class="form-group">
+                <label>邮箱</label>
+                <input id="useremail2" class="form-control" type="email" />
+            </div>
+            <div class="form-group">
+                <label>用户名</label>
+                <input id="username2" class="form-control" type="text" />
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input id="userpass2" class="form-control" type="password" />
+            </div>
+            <div class="form-group">
+                <label>密码确认</label>
+                <input id="userpass3" class="form-control" type="password" />
+            </div>
+        </form>
+        <button class="btn btn-warning" onclick="tryregister()">注册</button>
+        <button class="btn btn-default" onclick="hideusertab()">取消</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function switchusertab(sender, tab) {
+        $(sender).parent().siblings().removeClass("active");
+        $(sender).parent().addClass("active");
+
+        if (tab) {
+            $("#logindiv1").hide();
+            $("#registerdiv1").show();
+            return;
+        }
+
+        $("#logindiv1").show();
+        $("#registerdiv1").hide();
+    }
+
+    function showusertab() {
+        $("#usertabmaskdiv1").show();
+        $("#usertabdiv1").show();
+    }
+
+    function hideusertab() {
+        $("#usertabmaskdiv1").hide();
+        $("#usertabdiv1").hide();
+    }
+
+    function trylogin() {
+        var username = $("#username1").val();
+        if ($.trim(username).length == 0) {
+            alert("请输入用户名");
+            return;
+        }
+
+        var userpass = $("#userpass1").val();
+        if ($.trim(userpass).length == 0) {
+            alert("请输入密码");
+            return;
+        }
+
+        var url = '@Url.Content("~/User/Login")';
+        $.post(url, { username: username, userpass: userpass }, function (response) {
+            alert(response.message);
+            if (response.error == 0) {
+                $("#logeduser").val(username);
+                hideusertab();
+                return;
+            }
+        }, "json");
+    }
+
+    function tryregister() {
+        var useremail = $("#useremail2").val();
+        if ($.trim(useremail).length == 0) {
+            alert("请输入邮箱");
+            return;
+        }
+
+        var emailrgx = /\w+[@@]\w+/;
+        if (!emailrgx.test(useremail)) {
+            alert("邮箱格式不正确");
+            return;
+        }
+
+        var username = $("#username2").val();
+        if ($.trim(username).length == 0) {
+            alert("请输入用户名");
+            return;
+        }
+
+        var usernamergx = /\w{5,15}/;
+        if (!usernamergx.test(username)) {
+            alert("用户名不正确，请输入5~15位数字字母中文字符组成的用户名");
+            return;
+        }
+
+        var userpass2 = $("#userpass2").val();
+        var userpass3 = $("#userpass3").val();
+
+        if (userpass2 != userpass3) {
+            alert("两次输入密码不一致");
+            return;
+        }
+
+        var userpassrgx = /.{5,15}/;
+        if (!userpassrgx.test(userpass2)) {
+            alert("密码长度要求5~15位");
+            return;
+        }
+
+        var url = '@Url.Content("~/User/Register")';
+        $.post(url, { email: useremail, username: username, userpass: userpass2 }, function (response) {
+            alert(response.message);
+            if (response.error == 0) {
+                hideusertab();
+                return;
+            }
+        }, "json");
+    }
+</script>

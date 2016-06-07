@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>人品计算</title>
+    <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="panel">
+            <div class="panel-body">
+                <form id="form1">
+                    <div class="form-group">
+                        <label style="color:#22b14c;" for="yourname">你的名字</label>
+                        <input class="form-control" id="yourname" name="yourname" type="text" maxlength="64" placeholder="最多可以输入64个字符" />
+                    </div>
+                </form>
+                <button class="btn btn-success btn-block" onclick="trycalc(this)">计算</button>
+                <div style="text-align:center;color:#22b14c;margin-top:10px;">
+                    <h1 id="strh3"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../../Scripts/jquery-1.8.2.min.js"></script>
+<script src="../md5.js"></script>
+<script type="text/javascript">
+    function trycalc(sender) {
+        var yourname = $("#yourname").val();
+        if (!yourname) {
+            alert("请输入你的名字");
+            return;
+        }
+
+        var tempint = getnumfrommd5str(yourname);
+        var html = yourname + " 的人品为：" + tempint;
+        $("#strh3").html(html);
+    }
+
+    function getnumfrommd5str(str) {
+        var numrgx = /^[0-9]$/;
+        var md5str = hex_md5(str);
+        var sb = "";
+        for (var i = 0; i < md5str.length; i++) {
+            var ch = md5str[i];
+            if (numrgx.test(ch)) {
+                sb += ch;
+            }
+        }
+
+        var tempstr = sb;
+        if (tempstr.length >= 3) {
+            tempstr = tempstr.substr(0, 3);
+            if (tempstr != "100") {
+                tempstr = tempstr.substr(0, 2);
+            }
+        }
+
+        return parseInt(tempstr);
+    }
+</script>

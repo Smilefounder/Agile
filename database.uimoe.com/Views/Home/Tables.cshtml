@@ -1,0 +1,15 @@
+﻿@model IEnumerable<string>
+@{
+    ViewBag.Title = "表";
+}
+
+<div class="form-group">
+    <label>选择表</label>
+    <select id="tableselect" class="form-control">
+        @foreach (var name in Model)
+        {
+            <option>@name</option>
+        }
+    </select>
+    <input class="btn btn-success" type="button" value="查询" onclick="trygetitemlist(this)" />
+</div>

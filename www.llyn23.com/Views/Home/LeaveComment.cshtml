@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+}
+
+<ul class="list-group">
+    <li class="list-group-item active">
+        发表评论
+    </li>
+    <li class="list-group-item">
+        <div class=" form-group">
+            <textarea id="textarea1" class="form-control" maxlength="140"></textarea>
+        </div>
+        <div>
+            <div style="float:left;">
+                <input id="isAnonymous" name="isAnonymous" type="checkbox" />
+                <label for="isAnonymous">匿名评论</label>
+            </div>
+            <div style="float:right;">
+                <input id="logeduser" name="logeduser" type="hidden" />
+                <button class="btn btn-success" onclick="tryleaveacomment()">发表</button>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </li>
+</ul>
+
+<script type="text/javascript">
+    function tryleaveacomment() {
+        var logeduser = $("#logeduser").val();
+        var isAnonymous = $("#isAnonymous").is(":checked");
+        if (!isAnonymous) {
+            if (!logeduser) {
+                showusertab();
+                return;
+            }
+        }
+
+        var content = $("#textarea1").val();
+        if ($.trim(content).length == 0) {
+            alert("请填写评论");
+            return;
+        }
+
+        if ($.trim(content).length > 140) {
+            alert("评论最多140字");
+            return;
+        }
+
+        var archiveid = '@ViewBag.archiveid';
+        var username = $("#logeduser").val();
+        var url = '@Url.Content("~/Home/LeaveComment")';
+        $.post(url, { username: username, archiveid: archiveid, content: content, isanonymous: isAnonymous == true ? 1 : 0 }, function (response) {
+            alert(response.message);
+        }, "json");
+    }
+</script>

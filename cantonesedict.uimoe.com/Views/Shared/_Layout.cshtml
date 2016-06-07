@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>粤语词典</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="@Url.Content("~/Assets/weui.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Assets/example.css")" rel="stylesheet" />
+    <style type="text/css">
+        .splitter-d, .splitter-s {
+            width: 100%;
+            height: 2px;
+        }
+
+        .splitter-d {
+            border-top: 1px dotted #d5d5d5;
+        }
+
+        .splitter-s {
+            border-top: 1px solid #d5d5d5;
+        }
+
+        .newline, .newline2, .newline5 {
+            width: 100%;
+        }
+
+        .newline {
+            height: 10px;
+        }
+
+        .newline2 {
+            height: 2px;
+        }
+
+        .newline5 {
+            height: 2px;
+        }
+    </style>
+</head>
+<body>
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        function linkto(url, target, features, replace) {
+            switch (target) {
+                default: {
+                    window.location.href = url;
+                    break;
+                }
+                case "newtab": {
+                    window.open(url);
+                    break;
+                }
+                case "newwindow": {
+                    window.open(url, "newwindow", features, replace);
+                    break;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

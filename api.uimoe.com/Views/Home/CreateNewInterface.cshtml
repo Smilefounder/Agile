@@ -1,0 +1,39 @@
+﻿@model api.uimoe.com.ViewModels.CreateNewInterfaceVM
+@{
+    ViewBag.Title = "新增接口";
+}
+
+<form id="form1">
+    <div class="form-group">
+        @Html.DisplayNameFor(m => m.Code)
+        @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(m => m.Description)
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+    </div>
+</form>
+<button class="btn btn-success" onclick="trycreatenew()"><span class="glyphicon glyphicon-plus"></span>&nbsp;新增</button>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function trycreatenew() {
+            var url = '@Url.Content("~/Home/CreateNewInterface")';
+            $.post(url, $("#form1").serialize(), function (response) {
+                if (response.error != 0) {
+                    alert(response.message);
+                    return;
+                }
+
+                if (window.opener) {
+                    window.opener.location.reload();
+                }
+            }, "json");
+        }
+    </script>
+}

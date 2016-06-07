@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>手气测试</title>
+    <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style type="text/css">
+        .mask {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background-color: #ffffff;
+            opacity: 0.5;
+            z-index: 10000;
+        }
+
+        .result {
+            position: fixed;
+            height: 200px;
+            width: 300px;
+            left: 50%;
+            top: 50%;
+            margin-left: -150px;
+            margin-top: -100px;
+            z-index: 10010;
+            border: 1px solid #00a2e8;
+            border-radius: 5px;
+            box-shadow: 0 0 2px #00a2e8;
+        }
+
+        .line, .line50, .line100 {
+            text-align: center;
+            color: #00a2e8;
+        }
+
+        .line {
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .line50 {
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .line100 {
+            height: 100px;
+            line-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="well">
+        测试你手气的时候到了：A,B,C,D中随便选一个，选对得分（越往后的题分值越高），选错游戏结束。
+    </div>
+    <div class="list-group">
+        <a id="titlea" class="list-group-item active">第1题,得分0</a>
+        <a class="list-group-item" onclick="mychoose(1)">A</a>
+        <a class="list-group-item" onclick="mychoose(2)">B</a>
+        <a class="list-group-item" onclick="mychoose(3)">C</a>
+        <a class="list-group-item" onclick="mychoose(4)">D</a>
+    </div>
+    <div id="mask" class="mask" style="display:none;"></div>
+    <div id="result" class="result" style="display:none;">
+        <div class="line"></div>
+        <div class="line">游戏结束，你的得分为：</div>
+        <div class="line50" id="scorediv" style="font-size:48px;font-weight:bold;">0</div>
+        <div class="line">
+            <a href="javascript:window.location.reload();">再试一次</a>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    var count = 1;
+    var score = 0;
+    function mychoose(num) {
+        var num2 = Math.round(Math.random() * 4);
+        if (num2 != num) {
+            document.getElementById("mask").style.display = "block";
+            document.getElementById("result").style.display = "block";
+            document.getElementById("scorediv").innerHTML = score;
+            return;
+        }
+
+        //答对了
+        count += 1;
+
+        //根据答对次数的阶乘来给分
+        score += getfactnum(count);
+
+        document.getElementById("titlea").innerHTML = "第" + count + "题,得分" + score;
+    }
+
+    //获取数字的阶乘，例如5的阶乘=5*4*3*2*1
+    function getfactnum(num) {
+        var mul = 1;
+        for (var i = 1; i <= num; i++) {
+            mul *= i;
+        }
+
+        return mul;
+    }
+</script>

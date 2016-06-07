@@ -1,0 +1,62 @@
+﻿@model IEnumerable<cantonesedict.uimoe.com.ViewModels.Home.ScoreListItemVM>
+@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div class="hd">
+    <h1 class="page_title">我的积分：<span id="scoresp">0</span></h1>
+    <p class="page_desc"></p>
+</div>
+<div class="bd">
+    <div class="weui_cells_title">积分获取说明</div>
+    <div class="weui_cells_title">登录：积分+10（每天一次）</div>
+    <div class="weui_cells_title">查询：积分+1（不限次数）</div>
+    <div class="weui_cells_title">我的积分</div>
+    <div class="weui_cells weui_cells_access">
+        @if (Model == null || Model.Count() == 0)
+        {
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>
+                        没有查询到相关记录
+                    </p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <a href="javascript:void(0);" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>
+                            <span>@item.waydisplay</span>&nbsp;+<span>@item.score</span>
+                        </p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        @item.createdat.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")
+                    </div>
+                </a>
+            }
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem4");
+
+        var url = '@Url.Content("~/Home/ScoreSum")';
+        $.ajax({
+            type: 'POST',
+            url: url,
+            success: function (response) {
+                if (response.error == 0) {
+                    $("#scoresp").html(response.score);
+                }
+            }
+        });
+    }
+</script>

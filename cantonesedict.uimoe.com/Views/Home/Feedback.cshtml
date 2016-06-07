@@ -1,0 +1,63 @@
+﻿@model cantonesedict.uimoe.com.ViewModels.Home.FeedbackVM
+@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div class="weui_cells_title">提交你的反馈信息</div>
+<div class="weui_cells weui_cells_form">
+    <form id="form1">
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">普</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" id="ChnText" name="ChnText" maxlength="20" placeholder="要翻译的字/词/句(最多20字)" value="@Model.ChnText" />
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">粤</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" id="CanText" name="CanText" maxlength="20" placeholder="我知道它的粤语翻译（可不填）" />
+            </div>
+        </div>
+    </form>
+    <div class="weui_btn_area">
+        <a href="javascript:void(0)" onclick="tryfeedback(this)" class="weui_btn weui_btn_primary">提交</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem4");
+    }
+
+    function tryfeedback(sender) {
+        var title = $("#ChnText").val();
+        if (title.length == 0) {
+            weuialert("请填写要翻译的字/词/句(最多20字)");
+            return;
+        }
+
+        var data = $("#form1").serialize();
+        var url = '@Url.Content("~/Home/Feedback")';
+
+        $(sender).attr("disabled", "disabled").val("提交中");
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: data,
+            dataType: "json",
+            success: function (response) {
+                weuialert(response.message);
+                if (response.error != 0) {
+                    return;
+                }
+
+                $("#ChnText").val("");
+                $("#CanText").val("");
+            },
+            error: function () {
+                $(sender).removeAttr("disabled", "disabled").val("提交");
+            }
+        });
+    }
+</script>

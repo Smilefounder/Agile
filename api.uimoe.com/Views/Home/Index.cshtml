@@ -1,0 +1,96 @@
+﻿@model Agile.Dtos.API.H10000Response
+@{
+    ViewBag.Title = "接口列表";
+}
+
+<button class="btn btn-success" onclick="trycreatenew()"><span class="glyphicon glyphicon-plus"></span>&nbsp;新增</button>
+<table class="table table-striped  table-hover ">
+    <tr>
+        <th>编码</th>
+        <th>名称</th>
+        <th>创建于</th>
+        <th>操作</th>
+    </tr>
+    @if (Model.data.RecordList == null || Model.data.RecordList.Count == 0)
+    {
+        <tr>
+            <td colspan="4">
+                <div style="text-align:center;">未找到相关记录</div>
+            </td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model.data.RecordList)
+        {
+            <tr>
+                <td>@item.Code</td>
+                <td>@item.Name</td>
+                <td>@item.CreatedAt.GetValueOrDefault().ToString("yyyy-MM-dd")</td>
+                <td>
+                    <a href="javascript:void(0)" onclick="tryinvoke('@item.Code')">调用</a>&nbsp;|&nbsp;
+                    <a href="javascript:void(0)" onclick="tryupdate('@item.Id')">修改</a>&nbsp;|&nbsp;
+                    <a href="javascript:void(0)" onclick="trydelete('@item.Id')">删除</a>
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+@if (Model.data.RecordList != null || Model.data.RecordList.Any())
+{
+    <div>
+        <div style="float:left;">
+            第&nbsp;<span>@Model.data.Page</span>/<span>@Model.data.PageCount</span>&nbsp;页&nbsp;
+            共&nbsp;<span>@Model.data.RecordCount</span>&nbsp;条记录
+        </div>
+        <div style="float:right;">
+            @if (Model.data.Page >= 2)
+            {
+                <a href="@Url.Content("~/Home/Index?page="+(Model.data.Page-1)+"&pagesize="+Model.data.PageSize)">上一页</a>
+            }
+
+            @if (Model.data.Page <= Model.data.PageCount - 1)
+            {
+                <a href="@Url.Content("~/Home/Index?page="+(Model.data.Page+1)+"&pagesize="+Model.data.PageSize)">下一页</a>
+            }
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        function trycreatenew() {
+            var url = '@Url.Content("~/Home/CreateNewInterface")';
+            window.open(url);
+        }
+
+        function tryinvoke(code) {
+            var url = '@Url.Content("~/")' + 'Home/InvokeInterface?code=' + code;
+            window.open(url);
+        }
+
+        function tryupdate(id) {
+            var url = '@Url.Content("~/")' + 'Home/UpdateInterface?id=' + id;
+            window.open(url);
+        }
+
+        function trydelete(id) {
+            if (!confirm("确定要删除吗，该操作不可撤销！")) {
+                return;
+            }
+
+            var url = '@Url.Content("~/Home/DeleteInterface")';
+            $.post(url, { id: id }, function (response) {
+                if (response.error != 0) {
+                    alert(response.message);
+                    return;
+                }
+
+                window.location.reload();
+            }, "json");
+        }
+    </script>
+}

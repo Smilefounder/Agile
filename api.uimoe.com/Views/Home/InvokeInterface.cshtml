@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Agile.Dtos.API.H10000ResponseListItem>
+@{
+    ViewBag.Title = "调用接口";
+}
+
+<div class="container">
+    <div class="panel">
+        <div class="panel-body">
+            <form id="form1">
+                <div class="form-group">
+                    <label>选择接口</label>
+                    <select id="interfacelist" class="form-control">
+                        @foreach (var item in Model)
+                        {
+                            var selected = "";
+                            if (item.Code == ViewBag.code)
+                            {
+                                selected = "selected=\"selected\"";
+                            }
+
+                            <option @Html.Raw(selected) value="@item.Code">@(item.Code + "," + item.Name)</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>请求报文&nbsp;<span style="color:#d5d5d5;">例如：page=1&amp;pagesize=10</span></label>
+                    <textarea id="requeststr" class="form-control" style="height:100px;">@ViewBag.requeststr</textarea>
+                </div>
+            </form>
+            <div class="form-group">
+                <label>响应报文&nbsp;<span style="color:#d5d5d5;">例如：{"error":0,"message"="成功"}</span></label>
+                <textarea id="responsestr" class="form-control" style="height:150px;"></textarea>
+            </div>
+            <button class="btn btn-success" onclick="trytoinvoke(this)">调用接口</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function trytoinvoke(sender) {
+        var code = $("#interfacelist").val();
+        var requeststr = $("#requeststr").val();
+        var url = '@Url.Content("~/")' + 'Home/' + code;
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: requeststr,
+            dataType: "text",
+            success: function (response) {
+                $("#responsestr").val(response);
+            },
+            error: function () {
+                alert("抱歉，出错了哦。。");
+            }
+        });
+    }
+</script>

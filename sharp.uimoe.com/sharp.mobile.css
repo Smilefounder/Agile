@@ -1,0 +1,232 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.mask {
+    background-color: #000;
+    height: 100%;
+    left: 0;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+}
+
+.dialog_border {
+    background-color: #fafafc;
+    border-radius: 3px;
+    left: 50%;
+    position: fixed;
+    text-align: center;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 35%;
+    z-index: 10010;
+}
+
+.dialog_hd {
+    padding: 1em 2em;
+}
+
+.dialog_bd {
+    padding: 0 20px 20px;
+}
+
+.dialog_ft {
+    border-top: 1px solid #f0f0f0;
+}
+
+    .dialog_ft button {
+        border: 0;
+        width: 100%;
+    }
+
+    .dialog_ft input {
+        width: 100%;
+    }
+
+.btn {
+    padding: 1em;
+    background-color: #f7f7f7;
+    color: #808080;
+}
+
+    .btn:hover {
+        cursor: pointer;
+    }
+
+.text, .text-red, .text-green, .text-blue, .text-purple {
+    border-radius: 3px;
+    min-width: 200px;
+    padding: 5px;
+}
+
+.text {
+    border: 1px solid #808080;
+    color: #808080;
+}
+
+    .text:focus {
+        box-shadow: 0 0 2px #808080;
+    }
+
+.text-red {
+    border: 1px solid #ed1c24;
+    color: #ed1c24;
+}
+
+    .text-red:focus {
+        box-shadow: 0 0 2px #ed1c24;
+    }
+
+.text-green {
+    border: 1px solid #22b14c;
+    color: #22b14c;
+}
+
+    .text-green:focus {
+        box-shadow: 0 0 2px #22b14c;
+    }
+
+.text-blue {
+    border: 1px solid #00a2e8;
+    color: #00a2e8;
+}
+
+    .text-blue:focus {
+        box-shadow: 0 0 2px #00a2e8;
+    }
+
+.text-purple {
+    border: 1px solid #a349a4;
+    color: #a349a4;
+}
+
+    .text-purple:focus {
+        box-shadow: 0 0 2px #a349a4;
+    }
+
+.button, .button-red, .button-green, .button-blue, .button-purple {
+    border: 0;
+    border-radius: 3px;
+    color: #fff;
+    padding: 5px;
+}
+
+    .button:hover, .button-red:hover, .button-green:hover, .button-blue:hover, .button-purple:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+
+.button {
+    background-color: #808080;
+}
+
+.button-red {
+    background-color: #ed1c24;
+}
+
+.button-green {
+    background-color: #22b14c;
+}
+
+.button-blue {
+    background-color: #00a2e8;
+}
+
+.button-purple {
+    background-color: #a349a4;
+}
+
+.listbox, .listbox-red, .listbox-green, .listbox-blue, .listbox-purple {
+    list-style: none;
+}
+
+    .listbox li, .listbox-red li, .listbox-green li, .listbox-blue li, .listbox-purple li {
+        padding: 5px;
+    }
+
+.page {
+    margin: 0 auto;
+    width: 1000px;
+}
+
+.border, .border-red, .border-green, .border-blue, .border-purple {
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.border {
+    border: 1px solid #808080;
+}
+
+.border-red {
+    border: 1px solid #ed1c24;
+}
+
+.border-green {
+    border: 1px solid #22b14c;
+}
+
+.border-blue {
+    border: 1px solid #00a2e8;
+}
+
+.border-purple {
+    border: 1px solid #a349a4;
+}
+
+.form {
+    margin: 5px;
+}
+
+    .form input {
+        width: 100%;
+    }
+
+.form_element {
+    margin: 5px;
+}
+
+.strech {
+    width: 100%;
+}
+
+.block {
+    margin: 5px;
+}
+
+    .block div, .block input, .block ul {
+        margin: 5px;
+    }
+
+.selected, .selected-red, .selected-green, .selected-blue, .selected-purple {
+    color: #fff;
+}
+
+.selected {
+    background-color: #808080;
+}
+
+.selected-red {
+    background-color: #ed1c24;
+}
+
+.selected-green {
+    background-color: #22b14c;
+}
+
+.selected-blue {
+    background-color: #00a2e8;
+}
+
+.selected-purple {
+    background-color: #a349a4;
+}

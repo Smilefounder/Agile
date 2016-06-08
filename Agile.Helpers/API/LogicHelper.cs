@@ -418,7 +418,7 @@ namespace Agile.Helpers.API
             var username = new SqlParameter("@username", SqlDbType.NVarChar, 50);
             username.Value = request.username;
 
-            var sqlstr = "SELECT TOP 1 id,username,userpass,[status] FROM LYN_user WHERE UserName=@username ORDER BY ID DESC";
+            var sqlstr = "SELECT TOP 1 id,username,userpass,[status] FROM T_user WHERE UserName=@username ORDER BY ID DESC";
             var userlist = DataHelper.ExecuteList<H10009Request>(sqlstr, username);
             if (userlist == null || userlist.Count == 0)
             {
@@ -494,7 +494,7 @@ namespace Agile.Helpers.API
                 };
             }
 
-            var sqlstr = "SELECT TOP 1 username,userpass FROM LYN_user WHERE UserName='" + request.username + "' ORDER BY ID DESC";
+            var sqlstr = "SELECT TOP 1 username,userpass FROM T_user WHERE UserName='" + request.username + "' ORDER BY ID DESC";
             var userlist = DataHelper.ExecuteList<H10009Request>(sqlstr);
             if (userlist != null && userlist.Any())
             {
@@ -519,7 +519,7 @@ namespace Agile.Helpers.API
             splist.Add(userpass);
             splist.Add(email);
 
-            sqlstr = "INSERT INTO LYN_user(username,userpass,email,createdat,[status]) VALUES(@username,@userpass,@email,GETDATE(),1);";
+            sqlstr = "INSERT INTO T_user(username,userpass,email,createdat,[status]) VALUES(@username,@userpass,@email,GETDATE(),1);";
             var rows = DataHelper.ExecuteNonQuery(sqlstr, splist.ToArray());
             if (rows > 0)
             {
@@ -547,7 +547,7 @@ namespace Agile.Helpers.API
             var useridstr = "NULL";
             if (request.isanonymous.GetValueOrDefault(0) == 0)
             {
-                var sqlstr = "SELECT TOP 1 id FROM LYN_user WHERE UserName='" + request.username + "' ORDER BY ID DESC";
+                var sqlstr = "SELECT TOP 1 id FROM T_user WHERE UserName='" + request.username + "' ORDER BY ID DESC";
                 var userlist = DataHelper.ExecuteList<H10009Request>(sqlstr);
                 if (userlist == null || userlist.Count == 0)
                 {
@@ -619,7 +619,7 @@ namespace Agile.Helpers.API
             var archiveid = new SqlParameter("@archiveid", SqlDbType.Int, 11);
             archiveid.Value = request.archiveid.GetValueOrDefault(0);
 
-            var sqlstr = "SELECT t1.*,t2.username as username FROM LYN_comment t1 LEFT JOIN LYN_user t2 on t2.Id= t1.UserId WHERE t1.ArchiveId=@archiveid AND (t1.Status IS NULL OR t1.Status=0)";
+            var sqlstr = "SELECT t1.*,t2.username as username FROM LYN_comment t1 LEFT JOIN T_user t2 on t2.Id= t1.UserId WHERE t1.ArchiveId=@archiveid AND (t1.Status IS NULL OR t1.Status=0)";
             var recordlist = DataHelper.ExecuteList<H10012ResponseListItem>(sqlstr, archiveid);
             return new H10012Response
             {
@@ -875,6 +875,7 @@ namespace Agile.Helpers.API
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [Obsolete("此接口已废弃，请勿使用", true)]
         public static HBaseResponse H10020(H10020Request request)
         {
             var h10021responsebase = H10021(new H10021Request
@@ -891,7 +892,7 @@ namespace Agile.Helpers.API
                 };
             }
 
-            var sqlstr = "INSERT INTO CAN_user(UserName,CreatedAt) VALUES(N'" + request.username + "',GETDATE())";
+            var sqlstr = "INSERT INTO T_user(UserName,CreatedAt) VALUES(N'" + request.username + "',GETDATE())";
             var rows = DataHelper.ExecuteNonQuery(sqlstr);
             if (rows > 0)
             {
@@ -912,9 +913,10 @@ namespace Agile.Helpers.API
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [Obsolete("此接口已废弃，请勿使用", true)]
         public static HBaseResponse H10021(H10021Request request)
         {
-            var sqlstr = "SELECT COUNT(1) FROM CAN_user WHERE UserName=N'" + request.username + "'";
+            var sqlstr = "SELECT COUNT(1) FROM T_user WHERE UserName=N'" + request.username + "'";
             var obj = DataHelper.ExecuteScalar(sqlstr);
             var count = Convert.ToInt32(obj);
             return new H10021Response
@@ -1482,6 +1484,7 @@ namespace Agile.Helpers.API
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        [Obsolete("此接口已废弃，请勿使用", true)]
         public static HBaseResponse H10031(H10031Request request)
         {
             if (!request.page.HasValue)

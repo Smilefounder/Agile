@@ -1,0 +1,267 @@
+﻿2016-06-08 23:51:03
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 43
+   在 Agile.Helpers.API.LogicHelper.H10005(H10005Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 299
+   在 www.llyn23.com.Controllers.HomeController.Index() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 33
+ClientConnectionId:0899367f-4cc0-412f-a99d-f8f841eefcdb
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:53:07
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 43
+   在 Agile.Helpers.API.LogicHelper.H10005(H10005Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 299
+   在 www.llyn23.com.Controllers.HomeController.Index() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 33
+ClientConnectionId:a0777744-c165-4506-9847-0cbd7fbeb2fd
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:53:52
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 43
+   在 Agile.Helpers.API.LogicHelper.H10005(H10005Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 299
+   在 www.llyn23.com.Controllers.HomeController.Index() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 33
+ClientConnectionId:fce1ee39-b34f-44f0-9726-10762a0b152a
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:54:31
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 43
+   在 Agile.Helpers.API.LogicHelper.H10005(H10005Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 299
+   在 www.llyn23.com.Controllers.HomeController.Index() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 33
+ClientConnectionId:856efd58-4f27-44e8-8769-7caec6194d47
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:54:32
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   在 Agile.Helpers.DataHelper.ExecuteDataTable(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 59
+   在 Agile.Helpers.DataHelper.ExecuteList[T](String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 66
+   在 Agile.Helpers.API.LogicHelper.H10006(H10006Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 344
+   在 www.llyn23.com.Controllers.HomeController.RecentArchiveList() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 96
+ClientConnectionId:856efd58-4f27-44e8-8769-7caec6194d47
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:54:32
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   在 Agile.Helpers.DataHelper.ExecuteDataTable(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 59
+   在 Agile.Helpers.DataHelper.ExecuteList[T](String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 66
+   在 Agile.Helpers.API.LogicHelper.H10007(H10007Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 360
+   在 www.llyn23.com.Controllers.HomeController.ArchiveGroupList() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 132
+ClientConnectionId:856efd58-4f27-44e8-8769-7caec6194d47
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:54:39
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 43
+   在 Agile.Helpers.API.LogicHelper.H10031(H10031Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 1500
+   在 www.llyn23.com.Controllers.HomeController.Note() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 71
+ClientConnectionId:6324158e-860d-4cf8-9b84-2eb627660cd6
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:57:16
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 43
+   在 Agile.Helpers.API.LogicHelper.H10005(H10005Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 299
+   在 www.llyn23.com.Controllers.HomeController.Index() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 33
+ClientConnectionId:f66a1b89-f9c3-40b5-92fc-603b8f84c3c9
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:57:17
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   在 Agile.Helpers.DataHelper.ExecuteDataTable(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 59
+   在 Agile.Helpers.DataHelper.ExecuteList[T](String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 66
+   在 Agile.Helpers.API.LogicHelper.H10006(H10006Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 344
+   在 www.llyn23.com.Controllers.HomeController.RecentArchiveList() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 59
+ClientConnectionId:f66a1b89-f9c3-40b5-92fc-603b8f84c3c9
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:57:17
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   在 Agile.Helpers.DataHelper.ExecuteDataTable(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 59
+   在 Agile.Helpers.DataHelper.ExecuteList[T](String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 66
+   在 Agile.Helpers.API.LogicHelper.H10007(H10007Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 360
+   在 www.llyn23.com.Controllers.HomeController.ArchiveGroupList() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 95
+ClientConnectionId:f66a1b89-f9c3-40b5-92fc-603b8f84c3c9
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:58:54
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 43
+   在 Agile.Helpers.API.LogicHelper.H10005(H10005Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 299
+   在 www.llyn23.com.Controllers.HomeController.Index() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 33
+ClientConnectionId:872f5a6f-93ff-4f6d-ae7a-991ec958b8dd
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:58:54
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   在 Agile.Helpers.DataHelper.ExecuteDataTable(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 59
+   在 Agile.Helpers.DataHelper.ExecuteList[T](String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 66
+   在 Agile.Helpers.API.LogicHelper.H10006(H10006Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 344
+   在 www.llyn23.com.Controllers.HomeController.RecentArchiveList() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 59
+ClientConnectionId:872f5a6f-93ff-4f6d-ae7a-991ec958b8dd
+Error Number:15350,State:1,Class:14
+
+2016-06-08 23:58:54
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file c:\users\reimu\documents\visual studio 2013\Projects\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   在 Agile.Helpers.DataHelper.ExecuteDataTable(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 59
+   在 Agile.Helpers.DataHelper.ExecuteList[T](String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\DataHelper.cs:行号 66
+   在 Agile.Helpers.API.LogicHelper.H10007(H10007Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Helpers\API\LogicHelper.cs:行号 360
+   在 www.llyn23.com.Controllers.HomeController.ArchiveGroupList() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.llyn23.com\Controllers\HomeController.cs:行号 95
+ClientConnectionId:872f5a6f-93ff-4f6d-ae7a-991ec958b8dd
+Error Number:15350,State:1,Class:14
+

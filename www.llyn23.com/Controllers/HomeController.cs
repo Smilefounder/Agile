@@ -28,62 +28,49 @@ namespace www.llyn23.com.Controllers
                 pagesize = 10;
             }
 
+            var response = new H10005Response
+            {
+                data = new PagedListDto<H10005ResponseListItem>
+                {
+                    RecordList = new List<H10005ResponseListItem>()
+                }
+            };
+
             try
             {
-                var response = LogicHelper.H10005(new H10005Request
+                var h10005responsebase = LogicHelper.H10005(new H10005Request
                 {
                     page = page,
                     pagesize = pagesize,
                     yearmonth = Request.Params["yearmonth"]
                 });
 
-                return View(response);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-                return View(new H10005Response
+                var h10005response = h10005responsebase as H10005Response;
+                if (h10005response != null &&
+                    h10005response.error == 0 &&
+                    h10005response.data != null &&
+                    h10005response.data.RecordList != null)
                 {
-                    data = new PagedListDto<H10005ResponseListItem>()
-                });
-            }
-        }
-
-        public ActionResult Note()
-        {
-            int page;
-            if (int.TryParse(Request.Params["page"], out page) == false)
-            {
-                page = 1;
-            }
-
-            int pagesize;
-            if (int.TryParse(Request.Params["pagesize"], out pagesize) == false)
-            {
-                pagesize = 10;
-            }
-
-            try
-            {
-                var response = LogicHelper.H10031(new H10031Request
-                {
-                    page = page,
-                    pagesize = pagesize
-                });
-
-                return View(response);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-                return View(new H10031Response
-                {
-                    data = new PagedListDto<H10031ResponseListItem> 
+                    response.data = new PagedListDto<H10005ResponseListItem>
                     {
-                        RecordList=new List<H10031ResponseListItem>()
-                    }
-                });
+                        Page = h10005response.data.Page,
+                        PageSize = h10005response.data.PageSize,
+                        RecordCount = h10005response.data.RecordCount,
+                        RecordList = h10005response.data.RecordList
+                    };
+                }
             }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            if (StringHelper.IsPhoneRequest(Request.UserAgent))
+            {
+                return View("~/Views/Home/Index_m.cshtml", response);
+            }
+
+            return View(response);
         }
 
         public ActionResult RecentArchiveList()

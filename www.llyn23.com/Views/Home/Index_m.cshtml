@@ -1,0 +1,84 @@
+﻿@model Agile.Dtos.API.H10005Response
+@{
+    Layout = "~/Views/Shared/_WithFrameLayout.cshtml";
+}
+
+<div class="weui_cells weui_cells_access">
+    <a class="weui_cell" href="javascript:void(0)">
+        <div class="weui_cell_bd weui_cell_primary">
+            <p style="color:#00a2e8;">文章列表</p>
+        </div>
+        <div class="weui_cell_ft">
+        </div>
+    </a>
+    @if (Model.data.RecordList == null || Model.data.RecordList.Count == 0)
+    {
+        <a class="weui_cell" href="javascript:void(0)">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>未找到相关记录</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    }
+    else
+    {
+        foreach (var item in Model.data.RecordList)
+        {
+            <a class="weui_cell" target="_blank" href="@Url.Content("~/Home/ArchiveDetail?id="+item.id)">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>
+                        <div>
+                            <div><h2>@item.title</h2></div>
+                            <div>发布于<span>@item.createdat.GetValueOrDefault().ToString("yyyy-MM-dd")</span></div>
+                            <div class="newline"></div>
+                            <div class="splitter-d"></div>
+                            <div class="newline"></div>
+                            @{
+                                var parts = item.content.Split(new string[] { "{#more}" }, StringSplitOptions.None);
+                                if (parts.Length == 1)
+                                {
+                                    <div>@Html.Raw(item.content)</div>
+                                }
+                                else
+                                {
+                                    <div>@Html.Raw(parts[0])</div>
+                                    <div class="newline"></div>
+                                    <div>点击查看全文</div>
+                                }
+                            }
+                        </div>
+                    </p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+                                    }
+                                }
+</div>
+
+@if (Model.data.RecordList != null || Model.data.RecordList.Any())
+{
+    <div class="weui_cells weui_cells_access">
+        <div>
+            <div style="float:left;">
+                第&nbsp;<span>@Model.data.Page</span>/<span>@Model.data.PageCount</span>&nbsp;页&nbsp;
+                共&nbsp;<span>@Model.data.RecordCount</span>&nbsp;条记录
+            </div>
+            <div style="float:right;">
+                @if (Model.data.Page > 1)
+                {
+                    <a href="@Url.Content("~/Home/Index?page="+(Model.data.Page-1)+"&pagesize="+Model.data.PageSize)">上一页</a>
+                }
+
+                @if (Model.data.Page < Model.data.PageCount)
+                {
+                    <a href="@Url.Content("~/Home/Index?page="+(Model.data.Page+1)+"&pagesize="+Model.data.PageSize)">下一页</a>
+                }
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+}
+
+

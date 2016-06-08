@@ -23,5 +23,8 @@ namespace Agile.Models
 
         [TableField(MaxLength = 200)]
         public string UserAgent { get; set; }
+
+        [TableField]
+        public string Status { get; set; }
     }
 }

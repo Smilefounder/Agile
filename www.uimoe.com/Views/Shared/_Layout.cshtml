@@ -6,7 +6,7 @@
     <title>柚萌 - design &amp; develop</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Assets/weui.css")" rel="stylesheet" />
     <style type="text/css">
         .splitter-d, .splitter-s {
             width: 100%;
@@ -37,6 +37,7 @@
             height: 2px;
         }
     </style>
+    @RenderSection("styles", required: false)
 </head>
 <body style="background-color:#fff0f0;">
     @RenderBody()

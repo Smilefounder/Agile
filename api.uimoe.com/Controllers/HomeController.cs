@@ -341,16 +341,6 @@ namespace api.uimoe.com.Controllers
                             response = LogicHelper.H10019(ReflectHelper.ParseFromRequest<H10019Request>());
                             break;
                         }
-                    case "H10020":
-                        {
-                            response = LogicHelper.H10020(ReflectHelper.ParseFromRequest<H10020Request>());
-                            break;
-                        }
-                    case "H10021":
-                        {
-                            response = LogicHelper.H10021(ReflectHelper.ParseFromRequest<H10021Request>());
-                            break;
-                        }
                     case "H10022":
                         {
                             response = LogicHelper.H10022(ReflectHelper.ParseFromRequest<H10022Request>());
@@ -394,11 +384,6 @@ namespace api.uimoe.com.Controllers
                     case "H10030":
                         {
                             response = LogicHelper.H10030(ReflectHelper.ParseFromRequest<H10030Request>());
-                            break;
-                        }
-                    case "H10031":
-                        {
-                            response = LogicHelper.H10031(ReflectHelper.ParseFromRequest<H10031Request>());
                             break;
                         }
                     case "H10032":

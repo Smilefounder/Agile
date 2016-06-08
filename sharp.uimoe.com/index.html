@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="sharp.css" rel="stylesheet" />
+</head>
+<body>
+    <select id="select1">
+        <option value="@Code">@Code @Name</option>
+    </select>
+</body>
+</html>
+<script src="sharp.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        sharp.control.select.show("select1");
+    }
+</script>

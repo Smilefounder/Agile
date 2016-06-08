@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,6 +30,18 @@ namespace Agile.Helpers
                 var serializer = new XmlSerializer(typeof(T));
                 return (T)serializer.Deserialize(ms);
             }
+        }
+
+        public static string ToJson(object obj)
+        {
+            string json = JsonConvert.SerializeObject(obj);
+            return json;
+        }
+
+        public static T ParseFromJson<T>(string json)
+        {
+            var entity = JsonConvert.DeserializeObject<T>(json);
+            return entity;
         }
     }
 }

@@ -87,6 +87,8 @@
       <DependentUpon>ajax.ashx</DependentUpon>
     </Compile>
     <Compile Include="Dtos\SelectDto.cs" />
+    <Compile Include="Dtos\TableDto.cs" />
+    <Compile Include="Dtos\UlDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

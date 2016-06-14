@@ -7,14 +7,35 @@
     <link href="sharp.css" rel="stylesheet" />
 </head>
 <body>
-    <select id="select1">
-        <option value="@Code">@Code @Name</option>
-    </select>
+    <div class="panel" style="width:92%;">
+        <select id="select1" class="form-control strech">
+            <option value="@Code">@Code @Name</option>
+        </select>
+        <ul id="ul1" class="list strech">
+            <li>@Code @Name</li>
+        </ul>
+        <table id="table1" class="table table-border table-alternating table-hover strech">
+            <thead>
+                <tr>
+                    <th>接口编码</th>
+                    <th>接口名称</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Code</td>
+                    <td>@Name</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
 <script src="sharp.js"></script>
 <script type="text/javascript">
     window.onload = function () {
         sharp.control.select.show("select1");
+        sharp.control.ul.show("ul1");
+        sharp.control.table.show("table1");
     }
 </script>

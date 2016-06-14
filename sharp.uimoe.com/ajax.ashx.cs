@@ -30,6 +30,16 @@ namespace sharp.uimoe.com
                         obj = CoreHelper.Select(ReflectHelper.ParseFromRequest<SelectDto>());
                     }
                     break;
+                case "ul":
+                    {
+                        obj = CoreHelper.Ul(ReflectHelper.ParseFromRequest<UlDto>());
+                    }
+                    break;
+                case "table":
+                    {
+                        obj = CoreHelper.Table(ReflectHelper.ParseFromRequest<TableDto>());
+                    }
+                    break;
             }
 
             var json = SerializeHelper.ToJson(obj);

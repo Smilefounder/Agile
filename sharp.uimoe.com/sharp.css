@@ -7,3 +7,62 @@ html, body {
     height: 100%;
     width: 100%;
 }
+
+.strech {
+    width: 100%;
+}
+
+.panel {
+    margin: 5px;
+}
+
+    .panel div, .panel input, .panel select, .panel ul, .panel table {
+        margin: 5px;
+    }
+
+.form-control {
+    border: 1px solid #d5d5d5;
+    color: #555555;
+    padding: 5px;
+}
+
+    .form-control:focus {
+        box-shadow: 0 0 2px #d5d5d5;
+    }
+
+.table {
+    border-collapse: collapse;
+}
+
+    .table th, .table td {
+        border-bottom: 1px solid #d5d5d5;
+        color: #555555;
+        padding: 5px;
+        text-align: left;
+    }
+
+.table-alternating tr:nth-child(2n+1) {
+    background-color: #f9f9f9;
+}
+
+.table-border th, .table-border td {
+    border: 1px solid #d5d5d5;
+}
+
+.table-hover tr:hover {
+    background-color: #f0f0f0;
+}
+
+.list {
+    border: 1px solid #d5d5d5;
+}
+
+    .list li {
+        list-style: none;
+        border-bottom: 1px solid #d5d5d5;
+        padding: 5px;
+    }
+
+        .list li:last-child {
+            border-bottom: 0;
+        }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -21,41 +22,30 @@ namespace Agile.Helpers.API
         /// <returns></returns>
         public static HBaseResponse H10000(H10000Request request)
         {
-            if (!request.page.HasValue)
+            var page = request.page.GetValueOrDefault(1);
+            var pagesize = request.pagesize.GetValueOrDefault(10);
+            var options = new PagedQueryOptions
             {
-                request.page = 1;
-            }
+                Page = page,
+                PageSize = pagesize
+            };
 
-            if (!request.pagesize.HasValue)
-            {
-                request.pagesize = 10;
-            }
-
-            var sqlstr = "SELECT COUNT(1) FROM T_interface";
-            var obj = DataHelper.ExecuteScalar(sqlstr);
-            var recordcount = Convert.ToDouble(obj);
-
-            var begin = new SqlParameter("@begin", SqlDbType.Int, 11);
-            begin.Value = request.pagesize * (request.page - 1);
-
-            var end = new SqlParameter("@end", SqlDbType.Int, 11);
-            end.Value = request.pagesize * request.page;
-
-            var splist = new List<SqlParameter>();
-            splist.Add(begin);
-            splist.Add(end);
-
-            sqlstr = "SELECT * FROM (SELECT *,ROW_NUMBER() OVER(ORDER BY ID DESC) AS RW FROM T_interface) AS Q WHERE Q.RW>@begin AND Q.RW<=@end";
-            var recordlist = DataHelper.ExecuteList<H10000ResponseListItem>(sqlstr, splist.ToArray());
+            var list = QueryHelper.GetPagedList<T_interface>(options);
             return new H10000Response
             {
                 error = 0,
                 data = new PagedListDto<H10000ResponseListItem>
                 {
-                    Page = request.page.Value,
-                    PageSize = request.pagesize.Value,
-                    RecordCount = recordcount > Int64.MaxValue ? Int64.MaxValue : Convert.ToInt64(recordcount),
-                    RecordList = recordlist
+                    Page = options.Page,
+                    PageSize = options.PageSize,
+                    RecordCount = list.RecordCount,
+                    RecordList = list.RecordList.Select(o => new H10000ResponseListItem
+                    {
+                        Code = o.Code,
+                        CreatedAt = o.CreatedAt,
+                        Id = o.Id,
+                        Name = o.Name
+                    }).ToList()
                 }
             };
         }
@@ -76,19 +66,14 @@ namespace Agile.Helpers.API
                 };
             }
 
-            var sqlstr = "DELETE FROM T_interface WHERE Code=@Code";
-            var code = new SqlParameter("@Code", SqlDbType.NVarChar, 50);
-            code.Value = request.code;
-            var rows = DataHelper.ExecuteNonQuery(sqlstr, code);
-            if (rows > 0)
-            {
-                return new H10001Response
-                {
-                    error = 0,
-                };
-            }
+            var options = new DeleteOptions();
+            options.Where<T_interface>(w => w.Code == request.code);
 
-            return new HBaseResponse();
+            QueryHelper.Delete<T_interface>(options);
+            return new H10001Response
+            {
+                error = 0
+            };
         }
 
         /// <summary>
@@ -125,33 +110,19 @@ namespace Agile.Helpers.API
                 };
             }
 
-            var code = new SqlParameter("@Code", SqlDbType.NVarChar, 50);
-            code.Value = request.code;
-
-            var name = new SqlParameter("@Name", SqlDbType.NVarChar, 50);
-            name.Value = request.name;
-
-            var description = new SqlParameter("@Description", SqlDbType.NVarChar, 200);
-            description.Value = request.description;
-
-            var splist = new List<SqlParameter>();
-            splist.Add(code);
-            splist.Add(name);
-            splist.Add(description);
-
-            var sqlstr = "INSERT INTO T_interface(Code,Name,Description,CreatedAt) VALUES(@Code,@Name,@Description,GETDATE());SELECT @@IDENTITY;";
-            var obj = DataHelper.ExecuteScalar(sqlstr, splist.ToArray());
-            var id = Convert.ToDouble(obj);
-            if (id > 0)
+            var entity = new T_interface
             {
-                return new H10002Response
-                {
-                    error = 0,
-                    id = id > Int64.MaxValue ? Int64.MaxValue : Convert.ToInt64(id)
-                };
-            }
+                Code = request.code,
+                CreatedAt = DateTime.Now,
+                Description = request.description,
+                Name = request.name
+            };
 
-            return new HBaseResponse();
+            QueryHelper.Save<T_interface>(entity);
+            return new H10001Response
+            {
+                error = 0
+            };
         }
 
         /// <summary>
@@ -188,35 +159,21 @@ namespace Agile.Helpers.API
                 };
             }
 
-            var id = new SqlParameter("@Id", SqlDbType.Int, 11);
-            id.Value = request.id;
-
-            var code = new SqlParameter("@Code", SqlDbType.NVarChar, 50);
-            code.Value = request.code;
-
-            var name = new SqlParameter("@Name", SqlDbType.NVarChar, 50);
-            name.Value = request.name;
-
-            var description = new SqlParameter("@Description", SqlDbType.NVarChar, 200);
-            description.Value = request.description;
-
-            var splist = new List<SqlParameter>();
-            splist.Add(id);
-            splist.Add(code);
-            splist.Add(name);
-            splist.Add(description);
-
-            var sqlstr = "UPDATE T_interface SET Code=@Code,Name=@Name,Description=@Description WHERE Id=@Id;";
-            var rows = DataHelper.ExecuteNonQuery(sqlstr, splist.ToArray());
-            if (rows > 0)
+            var entity = new T_interface
             {
-                return new H10003Response
-                {
-                    error = 0
-                };
-            }
+                Code = request.code,
+                Description = request.description,
+                Name = request.name
+            };
 
-            return new HBaseResponse();
+            var options = new UpdateOptions();
+            options.Where<T_interface>(w => w.Code == request.code);
+
+            QueryHelper.Update<T_interface>(entity, options);
+            return new H10003Response
+            {
+                error = 0
+            };
         }
 
         /// <summary>
@@ -235,29 +192,34 @@ namespace Agile.Helpers.API
                 };
             }
 
-            var splist = new List<SqlParameter>();
-            var sqlstr = "SELECT * FROM T_interface WHERE 1=1 ";
+            var options = new TopQueryOptions
+            {
+                TopNum = 10
+            };
+
+            if (!string.IsNullOrEmpty(request.code))
+            {
+                options.Where<T_interface>(w => w.Code == request.code);
+            }
+
             if (request.id.HasValue)
             {
-                var id = new SqlParameter("@id", SqlDbType.Int, 11);
-                id.Value = request.id.Value;
-                splist.Add(id);
-                sqlstr += " AND id=@id ";
+                var id = request.id.Value;
+                options.Where<T_interface>(w => w.Id == id);
             }
 
-            if (!String.IsNullOrEmpty(request.code))
-            {
-                var code = new SqlParameter("@code", SqlDbType.NVarChar, 50);
-                code.Value = request.code;
-                splist.Add(code);
-                sqlstr += " AND code=@code ";
-            }
-
-            var list = DataHelper.ExecuteList<H10004ResponseListItem>(sqlstr, splist.ToArray());
+            var list = QueryHelper.GetList<T_interface>(options);
             return new H10004Response
             {
                 error = 0,
-                data = list
+                data = list.Select(o => new H10004ResponseListItem
+                {
+                    code = o.Code,
+                    createdat = o.CreatedAt,
+                    description = o.Description,
+                    id = o.Id,
+                    name = o.Name
+                }).ToList()
             };
         }
 

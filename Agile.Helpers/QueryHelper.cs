@@ -44,18 +44,10 @@ namespace Agile.Helpers
             parameterstr = parameterstr.TrimEnd(new char[] { ',' });
 
             var sb = new StringBuilder();
-            sb.AppendFormat(" INSERT INTO {0}({1}) VALUES({2});SELECT @@IDENTITY;", ttype.Name, fieldstr, parameterstr);
+            sb.AppendFormat(" INSERT INTO {0}({1}) VALUES({2});", ttype.Name, fieldstr, parameterstr);
 
             var sqlstr = sb.ToString();
-
-            try
-            {
-                DataHelper.ExecuteScalar(sqlstr, parameters.ToArray());
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-            }
+            DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
         }
 
         public static void Update<T>(T obj, UpdateOptions options)
@@ -107,14 +99,7 @@ namespace Agile.Helpers
                 return;
             }
 
-            try
-            {
-                DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-            }
+            DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
         }
 
         public static void Update<T>(T obj)
@@ -167,17 +152,10 @@ namespace Agile.Helpers
                 return;
             }
 
-            try
-            {
-                DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-            }
+            DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
         }
 
-        public static int Delete<T>(T obj)
+        public static void Delete<T>(T obj)
         {
             var ttype = typeof(T);
             var idproperty = default(PropertyInfo);
@@ -216,21 +194,13 @@ namespace Agile.Helpers
             var sqlstr = sb.ToString();
             if (!sqlstr.Contains("WHERE"))
             {
-                return 0;
+                return;
             }
 
-            try
-            {
-                return DataHelper.ExecuteNonQuery(sqlstr);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-                return 0;
-            }
+            DataHelper.ExecuteNonQuery(sqlstr);
         }
 
-        public static int Delete<T>(DeleteOptions options)
+        public static void Delete<T>(DeleteOptions options)
         {
             var ttype = typeof(T);
             var sb = new StringBuilder();
@@ -248,18 +218,10 @@ namespace Agile.Helpers
             var sqlstr = sb.ToString();
             if (!sqlstr.Contains("WHERE"))
             {
-                return 0;
+                return;
             }
 
-            try
-            {
-                return DataHelper.ExecuteNonQuery(sqlstr);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-                return 0;
-            }
+            DataHelper.ExecuteNonQuery(sqlstr);
         }
 
         public static List<T> GetList<T>(TopQueryOptions options)

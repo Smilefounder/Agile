@@ -143,6 +143,7 @@
     <Compile Include="ViewModels\Home\FeedbackVM.cs" />
     <Compile Include="ViewModels\Home\IndexVM.cs" />
     <Compile Include="ViewModels\Home\LyricResultVM.cs" />
+    <Compile Include="ViewModels\Home\MeVM.cs" />
     <Compile Include="ViewModels\Home\ScoreListItemVM.cs" />
     <Compile Include="ViewModels\Home\VocabularyVm.cs" />
     <Compile Include="ViewModels\User\ScoreListItemVM.cs" />
@@ -160,6 +161,7 @@
     <Content Include="Assets\icon_nav_cell.png" />
     <Content Include="Assets\icon_nav_search_bar.png" />
     <Content Include="Assets\icon_nav_tab.png" />
+    <Content Include="Assets\jweixin-1.0.0.js" />
     <Content Include="Assets\md5.js" />
     <Content Include="Assets\sha1.js" />
     <Content Include="Assets\weui.css" />
@@ -280,7 +282,7 @@
     <Content Include="Views\Home\SceneVocabulary.cshtml" />
     <Content Include="Views\User\ScoreList.cshtml" />
     <Content Include="Views\Home\CanWord.cshtml" />
-    <Content Include="Views\Home\Me_Loged.cshtml" />
+    <Content Include="Views\Home\CanTerm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

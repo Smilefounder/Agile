@@ -45,7 +45,11 @@
   <ItemGroup>
     <Compile Include="Can_feedback.cs" />
     <Compile Include="Can_noresult.cs" />
+    <Compile Include="Can_scene.cs" />
+    <Compile Include="Can_scenewordrelation.cs" />
     <Compile Include="Can_score.cs" />
+    <Compile Include="Can_testitem.cs" />
+    <Compile Include="Can_testoption.cs" />
     <Compile Include="Can_vocabulary.cs" />
     <Compile Include="Can_word.cs" />
     <Compile Include="LYN_archive.cs" />
@@ -53,10 +57,16 @@
     <Compile Include="NASA_img.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="T_base.cs" />
+    <Compile Include="T_blacklist.cs" />
     <Compile Include="T_interface.cs" />
+    <Compile Include="T_permission.cs" />
+    <Compile Include="T_role.cs" />
+    <Compile Include="T_rolepermissionrelation.cs" />
     <Compile Include="T_token.cs" />
     <Compile Include="T_user.cs" />
+    <Compile Include="T_userrolerelation.cs" />
     <Compile Include="T_visit.cs" />
+    <Compile Include="T_whitelist.cs" />
     <Compile Include="UME_app.cs" />
   </ItemGroup>
   <ItemGroup>

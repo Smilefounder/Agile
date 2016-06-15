@@ -224,6 +224,18 @@ namespace Agile.Helpers
             DataHelper.ExecuteNonQuery(sqlstr);
         }
 
+        public static List<T> GetList<T>(QueryOptions options)
+        {
+            return GetList<T>(new TopQueryOptions
+            {
+                OrderByAscExpList = options.OrderByAscExpList,
+                OrderByDescExpList = options.OrderByDescExpList,
+                SelectExp = options.SelectExp,
+                TopNum = null,
+                WhereExpList = options.WhereExpList
+            });
+        }
+
         public static List<T> GetList<T>(TopQueryOptions options)
         {
             var ttype = typeof(T);
@@ -515,7 +527,7 @@ namespace Agile.Helpers
     {
         public Expression SelectExp { get; set; }
 
-        public void Select<T>(Expression<Func<T,object>> exp)
+        public void Select<T>(Expression<Func<T, object>> exp)
         {
             SelectExp = exp;
         }

@@ -1,0 +1,8 @@
+﻿2016-06-16 00:18:10
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 cantonesedict.uimoe.com.Controllers.HomeController.GetPermissionListUseThread(Object state) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\cantonesedict.uimoe.com\Controllers\HomeController.cs:行号 706
+
+2016-06-16 00:20:56
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 cantonesedict.uimoe.com.Controllers.HomeController.GetPermissionListUseThread(Object state) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\cantonesedict.uimoe.com\Controllers\HomeController.cs:行号 706
+

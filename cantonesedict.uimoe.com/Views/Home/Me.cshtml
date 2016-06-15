@@ -1,16 +1,57 @@
-﻿@{
+﻿@model cantonesedict.uimoe.com.ViewModels.Home.MeVM
+@{
     Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
 }
 
 <div class="weui_cells weui_cells_access">
     <a href="@Url.Content("~/Home/Login")" class="weui_cell">
         <div class="weui_cell_bd weui_cell_primary">
-            <p>登录</p>
+            <p>@(String.IsNullOrEmpty(Model.UserName) ? "登录" : Model.UserName)</p>
+        </div>
+        <div class="weui_cell_ft">@(String.IsNullOrEmpty(Model.UserName) ? "" : "切换账号")</div>
+    </a>
+</div>
+
+<div class="weui_cells weui_cells_access">
+    <a href="@Url.Content("~/User/ScoreList")" class="weui_cell">
+        <div class="weui_cell_bd weui_cell_primary">
+            <p>我的积分</p>
+        </div>
+        <div class="weui_cell_ft">
+        </div>
+    </a>
+    <a href="@Url.Content("~/User/ScoreList")" class="weui_cell">
+        <div class="weui_cell_bd weui_cell_primary">
+            <p>我的反馈</p>
+        </div>
+        <div class="weui_cell_ft">
+        </div>
+    </a>
+    <a href="@Url.Content("~/User/ScoreList")" class="weui_cell">
+        <div class="weui_cell_bd weui_cell_primary">
+            <p>我的计划</p>
         </div>
         <div class="weui_cell_ft">
         </div>
     </a>
 </div>
+
+
+@if (Model.PermissionList.Count > 0)
+{
+    <div class="weui_cells weui_cells_access">
+        @foreach (var permission in Model.PermissionList)
+        {
+            <a href="@Url.Content("~"+permission.RawUrl)" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>@permission.Name</p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+        }
+    </div>
+}
 
 <script type="text/javascript">
     window.onload = function () {

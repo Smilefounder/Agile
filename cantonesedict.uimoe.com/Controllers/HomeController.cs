@@ -210,44 +210,6 @@ namespace cantonesedict.uimoe.com.Controllers
             return View();
         }
 
-        public ActionResult Scene()
-        {
-            try
-            {
-                var responsebase = LogicHelper.H10037(ReflectHelper.ParseFromRequest<H10037Request>());
-                var response = responsebase as H10037Response;
-                if (response != null && response.error == 0)
-                {
-                    return View(response.data);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-            }
-
-            return View(new List<H10037ResponseListItem>());
-        }
-
-        public ActionResult SceneVocabulary()
-        {
-            try
-            {
-                var responsebase = LogicHelper.H10038(ReflectHelper.ParseFromRequest<H10038Request>());
-                var response = responsebase as H10038Response;
-                if (response != null && response.error == 0)
-                {
-                    return View(response.data.RecordList);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-            }
-
-            return View(new List<H10038ResponseListItem>());
-        }
-
         public ActionResult Term()
         {
             int skip;
@@ -298,46 +260,20 @@ namespace cantonesedict.uimoe.com.Controllers
             return View(vm);
         }
 
-        public ActionResult Sentence()
+        public ActionResult CanTerm()
         {
-            int skip;
-            if (int.TryParse(Request.Params["skip"], out skip) == false)
-            {
-                skip = 0;
-            }
+            return View();
+        }
 
-            int take;
-            if (int.TryParse(Request.Params["take"], out take) == false)
-            {
-                take = 10;
-            }
-
-            var vm = new VocabularyVM
-            {
-                Skip = skip,
-                Take = take,
-                Data = new List<VocabularyListItemVM>()
-            };
-
+        public ActionResult Scene()
+        {
             try
             {
-                var responsebase = LogicHelper.H10018(new H10018Request
+                var responsebase = LogicHelper.H10037(ReflectHelper.ParseFromRequest<H10037Request>());
+                var response = responsebase as H10037Response;
+                if (response != null && response.error == 0)
                 {
-                    skip = skip,
-                    take = take,
-                    texttype = (int)H10018RequestTextTypeEnum.Sentence
-                });
-
-                var response = responsebase as H10018Response;
-                if (response != null && response.data != null)
-                {
-                    vm.Data = response.data.Select(o => new VocabularyListItemVM
-                    {
-                        CanPronounce = o.canpronounce,
-                        CanText = o.cantext,
-                        CanVoice = o.canvoice,
-                        ChnText = o.chntext
-                    }).ToList();
+                    return View(response.data);
                 }
             }
             catch (Exception ex)
@@ -345,7 +281,26 @@ namespace cantonesedict.uimoe.com.Controllers
                 LogHelper.Write(ex.ToString());
             }
 
-            return View(vm);
+            return View(new List<H10037ResponseListItem>());
+        }
+
+        public ActionResult SceneVocabulary()
+        {
+            try
+            {
+                var responsebase = LogicHelper.H10038(ReflectHelper.ParseFromRequest<H10038Request>());
+                var response = responsebase as H10038Response;
+                if (response != null && response.error == 0)
+                {
+                    return View(response.data.RecordList);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(new List<H10038ResponseListItem>());
         }
 
         public ActionResult Initials()
@@ -402,13 +357,14 @@ namespace cantonesedict.uimoe.com.Controllers
         public ActionResult Me()
         {
             var username = Session["username"] as string;
-            if (String.IsNullOrEmpty(username))
+            var permissions = Session["permissions"] as List<UserPermissionVM>;
+            var vm = new MeVM
             {
-                return View();
-            }
+                UserName = username,
+                PermissionList = permissions ?? new List<UserPermissionVM>()
+            };
 
-            ViewBag.username = username;
-            return View("~/Views/Home/Me_Loged.cshtml");
+            return View(vm);
         }
 
         [HttpPost]
@@ -708,6 +664,9 @@ namespace cantonesedict.uimoe.com.Controllers
                     Session["username"] = request.username;
                     Session["userid"] = response.userid.ToString();
 
+                    //登录成功获取权限
+                    CachePermissionListAfterLogin(response.userid);
+
                     //登录成功获得积分
                     ThreadPool.QueueUserWorkItem(new WaitCallback(MakeScoreUseThread), new H10040Request
                     {
@@ -725,6 +684,31 @@ namespace cantonesedict.uimoe.com.Controllers
             }
 
             return Json(new { error = 1, message = "操作失败，请稍后再试" });
+        }
+
+        /// <summary>
+        /// 登录成功获取权限
+        /// </summary>
+        private void CachePermissionListAfterLogin(int userid)
+        {
+            var responsebase = LogicHelper.H10044(new H10044Request
+            {
+                userid = userid,
+                domain = (int)H10044RequestDomainEnum.cantonesedict
+            });
+
+            var response = responsebase as H10044Response;
+            if (response != null &&
+                response.error == 0 &&
+                response.data != null &&
+                response.data.Any())
+            {
+                Session["permissions"] = response.data.Select(o => new UserPermissionVM
+                {
+                    Name = o.name,
+                    RawUrl = o.rawurl
+                }).ToList();
+            }
         }
 
         [HttpGet]

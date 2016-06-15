@@ -2012,6 +2012,11 @@ namespace Agile.Helpers.API
             };
         }
 
+        /// <summary>
+        /// 粤语词典 - 获取粤语常用字
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public static HBaseResponse H10043(H10043Request request)
         {
             var options = new PagedQueryOptions
@@ -2020,11 +2025,107 @@ namespace Agile.Helpers.API
                 PageSize = request.pagesize.GetValueOrDefault(10),
             };
 
-            var pagedlist = QueryHelper.GetPagedList<H10043ResponseListItem>(options);
+            var pagedlist = QueryHelper.GetPagedList<Can_word>(options);
             return new H10043Response
             {
                 error = 0,
-                data = pagedlist
+                data = new PagedListDto<H10043ResponseListItem>
+                {
+                    Page = pagedlist.Page,
+                    PageSize = pagedlist.PageSize,
+                    RecordCount = pagedlist.RecordCount,
+                    RecordList = pagedlist.RecordList.Select(o => new H10043ResponseListItem
+                    {
+                        canpronounce = o.CanPronounce,
+                        cantext = o.CanText,
+                        description = o.Description
+                    }).ToList()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 获取用户的权限列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static HBaseResponse H10044(H10044Request request)
+        {
+            var userid = request.userid.GetValueOrDefault(0);
+            if (userid == 0)
+            {
+                return new H10044Response
+                {
+                    error = 1,
+                    message = "userid必须填写"
+                };
+            }
+
+            var sqlstr = @"SELECT t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl FROM T_permission t1
+                           JOIN T_rolepermissionrelation t2 on t2.PermissionId = t1.Id
+                           JOIN T_role t3 on t3.Id = t2.RoleId
+                           JOIN T_userrolerelation t4 on t4.RoleId = t3.Id
+                           JOIN T_user t5 on t5.Id = t4.UserId
+                           WHERE t5.Id=" + userid;
+
+            if (request.domain.HasValue)
+            {
+                sqlstr += String.Format(" AND t1.Domain={0}", request.domain.Value);
+            }
+
+            if (!String.IsNullOrEmpty(request.area))
+            {
+                sqlstr += String.Format(" AND t1.Area={0}", request.area);
+            }
+
+            if (!String.IsNullOrEmpty(request.controller))
+            {
+                sqlstr += String.Format(" AND t1.Controller={0}", request.controller);
+            }
+
+            if (!String.IsNullOrEmpty(request.action))
+            {
+                sqlstr += String.Format(" AND t1.Action={0}", request.action);
+            }
+
+            var list = DataHelper.ExecuteList<H10044ResponseListItem>(sqlstr);
+
+            var sqlstr2 = @"SELECT t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl from T_blacklist t2
+                            JOIN T_permission t1 on t1.Id = t2.PermissionId
+                            JOIN T_user t3 on t3.Id = t2.UserId
+                            WHERE t3.Id=" + userid;
+
+            var blacklist = DataHelper.ExecuteList<H10044ResponseListItem>(sqlstr2);
+
+            var sqlstr3 = @"SELECT t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl from T_whitelist t2
+                            JOIN T_permission t1 on t1.Id = t2.PermissionId
+                            JOIN T_user t3 on t3.Id = t2.UserId
+                            WHERE t3.Id=" + userid;
+
+            var whitelist = DataHelper.ExecuteList<H10044ResponseListItem>(sqlstr3);
+
+            foreach (var item in whitelist)
+            {
+                list.Add(new H10044ResponseListItem
+                {
+                    name = item.name,
+                    rawurl = item.rawurl
+                });
+            }
+
+            for (var i = list.Count - 1; i >= 0; i--)
+            {
+                var permission = list[i];
+                if (blacklist.Any(a => a.domain == permission.domain && a.rawurl == permission.rawurl))
+                {
+                    list.Remove(permission);
+                }
+            }
+
+            return new H10044Response
+            {
+                error = 0,
+                data = list
             };
         }
     }

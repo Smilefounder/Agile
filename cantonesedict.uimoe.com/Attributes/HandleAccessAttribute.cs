@@ -22,6 +22,19 @@ namespace cantonesedict.uimoe.com.Attributes
                 var request = HttpContext.Current.Request;
                 ThreadPool.QueueUserWorkItem(new WaitCallback(CreateNewVisit), request);
             }
+
+            //贴有标签则不需要登录也可以访问
+            if (HasAttribute<FreeAccessAttribute>(filterContext))
+            {
+                return;
+            }
+
+            //否则转到登录页
+            var username = HttpContext.Current.Session["username"] as string;
+            if (String.IsNullOrEmpty(username))
+            {
+                filterContext.Result = new RedirectResult("~/Home/Login");
+            }
         }
 
         private void CreateNewVisit(object state)

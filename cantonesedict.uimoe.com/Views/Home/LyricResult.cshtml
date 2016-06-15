@@ -3,6 +3,16 @@
     Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
 }
 
+<style type="text/css">
+    .canlyric {
+        color: #555555;
+    }
+
+    .chnlyric {
+        color: #22b14c;
+    }
+</style>
+
 <div class="weui_cells_title" style="text-align:center;">
     <span>@Model.Title</span>&nbsp;-&nbsp;<span>@Model.Artists</span>
 </div>
@@ -29,11 +39,9 @@
             <a href="javascript:void(0)" class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>
-                        <div>@item.ChnText</div>
+                        <div class="chnlyric">@item.ChnText</div>
                         <div class="canlyric">@item.CanPronounce</div>
                     </p>
-                </div>
-                <div class="weui_cell_ft">
                 </div>
             </a>
         }

@@ -26,13 +26,13 @@ namespace Agile.Cache
                     continue;
                 }
 
-                var vstr = "#";
+                var vstr = chstr;
                 if (Instance.ContainsKey(chstr))
                 {
-                    vstr = Instance[chstr];
+                    vstr = Instance[chstr] + " ";
                 }
 
-                sb.AppendFormat("{0} ", vstr);
+                sb.AppendFormat("{0}", vstr);
             }
 
             return sb.ToString();

@@ -736,11 +736,6 @@ namespace Agile.Helpers.API
         public static HBaseResponse H10017(H10017Request request)
         {
             var sqlstr = "INSERT INTO CAN_feedback(ChnText,CanText,CreatedAt,CreatedBy) VALUES(N'" + request.chntext + "',N'" + request.cantext + "',GETDATE(),N'" + request.createdby + "')";
-            if (request.createdby == "reimu")
-            {
-                sqlstr = "INSERT INTO CAN_noresult(ChnText,CreatedAt) VALUES('" + request.chntext + "',GETDATE())";
-            }
-
             var rows = DataHelper.ExecuteNonQuery(sqlstr);
             if (rows > 0)
             {

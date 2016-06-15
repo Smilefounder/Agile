@@ -20,7 +20,8 @@
             <div class="weui_cell">
                 <div class="weui_cell_hd"><label class="weui_label">密码</label></div>
                 <div class="weui_cell_bd weui_cell_primary">
-                    <input type="password" class="weui_input" pattern="*" placeholder="密码" id="userpass" name="userpass">
+                    <input type="password" class="weui_input" pattern="*" placeholder="密码" id="userpass1">
+                    <input type="hidden" id="userpass" name="userpass" />
                 </div>
             </div>
             <div class="weui_cell">
@@ -39,6 +40,8 @@
     </div>
 </div>
 
+<script src="@Url.Content("~/Assets/sha1.js")"></script>
+<script src="@Url.Content("~/Assets/md5.js")"></script>
 <script type="text/javascript">
     window.onload = function () {
         showhighlight("appbaritem4");
@@ -69,7 +72,7 @@
             return;
         }
 
-        var userpass = $("#userpass").val();
+        var userpass = $("#userpass1").val();
         if (!userpass || userpass.length < 6 || userpass.length > 14) {
             weuialert("密码不能为空，且最少6位，最多14位");
             return;
@@ -81,6 +84,11 @@
             $("#userpass2").val("");
             return;
         }
+
+        var userpass2 = hex_md5(userpass);
+        var userpass3 = hex_sha1(userpass2);
+
+        $("#userpass").val(userpass3);
 
         var url = '@Url.Content("~/Home/Register")';
         $.ajax({

@@ -40,31 +40,31 @@
         var url = '@Url.Content("~/Home/GetLyricList")';
         $.post(url, { title: title, artists: artists }, function (response) {
             var html = '';
-            if (!response.result) {
+            if (!response.result || response.result.length == 0) {
                 html += '<a href="javascript:void(0);" class="weui_cell">';
-                html += '<div class="weui_cell_bd weui_cell_primary">';
-                html += '<p>';
-                html += '未找到相关记录';
-                html += '</p>';
-                html += '</div>';
-                html += '<div class="weui_cell_ft">';
-                html += '</div>';
+                html += '    <div class="weui_cell_bd weui_cell_primary">';
+                html += '        <p>未找到相关记录</p>';
+                html += '    </div>';
                 html += '</a>';
 
                 $("#lyriclistdiv").html(html).show();
                 return;
             }
 
+            html += '<a href="javascript:void(0);" class="weui_cell" style="color:#22b14c;">';
+            html += '    <div class="weui_cell_bd weui_cell_primary">';
+            html += '        <p>共找到' + response.result.length + '个结果，点击查看歌词详细</p>';
+            html += '    </div>';
+            html += '</a>';
+
             for (var i = 0; i < response.result.length; i++) {
                 var item = response.result[i];
                 html += '<a href="@Url.Content("~/Home/LyricResult?lrc=")' + encodeURI(item.lrc) + '&title=' + title + '&artist=' + artists + '" class="weui_cell">';
-                html += '<div class="weui_cell_bd weui_cell_primary">';
-                html += '<p>';
-                html += item.song;
-                html += '</p>';
-                html += '</div>';
-                html += '<div class="weui_cell_ft">';
-                html += '</div>';
+                html += '    <div class="weui_cell_bd weui_cell_primary">';
+                html += '        <p>' + (i + 1) + '. ' + item.song + '</p>';
+                html += '    </div>';
+                html += '    <div class="weui_cell_ft">';
+                html += '    </div>';
                 html += '</a>';
             }
 

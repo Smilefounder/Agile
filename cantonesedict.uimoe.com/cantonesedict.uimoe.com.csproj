@@ -133,6 +133,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\HandleAccessAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -144,6 +145,7 @@
     <Compile Include="ViewModels\Home\LyricResultVM.cs" />
     <Compile Include="ViewModels\Home\ScoreListItemVM.cs" />
     <Compile Include="ViewModels\Home\VocabularyVm.cs" />
+    <Compile Include="ViewModels\User\ScoreListItemVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\bootstrap-3.3.5-dist\css\bootstrap-theme.css" />
@@ -158,6 +160,8 @@
     <Content Include="Assets\icon_nav_cell.png" />
     <Content Include="Assets\icon_nav_search_bar.png" />
     <Content Include="Assets\icon_nav_tab.png" />
+    <Content Include="Assets\md5.js" />
+    <Content Include="Assets\sha1.js" />
     <Content Include="Assets\weui.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -274,7 +278,7 @@
     <Content Include="Views\Home\FinalsN.cshtml" />
     <Content Include="Views\Home\Scene.cshtml" />
     <Content Include="Views\Home\SceneVocabulary.cshtml" />
-    <Content Include="Views\Home\ScoreList.cshtml" />
+    <Content Include="Views\User\ScoreList.cshtml" />
     <Content Include="Views\Home\CanWord.cshtml" />
     <Content Include="Views\Home\Me_Loged.cshtml" />
   </ItemGroup>

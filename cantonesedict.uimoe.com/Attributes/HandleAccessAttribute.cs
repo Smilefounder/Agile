@@ -48,7 +48,15 @@ namespace cantonesedict.uimoe.com.Attributes
             var permission = userinfo.UserPermissions.Where(a => filterContext.HttpContext.Request.RawUrl.StartsWith(a.RawUrl)).FirstOrDefault();
             if (permission == null)
             {
-                filterContext.Result = new RedirectResult("~/Home/NotAllowed");
+                filterContext.Result = new JsonResult
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new
+                    {
+                        error = 1,
+                        message = "很抱歉，您没有权限执行此操作"
+                    }
+                };
                 return;
             }
         }

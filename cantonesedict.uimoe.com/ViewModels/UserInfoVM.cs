@@ -13,6 +13,8 @@ namespace cantonesedict.uimoe.com.ViewModels
 
     public class UserPermissionVM
     {
+        public int? HasMenu { get; set; }
+
         public string Name { get; set; }
 
         public string RawUrl { get; set; }

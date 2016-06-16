@@ -162,13 +162,13 @@ namespace cantonesedict.uimoe.com.Controllers
             {
                 var responsebase = LogicHelper.H10046(new H10046Request
                 {
-                    take=10,
-                    texttype=(int)H10018RequestTextTypeEnum.Character
+                    take = 10,
+                    texttype = (int)H10018RequestTextTypeEnum.Character
                 });
 
                 var response = responsebase as H10046Response;
-                if (response != null && 
-                    response.error==0 &&
+                if (response != null &&
+                    response.error == 0 &&
                     response.data != null &&
                     response.data.Any())
                 {
@@ -335,13 +335,28 @@ namespace cantonesedict.uimoe.com.Controllers
 
         public ActionResult Me()
         {
-            var userinfo = Session["userinfo"] as UserInfoVM;
-            if (userinfo == null)
+            var userinfo = new UserInfoVM
             {
-                userinfo = new UserInfoVM
+                UserPermissions = new List<UserPermissionVM>()
+            };
+
+            var userinfo2 = Session["userinfo"] as UserInfoVM;
+            if (userinfo2 != null)
+            {
+                userinfo.UserId = userinfo2.UserId;
+                userinfo.UserName = userinfo2.UserName;
+
+                if (userinfo2.UserPermissions != null &&
+                    userinfo2.UserPermissions.Any())
                 {
-                    UserPermissions = new List<UserPermissionVM>()
-                };
+                    foreach (var permission in userinfo2.UserPermissions)
+                    {
+                        if (permission.HasMenu.GetValueOrDefault(0) > 0)
+                        {
+                            userinfo.UserPermissions.Add(permission);
+                        }
+                    }
+                }
             }
 
             return View(userinfo);
@@ -667,7 +682,8 @@ namespace cantonesedict.uimoe.com.Controllers
                     userinfo.UserPermissions = response.data.Select(o => new UserPermissionVM
                     {
                         Name = o.name,
-                        RawUrl = o.rawurl
+                        RawUrl = o.rawurl,
+                        HasMenu = o.hasmenu
                     }).ToList();
                 }
             }

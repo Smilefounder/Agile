@@ -401,12 +401,22 @@ namespace Agile.Helpers.API
                 };
             }
 
-            if (user.status.GetValueOrDefault(0) == 1)
+            var userstatus = user.status.GetValueOrDefault(0);
+            if (userstatus == (int)H10047UserStatusEnum.Pending)
             {
                 return new H10009Response
                 {
                     error = 1,
                     message = "用户需要审核通过后才可以登录"
+                };
+            }
+
+            if (userstatus == (int)H10047UserStatusEnum.Forbidden)
+            {
+                return new H10009Response
+                {
+                    error = 1,
+                    message = "用户被禁止，无法登录"
                 };
             }
 
@@ -791,9 +801,12 @@ namespace Agile.Helpers.API
             return new H10018Response
             {
                 error = 0,
-                skip = skip,
-                take = take,
-                data = recordlist ?? new List<H10018ResponseListItem>()
+                data = new SkipTakeListDto<H10018ResponseListItem>
+                {
+                    Skip = skip,
+                    Take = take,
+                    RecordList = recordlist
+                }
             };
         }
 
@@ -2062,7 +2075,7 @@ namespace Agile.Helpers.API
                 };
             }
 
-            var sqlstr = @"SELECT t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl FROM T_permission t1
+            var sqlstr = @"SELECT t1.HasMenu, t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl FROM T_permission t1
                            JOIN T_rolepermissionrelation t2 on t2.PermissionId = t1.Id
                            JOIN T_role t3 on t3.Id = t2.RoleId
                            JOIN T_userrolerelation t4 on t4.RoleId = t3.Id
@@ -2091,14 +2104,14 @@ namespace Agile.Helpers.API
 
             var list = DataHelper.ExecuteList<H10044ResponseListItem>(sqlstr);
 
-            var sqlstr2 = @"SELECT t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl from T_blacklist t2
+            var sqlstr2 = @"SELECT t1.HasMenu, t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl from T_blacklist t2
                             JOIN T_permission t1 on t1.Id = t2.PermissionId
                             JOIN T_user t3 on t3.Id = t2.UserId
                             WHERE t3.Id=" + userid;
 
             var blacklist = DataHelper.ExecuteList<H10044ResponseListItem>(sqlstr2);
 
-            var sqlstr3 = @"SELECT t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl from T_whitelist t2
+            var sqlstr3 = @"SELECT t1.HasMenu, t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl from T_whitelist t2
                             JOIN T_permission t1 on t1.Id = t2.PermissionId
                             JOIN T_user t3 on t3.Id = t2.UserId
                             WHERE t3.Id=" + userid;
@@ -2109,6 +2122,7 @@ namespace Agile.Helpers.API
             {
                 list.Add(new H10044ResponseListItem
                 {
+                    hasmenu = item.hasmenu,
                     name = item.name,
                     rawurl = item.rawurl
                 });
@@ -2210,6 +2224,91 @@ namespace Agile.Helpers.API
                     canvoice = o.CanVoice,
                     chntext = o.ChnText
                 }).ToList()
+            };
+        }
+
+        /// <summary>
+        /// 获取用户列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static HBaseResponse H10047(H10047Request request)
+        {
+            var options = new PagedQueryOptions
+            {
+                Page = request.page.GetValueOrDefault(1),
+                PageSize = request.pagesize.GetValueOrDefault(10)
+            };
+
+            var pagedlist = QueryHelper.GetPagedList<T_user>(options);
+            return new H10047Response
+            {
+                error = 0,
+                data = new PagedListDto<H10047ResponseListItem>
+                {
+                    Page = pagedlist.Page,
+                    PageSize = pagedlist.PageSize,
+                    RecordCount = pagedlist.RecordCount,
+                    RecordList = pagedlist.RecordList.Select(o => new H10047ResponseListItem
+                    {
+                        status = o.Status.GetValueOrDefault(0),
+                        username = o.UserName
+                    }).ToList()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 通过一个用户
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static HBaseResponse H10048(H10048Request request)
+        {
+            if (String.IsNullOrEmpty(request.username))
+            {
+                return new H10048Response
+                {
+                    error = 1,
+                    message = "username不能为空"
+                };
+            }
+
+            var sqlstr = "UPDATE T_user SET Status=0 WHERE UserName=@UserName";
+            var sp = new SqlParameter("@UserName", SqlDbType.NVarChar, 50);
+            sp.Value = request.username;
+
+            DataHelper.ExecuteNonQuery(sqlstr, sp);
+            return new H10048Response
+            {
+                error = 0
+            };
+        }
+
+        /// <summary>
+        /// 禁止一个用户
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static HBaseResponse H10049(H10049Request request)
+        {
+            if (String.IsNullOrEmpty(request.username))
+            {
+                return new H10049Response
+                {
+                    error = 1,
+                    message = "username不能为空"
+                };
+            }
+
+            var sqlstr = "UPDATE T_user SET Status=2 WHERE UserName=@UserName";
+            var sp = new SqlParameter("@UserName", SqlDbType.NVarChar, 50);
+            sp.Value = request.username;
+
+            DataHelper.ExecuteNonQuery(sqlstr, sp);
+            return new H10049Response
+            {
+                error = 0
             };
         }
     }

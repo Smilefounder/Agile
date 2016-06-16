@@ -1,56 +1,61 @@
-﻿@model cantonesedict.uimoe.com.ViewModels.Home.VocabularyVM
+﻿@model cantonesedict.uimoe.com.ViewModels.User.VocabularyListVM
 @{
     Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
 }
 
-<div class="weui_tab_bd">
-    <div class="weui_btn_area">
-        <a href="@Url.Content("~/Home/Word?skip=" + (Model.Skip + Model.Take) + "&take=" + Model.Take)" class="weui_btn weui_btn_primary">换一批</a>
-    </div>
-    <div class="weui_cells weui_cells_access">
-        @if (Model.Data == null || Model.Data.Count == 0)
-        {
-            <a href="javascript:void(0)" class="weui_cell">
+<div class="hd">
+    <h1 class="page_title">词库管理</h1>
+    <p class="page_desc">普通话，粤语，注音</p>
+</div>
+<div class="bd">
+    @if (Model.data.RecordList.Any())
+    {
+        <div class="weui_cells weui_cells_access">
+            <a href="javascript:void(0);" class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
-                    <p>没有找到相关记录哦</p>
+                    <p>已加载<span>@(Model.data.Skip + Model.data.Take)</span>条数据，每次加载<span>@Model.data.Take</span>条</p>
                 </div>
-                <div class="weui_cell_ft">
-                </div>
+                <div class="weui_cell_ft"></div>
             </a>
-        }
-        else
+            <a href="@Url.Content("~/User/VocabularyList?skip="+(Model.data.Skip+ Model.data.Take)+"&take="+Model.data.Take)" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>加载更多</p>
+                </div>
+                <div class="weui_cell_ft"></div>
+            </a>
+        </div>
+    }
+    <div class="weui_cells weui_cells_access">
+        @if (Model.data.RecordList.Any())
         {
-            foreach (var item in Model.Data)
+            foreach (var item in Model.data.RecordList)
             {
-                <a href="javascript:void(0)" class="weui_cell">
+                <a href="javascript:void(0);" class="weui_cell">
                     <div class="weui_cell_bd weui_cell_primary">
                         <p>
-                            <div>【普】<span>@item.ChnText</span></div>
-                            <div class="newline5"></div>
-                            <div>【粤】<span>@item.CanText</span></div>
-                            <div class="newline5"></div>
-                            <div>【音】<span>@item.CanPronounce</span></div>
-                            <div class="newline"></div>
-                            <div>
-                                <audio src="http://yueyv.cn/voice/@(item.CanVoice)" controls="controls">你的浏览器不支持播放此音频</audio>
-                            </div>
+                            <div style="color:#22b14c;">[普]<span>@item.ChnText</span></div>
+                            <div style="color:#ed1c24;">[粤]<span>@item.CanText</span></div>
+                            <div style="color:#00a2e8;">[音]<span>@item.CanPronounce</span></div>
                         </p>
                     </div>
-                    <div class="weui_cell_ft">
-                    </div>
+                    <div class="weui_cell_ft"></div>
                 </a>
             }
         }
-    </div>
-    <div class="weui_btn_area">
-        <a href="@Url.Content("~/Home/Word?skip=" + (Model.Skip + Model.Take) + "&take=" + Model.Take)" class="weui_btn weui_btn_primary">换一批</a>
+        else
+        {
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>很抱歉，没有找到相关记录</p>
+                </div>
+                <div class="weui_cell_ft"></div>
+            </a>
+        }
     </div>
 </div>
 
-
-
 <script type="text/javascript">
     window.onload = function () {
-        showhighlight("appbaritem2");
+        showhighlight("appbaritem4");
     }
 </script>

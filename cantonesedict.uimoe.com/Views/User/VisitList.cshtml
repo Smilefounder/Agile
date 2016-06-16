@@ -8,38 +8,70 @@
     <p class="page_desc">时间，页面，用户代理，IP地址</p>
 </div>
 <div class="bd">
+    @if (Model.data.RecordList.Any())
+    {
+        <div class="weui_cells weui_cells_access">
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>第<span>@Model.data.Page</span>/<span>@Model.data.PageCount</span>页，共<span>@Model.data.RecordCount</span>条记录</p>
+                </div>
+                <div class="weui_cell_ft"></div>
+            </a>
+
+            @if (Model.data.Page > 1)
+            {
+                <a href="@Url.Content("~/User/VisitList?page="+(Model.data.Page-1)+"&pagesize="+Model.data.PageSize)" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>上一页</p>
+                    </div>
+                    <div class="weui_cell_ft"></div>
+                </a>
+            }
+
+            @if (Model.data.Page < Model.data.PageCount)
+            {
+                <a href="@Url.Content("~/User/VisitList?page="+(Model.data.Page+1)+"&pagesize="+Model.data.PageSize)" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>下一页</p>
+                    </div>
+                    <div class="weui_cell_ft"></div>
+                </a>
+            }
+        </div>
+    }
     <div class="weui_cells weui_cells_access">
         @if (Model.data.RecordList.Any())
         {
             foreach (var item in Model.data.RecordList)
             {
-                <a href="javascript:void(0);" class="weui_cell">
-                    <div class="weui_cell_bd weui_cell_primary">
-                        <p>
-                            <div style="color:#22b14c;">@item.createdatstr</div>
-                            <div style="color:#ed1c24;">@item.rawurl</div>
-                            <div>@item.useragent</div>
-                            <div>@item.ipaddress</div>
-                        </p>
-                    </div>
-                    <div class="weui_cell_ft"></div>
-                </a>
+        <a href="javascript:void(0);" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>
+                    <div style="color:#22b14c;">@item.createdatstr</div>
+                    <div style="color:#ed1c24;">@item.rawurl</div>
+                    <div>@item.useragent</div>
+                    <div>@item.ipaddress</div>
+                </p>
+            </div>
+            <div class="weui_cell_ft"></div>
+        </a>
             }
         }
         else
         {
-            <a href="javascript:void(0);" class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>没有访问记录</p>
-                </div>
-                <div class="weui_cell_ft"></div>
-            </a>
+        <a href="javascript:void(0);" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>很抱歉，没有找到相关记录</p>
+            </div>
+            <div class="weui_cell_ft"></div>
+        </a>
         }
     </div>
-
-    @if (Model.data.RecordList.Any())
-    {
-
-    }
-
 </div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem4");
+    }
+</script>
+

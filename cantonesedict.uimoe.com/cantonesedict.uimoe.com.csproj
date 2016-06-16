@@ -143,11 +143,13 @@
     <Compile Include="ViewModels\Home\IndexVM.cs" />
     <Compile Include="ViewModels\Home\LyricResultVM.cs" />
     <Compile Include="ViewModels\Home\ScoreListItemVM.cs" />
-    <Compile Include="ViewModels\Home\VocabularyVm.cs" />
+    <Compile Include="ViewModels\Home\VocabularyVM.cs" />
     <Compile Include="ViewModels\UserInfoVM.cs" />
     <Compile Include="ViewModels\User\FeedbackListVM.cs" />
     <Compile Include="ViewModels\User\ScoreListItemVM.cs" />
+    <Compile Include="ViewModels\User\UserListVM.cs" />
     <Compile Include="ViewModels\User\VisitListVM.cs" />
+    <Compile Include="ViewModels\User\VocabularyListVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\bootstrap-3.3.5-dist\css\bootstrap-theme.css" />

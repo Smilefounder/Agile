@@ -1,5 +1,157 @@
-﻿@{
-    ViewBag.Title = "UserList";
+﻿@model cantonesedict.uimoe.com.ViewModels.User.UserListVM
+@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
 }
 
-<h2>UserList</h2>
+<div class="hd">
+    <h1 class="page_title">用户管理</h1>
+    <p class="page_desc">用户名，状态</p>
+</div>
+<div class="bd">
+    @if (Model.data.RecordList.Any())
+    {
+        <div class="weui_cells weui_cells_access">
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>第<span>@Model.data.Page</span>/<span>@Model.data.PageCount</span>页，共<span>@Model.data.RecordCount</span>条记录</p>
+                </div>
+                <div class="weui_cell_ft"></div>
+            </a>
+
+            @if (Model.data.Page > 1)
+            {
+                <a href="@Url.Content("~/User/UserList?page="+(Model.data.Page-1)+"&pagesize="+Model.data.PageSize)" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>上一页</p>
+                    </div>
+                    <div class="weui_cell_ft"></div>
+                </a>
+            }
+
+            @if (Model.data.Page < Model.data.PageCount)
+            {
+                <a href="@Url.Content("~/User/UserList?page="+(Model.data.Page+1)+"&pagesize="+Model.data.PageSize)" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>下一页</p>
+                    </div>
+                    <div class="weui_cell_ft"></div>
+                </a>
+            }
+        </div>
+    }
+    <div class="weui_cells weui_cells_access">
+        @if (Model.data.RecordList.Any())
+        {
+            foreach (var item in Model.data.RecordList)
+            {
+                <div href="javascript:void(0);" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>
+                            <div style="color:#22b14c;">@item.UserName</div>
+                            @if (item.Status.GetValueOrDefault(0) == (int)Agile.Dtos.API.H10047UserStatusEnum.Normal)
+                            {
+                                <div>
+                                    <a href="javascript:void(0);" onclick="view.forbid(this,'@item.UserName')">封禁</a>
+                                </div>
+                            }
+
+                            @if (item.Status.GetValueOrDefault(0) == (int)Agile.Dtos.API.H10047UserStatusEnum.Pending)
+                            {
+                                <div>
+                                    <span style="color:#ed1c24;">@item.StatusDisplay</span>&nbsp;
+                                    <a href="javascript:void(0);" onclick="view.pass(this,'@item.UserName')">通过</a>&nbsp;|&nbsp;
+                                    <a href="javascript:void(0);" onclick="view.forbid(this,'@item.UserName')">禁止</a>
+                                </div>
+                            }
+
+                            @if (item.Status.GetValueOrDefault(0) == (int)Agile.Dtos.API.H10047UserStatusEnum.Forbidden)
+                            {
+                                <div>
+                                    <span style="color:#ed1c24;">@item.StatusDisplay</span>&nbsp;
+                                    <a href="javascript:void(0);" onclick="view.pass(this,'@item.UserName')">解禁</a>
+                                </div>
+                            }
+                        </p>
+                    </div>
+                    <div class="weui_cell_ft"></div>
+                </div>
+            }
+        }
+        else
+        {
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>很抱歉，没有找到相关记录</p>
+                </div>
+                <div class="weui_cell_ft"></div>
+            </a>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem4");
+    }
+
+    var view = {
+        pass: function (sender, username) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/User/PassUser")',
+                data: { username: username },
+                complete: function (xhr, status) {
+                    var response = {};
+
+                    try {
+                        response = JSON.parse(xhr.responseText);
+                    }
+                    catch (e){
+
+                    }
+
+                    if (!response || response.error != 0) {
+                        var message = "操作失败，请稍后重试";
+                        if (response.message) {
+                            message = response.message;
+                        }
+
+                        weuialert(message);
+                        return;
+                    }
+
+                    $(sender).parent().html("");
+                }
+            });
+        },
+        forbid: function (sender, username) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/User/ForbidUser")',
+                data: { username: username },
+                complete: function (xhr, status) {
+                    var response = {};
+
+                    try {
+                        response = JSON.parse(xhr.responseText);
+                    }
+                    catch (e) {
+
+                    }
+
+                    if (!response || response.error != 0) {
+                        var message = "操作失败，请稍后重试";
+                        if (response.message) {
+                            message = response.message;
+                        }
+
+                        weuialert(message);
+                        return;
+                    }
+
+                    $(sender).parent().html("<span>已禁止用户</span>");
+                }
+            });
+        }
+    };
+</script>

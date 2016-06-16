@@ -23,5 +23,8 @@ namespace Agile.Models
 
         [TableField(MaxLength = 50)]
         public string Action { get; set; }
+
+        [TableField]
+        public int? HasMenu { get; set; }
     }
 }

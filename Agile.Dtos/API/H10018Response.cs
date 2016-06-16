@@ -8,11 +8,7 @@ namespace Agile.Dtos.API
 {
     public class H10018Response : HBaseResponse
     {
-        public int skip { get; set; }
-
-        public int take { get; set; }
-
-        public List<H10018ResponseListItem> data { get; set; }
+        public SkipTakeListDto<H10018ResponseListItem> data { get; set; }
     }
 
     public class H10018ResponseListItem

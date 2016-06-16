@@ -137,6 +137,12 @@
     <Compile Include="API\H10045Response.cs" />
     <Compile Include="API\H10046Request.cs" />
     <Compile Include="API\H10046Response.cs" />
+    <Compile Include="API\H10047Request.cs" />
+    <Compile Include="API\H10047Response.cs" />
+    <Compile Include="API\H10048Request.cs" />
+    <Compile Include="API\H10048Response.cs" />
+    <Compile Include="API\H10049Request.cs" />
+    <Compile Include="API\H10049Response.cs" />
     <Compile Include="API\HBaseResponse.cs" />
     <Compile Include="API\HPagedListRequest.cs" />
     <Compile Include="GroupItemDto.cs" />
@@ -144,6 +150,7 @@
     <Compile Include="KeyValueTypeDto.cs" />
     <Compile Include="PagedListDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkipTakeListDto.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

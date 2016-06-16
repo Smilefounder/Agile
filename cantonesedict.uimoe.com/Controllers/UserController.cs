@@ -15,20 +15,20 @@ namespace cantonesedict.uimoe.com.Controllers
 {
     public class UserController : Controller
     {
-        [LoginAccessAttribute]
+        [LoginAccess]
         public ActionResult ScoreList()
         {
-            var userid = default(int);
-            var useridstr = Session["userid"] as string;
-            if (int.TryParse(useridstr, out userid) == false)
+            var vm = new List<ScoreListItemVM>();
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo == null)
             {
-                return View(new List<ScoreListItemVM>());
+                return View(vm);
             }
 
             try
             {
                 var request = ReflectHelper.ParseFromRequest<H10039Request>();
-                request.userid = userid;
+                request.userid = userinfo.UserId;
 
                 var responsebase = LogicHelper.H10039(request);
                 var response = responsebase as H10039Response;
@@ -37,14 +37,12 @@ namespace cantonesedict.uimoe.com.Controllers
                     response.data != null &&
                     response.data.Count > 0)
                 {
-                    var recordlist = response.data.Select(o => new ScoreListItemVM
+                    vm = response.data.Select(o => new ScoreListItemVM
                     {
                         createdat = o.createdat,
                         score = o.score,
                         way = o.way
                     }).ToList();
-
-                    return View(recordlist);
                 }
             }
             catch (Exception ex)
@@ -52,14 +50,18 @@ namespace cantonesedict.uimoe.com.Controllers
                 LogHelper.Write(ex.ToString());
             }
 
-            return View(new List<ScoreListItemVM>());
+            return View(vm);
         }
 
         [HttpGet]
         [LoginAccessAttribute]
         public ActionResult FeedbackList()
         {
-            var vm = new FeedbackListVM();
+            var vm = new FeedbackListVM
+            {
+                Data = new List<FeedbackListItemVM>()
+            };
+
             var userinfo = Session["userinfo"] as UserInfoVM;
             if (userinfo != null)
             {
@@ -101,47 +103,77 @@ namespace cantonesedict.uimoe.com.Controllers
         [HttpGet]
         public ActionResult UserList()
         {
-            return View();
-        }
-
-        public ActionResult VocabularyList()
-        {
-            int skip;
-            if (int.TryParse(Request.Params["skip"], out skip) == false)
+            var vm = new UserListVM
             {
-                skip = 0;
-            }
-
-            int take;
-            if (int.TryParse(Request.Params["take"], out take) == false)
-            {
-                take = 10;
-            }
-
-            var vm = new VocabularyVM
-            {
-                Data = new List<VocabularyListItemVM>()
+                data = new PagedListDto<UserListItemVM>
+                {
+                    RecordList = new List<UserListItemVM>()
+                }
             };
 
             try
             {
-                var responsebase = LogicHelper.H10018(new H10018Request
+                var responsebase = LogicHelper.H10047(ReflectHelper.ParseFromRequest<H10047Request>());
+                var response = responsebase as H10047Response;
+                if (response != null &&
+                    response.error == 0 &&
+                    response.data != null &&
+                    response.data.RecordList != null &&
+                    response.data.RecordList.Any())
                 {
-                    skip = skip,
-                    take = take,
-                    texttype = (int)H10018RequestTextTypeEnum.Character
-                });
-
-                var response = responsebase as H10018Response;
-                if (response != null && response.data != null)
-                {
-                    vm.Data = response.data.Select(o => new VocabularyListItemVM
+                    vm.data = new PagedListDto<UserListItemVM>
                     {
-                        CanPronounce = o.canpronounce,
-                        CanText = o.cantext,
-                        CanVoice = o.canvoice,
-                        ChnText = o.chntext
-                    }).ToList();
+                        Page = response.data.Page,
+                        PageSize = response.data.PageSize,
+                        RecordCount = response.data.RecordCount,
+                        RecordList = response.data.RecordList.Select(o => new UserListItemVM
+                        {
+                            Status = o.status,
+                            UserName = o.username
+                        }).ToList()
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
+        }
+
+        public ActionResult VocabularyList()
+        {
+            var vm = new VocabularyListVM
+            {
+                data = new SkipTakeListDto<VocabularyListItemVM>
+                {
+                    RecordList = new List<VocabularyListItemVM>()
+                }
+            };
+
+            try
+            {
+                var responsebase = LogicHelper.H10018(ReflectHelper.ParseFromRequest<H10018Request>());
+                var response = responsebase as H10018Response;
+                if (response != null &&
+                    response.error == 0 &&
+                    response.data != null &&
+                    response.data.RecordList != null &&
+                    response.data.RecordList.Any())
+                {
+                    vm.data = new SkipTakeListDto<VocabularyListItemVM>
+                    {
+                        Skip = response.data.Skip,
+                        Take = response.data.Take,
+                        RecordList = response.data.RecordList.Select(o => new VocabularyListItemVM
+                        {
+                            CanPronounce = o.canpronounce,
+                            CanText = o.cantext,
+                            CanVoice = o.canvoice,
+                            ChnText = o.chntext
+                        }).ToList()
+                    };
                 }
             }
             catch (Exception ex)
@@ -154,7 +186,14 @@ namespace cantonesedict.uimoe.com.Controllers
 
         public ActionResult VisitList()
         {
-            var vm = new VisitListVM { };
+            var vm = new VisitListVM
+            {
+                data = new PagedListDto<VisitListItemVM>
+                {
+                    RecordList = new List<VisitListItemVM>()
+                }
+            };
+
             try
             {
                 var responsebase = LogicHelper.H10045(ReflectHelper.ParseFromRequest<H10045Request>());
@@ -186,6 +225,42 @@ namespace cantonesedict.uimoe.com.Controllers
             }
 
             return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult PassUser(string username)
+        {
+            try
+            {
+                LogicHelper.H10048(new H10048Request
+                {
+                    username = username
+                });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(new { error = 0 });
+        }
+
+        [HttpPost]
+        public ActionResult ForbidUser(string username)
+        {
+            try
+            {
+                LogicHelper.H10049(new H10049Request
+                {
+                    username = username
+                });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(new { error = 0 });
         }
     }
 }

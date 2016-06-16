@@ -2,6 +2,7 @@
 using Agile.Dtos.API;
 using Agile.Helpers;
 using Agile.Helpers.API;
+using cantonesedict.uimoe.com.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,10 +31,25 @@ namespace cantonesedict.uimoe.com.Attributes
             }
 
             //否则转到登录页
-            var username = HttpContext.Current.Session["username"] as string;
-            if (String.IsNullOrEmpty(username))
+            var userinfo = HttpContext.Current.Session["userinfo"] as UserInfoVM;
+            if (userinfo == null)
             {
                 filterContext.Result = new RedirectResult("~/Home/Login");
+                return;
+            }
+
+            //贴有标签则登录后就可以访问
+            if (HasAttribute<LoginAccessAttribute>(filterContext))
+            {
+                return;
+            }
+
+            //否则校验页面权限
+            var permission = userinfo.UserPermissions.Where(a => filterContext.HttpContext.Request.RawUrl.StartsWith(a.RawUrl)).FirstOrDefault();
+            if (permission == null)
+            {
+                filterContext.Result = new RedirectResult("~/Home/NotAllowed");
+                return;
             }
         }
 
@@ -50,8 +66,9 @@ namespace cantonesedict.uimoe.com.Attributes
                 LogicHelper.H10036(new H10036Request
                 {
                     ipaddress = request.UserHostAddress,
-                    rawurl = request.Url.ToString(),
-                    useragent = request.UserAgent
+                    rawurl = request.RawUrl.ToString(),
+                    useragent = request.UserAgent,
+                    domain = (int)H10044RequestDomainEnum.cantonesedict
                 });
             }
             catch

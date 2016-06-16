@@ -6,16 +6,21 @@ using System.Threading.Tasks;
 
 namespace Agile.Dtos.API
 {
-    public class H10036Request
+    public class H10045Response : HBaseResponse
     {
+        public PagedListDto<H10045ResponseListItem> data { get; set; }
+    }
+
+    public class H10045ResponseListItem
+    {
+        public string ipaddress { get; set; }
+
         public string rawurl { get; set; }
 
         public string useragent { get; set; }
 
         public int? userid { get; set; }
 
-        public string ipaddress { get; set; }
-
-        public int? domain { get; set; }
+        public DateTime? createdat { get; set; }
     }
 }

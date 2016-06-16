@@ -24,23 +24,4 @@ namespace Agile.Models
         [TableField(MaxLength = 50)]
         public string Action { get; set; }
     }
-
-    public enum PermissionDomainEnum
-    {
-        llyn23 = 0,
-
-        uimoe = 1,
-
-        api = 2,
-
-        cantonesedict = 3,
-
-        database = 4,
-
-        mp = 5,
-
-        nasa = 6,
-
-        sharp = 7
-    }
 }

@@ -9,6 +9,9 @@ namespace Agile.Models
 {
     public class T_visit : T_base
     {
+        [TableField]
+        public int? Domain { get; set; }
+
         [TableField(MaxLength = 200)]
         public string RawUrl { get; set; }
 

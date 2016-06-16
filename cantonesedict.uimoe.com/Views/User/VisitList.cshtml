@@ -1,0 +1,45 @@
+﻿@model cantonesedict.uimoe.com.ViewModels.User.VisitListVM
+@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div class="hd">
+    <h1 class="page_title">访问记录</h1>
+    <p class="page_desc">时间，页面，用户代理，IP地址</p>
+</div>
+<div class="bd">
+    <div class="weui_cells weui_cells_access">
+        @if (Model.data.RecordList.Any())
+        {
+            foreach (var item in Model.data.RecordList)
+            {
+                <a href="javascript:void(0);" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>
+                            <div style="color:#22b14c;">@item.createdatstr</div>
+                            <div style="color:#ed1c24;">@item.rawurl</div>
+                            <div>@item.useragent</div>
+                            <div>@item.ipaddress</div>
+                        </p>
+                    </div>
+                    <div class="weui_cell_ft"></div>
+                </a>
+            }
+        }
+        else
+        {
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>没有访问记录</p>
+                </div>
+                <div class="weui_cell_ft"></div>
+            </a>
+        }
+    </div>
+
+    @if (Model.data.RecordList.Any())
+    {
+
+    }
+
+</div>

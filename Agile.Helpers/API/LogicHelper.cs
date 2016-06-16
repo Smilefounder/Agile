@@ -1698,12 +1698,12 @@ namespace Agile.Helpers.API
         /// <returns></returns>
         public static HBaseResponse H10036(H10036Request request)
         {
-            if (String.IsNullOrEmpty(request.rawurl))
+            if (!request.domain.HasValue)
             {
                 return new H10036Response
                 {
                     error = 1,
-                    message = "rawurl不能为空"
+                    message = "domain不能为空"
                 };
             }
 
@@ -1712,7 +1712,7 @@ namespace Agile.Helpers.API
                 return new H10036Response
                 {
                     error = 1,
-                    message = "userhost不能为空"
+                    message = "rawurl不能为空"
                 };
             }
 
@@ -1731,7 +1731,8 @@ namespace Agile.Helpers.API
                 IPAddress = request.ipaddress,
                 RawUrl = request.rawurl,
                 UserAgent = request.useragent,
-                UserId = request.userid
+                UserId = request.userid,
+                Domain = request.domain
             });
 
             return new H10036Response
@@ -2126,6 +2127,89 @@ namespace Agile.Helpers.API
             {
                 error = 0,
                 data = list
+            };
+        }
+
+        /// <summary>
+        /// 获取访问记录
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static HBaseResponse H10045(H10045Request request)
+        {
+            var options = new PagedQueryOptions
+            {
+                Page = request.page.GetValueOrDefault(1),
+                PageSize = request.pagesize.GetValueOrDefault(10)
+            };
+
+            if (request.domain.HasValue)
+            {
+                var domain = request.domain.Value;
+                options.Where<T_visit>(w => w.Domain == domain);
+            }
+
+            var pagedlist = QueryHelper.GetPagedList<T_visit>(options);
+            return new H10045Response
+            {
+                error = 0,
+                data = new PagedListDto<H10045ResponseListItem>
+                {
+                    Page = pagedlist.Page,
+                    PageSize = pagedlist.PageSize,
+                    RecordCount = pagedlist.RecordCount,
+                    RecordList = pagedlist.RecordList.Select(o => new H10045ResponseListItem
+                    {
+                        createdat = o.CreatedAt,
+                        ipaddress = o.IPAddress,
+                        rawurl = o.RawUrl,
+                        useragent = o.UserAgent,
+                        userid = o.UserId
+                    }).ToList()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取普通话常用字，词
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static HBaseResponse H10046(H10046Request request)
+        {
+            var options = new RandomQueryOptions
+            {
+                TopNum = request.take.GetValueOrDefault(10)
+            };
+
+            if (request.texttype.HasValue)
+            {
+                switch (request.texttype.Value)
+                {
+                    case (int)H10018RequestTextTypeEnum.Character:
+                        {
+                            options.Where<Can_vocabulary>(w => w.ChnText.Length == 1);
+                        }
+                        break;
+                    case (int)H10018RequestTextTypeEnum.Term:
+                        {
+                            options.Where<Can_vocabulary>(w => w.ChnText.Length == 2);
+                        }
+                        break;
+                }
+            }
+
+            var list = QueryHelper.GetRandomList<Can_vocabulary>(options);
+            return new H10046Response
+            {
+                error = 0,
+                data = list.Select(o => new H10018ResponseListItem
+                {
+                    canpronounce = o.CanPronounce,
+                    cantext = o.CanText,
+                    canvoice = o.CanVoice,
+                    chntext = o.ChnText
+                }).ToList()
             };
         }
     }

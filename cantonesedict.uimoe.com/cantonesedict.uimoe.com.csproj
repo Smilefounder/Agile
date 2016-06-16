@@ -139,14 +139,15 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Home\CantoneseTestVM.cs" />
-    <Compile Include="ViewModels\Home\FeedbackListVM.cs" />
     <Compile Include="ViewModels\Home\FeedbackVM.cs" />
     <Compile Include="ViewModels\Home\IndexVM.cs" />
     <Compile Include="ViewModels\Home\LyricResultVM.cs" />
-    <Compile Include="ViewModels\Home\MeVM.cs" />
     <Compile Include="ViewModels\Home\ScoreListItemVM.cs" />
     <Compile Include="ViewModels\Home\VocabularyVm.cs" />
+    <Compile Include="ViewModels\UserInfoVM.cs" />
+    <Compile Include="ViewModels\User\FeedbackListVM.cs" />
     <Compile Include="ViewModels\User\ScoreListItemVM.cs" />
+    <Compile Include="ViewModels\User\VisitListVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\bootstrap-3.3.5-dist\css\bootstrap-theme.css" />
@@ -268,7 +269,7 @@
     <Content Include="Views\Home\CantoneseTest.cshtml" />
     <Content Include="Views\Home\TranslateLyric.cshtml" />
     <Content Include="Views\Home\LyricResult.cshtml" />
-    <Content Include="Views\Home\FeedbackList.cshtml" />
+    <Content Include="Views\User\FeedbackList.cshtml" />
     <Content Include="Views\Home\Word.cshtml" />
     <Content Include="Views\Home\Initials.cshtml" />
     <Content Include="Views\Home\Finals.cshtml" />
@@ -283,6 +284,11 @@
     <Content Include="Views\User\ScoreList.cshtml" />
     <Content Include="Views\Home\CanWord.cshtml" />
     <Content Include="Views\Home\CanTerm.cshtml" />
+    <Content Include="Views\User\VocabularyList.cshtml" />
+    <Content Include="Views\Home\NotAllowed.cshtml" />
+    <Content Include="Views\User\VisitList.cshtml" />
+    <Content Include="Views\User\PlanList.cshtml" />
+    <Content Include="Views\User\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

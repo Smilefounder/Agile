@@ -8,10 +8,6 @@ namespace cantonesedict.uimoe.com.ViewModels.Home
 {
     public class VocabularyVM
     {
-        public int Skip { get; set; }
-
-        public int Take { get; set; }
-
         public List<VocabularyListItemVM> Data { get; set; }
     }
 

@@ -5,10 +5,10 @@
 
 <div class="weui_tab_bd">
     <div class="weui_btn_area">
-        <a href="@Url.Content("~/Home/Term?skip=" + (Model.Skip + Model.Take) + "&take=" + Model.Take)" class="weui_btn weui_btn_primary">换一批</a>
+        <a href="@Url.Content("~/Home/Term")" class="weui_btn weui_btn_primary">换一批</a>
     </div>
     <div class="weui_cells weui_cells_access">
-        @if (Model.Data == null || Model.Data.Count == 0)
+        @if (Model.Data == null || Model.Data.Count() == 0)
         {
             <a href="javascript:void(0)" class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
@@ -22,7 +22,7 @@
         {
             foreach (var item in Model.Data)
             {
-                <a href="@Url.Content("~/Home/Index?input="+Server.UrlEncode(item.ChnText))" class="weui_cell">
+                <a href="javascript:void(0)" class="weui_cell">
                     <div class="weui_cell_bd weui_cell_primary">
                         <p>
                             <div>【普】<span>@item.ChnText</span></div>
@@ -39,9 +39,11 @@
         }
     </div>
     <div class="weui_btn_area">
-        <a href="@Url.Content("~/Home/Term?skip=" + (Model.Skip + Model.Take) + "&take=" + Model.Take)" class="weui_btn weui_btn_primary">换一批</a>
+        <a href="@Url.Content("~/Home/Term")" class="weui_btn weui_btn_primary">换一批</a>
     </div>
 </div>
+
+
 
 <script type="text/javascript">
     window.onload = function () {

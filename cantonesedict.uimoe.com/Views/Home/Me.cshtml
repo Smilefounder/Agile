@@ -1,4 +1,4 @@
-﻿@model cantonesedict.uimoe.com.ViewModels.Home.MeVM
+﻿@model cantonesedict.uimoe.com.ViewModels.UserInfoVM
 @{
     Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
 }
@@ -20,14 +20,14 @@
         <div class="weui_cell_ft">
         </div>
     </a>
-    <a href="@Url.Content("~/User/ScoreList")" class="weui_cell">
+    <a href="@Url.Content("~/User/FeedbackList")" class="weui_cell">
         <div class="weui_cell_bd weui_cell_primary">
             <p>我的反馈</p>
         </div>
         <div class="weui_cell_ft">
         </div>
     </a>
-    <a href="@Url.Content("~/User/ScoreList")" class="weui_cell">
+    <a href="@Url.Content("~/User/PlanList")" class="weui_cell">
         <div class="weui_cell_bd weui_cell_primary">
             <p>我的计划</p>
         </div>
@@ -37,10 +37,10 @@
 </div>
 
 
-@if (Model.PermissionList.Count > 0)
+@if (Model.UserPermissions.Count > 0)
 {
     <div class="weui_cells weui_cells_access">
-        @foreach (var permission in Model.PermissionList)
+        @foreach (var permission in Model.UserPermissions)
         {
             <a href="@Url.Content("~"+permission.RawUrl)" class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">

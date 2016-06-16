@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace cantonesedict.uimoe.com.ViewModels.Home
+namespace cantonesedict.uimoe.com.ViewModels.User
 {
     public class FeedbackListVM
     {

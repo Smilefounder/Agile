@@ -286,6 +286,52 @@ namespace Agile.Helpers
             }
         }
 
+        public static List<T> GetRandomList<T>(RandomQueryOptions options)
+        {
+            var ttype = typeof(T);
+            var sb = new StringBuilder();
+
+            sb.AppendFormat(" SELECT");
+            if (options.TopNum.HasValue)
+            {
+                sb.AppendFormat(" TOP({0})", options.TopNum.Value);
+            }
+
+            if (options.SelectExp != null)
+            {
+                var fields = ExpressionHelper.GetMemberNames(options.SelectExp);
+                sb.AppendFormat(" {0}", String.Join(",", fields));
+            }
+            else
+            {
+                sb.AppendFormat(" *");
+            }
+
+            sb.AppendFormat(" FROM {0}", ttype.Name);
+            if (options.WhereExpList != null)
+            {
+                var whereStr = ExpressionHelper.MakeWhereStr(options.WhereExpList.ToArray());
+                if (!String.IsNullOrEmpty(whereStr))
+                {
+                    sb.AppendFormat(" WHERE {0}", whereStr);
+                }
+            }
+
+            sb.AppendFormat(" ORDER BY NEWID();");
+
+            var sqlstr = sb.ToString();
+
+            try
+            {
+                return DataHelper.ExecuteList<T>(sqlstr);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+                return new List<T>();
+            }
+        }
+
         public static PagedListDto<T> GetPagedList<T>(PagedQueryOptions options)
         {
             var ttype = typeof(T);
@@ -491,6 +537,11 @@ namespace Agile.Helpers
     }
 
     public class TopQueryOptions : QueryOptions
+    {
+        public int? TopNum { get; set; }
+    }
+
+    public class RandomQueryOptions : UpdateOptions
     {
         public int? TopNum { get; set; }
     }

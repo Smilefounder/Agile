@@ -3,6 +3,7 @@ using Agile.Cache;
 using Agile.Dtos.API;
 using Agile.Helpers;
 using Agile.Helpers.API;
+using cantonesedict.uimoe.com.ViewModels;
 using cantonesedict.uimoe.com.ViewModels.Home;
 using cantonesedict.uimoe.com.ViewModels.User;
 using System;
@@ -111,17 +112,15 @@ namespace cantonesedict.uimoe.com.Controllers
             }
 
             //查询获得积分
-            var userid = default(int);
-            var useridstr = Session["userid"] as string;
-            int.TryParse(useridstr, out userid);
-            if (userid > 0)
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo != null)
             {
                 ThreadPool.QueueUserWorkItem(new WaitCallback(MakeScoreUseThread), new H10040Request
                 {
                     canrepeat = 1,
                     score = 1,
                     way = (int)ScoreListItemWayEnum.Query,
-                    userid = userid
+                    userid = userinfo.UserId
                 });
             }
 
@@ -157,36 +156,21 @@ namespace cantonesedict.uimoe.com.Controllers
 
         public ActionResult Word()
         {
-            int skip;
-            if (int.TryParse(Request.Params["skip"], out skip) == false)
-            {
-                skip = 0;
-            }
-
-            int take;
-            if (int.TryParse(Request.Params["take"], out take) == false)
-            {
-                take = 10;
-            }
-
-            var vm = new VocabularyVM
-            {
-                Skip = skip,
-                Take = take,
-                Data = new List<VocabularyListItemVM>()
-            };
+            var vm = new VocabularyVM();
 
             try
             {
-                var responsebase = LogicHelper.H10018(new H10018Request
+                var responsebase = LogicHelper.H10046(new H10046Request
                 {
-                    skip = skip,
-                    take = take,
-                    texttype = (int)H10018RequestTextTypeEnum.Character
+                    take=10,
+                    texttype=(int)H10018RequestTextTypeEnum.Character
                 });
 
-                var response = responsebase as H10018Response;
-                if (response != null && response.data != null)
+                var response = responsebase as H10046Response;
+                if (response != null && 
+                    response.error==0 &&
+                    response.data != null &&
+                    response.data.Any())
                 {
                     vm.Data = response.data.Select(o => new VocabularyListItemVM
                     {
@@ -200,6 +184,11 @@ namespace cantonesedict.uimoe.com.Controllers
             catch (Exception ex)
             {
                 LogHelper.Write(ex.ToString());
+            }
+
+            if (vm.Data == null)
+            {
+                vm.Data = new List<VocabularyListItemVM>();
             }
 
             return View(vm);
@@ -212,36 +201,21 @@ namespace cantonesedict.uimoe.com.Controllers
 
         public ActionResult Term()
         {
-            int skip;
-            if (int.TryParse(Request.Params["skip"], out skip) == false)
-            {
-                skip = 0;
-            }
-
-            int take;
-            if (int.TryParse(Request.Params["take"], out take) == false)
-            {
-                take = 10;
-            }
-
-            var vm = new VocabularyVM
-            {
-                Skip = skip,
-                Take = take,
-                Data = new List<VocabularyListItemVM>()
-            };
+            var vm = new VocabularyVM();
 
             try
             {
-                var responsebase = LogicHelper.H10018(new H10018Request
+                var responsebase = LogicHelper.H10046(new H10046Request
                 {
-                    skip = skip,
-                    take = take,
+                    take = 10,
                     texttype = (int)H10018RequestTextTypeEnum.Term
                 });
 
-                var response = responsebase as H10018Response;
-                if (response != null && response.data != null)
+                var response = responsebase as H10046Response;
+                if (response != null &&
+                    response.error == 0 &&
+                    response.data != null &&
+                    response.data.Any())
                 {
                     vm.Data = response.data.Select(o => new VocabularyListItemVM
                     {
@@ -255,6 +229,11 @@ namespace cantonesedict.uimoe.com.Controllers
             catch (Exception ex)
             {
                 LogHelper.Write(ex.ToString());
+            }
+
+            if (vm.Data == null)
+            {
+                vm.Data = new List<VocabularyListItemVM>();
             }
 
             return View(vm);
@@ -356,29 +335,29 @@ namespace cantonesedict.uimoe.com.Controllers
 
         public ActionResult Me()
         {
-            var username = Session["username"] as string;
-            var permissions = Session["permissions"] as List<UserPermissionVM>;
-            var vm = new MeVM
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo == null)
             {
-                UserName = username,
-                PermissionList = permissions ?? new List<UserPermissionVM>()
-            };
+                userinfo = new UserInfoVM
+                {
+                    UserPermissions = new List<UserPermissionVM>()
+                };
+            }
 
-            return View(vm);
+            return View(userinfo);
         }
 
         [HttpPost]
         public ActionResult MakeScore()
         {
-            var userid = default(int);
-            var useridstr = Session["userid"] as string;
-            if (int.TryParse(useridstr, out userid) == false)
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo == null)
             {
                 return Json(new { error = 1, message = "请先登录" });
             }
 
             var request = ReflectHelper.ParseFromRequest<H10040Request>();
-            request.userid = userid;
+            request.userid = userinfo.UserId;
 
             ThreadPool.QueueUserWorkItem(new WaitCallback(MakeScoreUseThread), request);
             return Json(new { error = 0 });
@@ -405,9 +384,8 @@ namespace cantonesedict.uimoe.com.Controllers
         [HttpPost]
         public ActionResult ScoreSum()
         {
-            var userid = default(int);
-            var useridstr = Session["userid"] as string;
-            if (int.TryParse(useridstr, out userid) == false)
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo == null)
             {
                 return Json(new { error = 1 });
             }
@@ -418,7 +396,7 @@ namespace cantonesedict.uimoe.com.Controllers
             {
                 var responsebase = LogicHelper.H10041(new H10041Request
                 {
-                    userid = userid,
+                    userid = userinfo.UserId,
                     type = (int)H10041RequestTypeEnum.Total
                 });
                 var response = responsebase as H10041Response;
@@ -441,38 +419,6 @@ namespace cantonesedict.uimoe.com.Controllers
         }
 
         [HttpGet]
-        public ActionResult FeedbackList()
-        {
-            var username = Session["username"] as string;
-            var vm = new FeedbackListVM();
-            try
-            {
-                var responsebase = LogicHelper.H10022(new H10022Request
-                {
-                    username = username
-                });
-
-                var response = responsebase as H10022Response;
-                if (response != null)
-                {
-                    vm.Data = response.data.Select(o => new FeedbackListItemVM
-                    {
-                        CanText = o.cantext,
-                        ChnText = o.chntext,
-                        CreatedAt = o.createdat,
-                        Status = o.status
-                    }).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-            }
-
-            return View(vm);
-        }
-
-        [HttpGet]
         public ActionResult Feedback()
         {
             return View(new FeedbackVM
@@ -490,7 +436,11 @@ namespace cantonesedict.uimoe.com.Controllers
                 message = "操作失败，请稍后再试。"
             };
 
-            var username = Session["username"] as string;
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo != null)
+            {
+
+            }
 
             try
             {
@@ -498,7 +448,7 @@ namespace cantonesedict.uimoe.com.Controllers
                 {
                     cantext = vm.CanText,
                     chntext = vm.ChnText,
-                    createdby = username
+                    createdby = userinfo.UserName
                 });
 
                 var h10017response = h10017responsebase as H10017Response;
@@ -646,6 +596,12 @@ namespace cantonesedict.uimoe.com.Controllers
         }
 
         [HttpGet]
+        public ActionResult NotAllowed()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult Login()
         {
             return View();
@@ -661,11 +617,8 @@ namespace cantonesedict.uimoe.com.Controllers
                 var response = responsebase as H10009Response;
                 if (response != null && response.error == 0)
                 {
-                    Session["username"] = request.username;
-                    Session["userid"] = response.userid.ToString();
-
                     //登录成功获取权限
-                    CachePermissionListAfterLogin(response.userid);
+                    CacheUserInfoAfterLogin(response.userid, request.username);
 
                     //登录成功获得积分
                     ThreadPool.QueueUserWorkItem(new WaitCallback(MakeScoreUseThread), new H10040Request
@@ -687,28 +640,49 @@ namespace cantonesedict.uimoe.com.Controllers
         }
 
         /// <summary>
-        /// 登录成功获取权限
+        /// 登录成功后缓存用户信息
         /// </summary>
-        private void CachePermissionListAfterLogin(int userid)
+        private void CacheUserInfoAfterLogin(int userid, string username)
         {
-            var responsebase = LogicHelper.H10044(new H10044Request
+            var userinfo = new UserInfoVM
             {
-                userid = userid,
-                domain = (int)H10044RequestDomainEnum.cantonesedict
-            });
+                UserId = userid,
+                UserName = username
+            };
 
-            var response = responsebase as H10044Response;
-            if (response != null &&
-                response.error == 0 &&
-                response.data != null &&
-                response.data.Any())
+            try
             {
-                Session["permissions"] = response.data.Select(o => new UserPermissionVM
+                var responsebase = LogicHelper.H10044(new H10044Request
                 {
-                    Name = o.name,
-                    RawUrl = o.rawurl
-                }).ToList();
+                    userid = userid,
+                    domain = (int)H10044RequestDomainEnum.cantonesedict
+                });
+
+                var response = responsebase as H10044Response;
+                if (response != null &&
+                    response.error == 0 &&
+                    response.data != null &&
+                    response.data.Any())
+                {
+                    userinfo.UserPermissions = response.data.Select(o => new UserPermissionVM
+                    {
+                        Name = o.name,
+                        RawUrl = o.rawurl
+                    }).ToList();
+                }
             }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+
+            if (userinfo.UserPermissions == null)
+            {
+                userinfo.UserPermissions = new List<UserPermissionVM>();
+            }
+
+            Session["userinfo"] = userinfo;
         }
 
         [HttpGet]

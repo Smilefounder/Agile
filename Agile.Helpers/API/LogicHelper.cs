@@ -745,8 +745,20 @@ namespace Agile.Helpers.API
         /// <returns></returns>
         public static HBaseResponse H10017(H10017Request request)
         {
-            var sqlstr = "INSERT INTO CAN_feedback(ChnText,CanText,CreatedAt,CreatedBy) VALUES(N'" + request.chntext + "',N'" + request.cantext + "',GETDATE(),N'" + request.createdby + "')";
-            var rows = DataHelper.ExecuteNonQuery(sqlstr);
+            var sqlstr = "INSERT INTO CAN_feedback(ChnText,CanText,CreatedAt,CreatedBy,Status) VALUES(@ChnText,@CanText,GETDATE(),@CreatedBy,1);" ;
+            var sp1 = new SqlParameter("@ChnText",SqlDbType.NVarChar,50);
+            sp1.Value = request.chntext;
+            sp1.IsNullable = true;
+
+            var sp2 = new SqlParameter("@CanText", SqlDbType.NVarChar, 50);
+            sp2.Value = request.cantext;
+            sp2.IsNullable = true;
+
+            var sp3 = new SqlParameter("@CreatedBy", SqlDbType.NVarChar, 50);
+            sp3.Value = request.createdby;
+            sp3.IsNullable = true;
+
+            var rows = DataHelper.ExecuteNonQuery(sqlstr,sp1,sp2,sp3);
             if (rows > 0)
             {
                 return new H10017Response
@@ -902,21 +914,34 @@ namespace Agile.Helpers.API
         /// <returns></returns>
         public static HBaseResponse H10022(H10022Request request)
         {
-            if (String.IsNullOrEmpty(request.username))
+            var options = new PagedQueryOptions
             {
-                return new H10022Response
-                {
-                    error = 0,
-                    data = new List<H10022ResponseListItem>()
-                };
+                Page = request.page.GetValueOrDefault(1),
+                PageSize = request.pagesize.GetValueOrDefault(10)
+            };
+
+            if (!string.IsNullOrEmpty(request.username))
+            {
+                options.Where<Can_feedback>(w => w.CreatedBy == request.username);
             }
 
-            var sqlstr = "SELECT * FROM CAN_feedback WHERE CreatedBy='" + request.username + "'";
-            var recordlist = DataHelper.ExecuteList<H10022ResponseListItem>(sqlstr);
+            var pagedlist = QueryHelper.GetPagedList<Can_feedback>(options);
             return new H10022Response
             {
                 error = 0,
-                data = recordlist ?? new List<H10022ResponseListItem>()
+                data = new PagedListDto<H10022ResponseListItem>
+                {
+                    Page = pagedlist.Page,
+                    PageSize = pagedlist.PageSize,
+                    RecordCount = pagedlist.RecordCount,
+                    RecordList = pagedlist.RecordList.Select(o => new H10022ResponseListItem
+                    {
+                        cantext = o.CanText,
+                        chntext = o.ChnText,
+                        createdat = o.CreatedAt,
+                        status = o.Status
+                    }).ToList()
+                }
             };
         }
 
@@ -1007,21 +1032,21 @@ namespace Agile.Helpers.API
                         sqlstr += " SELECT SUM(UserCost) AS ICount FROM MNY_daily WHERE DATEDIFF(DAY,CreatedAt,GETDATE())=0 AND UserCost>0 AND UserName='" + request.username + "'";
                         break;
                     }
-                case (int)H10024RequestTypeEnum.ThisMonth:
+                case (int)H10041RequestTypeEnum.ThisMonth:
                     {
                         sqlstr += " SELECT SUM(UserCost) AS ICount FROM MNY_daily WHERE DATEDIFF(DAY,CreatedAt,GETDATE())=0 AND UserCost<0 AND UserName='" + request.username + "'";
                         sqlstr += " UNION";
                         sqlstr += " SELECT SUM(UserCost) AS ICount FROM MNY_daily WHERE DATEDIFF(DAY,CreatedAt,GETDATE())=0 AND UserCost>0 AND UserName='" + request.username + "'";
                         break;
                     }
-                case (int)H10024RequestTypeEnum.ThisYear:
+                case (int)H10041RequestTypeEnum.ThisYear:
                     {
                         sqlstr += " SELECT SUM(UserCost) AS ICount FROM MNY_daily WHERE DATEDIFF(DAY,CreatedAt,GETDATE())=0 AND UserCost<0 AND UserName='" + request.username + "'";
                         sqlstr += " UNION";
                         sqlstr += " SELECT SUM(UserCost) AS ICount FROM MNY_daily WHERE DATEDIFF(DAY,CreatedAt,GETDATE())=0 AND UserCost>0 AND UserName='" + request.username + "'";
                         break;
                     }
-                case (int)H10024RequestTypeEnum.Total:
+                case (int)H10041RequestTypeEnum.Total:
                     {
                         sqlstr += " SELECT SUM(UserCost) AS ICount FROM MNY_daily WHERE UserCost<0 AND UserName='" + request.username + "'"; ;
                         sqlstr += " UNION";
@@ -2304,6 +2329,33 @@ namespace Agile.Helpers.API
             var sqlstr = "UPDATE T_user SET Status=2 WHERE UserName=@UserName";
             var sp = new SqlParameter("@UserName", SqlDbType.NVarChar, 50);
             sp.Value = request.username;
+
+            DataHelper.ExecuteNonQuery(sqlstr, sp);
+            return new H10049Response
+            {
+                error = 0
+            };
+        }
+
+        /// <summary>
+        /// 处理一条反馈
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static HBaseResponse H10050(H10050Request request)
+        {
+            if (String.IsNullOrEmpty(request.chntext))
+            {
+                return new H10049Response
+                {
+                    error = 1,
+                    message = "chntext不能为空"
+                };
+            }
+
+            var sqlstr = "UPDATE Can_feedback SET Status=0 WHERE ChnText=@ChnText";
+            var sp = new SqlParameter("@ChnText", SqlDbType.NVarChar, 50);
+            sp.Value = request.chntext;
 
             DataHelper.ExecuteNonQuery(sqlstr, sp);
             return new H10049Response

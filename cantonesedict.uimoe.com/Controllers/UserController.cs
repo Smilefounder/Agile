@@ -59,35 +59,50 @@ namespace cantonesedict.uimoe.com.Controllers
         {
             var vm = new FeedbackListVM
             {
-                Data = new List<FeedbackListItemVM>()
+                Data = new PagedListDto<FeedbackListItemVM>
+                {
+                    RecordList = new List<FeedbackListItemVM>()
+                }
             };
 
             var userinfo = Session["userinfo"] as UserInfoVM;
-            if (userinfo != null)
+            if (userinfo == null)
             {
-                try
-                {
-                    var responsebase = LogicHelper.H10022(new H10022Request
-                    {
-                        username = userinfo.UserName
-                    });
+                return View(vm);
+            }
 
-                    var response = responsebase as H10022Response;
-                    if (response != null)
+            try
+            {
+                var responsebase = LogicHelper.H10022(new H10022Request
+                {
+                    username = userinfo.UserName
+                });
+
+                var response = responsebase as H10022Response;
+                if (response != null &&
+                    response.error == 0 &&
+                    response.data != null &&
+                    response.data.RecordList != null &&
+                    response.data.RecordList.Any())
+                {
+                    vm.Data = new PagedListDto<FeedbackListItemVM>
                     {
-                        vm.Data = response.data.Select(o => new FeedbackListItemVM
+                        Page = response.data.Page,
+                        PageSize = response.data.PageSize,
+                        RecordCount = response.data.RecordCount,
+                        RecordList = response.data.RecordList.Select(o => new FeedbackListItemVM
                         {
                             CanText = o.cantext,
                             ChnText = o.chntext,
                             CreatedAt = o.createdat,
                             Status = o.status
-                        }).ToList();
-                    }
+                        }).ToList()
+                    };
                 }
-                catch (Exception ex)
-                {
-                    LogHelper.Write(ex.ToString());
-                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
             }
 
             return View(vm);
@@ -246,6 +261,24 @@ namespace cantonesedict.uimoe.com.Controllers
         }
 
         [HttpPost]
+        public ActionResult PassFeedback(string chntext)
+        {
+            try
+            {
+                LogicHelper.H10050(new H10050Request
+                {
+                    chntext = chntext
+                });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(new { error = 0 });
+        }
+
+        [HttpPost]
         public ActionResult ForbidUser(string username)
         {
             try
@@ -261,6 +294,54 @@ namespace cantonesedict.uimoe.com.Controllers
             }
 
             return Json(new { error = 0 });
+        }
+
+        public ActionResult FeedbackListAll()
+        {
+            var vm = new FeedbackListVM
+            {
+                Data = new PagedListDto<FeedbackListItemVM>
+                {
+                    RecordList = new List<FeedbackListItemVM>()
+                }
+            };
+
+            try
+            {
+                var responsebase = LogicHelper.H10022(new H10022Request());
+                var response = responsebase as H10022Response;
+                if (response != null &&
+                    response.error == 0 &&
+                    response.data != null &&
+                    response.data.RecordList != null &&
+                    response.data.RecordList.Any())
+                {
+                    vm.Data = new PagedListDto<FeedbackListItemVM>
+                    {
+                        Page = response.data.Page,
+                        PageSize = response.data.PageSize,
+                        RecordCount = response.data.RecordCount,
+                        RecordList = response.data.RecordList.Select(o => new FeedbackListItemVM
+                        {
+                            CanText = o.cantext,
+                            ChnText = o.chntext,
+                            CreatedAt = o.createdat,
+                            Status = o.status
+                        }).ToList()
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
+        }
+
+        public ActionResult NoResultList()
+        {
+            return View();
         }
     }
 }

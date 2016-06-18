@@ -8,7 +8,7 @@ namespace Agile.Dtos.API
 {
     public class H10022Response : HBaseResponse
     {
-        public List<H10022ResponseListItem> data { get; set; }
+        public PagedListDto<H10022ResponseListItem> data { get; set; }
     }
 
     public class H10022ResponseListItem
@@ -20,5 +20,12 @@ namespace Agile.Dtos.API
         public DateTime? createdat { get; set; }
 
         public int? status { get; set; }
+    }
+
+    public enum H10022ResponseFeedbackStatusEnum
+    {
+        Normal = 0,
+
+        Pending = 1
     }
 }

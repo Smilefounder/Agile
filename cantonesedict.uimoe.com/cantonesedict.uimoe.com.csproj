@@ -291,6 +291,7 @@
     <Content Include="Views\User\VisitList.cshtml" />
     <Content Include="Views\User\PlanList.cshtml" />
     <Content Include="Views\User\UserList.cshtml" />
+    <Content Include="Views\User\FeedbackListAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

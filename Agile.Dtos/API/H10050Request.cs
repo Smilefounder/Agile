@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Agile.Dtos.API
 {
-    public class H10022Request:HPagedListRequest
+    public class H10050Request
     {
-        public string username { get; set; }
+        public string chntext { get; set; }
     }
 }

@@ -17,5 +17,8 @@ namespace Agile.Models
 
         [TableField(MaxLength = 50)]
         public string CreatedBy { get; set; }
+
+        [TableField]
+        public int? Status { get; set; }
     }
 }

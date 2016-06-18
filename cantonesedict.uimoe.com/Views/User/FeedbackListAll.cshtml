@@ -1,0 +1,120 @@
+﻿@model cantonesedict.uimoe.com.ViewModels.User.FeedbackListVM
+@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<div class="hd">
+    <h1 class="page_title">反馈管理</h1>
+    <p class="page_desc">时间，普通话，粤语，状态</p>
+</div>
+<div class="bd">
+    @if (Model.Data.RecordList.Any())
+    {
+        <div class="weui_cells weui_cells_access">
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>第<span>@Model.Data.Page</span>/<span>@Model.Data.PageCount</span>页，共<span>@Model.Data.RecordCount</span>条记录</p>
+                </div>
+                <div class="weui_cell_ft"></div>
+            </a>
+
+            @if (Model.Data.Page > 1)
+            {
+                <a href="@Url.Content("~/User/VisitList?page=" + (Model.Data.Page - 1) + "&pagesize=" + Model.Data.PageSize)" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>上一页</p>
+                    </div>
+                    <div class="weui_cell_ft"></div>
+                </a>
+            }
+
+            @if (Model.Data.Page < Model.Data.PageCount)
+            {
+                <a href="@Url.Content("~/User/VisitList?page=" + (Model.Data.Page + 1) + "&pagesize=" + Model.Data.PageSize)" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>下一页</p>
+                    </div>
+                    <div class="weui_cell_ft"></div>
+                </a>
+            }
+        </div>
+    }
+
+    <div class="weui_cells weui_cells_access">
+        @if (Model.Data.RecordList.Any())
+        {
+            foreach (var item in Model.Data.RecordList)
+            {
+                <div href="javascript:void(0);" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>
+                            <div>@item.CreatedAt.GetValueOrDefault().ToString("yyyy-MM-dd")</div>
+                            <div>[普]<span>@item.ChnText</span></div>
+                            @if (!string.IsNullOrEmpty(item.CanText))
+                            {
+                                <div>[粤]<span>@item.CanText</span></div>
+                            }
+
+                            @if (item.Status == (int)Agile.Dtos.API.H10022ResponseFeedbackStatusEnum.Pending)
+                            {
+                                <div><span style="color:#ed1c24;">@item.StatusDisplay</span>&nbsp;<a href="javascript:void(0);" onclick="view.pass(this,'@item.ChnText')">处理</a></div>
+                            }
+                        </p>
+                    </div>
+                    <div class="weui_cell_ft">
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>
+                        没有查询到相关记录
+                    </p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem4");
+    }
+
+    var view = {
+        pass: function (sender, chntext) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/User/PassFeedback")',
+                data: { chntext:chntext },
+                complete: function (xhr, status) {
+                    var response = {};
+
+                    try {
+                        response = JSON.parse(xhr.responseText);
+                    }
+                    catch (e) {
+
+                    }
+
+                    if (!response || response.error != 0) {
+                        var message = "操作失败，请稍后重试";
+                        if (response.message) {
+                            message = response.message;
+                        }
+
+                        weuialert(message);
+                        return;
+                    }
+
+                    $(sender).parent().html("");
+                }
+            });
+        }
+    };
+</script>

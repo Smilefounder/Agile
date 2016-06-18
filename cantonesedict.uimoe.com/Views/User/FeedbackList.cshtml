@@ -6,7 +6,7 @@
 <div class="weui_cells_title">我的反馈（浅绿色背景的反馈表示已处理）</div>
 <div class="weui_cells_title"><a href="@Url.Content("~/Home/Feedback")">我要反馈...</a></div>
 <div class="weui_cells weui_cells_access">
-    @if (Model.Data == null || Model.Data.Count == 0)
+    @if (Model.Data.RecordList == null || Model.Data.RecordList.Count == 0)
     {
         <a href="javascript:void(0);" class="weui_cell">
             <div class="weui_cell_bd weui_cell_primary">
@@ -20,7 +20,7 @@
     }
     else
     {
-        foreach (var item in Model.Data)
+        foreach (var item in Model.Data.RecordList)
         {
             if (item.Status.GetValueOrDefault(1) == 0)
             {
@@ -51,3 +51,9 @@
         }
     }
 </div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem4");
+    }
+</script>

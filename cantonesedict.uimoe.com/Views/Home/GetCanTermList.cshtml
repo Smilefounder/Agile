@@ -1,0 +1,22 @@
+﻿@model Agile.Dtos.API.H10052Response
+@{
+    Layout = null;
+}
+
+@if (Model.data.RecordList.Any())
+{
+    foreach (var item in Model.data.RecordList)
+    {
+        <a href="javascript:void(0);" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>
+                    <div>[粤语]&nbsp;<span>@item.cantext</span></div>
+                    <div>[音标]&nbsp;<span>@item.canpronounce</span></div>
+                    <div>[解释]&nbsp;<span>@item.description</span></div>
+                </p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    }
+}

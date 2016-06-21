@@ -292,6 +292,8 @@
     <Content Include="Views\User\PlanList.cshtml" />
     <Content Include="Views\User\UserList.cshtml" />
     <Content Include="Views\User\FeedbackListAll.cshtml" />
+    <Content Include="Views\Home\GetCanWordList.cshtml" />
+    <Content Include="Views\Home\GetCanTermList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

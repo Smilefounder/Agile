@@ -1,5 +1,6 @@
 ﻿using Agile.Attributes;
 using Agile.Cache;
+using Agile.Dtos;
 using Agile.Dtos.API;
 using Agile.Helpers;
 using Agile.Helpers.API;
@@ -199,6 +200,44 @@ namespace cantonesedict.uimoe.com.Controllers
             return View();
         }
 
+        public ActionResult GetCanWordList()
+        {
+            var response = new H10051Response
+            {
+                error = 0,
+                data = new PagedListDto<H10051ResponseListItem>
+                {
+                    RecordList = new List<H10051ResponseListItem>()
+                }
+            };
+
+            try
+            {
+                var h10051request = ReflectHelper.ParseFromRequest<H10051Request>();
+                var h10051response = LogicHelper.H10051(h10051request);
+                if (h10051response != null &&
+                    h10051response.error == 0 &&
+                    h10051response.data != null &&
+                    h10051response.data.RecordList != null &&
+                    h10051response.data.RecordList.Any())
+                {
+                    response.data = new PagedListDto<H10051ResponseListItem>
+                    {
+                        Page = h10051response.data.Page,
+                        PageSize = h10051response.data.PageSize,
+                        RecordCount = h10051response.data.RecordCount,
+                        RecordList = h10051response.data.RecordList
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(response);
+        }
+
         public ActionResult Term()
         {
             var vm = new VocabularyVM();
@@ -242,6 +281,43 @@ namespace cantonesedict.uimoe.com.Controllers
         public ActionResult CanTerm()
         {
             return View();
+        }
+
+        public ActionResult GetCanTermList()
+        {
+            var response = new H10052Response
+            {
+                error = 0,
+                data = new PagedListDto<H10052ResponseListItem>
+                {
+                    RecordList = new List<H10052ResponseListItem>()
+                }
+            };
+
+            try
+            {
+                var h10052response = LogicHelper.H10052(ReflectHelper.ParseFromRequest<H10052Request>());
+                if (h10052response != null &&
+                    h10052response.error == 0 &&
+                    h10052response.data != null &&
+                    h10052response.data.RecordList != null &&
+                    h10052response.data.RecordList.Any())
+                {
+                    response.data = new PagedListDto<H10052ResponseListItem>
+                    {
+                        Page = h10052response.data.Page,
+                        PageSize = h10052response.data.PageSize,
+                        RecordCount = h10052response.data.RecordCount,
+                        RecordList = h10052response.data.RecordList
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(response);
         }
 
         public ActionResult Scene()

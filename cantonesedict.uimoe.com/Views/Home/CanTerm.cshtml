@@ -14,48 +14,51 @@
             </div>
         </a>
     </div>
-    <div class="weui_cells weui_cells_access">
-        <a href="javascript:void(0);" class="weui_cell">
-            <div class="weui_cell_bd weui_cell_primary">
-                <p>
-                    <div>[粤语]&nbsp;<span>佢</span></div>
-                    <div>[音标]&nbsp;<span>keoi5</span></div>
-                    <div>[解释]&nbsp;<span>他或她</span></div>
-                </p>
-            </div>
-            <div class="weui_cell_ft">
-            </div>
-        </a>
-        <a href="javascript:void(0);" class="weui_cell">
-            <div class="weui_cell_bd weui_cell_primary">
-                <p>
-                    <div>[粤语]&nbsp;<span>啲</span></div>
-                    <div>[音标]&nbsp;<span>di1</span></div>
-                    <div>[解释]&nbsp;<span>一些，少量，一般写做D</span></div>
-                </p>
-            </div>
-            <div class="weui_cell_ft">
-            </div>
-        </a>
-        <a href="javascript:void(0);" class="weui_cell">
-            <div class="weui_cell_bd weui_cell_primary">
-                <p>
-                    <div>[粤语]&nbsp;<span>咁</span></div>
-                    <div>[音标]&nbsp;<span>gam3</span></div>
-                    <div>[解释]&nbsp;<span>这样，这么</span></div>
-                </p>
-            </div>
-            <div class="weui_cell_ft">
-            </div>
-        </a>
+    <div class="weui_cells weui_cells_access" id="container">
     </div>
     <div class="weui_btn_area">
-        <a class="weui_btn weui_btn_primary" href="/Home/Word?skip=10&amp;take=10">加载更多</a>
+        <a class="weui_btn weui_btn_primary" href="javascript:void(0);" onclick="view.loaddata()">加载更多</a>
     </div>
 </div>
 
 <script type="text/javascript">
     window.onload = function () {
         showhighlight("appbaritem2");
+        view.loaddata();
     }
+
+    var view = {
+        page: 1,
+        pagesize: 10,
+        loaddata: function () {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Content("~/Home/GetCanTermList")',
+                data: { page: view.page, pagesize: view.pagesize },
+                dataType: "html",
+                complete: function (xhr, status) {
+                    if (status != "success") {
+                        weuialert("网络好像有点问题。");
+                        return;
+                    }
+
+                    if (!xhr.responseText || xhr.responseText.length < 10) {
+                        if (view.page == 1) {
+                            weuialert("未找到相关数据。");
+                            return;
+                        }
+
+                        weuialert("没有更多了。");
+                        return;
+                    }
+
+                    view.page += 1;
+
+                    var html = $("#container").html();
+                    html += xhr.responseText;
+                    $("#container").html(html);
+                }
+            });
+        }
+    };
 </script>

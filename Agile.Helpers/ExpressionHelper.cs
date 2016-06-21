@@ -109,12 +109,14 @@ namespace Agile.Helpers
             if (memberExp != null)
             {
                 sb += memberExp.Member.Name;
+                return;
             }
 
             var constantExp = exp as ConstantExpression;
             if (constantExp != null)
             {
                 sb += "'" + constantExp.Value.ToString() + "'";
+                return;
             }
         }
 

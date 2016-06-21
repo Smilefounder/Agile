@@ -46,8 +46,10 @@
     <Compile Include="Can_feedback.cs" />
     <Compile Include="Can_noresult.cs" />
     <Compile Include="Can_scene.cs" />
+    <Compile Include="Can_sceneword.cs" />
     <Compile Include="Can_scenewordrelation.cs" />
     <Compile Include="Can_score.cs" />
+    <Compile Include="Can_term.cs" />
     <Compile Include="Can_testitem.cs" />
     <Compile Include="Can_testoption.cs" />
     <Compile Include="Can_vocabulary.cs" />

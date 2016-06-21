@@ -745,8 +745,8 @@ namespace Agile.Helpers.API
         /// <returns></returns>
         public static HBaseResponse H10017(H10017Request request)
         {
-            var sqlstr = "INSERT INTO CAN_feedback(ChnText,CanText,CreatedAt,CreatedBy,Status) VALUES(@ChnText,@CanText,GETDATE(),@CreatedBy,1);" ;
-            var sp1 = new SqlParameter("@ChnText",SqlDbType.NVarChar,50);
+            var sqlstr = "INSERT INTO CAN_feedback(ChnText,CanText,CreatedAt,CreatedBy,Status) VALUES(@ChnText,@CanText,GETDATE(),@CreatedBy,1);";
+            var sp1 = new SqlParameter("@ChnText", SqlDbType.NVarChar, 50);
             sp1.Value = request.chntext;
             sp1.IsNullable = true;
 
@@ -758,7 +758,7 @@ namespace Agile.Helpers.API
             sp3.Value = request.createdby;
             sp3.IsNullable = true;
 
-            var rows = DataHelper.ExecuteNonQuery(sqlstr,sp1,sp2,sp3);
+            var rows = DataHelper.ExecuteNonQuery(sqlstr, sp1, sp2, sp3);
             if (rows > 0)
             {
                 return new H10017Response
@@ -1820,7 +1820,7 @@ namespace Agile.Helpers.API
                 };
             }
 
-            var sqlstr = "SELECT t3.ChnText, t3.CanText,t3.CanPronounce FROM CAN_scenewordrelation t1 LEFT JOIN CAN_scene t2 on t2.Id=t1.SceneId LEFT JOIN CAN_vocabulary t3 on t3.Id=t1.VocabularyId WHERE t2.Id=@SceneId;";
+            var sqlstr = "SELECT t3.ChnText, t3.CanText,t3.CanPronounce FROM CAN_scenewordrelation t1 LEFT JOIN CAN_scene t2 on t2.Id=t1.SceneId LEFT JOIN CAN_sceneword t3 on t3.Id=t1.VocabularyId WHERE t2.Id=@SceneId;";
             if (request.page.HasValue && request.pagesize.HasValue)
             {
                 var skip = request.pagesize.Value * (request.page.Value - 1);
@@ -2216,38 +2216,30 @@ namespace Agile.Helpers.API
         /// <returns></returns>
         public static HBaseResponse H10046(H10046Request request)
         {
-            var options = new RandomQueryOptions
+            var take = request.take.GetValueOrDefault(10);
+            var textLength = 1;
+            if (request.texttype.GetValueOrDefault(1) == 2)
             {
-                TopNum = request.take.GetValueOrDefault(10)
-            };
-
-            if (request.texttype.HasValue)
-            {
-                switch (request.texttype.Value)
-                {
-                    case (int)H10018RequestTextTypeEnum.Character:
-                        {
-                            options.Where<Can_vocabulary>(w => w.ChnText.Length == 1);
-                        }
-                        break;
-                    case (int)H10018RequestTextTypeEnum.Term:
-                        {
-                            options.Where<Can_vocabulary>(w => w.ChnText.Length == 2);
-                        }
-                        break;
-                }
+                textLength = 2;
             }
 
-            var list = QueryHelper.GetRandomList<Can_vocabulary>(options);
+            var sqlstr = "SELECT TOP(@Take) CanPronounce,CanText,CanVoice,ChnText FROM CAN_vocabulary WHERE LEN(ChnText)=@ChnTextLength ORDER BY NEWID();";
+            var sp1 = new SqlParameter("@Take", SqlDbType.Int, 11);
+            sp1.Value = take;
+
+            var sp2 = new SqlParameter("@ChnTextLength", SqlDbType.Int, 11);
+            sp2.Value = textLength;
+
+            var list = DataHelper.ExecuteList<H10018ResponseListItem>(sqlstr, sp1, sp2);
             return new H10046Response
             {
                 error = 0,
                 data = list.Select(o => new H10018ResponseListItem
                 {
-                    canpronounce = o.CanPronounce,
-                    cantext = o.CanText,
-                    canvoice = o.CanVoice,
-                    chntext = o.ChnText
+                    canpronounce = o.canpronounce,
+                    cantext = o.cantext,
+                    canvoice = o.canvoice,
+                    chntext = o.chntext
                 }).ToList()
             };
         }
@@ -2361,6 +2353,60 @@ namespace Agile.Helpers.API
             return new H10049Response
             {
                 error = 0
+            };
+        }
+
+        public static H10051Response H10051(H10051Request request)
+        {
+            var options = new PagedQueryOptions
+            {
+                Page = request.page.GetValueOrDefault(1),
+                PageSize = request.pagesize.GetValueOrDefault(10)
+            };
+
+            var pagedlist = QueryHelper.GetPagedList<Can_word>(options);
+            return new H10051Response
+            {
+                error = 0,
+                data = new PagedListDto<H10051ResponseListItem>
+                {
+                    Page = pagedlist.Page,
+                    PageSize = pagedlist.PageSize,
+                    RecordCount = pagedlist.RecordCount,
+                    RecordList = pagedlist.RecordList.Select(o => new H10051ResponseListItem
+                    {
+                        canpronounce = o.CanPronounce,
+                        cantext = o.CanText,
+                        description = o.Description
+                    }).ToList()
+                }
+            };
+        }
+
+        public static H10052Response H10052(H10052Request request)
+        {
+            var options = new PagedQueryOptions
+            {
+                Page = request.page.GetValueOrDefault(1),
+                PageSize = request.pagesize.GetValueOrDefault(10)
+            };
+
+            var pagedlist = QueryHelper.GetPagedList<Can_term>(options);
+            return new H10052Response
+            {
+                error = 0,
+                data = new PagedListDto<H10052ResponseListItem>
+                {
+                    Page = pagedlist.Page,
+                    PageSize = pagedlist.PageSize,
+                    RecordCount = pagedlist.RecordCount,
+                    RecordList = pagedlist.RecordList.Select(o => new H10052ResponseListItem
+                    {
+                        canpronounce = o.CanPronounce,
+                        cantext = o.CanText,
+                        description = o.Description
+                    }).ToList()
+                }
             };
         }
     }

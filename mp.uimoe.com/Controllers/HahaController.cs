@@ -92,10 +92,10 @@ namespace mp.uimoe.com.Controllers
         private void HandleTextRequest(string xml, MP_TextResponse response)
         {
             var content = "未找到相关结果";
-            var extra = "\r\n------------------------------\r\n<a href=\"http://haha.uimoe.com/user/index\">点这里查看哈哈MX精选</a>";
+            var extra = "\r\n------------------------------\r\n<a href=\"http://haha.uimoe.com/user/index\">点这里查看哈哈MX来源</a>";
 
             var textrequest = SerializeHelper.ParseFromXml<MP_TextRequest>(xml);
-            if (textrequest != null)
+            if (textrequest == null)
             {
                 response.Content = content + extra;
                 return;
@@ -105,7 +105,8 @@ namespace mp.uimoe.com.Controllers
             {
                 var list = LogicHelper.H10059(new H10059Request
                 {
-                    take = 1
+                    take = 1,
+                    nopicture = 1
                 });
 
                 if (list != null &&

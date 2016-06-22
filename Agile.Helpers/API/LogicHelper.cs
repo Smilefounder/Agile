@@ -2659,10 +2659,10 @@ namespace Agile.Helpers.API
                 sqlstr = "SELECT TOP(@Take) Content FROM HAHA_collection WHERE PictureUrl IS NULL ORDER BY NEWID()";
             }
 
-            var sp = new SqlParameter("@Take",SqlDbType.Int,11);
+            var sp = new SqlParameter("@Take", SqlDbType.Int, 11);
             sp.Value = request.take.GetValueOrDefault(1);
 
-            var list = DataHelper.ExecuteList<H10059ResponseListItem>(sqlstr);
+            var list = DataHelper.ExecuteList<H10059ResponseListItem>(sqlstr, sp);
             return new H10059Response
             {
                 error = 0,

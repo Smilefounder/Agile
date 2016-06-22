@@ -12,7 +12,7 @@ namespace Agile.Models
         [TableField(MaxLength = 50)]
         public string JokeId { get; set; }
 
-        [TableField(MaxLength = 50)]
+        [TableField(MaxLength = 2000)]
         public string Content { get; set; }
 
         [TableField(MaxLength = 50)]

@@ -2609,5 +2609,75 @@ namespace Agile.Helpers.API
                 error = 0
             };
         }
+
+        /// <summary>
+        /// 哈哈MX - 获取笑话列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10058Response H10058(H10058Request request)
+        {
+            var sqlstr = "SELECT ROW_NUMBER() OVER(ORDER BY GoodCount DESC) AS RW,* FROM HAHA_collection";
+            if (request.rtype.GetValueOrDefault(0) == 1)
+            {
+                sqlstr = "SELECT ROW_NUMBER() OVER(ORDER BY ID DESC) AS RW,* FROM HAHA_collection";
+            }
+
+            var sb = string.Format("SELECT COUNT(1) FROM ({0}) AS Q", sqlstr);
+            var obj = DataHelper.ExecuteScalar(sb);
+            var recordcount = Convert.ToInt32(obj);
+
+            var page = request.page.GetValueOrDefault(1);
+            var pagesize = request.pagesize.GetValueOrDefault(10);
+
+            sb = string.Format("SELECT * FROM ({0}) AS Q WHERE Q.RW>{1} AND Q.RW<={2}", sqlstr, pagesize * (page - 1), pagesize * page);
+            var list = DataHelper.ExecuteList<HAHA_collection>(sb);
+
+            return new H10058Response
+            {
+                error = 0,
+                data = new PagedListDto<H10058ResponseListItem>
+                {
+                    Page = page,
+                    PageSize = pagesize,
+                    RecordCount = recordcount,
+                    RecordList = list.Select(o => new H10058ResponseListItem
+                    {
+                        badcount = o.BadCount,
+                        commentcount = o.CommentCount,
+                        content = o.Content,
+                        goodcount = o.GoodCount,
+                        jokeid = o.JokeId,
+                        pictureurl = o.PictureUrl,
+                        postedat = o.PostedAt,
+                        postedby = o.PostedBy
+                    }).ToList()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 哈哈MX - 获取随机笑话列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10059Response H10059(H10059Request request)
+        {
+            var sqlstr = "SELECT TOP(@Take) Content FROM HAHA_collection ORDER BY NEWID()";
+            if (request.nopicture.GetValueOrDefault(0) > 0)
+            {
+                sqlstr = "SELECT TOP(@Take) Content FROM HAHA_collection WHERE PictureUrl IS NULL ORDER BY NEWID()";
+            }
+
+            var sp = new SqlParameter("@Take",SqlDbType.Int,11);
+            sp.Value = request.take.GetValueOrDefault(1);
+
+            var list = DataHelper.ExecuteList<H10059ResponseListItem>(sqlstr);
+            return new H10059Response
+            {
+                error = 0,
+                data = list
+            };
+        }
     }
 }

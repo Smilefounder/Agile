@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>哈哈MX精选</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .listitem {
+            border-top: 1px solid #d5d5d5;
+            border-bottom: 1px solid #d5d5d5;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display:flex;">
+        <div style="flex:1;text-align:center;padding:10px;background-color:#555;" onclick="view.openlink(this,'@Url.Content("~/Home/Index")')">
+            <span style="color:#fff;" class="navbar-brand">最热</span>
+        </div>
+        <div style="flex:1;text-align:center;padding:10px;background-color:#000;" onclick="view.openlink(this,'@Url.Content("~/Home/NewList")')">
+            <span style="color:#fff;" class="navbar-brand">最新</span>
+        </div>
+    </div>
+    <div id="container">
+        @RenderBody()
+    </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        var view = {
+            openlink: function (sender, link) {
+                window.location.href = link;
+            },
+            hotlist: {
+                page: 1,
+                pagesize: 10,
+                show: function (sender) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Content("~/Home/GetHotList")',
+                        data: { page: view.hotlist.page, pagesize: view.hotlist.pagesize },
+                        dataType: 'html',
+                        complete: function (xhr, status) {
+                            if (status != "success") {
+                                alert("网络好像有点问题哦");
+                                return;
+                            }
+
+                            var html = $("#container").html();
+                            html += xhr.responseText;
+                            $("#container").html(html);
+                        }
+                    });
+                }
+            },
+            newlist: {
+                page: 1,
+                pagesize: 10,
+                show: function (sender) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Content("~/Home/GetNewList")',
+                        data: { page: view.hotlist.page, pagesize: view.hotlist.pagesize },
+                        dataType: 'html',
+                        complete: function (xhr, status) {
+                            if (status != "success") {
+                                alert("网络好像有点问题哦");
+                                return;
+                            }
+
+                            var html = $("#container").html();
+                            html += xhr.responseText;
+                            $("#container").html(html);
+                        }
+                    });
+                }
+            }
+        };
+    </script>
+    @RenderSection("scripts", false)
+</body>
+</html>

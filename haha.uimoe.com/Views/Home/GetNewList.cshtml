@@ -1,0 +1,33 @@
+﻿@model Agile.Dtos.API.H10058Response
+@{
+    Layout = null;
+}
+
+@if (Model.data.RecordList.Any())
+{
+    foreach (var item in Model.data.RecordList)
+    {
+        <div class="listitem">
+            <div><span>@item.postedby</span>发表于<span>@item.postedat</span></div>
+            <div>@item.content</div>
+            <div style="height:5px;width:100%;"></div>
+            <div style="height:1px;background-color:#d5d5d5;"></div>
+            <div style="height:5px;width:100%;"></div>
+            <div style="display:flex;">
+                <div style="flex:1;text-align:center;border-right:1px solid #d5d5d5;">赞<span>@item.goodcount</span></div>
+                <div style="flex:1;text-align:center;border-right:1px solid #d5d5d5;">踩<span>@item.badcount</span></div>
+                <div style="flex:1;text-align:center;">评论<span>@item.commentcount</span></div>
+            </div>
+            <div style="height:5px;width:100%;"></div>
+        </div>
+    }
+}
+else
+{
+    <div class="listitem">
+        <div style="height:5px;width:100%;"></div>
+        <div>什么都没有呢</div>
+        <div style="height:5px;width:100%;"></div>
+    </div>
+}
+

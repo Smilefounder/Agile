@@ -61,6 +61,7 @@
     <Compile Include="T_base.cs" />
     <Compile Include="T_blacklist.cs" />
     <Compile Include="T_interface.cs" />
+    <Compile Include="T_menu.cs" />
     <Compile Include="T_permission.cs" />
     <Compile Include="T_role.cs" />
     <Compile Include="T_rolepermissionrelation.cs" />

@@ -14,11 +14,7 @@ namespace Agile.Dtos.API
 
         public string name { get; set; }
 
-        public string area { get; set; }
-
-        public string controller { get; set; }
-
-        public string action { get; set; }
+        public string rawurl { get; set; }
     }
 
     public enum H10044RequestDomainEnum

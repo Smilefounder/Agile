@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+<form id="form1">
+    <div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">权限</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input type="text" placeholder="请输入权限名" id="name" name="name" pattern=".*" class="weui_input">
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">页面</label></div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input type="text" placeholder="请输入页面路径" id="rawurl" name="rawurl" pattern=".*" class="weui_input">
+            </div>
+        </div>
+    </div>
+</form>
+<div class="weui_btn_area">
+    <a href="javascript:void(0);" class="weui_btn weui_btn_primary" onclick="view.submit(this)">确定</a>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem4");
+    }
+
+    var view = {
+        submit: function (sender) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/User/AddPermission")',
+                data: $("#form1").serialize(),
+                complete: function (xhr,status) {
+                    var response = {};
+
+                    try {
+                        response = JSON.parse(xhr.responseText);
+                    }
+                    catch (e) {
+
+                    }
+
+                    if (!response || response.error != 0) {
+                        var message = "操作失败，请稍后重试";
+                        if (response.message) {
+                            message = response.message;
+                        }
+
+                        weuialert(message);
+                        return;
+                    }
+
+                    weuialert("添加成功");
+                }
+            });
+        }
+    };
+</script>

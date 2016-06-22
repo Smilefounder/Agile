@@ -255,6 +255,7 @@ namespace cantonesedict.uimoe.com.Controllers
             catch (Exception ex)
             {
                 LogHelper.Write(ex.ToString());
+                return Json(new { error = 1, message = ex.Message });
             }
 
             return Json(new { error = 0 });
@@ -273,6 +274,7 @@ namespace cantonesedict.uimoe.com.Controllers
             catch (Exception ex)
             {
                 LogHelper.Write(ex.ToString());
+                return Json(new { error = 1, message = ex.Message });
             }
 
             return Json(new { error = 0 });
@@ -291,6 +293,7 @@ namespace cantonesedict.uimoe.com.Controllers
             catch (Exception ex)
             {
                 LogHelper.Write(ex.ToString());
+                return Json(new { error = 1, message = ex.Message });
             }
 
             return Json(new { error = 0 });
@@ -341,7 +344,159 @@ namespace cantonesedict.uimoe.com.Controllers
 
         public ActionResult NoResultList()
         {
+            var response = new H10053Response
+            {
+                error = 0,
+                data = new PagedListDto<H10053ResponseListItem>
+                {
+                    RecordList = new List<H10053ResponseListItem>()
+                }
+            };
+
+            try
+            {
+                var h10053request = ReflectHelper.ParseFromRequest<H10053Request>();
+                var h10053response = LogicHelper.H10053(h10053request);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(response);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteNoResult(string chntext)
+        {
+            try
+            {
+                LogicHelper.H10054(new H10054Request
+                {
+                    chntext = chntext
+                });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+                return Json(new { error = 1, message = ex.Message });
+            }
+
+            return Json(new { error = 0 });
+        }
+
+        public ActionResult PermissionList()
+        {
+            var response = new H10044Response
+            {
+                error = 0,
+                data = new List<H10044ResponseListItem>()
+            };
+
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo == null)
+            {
+                return View(response);
+            }
+
+            try
+            {
+                var h10044request = new H10044Request
+                {
+                    domain = (int)H10044RequestDomainEnum.cantonesedict,
+                    userid = userinfo.UserId
+                };
+
+                var responsebase = LogicHelper.H10044(h10044request);
+                var h10044response = responsebase as H10044Response;
+                if (h10044response != null &&
+                    h10044response.error == 0 &&
+                    h10044response.data != null &&
+                    h10044response.data.Any())
+                {
+                    response.data = h10044response.data.Select(o => new H10044ResponseListItem
+                    {
+                        domain = o.domain,
+                        hasmenu = o.hasmenu,
+                        name = o.name,
+                        rawurl = o.name
+                    }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(response);
+        }
+
+        public ActionResult DeletePermission(int? permissionid)
+        {
+            try
+            {
+                LogicHelper.H10055(new H10055Request
+                {
+                    permissionid = permissionid
+                });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(new { error = 0 });
+        }
+
+        public ActionResult DeleteUserPermission(int? permissionid)
+        {
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo == null)
+            {
+                return Json(new { error = 1, message = "请先登录" });
+            }
+
+            try
+            {
+                LogicHelper.H10055(new H10055Request
+                {
+                    permissionid = permissionid,
+                    userid = userinfo.UserId
+                });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(new { error = 0 });
+        }
+
+        [HttpGet]
+        public ActionResult AddPermission()
+        {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddPermission(string name, string rawurl)
+        {
+            try
+            {
+                LogicHelper.H10057(new H10057Request
+                {
+                    domain = (int)H10044RequestDomainEnum.cantonesedict,
+                    name = name,
+                    rawurl = rawurl
+                });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+                return Json(new { error = 1,message=ex.Message });
+            }
+
+            return Json(new { error = 0 });
         }
     }
 }

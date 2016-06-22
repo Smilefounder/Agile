@@ -13,7 +13,7 @@ namespace Agile.Dtos.API
 
     public class H10044ResponseListItem
     {
-        public int hasmenu { get; set; }
+        public int? hasmenu { get; set; }
 
         public int domain { get; set; }
 

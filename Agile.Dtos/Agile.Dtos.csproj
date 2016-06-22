@@ -149,6 +149,16 @@
     <Compile Include="API\H10051Response.cs" />
     <Compile Include="API\H10052Request.cs" />
     <Compile Include="API\H10052Response.cs" />
+    <Compile Include="API\H10053Request.cs" />
+    <Compile Include="API\H10053Response.cs" />
+    <Compile Include="API\H10054Request.cs" />
+    <Compile Include="API\H10054Response.cs" />
+    <Compile Include="API\H10055Request.cs" />
+    <Compile Include="API\H10055Response.cs" />
+    <Compile Include="API\H10056Request.cs" />
+    <Compile Include="API\H10056Response.cs" />
+    <Compile Include="API\H10057Request.cs" />
+    <Compile Include="API\H10057Response.cs" />
     <Compile Include="API\HBaseResponse.cs" />
     <Compile Include="API\HPagedListRequest.cs" />
     <Compile Include="GroupItemDto.cs" />

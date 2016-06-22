@@ -1123,14 +1123,7 @@ namespace Agile.Helpers.API
             var sb = new StringBuilder();
             foreach (var ch in chars)
             {
-                if (request.createdby == "reimu")
-                {
-                    sb.AppendFormat("INSERT INTO CAN_noresult(ChnText,CreatedAt) VALUES('{0}',GETDATE())", ch);
-                }
-                else
-                {
-                    sb.AppendFormat(" INSERT INTO CAN_feedback(ChnText,CreatedAt) VALUES('{0}',GETDATE());", ch);
-                }
+                sb.AppendFormat(" INSERT INTO CAN_feedback(ChnText,CreatedAt) VALUES('{0}',GETDATE());", ch);
             }
 
             var sqlstr = sb.ToString();
@@ -2100,7 +2093,7 @@ namespace Agile.Helpers.API
                 };
             }
 
-            var sqlstr = @"SELECT t1.HasMenu, t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl FROM T_permission t1
+            var sqlstr = @"SELECT (SELECT COUNT(1) FROM T_menu WHERE T_menu.PermissionId= t1.Id) AS HasMenu, t1.Domain, t1.Name,t1.RawUrl FROM T_permission t1
                            JOIN T_rolepermissionrelation t2 on t2.PermissionId = t1.Id
                            JOIN T_role t3 on t3.Id = t2.RoleId
                            JOIN T_userrolerelation t4 on t4.RoleId = t3.Id
@@ -2112,31 +2105,21 @@ namespace Agile.Helpers.API
                 sqlstr += String.Format(" AND t1.Domain={0}", request.domain.Value);
             }
 
-            if (!String.IsNullOrEmpty(request.area))
+            if (!String.IsNullOrEmpty(request.rawurl))
             {
-                sqlstr += String.Format(" AND t1.Area={0}", request.area);
-            }
-
-            if (!String.IsNullOrEmpty(request.controller))
-            {
-                sqlstr += String.Format(" AND t1.Controller={0}", request.controller);
-            }
-
-            if (!String.IsNullOrEmpty(request.action))
-            {
-                sqlstr += String.Format(" AND t1.Action={0}", request.action);
+                sqlstr += String.Format(" AND t1.RawUrl={0}", request.rawurl);
             }
 
             var list = DataHelper.ExecuteList<H10044ResponseListItem>(sqlstr);
 
-            var sqlstr2 = @"SELECT t1.HasMenu, t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl from T_blacklist t2
+            var sqlstr2 = @"SELECT (SELECT COUNT(1) FROM T_menu WHERE T_menu.PermissionId= t1.Id) AS HasMenu,t1.Domain, t1.Name,t1.RawUrl from T_blacklist t2
                             JOIN T_permission t1 on t1.Id = t2.PermissionId
                             JOIN T_user t3 on t3.Id = t2.UserId
                             WHERE t3.Id=" + userid;
 
             var blacklist = DataHelper.ExecuteList<H10044ResponseListItem>(sqlstr2);
 
-            var sqlstr3 = @"SELECT t1.HasMenu, t1.Domain, t1.Name,ISNULL(t1.Area,'')+'/'+ISNULL(t1.Controller,'')+'/'+ISNULL(t1.Action,'') as RawUrl from T_whitelist t2
+            var sqlstr3 = @"SELECT (SELECT COUNT(1) FROM T_menu WHERE T_menu.PermissionId= t1.Id) AS HasMenu,t1.Domain, t1.Name,t1.RawUrl from T_whitelist t2
                             JOIN T_permission t1 on t1.Id = t2.PermissionId
                             JOIN T_user t3 on t3.Id = t2.UserId
                             WHERE t3.Id=" + userid;
@@ -2356,6 +2339,11 @@ namespace Agile.Helpers.API
             };
         }
 
+        /// <summary>
+        /// 粤语词典 - 查询普通话常用字（随机列表）
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public static H10051Response H10051(H10051Request request)
         {
             var options = new PagedQueryOptions
@@ -2383,6 +2371,11 @@ namespace Agile.Helpers.API
             };
         }
 
+        /// <summary>
+        /// 粤语词典 - 查询普通话常用词（随机列表）
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public static H10052Response H10052(H10052Request request)
         {
             var options = new PagedQueryOptions
@@ -2407,6 +2400,213 @@ namespace Agile.Helpers.API
                         description = o.Description
                     }).ToList()
                 }
+            };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 没有结果的查询管理
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10053Response H10053(H10053Request request)
+        {
+            var options = new PagedQueryOptions
+            {
+                Page = request.page.GetValueOrDefault(1),
+                PageSize = request.pagesize.GetValueOrDefault(10)
+            };
+
+            var pagedlist = QueryHelper.GetPagedList<Can_noresult>(options);
+            return new H10053Response
+            {
+                error = 0,
+                data = new PagedListDto<H10053ResponseListItem>
+                {
+                    Page = pagedlist.Page,
+                    PageSize = pagedlist.PageSize,
+                    RecordCount = pagedlist.RecordCount,
+                    RecordList = pagedlist.RecordList.Select(o => new H10053ResponseListItem
+                    {
+                        chntext = o.ChnText
+                    }).ToList()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 删除查询无结果的项
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10054Response H10054(H10054Request request)
+        {
+            var options = new DeleteOptions();
+            options.Where<Can_noresult>(w => w.ChnText == request.chntext);
+            QueryHelper.Delete<Can_noresult>(options);
+            return new H10054Response
+            {
+                error = 0
+            };
+        }
+
+        /// <summary>
+        /// 删除权限
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10055Response H10055(H10055Request request)
+        {
+            if (!request.permissionid.HasValue)
+            {
+                return new H10055Response
+                {
+                    error = 1,
+                    message = "permissionid必须填写"
+                };
+            }
+
+            if (!request.userid.HasValue)
+            {
+                var sqlstr0 = "DELETE FROM T_permission WHERE ID=" + request.permissionid.Value;
+                DataHelper.ExecuteNonQuery(sqlstr0);
+                return new H10055Response
+                {
+                    error = 0
+                };
+            }
+
+            var sqlstr = "DELETE FROM T_whitelist WHERE PermissionId=@PermissionId1 AND UserId=@UserId1";
+            var sp1 = new SqlParameter("@PermissionId1", SqlDbType.Int, 11);
+            sp1.Value = request.permissionid.Value;
+
+            var sp2 = new SqlParameter("@UserId1", SqlDbType.Int, 11);
+            sp2.Value = request.userid.Value;
+
+            DataHelper.ExecuteNonQuery(sqlstr, sp1, sp2);
+
+            var entity = new T_blacklist
+            {
+                CreatedAt = DateTime.Now,
+                PermissionId = request.permissionid.Value,
+                UserId = request.userid.Value
+            };
+
+            QueryHelper.Save<T_blacklist>(entity);
+            return new H10055Response
+            {
+                error = 0
+            };
+        }
+
+        /// <summary>
+        /// 增加用户权限
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10056Response H10056(H10056Request request)
+        {
+            if (!request.permissionid.HasValue)
+            {
+                return new H10056Response
+                {
+                    error = 1,
+                    message = "permissionid必须填写"
+                };
+            }
+
+            if (!request.userid.HasValue)
+            {
+                return new H10056Response
+                {
+                    error = 1,
+                    message = "userid必须填写"
+                };
+            }
+
+            var sqlstr = "DELETE FROM T_black WHERE PermissionId=@PermissionId1 AND UserId=@UserId1";
+            var sp1 = new SqlParameter("@PermissionId1", SqlDbType.Int, 11);
+            sp1.Value = request.permissionid.Value;
+
+            var sp2 = new SqlParameter("@UserId1", SqlDbType.Int, 11);
+            sp2.Value = request.userid.Value;
+
+            DataHelper.ExecuteNonQuery(sqlstr, sp1, sp2);
+
+            var entity = new T_whitelist
+            {
+                CreatedAt = DateTime.Now,
+                PermissionId = request.permissionid.Value,
+                UserId = request.userid.Value
+            };
+
+            QueryHelper.Save<T_whitelist>(entity);
+            return new H10056Response
+            {
+                error = 0
+            };
+        }
+
+        /// <summary>
+        /// 新增权限
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10057Response H10057(H10057Request request)
+        {
+            if (String.IsNullOrEmpty(request.rawurl))
+            {
+                return new H10057Response
+                {
+                    error = 1,
+                    message = "rawurl必须填写"
+                };
+            }
+
+            if (String.IsNullOrEmpty(request.name))
+            {
+                return new H10057Response
+                {
+                    error = 1,
+                    message = "name必须填写"
+                };
+            }
+
+            if (!request.domain.HasValue)
+            {
+                return new H10057Response
+                {
+                    error = 1,
+                    message = "domain必须填写"
+                };
+            }
+
+            var permissionid = 0;
+            var sqlstr0 = "SELECT TOP 1 CAST(Id AS NVARCHAR(11)) AS IValue FROM T_permission WHERE Domain=" + request.domain.Value + " AND RawUrl='" + request.rawurl + "'";
+            var list = DataHelper.ExecuteList<KeyValueDto>(sqlstr0);
+            if (list != null && list.Any())
+            {
+                return new H10057Response
+                {
+                    error = 1,
+                    message = "此权限已经存在"
+                };
+            }
+
+            sqlstr0 = "INSERT INTO T_permission(Name,Domain,RawUrl,CreatedAt) VALUES(@Name,@Domain,@RawUrl,GETDATE());SELECT @@IDENTITY;";
+            var sp0n = new SqlParameter("@Name", SqlDbType.NVarChar, 50);
+            sp0n.Value = request.name;
+
+            var sp0d = new SqlParameter("@Domain", SqlDbType.Int, 11);
+            sp0d.Value = request.domain.Value;
+
+            var sp0r = new SqlParameter("@RawUrl", SqlDbType.NVarChar, 50);
+            sp0r.Value = request.rawurl;
+
+            var obj = DataHelper.ExecuteScalar(sqlstr0, sp0n, sp0d, sp0r);
+            permissionid = Convert.ToInt32(obj);
+            return new H10057Response
+            {
+                error = 0
             };
         }
     }

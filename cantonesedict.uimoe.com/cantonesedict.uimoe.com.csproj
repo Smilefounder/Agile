@@ -294,6 +294,9 @@
     <Content Include="Views\User\FeedbackListAll.cshtml" />
     <Content Include="Views\Home\GetCanWordList.cshtml" />
     <Content Include="Views\Home\GetCanTermList.cshtml" />
+    <Content Include="Views\User\NoResultList.cshtml" />
+    <Content Include="Views\User\PermissionList.cshtml" />
+    <Content Include="Views\User\AddPermission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

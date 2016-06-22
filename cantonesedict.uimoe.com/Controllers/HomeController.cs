@@ -296,19 +296,26 @@ namespace cantonesedict.uimoe.com.Controllers
 
             try
             {
-                var h10052response = LogicHelper.H10052(ReflectHelper.ParseFromRequest<H10052Request>());
-                if (h10052response != null &&
-                    h10052response.error == 0 &&
-                    h10052response.data != null &&
-                    h10052response.data.RecordList != null &&
-                    h10052response.data.RecordList.Any())
+                var responsebase = LogicHelper.H10046(new H10046Request
+                {
+                    take = 10,
+                    texttype = (int)H10018RequestTextTypeEnum.Term
+                });
+
+                var h10046response = responsebase as H10046Response;
+                if (h10046response != null &&
+                    h10046response.error == 0 &&
+                    h10046response.data != null &&
+                    h10046response.data.Any())
                 {
                     response.data = new PagedListDto<H10052ResponseListItem>
                     {
-                        Page = h10052response.data.Page,
-                        PageSize = h10052response.data.PageSize,
-                        RecordCount = h10052response.data.RecordCount,
-                        RecordList = h10052response.data.RecordList
+                        RecordList = h10046response.data.Select(o => new H10052ResponseListItem
+                        {
+                            canpronounce = o.canpronounce,
+                            cantext = o.cantext,
+                            description = o.chntext
+                        }).ToList()
                     };
                 }
             }

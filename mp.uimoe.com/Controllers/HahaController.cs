@@ -91,11 +91,13 @@ namespace mp.uimoe.com.Controllers
 
         private void HandleTextRequest(string xml, MP_TextResponse response)
         {
-            response.Content = "未找到相关结果";
+            var content = "未找到相关结果";
+            var extra = "\r\n------------------------------\r\n<a href=\"http://haha.uimoe.com/user/index\">点这里查看哈哈MX精选</a>";
 
             var textrequest = SerializeHelper.ParseFromXml<MP_TextRequest>(xml);
-            if (textrequest == null)
+            if (textrequest != null)
             {
+                response.Content = content + extra;
                 return;
             }
 
@@ -112,13 +114,15 @@ namespace mp.uimoe.com.Controllers
                     list.data.Any())
                 {
                     var item = list.data[0];
-                    response.Content = item.content;
+                    content = item.content;
                 }
             }
             catch (Exception ex)
             {
                 LogHelper.Write(ex.ToString());
             }
+
+            response.Content = content + extra;
         }
     }
 }

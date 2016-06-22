@@ -295,6 +295,83 @@ namespace Agile.Helpers
 
             return tempint;
         }
+
+        /// <summary>
+        /// 获取字符串中的时间
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static DateTime GetDateTimeFromStr(string str)
+        {
+            var dt = DateTime.Now;
+            if (str.Contains("分钟") || str.Contains("小时") || str.Contains("天"))
+            {
+                var num = GetNumberFromStr(str);
+                if (str.Contains("分钟"))
+                {
+                    return dt.AddMinutes(0 - num);
+                }
+
+                if (str.Contains("小时"))
+                {
+                    return dt.AddHours(0 - num);
+                }
+
+                if (str.Contains("天"))
+                {
+                    return dt.AddDays(0 - num);
+                }
+            }
+
+            if (str.Length == 5)
+            {
+                str = string.Format("{0}{1}:00", dt.ToString("yyyy-MM-dd "), str);
+                var dt2 = DateTime.Now;
+                if (DateTime.TryParse(str, out dt2))
+                {
+                    return dt2;
+                }
+
+                return dt;
+            }
+
+            if (str.Length == 11)
+            {
+                str = string.Format("{0}{1}:00", dt.ToString("yyyy-"), str);
+                var dt3 = DateTime.Now;
+                if (DateTime.TryParse(str, out dt3))
+                {
+                    return dt3;
+                }
+
+                return dt;
+            }
+
+            if (str.Length == 16)
+            {
+                str = string.Format("{1}:00", str);
+                var dt4 = DateTime.Now;
+                if (DateTime.TryParse(str, out dt4))
+                {
+                    return dt4;
+                }
+
+                return dt;
+            }
+
+            if (str.Length == 19)
+            {
+                var dt5 = DateTime.Now;
+                if (DateTime.TryParse(str, out dt5))
+                {
+                    return dt5;
+                }
+
+                return dt;
+            }
+
+            return dt;
+        }
     }
 
     /// <summary>

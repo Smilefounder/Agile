@@ -1,0 +1,31 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.listitem {
+    border-top: 1px solid #d5d5d5;
+    border-bottom: 1px solid #d5d5d5;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.button {
+    background-color: #1c1c20;
+    border: 0;
+    padding: 5px;
+    color: #fff;
+}
+
+    .button :hover {
+        opacity: 0.8;
+    }
+
+.strech {
+    width: 100%;
+}

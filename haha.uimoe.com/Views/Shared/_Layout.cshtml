@@ -6,61 +6,12 @@
     <title>哈哈MX精选</title>
     <link href="@Url.Content("~/Assets/reset.css")" rel="stylesheet" />
 </head>
-<body>
-    <div style="display:flex;background-color:#1c1c20;height:40px;line-height:40px;">
-        <div style="flex:1;"></div>
-        <div style="flex:1;text-align:right;">
-            <span id="appbaritem1" style="color:#000;padding:5px 25px;background-color:#d5d5d5;border-top-left-radius:3px;border-bottom-left-radius:3px;" class="appbaritem" onclick="view.openlink(this,'@Url.Content("~/Home/Index")')">最热</span>
-        </div>
-        <div style="flex:1;text-align:left;">
-            <span id="appbaritem2" style="color:#000;padding:5px 25px;background-color:#f0f0f0;border-top-right-radius:3px;border-bottom-right-radius:3px;" class="appbaritem" onclick="view.openlink(this,'@Url.Content("~/Home/NewList")')">最新</span>
-        </div>
-        <div style="flex:1;"></div>
-    </div>
+<body style="background-color:#e7e7e7;">
     <div id="container"></div>
     @RenderBody()
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript">
         var view = {
-            showhighlight: function (targetid) {
-                var items = $(".appbaritem");
-                for (var i = 0; i < items.length; i++) {
-                    var item = items[i];
-                    var id = $(item).attr("id");
-                    if (id == targetid) {
-                        $(item).css("background-color", "#d5d5d5");
-                        continue;
-                    }
-
-                    $(item).css("background-color", "#f0f0f0");
-                }
-            },
-            openlink: function (sender, link) {
-                window.location.href = link;
-            },
-            hotlist: {
-                page: 1,
-                pagesize: 10,
-                show: function (sender) {
-                    $.ajax({
-                        type: 'GET',
-                        url: '@Url.Content("~/Home/GetHotList")',
-                        data: { page: view.hotlist.page, pagesize: view.hotlist.pagesize },
-                        dataType: 'html',
-                        complete: function (xhr, status) {
-                            if (status != "success") {
-                                alert("网络好像有点问题哦");
-                                return;
-                            }
-
-                            view.hotlist.page += 1;
-                            var html = $("#container").html();
-                            html += xhr.responseText;
-                            $("#container").html(html);
-                        }
-                    });
-                }
-            },
             newlist: {
                 page: 1,
                 pagesize: 10,
@@ -68,7 +19,7 @@
                     $.ajax({
                         type: 'GET',
                         url: '@Url.Content("~/Home/GetNewList")',
-                        data: { page: view.hotlist.page, pagesize: view.hotlist.pagesize },
+                        data: { page: view.newlist.page, pagesize: view.newlist.pagesize },
                         dataType: 'html',
                         complete: function (xhr, status) {
                             if (status != "success") {

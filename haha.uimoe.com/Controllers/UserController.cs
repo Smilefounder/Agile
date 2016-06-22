@@ -1,6 +1,7 @@
 ﻿using Agile.Dtos;
 using Agile.Dtos.API;
 using Agile.Helpers;
+using haha.uimoe.com.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace haha.uimoe.com.Controllers
 
         public ActionResult GetHotList()
         {
-            return GetNewList((int)H10058RequestTypeEnum.ByGoodCount);
+            return GetNewList((int)NewListTypeEnum.ByGoodCount);
         }
 
         public ActionResult GetNewList(int? rtype)
@@ -41,7 +42,7 @@ namespace haha.uimoe.com.Controllers
             var xpath = "/html/body/div[2]/div/div[2]/div[1]";
 
             var rtype1 = rtype.GetValueOrDefault(0);
-            var rtype2 = (int)H10058RequestTypeEnum.ByGoodCount;
+            var rtype2 = (int)NewListTypeEnum.ByGoodCount;
             if (rtype1 == rtype2)
             {
                 url = "http://www.haha.mx/good/day/";
@@ -49,13 +50,9 @@ namespace haha.uimoe.com.Controllers
             }
 
             url += page;
-            var response = new H10058Response
+            var response = new NewListVM
             {
-                error = 0,
-                data = new PagedListDto<H10058ResponseListItem>
-                {
-                    RecordList = new List<H10058ResponseListItem>()
-                }
+                data =new List<NewListItemVM>()
             };
 
             try
@@ -84,7 +81,7 @@ namespace haha.uimoe.com.Controllers
                     var badcount = item.SelectSingleNode("div[1]/div[3]/div[2]/div[1]/a[2]");
                     var commentcount = item.SelectSingleNode("div[1]/div[3]/div[2]/div[2]/a[3]");
 
-                    response.data.RecordList.Add(new H10058ResponseListItem
+                    response.data.Add(new NewListItemVM
                     {
                         badcount = badcount == null ? 0 : StringHelper.GetNumberFromStr(badcount.InnerText),
                         commentcount = commentcount == null ? 0 : StringHelper.GetNumberFromStr(commentcount.InnerText),

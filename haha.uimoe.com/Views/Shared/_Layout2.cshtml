@@ -6,7 +6,7 @@
     <title>哈哈MX精选</title>
     <link href="@Url.Content("~/Assets/reset.css")" rel="stylesheet" />
 </head>
-<body>
+<body style="background-color:#e7e7e7;">
     <div style="display:flex;background-color:#1c1c20;height:40px;line-height:40px;">
         <div style="flex:1;"></div>
         <div style="flex:1;text-align:right;">
@@ -68,7 +68,7 @@
                     $.ajax({
                         type: 'GET',
                         url: '@Url.Content("~/User/GetNewList")',
-                        data: { page: view.hotlist.page, pagesize: view.hotlist.pagesize },
+                        data: { page: view.newlist.page, pagesize: view.newlist.pagesize },
                         dataType: 'html',
                         complete: function (xhr, status) {
                             if (status != "success") {

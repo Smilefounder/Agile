@@ -13,24 +13,9 @@ namespace Agile.Models
         public string JokeId { get; set; }
 
         [TableField(MaxLength = 50)]
-        public string PostedAt { get; set; }
-
-        [TableField(MaxLength = 50)]
-        public string PostedBy { get; set; }
-
-        [TableField(MaxLength = 50)]
         public string Content { get; set; }
 
         [TableField(MaxLength = 50)]
         public string PictureUrl { get; set; }
-
-        [TableField]
-        public int GoodCount { get; set; }
-
-        [TableField]
-        public int BadCount { get; set; }
-
-        [TableField]
-        public int CommentCount { get; set; }
     }
 }

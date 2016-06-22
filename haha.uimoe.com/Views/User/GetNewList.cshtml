@@ -1,15 +1,15 @@
-﻿@model Agile.Dtos.API.H10058Response
+﻿@model haha.uimoe.com.ViewModels.User.NewListVM
 @{
     Layout = null;
 }
 
-@if (Model.data.RecordList.Any())
+@if (Model.data.Any())
 {
-    foreach (var item in Model.data.RecordList)
+    foreach (var item in Model.data)
     {
         <div class="listitem">
-            <div><span>@item.postedby</span>发表于<span>@item.postedat</span></div>
-            <div>@item.content</div>
+            <div style="padding:5px;"><span style="color:#22b14c;">@item.postedby</span>&nbsp;发表于&nbsp;<span>@item.postedat</span></div>
+            <div style="padding-left:5px;padding-right:5px;padding-top:0;padding-bottom:15px;">@item.content</div>
             <div style="height:5px;width:100%;"></div>
             <div style="height:1px;background-color:#d5d5d5;"></div>
             <div style="height:5px;width:100%;"></div>

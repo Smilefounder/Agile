@@ -2617,12 +2617,7 @@ namespace Agile.Helpers.API
         /// <returns></returns>
         public static H10058Response H10058(H10058Request request)
         {
-            var sqlstr = "SELECT ROW_NUMBER() OVER(ORDER BY GoodCount DESC) AS RW,* FROM HAHA_collection";
-            if (request.rtype.GetValueOrDefault(0) == 1)
-            {
-                sqlstr = "SELECT ROW_NUMBER() OVER(ORDER BY ID DESC) AS RW,* FROM HAHA_collection";
-            }
-
+            var sqlstr = "SELECT ROW_NUMBER() OVER(ORDER BY ID DESC) AS RW,* FROM HAHA_collection";
             var sb = string.Format("SELECT COUNT(1) FROM ({0}) AS Q", sqlstr);
             var obj = DataHelper.ExecuteScalar(sb);
             var recordcount = Convert.ToInt32(obj);
@@ -2643,14 +2638,9 @@ namespace Agile.Helpers.API
                     RecordCount = recordcount,
                     RecordList = list.Select(o => new H10058ResponseListItem
                     {
-                        badcount = o.BadCount,
-                        commentcount = o.CommentCount,
                         content = o.Content,
-                        goodcount = o.GoodCount,
                         jokeid = o.JokeId,
-                        pictureurl = o.PictureUrl,
-                        postedat = o.PostedAt,
-                        postedby = o.PostedBy
+                        pictureurl = o.PictureUrl
                     }).ToList()
                 }
             };

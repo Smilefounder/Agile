@@ -8,13 +8,6 @@ namespace Agile.Dtos.API
 {
     public class H10058Request : HPagedListRequest
     {
-        public int? rtype { get; set; }
-    }
 
-    public enum H10058RequestTypeEnum
-    {
-        ByCreatedAt = 0,
-
-        ByGoodCount = 1
     }
 }

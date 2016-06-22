@@ -17,18 +17,7 @@ namespace haha.uimoe.com.Controllers
             return View();
         }
 
-        public ActionResult NewList()
-        {
-            return View();
-        }
-
-        public ActionResult GetHotList()
-        {
-            var rtype = (int)H10058RequestTypeEnum.ByGoodCount;
-            return GetNewList(rtype);
-        }
-
-        public ActionResult GetNewList(int? rtype)
+        public ActionResult GetNewList()
         {
             var response = new H10058Response
             {
@@ -41,19 +30,7 @@ namespace haha.uimoe.com.Controllers
 
             try
             {
-                var rtype1 = rtype.GetValueOrDefault(0);
-                var rtype2 = (int)H10058RequestTypeEnum.ByGoodCount;
-
                 var h10058request = ReflectHelper.ParseFromRequest<H10058Request>();
-                if (rtype1 == rtype2)
-                {
-                    h10058request.rtype = rtype2;
-                }
-                else
-                {
-                    h10058request.rtype = (int)H10058RequestTypeEnum.ByCreatedAt;
-                }
-
                 var h10058response = LogicHelper.H10058(h10058request);
                 if (h10058response != null &&
                     h10058response.error == 0 &&
@@ -68,14 +45,9 @@ namespace haha.uimoe.com.Controllers
                         RecordCount = h10058response.data.RecordCount,
                         RecordList = h10058response.data.RecordList.Select(o => new H10058ResponseListItem
                         {
-                            badcount = o.badcount,
-                            commentcount = o.commentcount,
                             content = o.content,
-                            goodcount = o.goodcount,
                             jokeid = o.jokeid,
-                            pictureurl = o.pictureurl,
-                            postedat = o.postedat,
-                            postedby = o.postedby
+                            pictureurl = o.pictureurl
                         }).ToList()
                     };
                 }

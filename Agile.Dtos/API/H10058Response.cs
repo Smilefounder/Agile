@@ -15,18 +15,8 @@ namespace Agile.Dtos.API
     {
         public string jokeid { get; set; }
 
-        public string postedat { get; set; }
-
-        public string postedby { get; set; }
-
         public string content { get; set; }
 
         public string pictureurl { get; set; }
-
-        public int goodcount { get; set; }
-
-        public int badcount { get; set; }
-
-        public int commentcount { get; set; }
     }
 }

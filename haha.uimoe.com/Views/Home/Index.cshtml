@@ -2,14 +2,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<button class="button strech" onclick="view.hotlist.show();">加载更多</button>
+<button class="button strech" onclick="view.newlist.show();">加载更多</button>
 
 @section scripts
 {
     <script type="text/javascript">
         $(function () {
-            view.showhighlight('appbaritem1');
-            view.hotlist.show();
+            view.newlist.show();
         });
     </script>
 }

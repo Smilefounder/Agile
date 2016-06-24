@@ -1,12 +1,14 @@
 ﻿using Agile.Dtos;
 using Agile.Dtos.API;
 using Agile.Helpers;
+using Agile.Helpers.API;
 using haha.uimoe.com.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -52,7 +54,7 @@ namespace haha.uimoe.com.Controllers
             url += page;
             var response = new NewListVM
             {
-                data =new List<NewListItemVM>()
+                data = new List<NewListItemVM>()
             };
 
             try
@@ -99,7 +101,72 @@ namespace haha.uimoe.com.Controllers
                 LogHelper.Write(ex.ToString());
             }
 
+            //开启线程保存最热哈哈
+            if (rtype1 == rtype2)
+            {
+                ThreadPool.QueueUserWorkItem(new WaitCallback(SaveHahaUseThread), response);
+            }
+
             return View("~/Views/User/GetNewList.cshtml", response);
+        }
+
+        private void SaveHahaUseThread(object state)
+        {
+            var vm = state as NewListVM;
+            if (vm == null || vm.data == null || vm.data.Count == 0)
+            {
+                return;
+            }
+
+            var h10060request = new H10060Request
+            {
+                data = vm.data.Select(o => new H10060RequestListItem
+                {
+                    content = o.content,
+                    jokeid = o.content,
+                    pictureurl = o.pictureurl
+                }).ToList()
+            };
+
+            try
+            {
+                LogicHelper.H10060(h10060request);
+            }
+            catch
+            {
+
+            }
+
+            var folder = Server.MapPath("~/Assets/Htmls");
+            if (!System.IO.File.Exists(folder))
+            {
+                try
+                {
+                    System.IO.Directory.CreateDirectory(folder);
+                }
+                catch
+                {
+
+                }
+            }
+
+            var templatefile = System.IO.Path.Combine(new string[] { folder, "haha.detail.html" });
+            var templatecontent = System.IO.File.ReadAllText(templatefile);
+
+            //离线下载哈哈
+            foreach (var item in vm.data)
+            {
+                var newfile = System.IO.Path.Combine(new string[] { folder, item.jokeid + ".html" });
+                if (!System.IO.File.Exists(newfile))
+                {
+                    var newtemplatecontent = templatecontent;
+                    newtemplatecontent = newtemplatecontent.Replace("@content", item.content);
+                    using (var sw = new System.IO.StreamWriter(newfile, false, Encoding.UTF8))
+                    {
+                        sw.Write(newtemplatecontent);
+                    }
+                }
+            }
         }
     }
 }

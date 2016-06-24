@@ -19,6 +19,8 @@
     </div>
     <div id="container"></div>
     @RenderBody()
+    <div id="mask" class="mask" style="display:none;"></div>
+    <div id="imagediv" class="imagediv" style="display:none;" onclick="view.image.close()"></div>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript">
         var view = {
@@ -37,6 +39,21 @@
             },
             openlink: function (sender, link) {
                 window.location.href = link;
+            },
+            image: {
+                show: function (sender) {
+                    var src = $(sender).attr("src");
+                    if (src) {
+                        src = src.replace("small", "big");
+                    }
+
+                    $("#mask").show();
+                    $("#imagediv").html('<image style="max-width:100%;" src="' + src + '" />').show();
+                },
+                close: function () {
+                    $("#mask").hide();
+                    $("#imagediv").html('').hide();
+                }
             },
             hotlist: {
                 page: 1,

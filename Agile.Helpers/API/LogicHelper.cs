@@ -2656,7 +2656,7 @@ namespace Agile.Helpers.API
             var sqlstr = "SELECT TOP(@Take) Content FROM HAHA_collection ORDER BY NEWID()";
             if (request.nopicture.GetValueOrDefault(0) > 0)
             {
-                sqlstr = "SELECT TOP(@Take) Content FROM HAHA_collection WHERE PictureUrl IS NULL ORDER BY NEWID()";
+                sqlstr = "SELECT TOP(1) Content FROM HAHA_collection WHERE PictureUrl IS NULL OR LEN(PictureUrl) = 0 ORDER BY NEWID()";
             }
 
             var sp = new SqlParameter("@Take", SqlDbType.Int, 11);
@@ -2667,6 +2667,44 @@ namespace Agile.Helpers.API
             {
                 error = 0,
                 data = list
+            };
+        }
+
+        /// <summary>
+        /// 哈哈MX - 保存哈哈
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10060Response H10060(H10060Request request)
+        {
+            if (request.data == null || request.data.Count == 0)
+            {
+                new H10060Response
+                {
+                    error = 1,
+                    count = 0,
+                    message = "request.data不能为空"
+                };
+            }
+
+            var sb = new StringBuilder();
+            foreach (var item in request.data)
+            {
+                if (string.IsNullOrEmpty(item.pictureurl))
+                {
+                    sb.AppendFormat("INSERT INTO HAHA_collection(Content,JokeId,PictureUrl,CreatedAt) VALUES('{0}','{1}',NULL,GETDATE());\r\n", item.content, item.jokeid);
+                }
+                else
+                {
+                    sb.AppendFormat("INSERT INTO HAHA_collection(Content,JokeId,PictureUrl,CreatedAt) VALUES('{0}','{1}','{2}',GETDATE());\r\n", item.content, item.jokeid, item.pictureurl);
+                }
+            }
+
+            var count = DataHelper.ExecuteNonQuery(sb.ToString());
+            return new H10060Response
+            {
+                error = 0,
+                count = count
             };
         }
     }

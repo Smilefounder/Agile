@@ -112,7 +112,130 @@ namespace cantonesedict.uimoe.com.Controllers
         [LoginAccessAttribute]
         public ActionResult PlanList()
         {
-            return View();
+            var response = new H10061Response
+            {
+                error = 0,
+                data = new PagedListDto<H10061ResponseListItem>
+                {
+                    RecordList = new List<H10061ResponseListItem>()
+                }
+            };
+
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo == null)
+            {
+                return View(response);
+            }
+
+            try
+            {
+                var h10061request = ReflectHelper.ParseFromRequest<H10061Request>();
+                h10061request.userid = userinfo.UserId;
+
+                var h10061response = LogicHelper.H10061(h10061request);
+                if (h10061response != null &&
+                    h10061response.error == 0 &&
+                    h10061response.data != null &&
+                    h10061response.data.RecordList != null &&
+                    h10061response.data.RecordList.Any())
+                {
+                    response.data = new PagedListDto<H10061ResponseListItem>
+                    {
+                        Page = h10061response.data.Page,
+                        PageSize = h10061response.data.PageSize,
+                        RecordCount = h10061response.data.RecordCount,
+                        RecordList = h10061response.data.RecordList
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(response);
+        }
+
+        [HttpGet]
+        [LoginAccess]
+        public ActionResult DoPlan()
+        {
+            ViewBag.sceneid = Request.Params["sceneid"];
+
+            var vm = new DoPlanVM();
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo == null)
+            {
+                return View(vm);
+            }
+
+            try
+            {
+                var h10062request = ReflectHelper.ParseFromRequest<H10062Request>();
+                h10062request.userid = userinfo.UserId;
+
+                var h10062response = LogicHelper.H10062(h10062request);
+                if (h10062response != null && h10062response.data != null)
+                {
+                    vm = new DoPlanVM
+                    {
+                        CanPronounce = h10062response.data.canpronounce,
+                        CanText = h10062response.data.cantext,
+                        ChnText = h10062response.data.chntext,
+                        Finished = h10062response.data.finished > 0,
+                        VocabularyId= h10062response.data.id
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [LoginAccess]
+        public ActionResult DoPlan(int? sceneid, int? vocabularyid)
+        {
+            var response = new H10063Response
+            {
+                error = 1,
+                message = "操作失败，请稍后重试"
+            };
+
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo == null)
+            {
+                response.message = "请先登录";
+                return Json(response);
+            }
+
+            try
+            {
+                var h10063response = LogicHelper.H10063(new H10063Request
+                {
+                    sceneid = sceneid,
+                    userid = userinfo.UserId,
+                    vocabularyid = vocabularyid
+                });
+
+                if (h10063response != null)
+                {
+                    response = new H10063Response
+                    {
+                        error = h10063response.error,
+                        message = h10063response.message
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(response);
         }
 
         [HttpGet]
@@ -493,7 +616,7 @@ namespace cantonesedict.uimoe.com.Controllers
             catch (Exception ex)
             {
                 LogHelper.Write(ex.ToString());
-                return Json(new { error = 1,message=ex.Message });
+                return Json(new { error = 1, message = ex.Message });
             }
 
             return Json(new { error = 0 });

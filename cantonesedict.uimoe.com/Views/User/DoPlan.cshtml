@@ -1,0 +1,64 @@
+﻿@model cantonesedict.uimoe.com.ViewModels.User.DoPlanVM
+@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
+}
+
+
+<div style="text-align:center;">
+    <div style="font-size:48px;color:#22b14c;">@Model.ChnText</div>
+    <div>@Model.CanText</div>
+    <div>@Model.CanPronounce</div>
+    <div style="display:flex;">
+        @if (!Model.Finished)
+        {
+            <button style="flex:1;" class="weui_btn weui_btn_primary" onclick="view.finished(this)">我会了</button><span>&nbsp;</span>
+        }
+        <button style="flex:1;" class="weui_btn weui_btn_primary" onclick="view.refresh(this)">换一个</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var view = {
+        refresh: function (sender) {
+            window.location.reload();
+        },
+        finished: function (sender) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/User/DoPlan")',
+                data: { sceneid: '@ViewBag.sceneid', vocabularyid: '@Model.VocabularyId' },
+                complete: function (xhr, status) {
+                    if (status != "success") {
+                        weuialert("网络好像有点问题哦");
+                        return;
+                    }
+
+                    var response = {};
+
+                    try {
+                        response = JSON.parse(xhr.responseText);
+                    }
+                    catch (e) {
+
+                    }
+
+                    if (!response || response.error != 0) {
+                        var message = "操作失败，请稍后重试";
+                        if (response.message) {
+                            message = response.message;
+                        }
+
+                        weuialert(message);
+                        return;
+                    }
+
+                    $(sender).hide();
+                }
+            });
+        }
+    };
+
+    window.onload = function () {
+        showhighlight("appbaritem4");
+    }
+</script>

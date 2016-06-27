@@ -1,5 +1,40 @@
-﻿@{
-    ViewBag.Title = "PlanList";
+﻿@model Agile.Dtos.API.H10061Response
+@{
+    Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
 }
 
-<h2>PlanList</h2>
+<div class="weui_tab_bd">
+    <div class="weui_cells weui_cells_access">
+        @if (Model == null || Model.data == null || Model.data.RecordList == null || Model.data.RecordList.Count == 0)
+        {
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>未找到相关记录</p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+        }
+        else
+        {
+            foreach (var item in Model.data.RecordList)
+            {
+                <a href="@Url.Content("~/User/DoPlan?sceneid="+item.sceneid)" class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>
+                            <div style="color:#22b14c;">@item.name</div>
+                            <div>词汇量：<span>@item.total</span></div>
+                        </p>
+                    </div>
+                    <div class="weui_cell_ft">已完成：<span>@item.percent</span>%</div>
+                </a>
+            }
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        showhighlight("appbaritem4");
+    }
+</script>

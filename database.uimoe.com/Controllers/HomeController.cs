@@ -54,11 +54,6 @@ namespace database.uimoe.com.Controllers
 
         public string DataTableToHtml(DataTable table, string tablename, int page, int pagesize, int recordcount, bool showInsertButton = false, bool showOperateColumn = false, bool showPager = false)
         {
-            if (table == null || table.Rows.Count == 0)
-            {
-                return "";
-            }
-
             var collist = new List<string>();
             var sb = new StringBuilder();
 
@@ -67,6 +62,12 @@ namespace database.uimoe.com.Controllers
                 sb.AppendLine("<div style=\"height:40px;line-height:40px;\">");
                 sb.AppendLine("<input class=\"btn btn-success\" type=\"button\" value=\"新增\" onclick=\"tryinsert(this,'" + tablename + "')\"/>");
                 sb.AppendLine("</div>");
+            }
+
+            if (table == null || table.Rows.Count == 0)
+            {
+                sb.AppendLine("<div style=\"border:1px solid #d5d5d5;border-radius:3px;height:40px;line-height:40px;\">未找到相关记录</div>");
+                return sb.ToString();
             }
 
             sb.AppendLine("<table class=\"table table-bordered table-condensed table-hover\">");
@@ -349,35 +350,39 @@ namespace database.uimoe.com.Controllers
         [HttpPost]
         public ActionResult Execute(string sqlstr)
         {
-            var responseobj = new { error = 1, message = "操作失败，请稍后再试" };
-
             try
             {
                 if (String.IsNullOrEmpty(sqlstr))
                 {
-                    return Json(responseobj);
+                    throw new Exception("sql语句不能为空");
                 }
 
                 sqlstr = sqlstr.ToUpper();
-                if (sqlstr.Contains("DROP") || sqlstr.Contains("TRUNCATE"))
+                if (sqlstr.Contains("DROP") && sqlstr.Contains("TABLE") && sqlstr.Contains("ALTER") == false)
                 {
-                    return Json(responseobj);
+                    throw new Exception("无法执行DROP TABLE");
                 }
 
                 if (sqlstr.Contains("DELETE") && sqlstr.Contains("WHERE") == false)
                 {
-                    return Json(responseobj);
+                    throw new Exception("无法执行不带WHERE的DELETE");
                 }
 
                 if (sqlstr.Contains("SELECT") && sqlstr.Contains("TOP") == false && sqlstr.Contains("ROW_NUMBER") == false)
                 {
-                    return Json(responseobj);
+                    throw new Exception("无法执行不带TOP的SELECT");
                 }
 
                 if (sqlstr.Contains("SELECT") && (sqlstr.Contains("COUNT") || sqlstr.Contains("SUM") || sqlstr.Contains("MAX") || sqlstr.Contains("MIN")))
                 {
                     var obj = DataHelper.ExecuteScalar(sqlstr);
                     return Json(new { error = 0, exec = "scalar", data = Convert.ToInt32(obj) });
+                }
+
+                if (sqlstr.Contains("CREATE") || sqlstr.Contains("ALTER") && sqlstr.Contains("TABLE"))
+                {
+                    var rows = DataHelper.ExecuteNonQuery(sqlstr);
+                    return Json(new { error = 0, exec = "nonquery", data = rows });
                 }
 
                 if (sqlstr.Contains("INSERT") || sqlstr.Contains("UPDATE") || sqlstr.Contains("DELETE"))
@@ -389,7 +394,7 @@ namespace database.uimoe.com.Controllers
                 var table = DataHelper.ExecuteDataTable(sqlstr);
                 if (table == null)
                 {
-                    return Json(responseobj);
+                    throw new Exception("查询失败了，可能是因为没有相关数据");
                 }
 
                 var str = DataTableToString(table);
@@ -397,8 +402,7 @@ namespace database.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.Message);
-                return Json(responseobj);
+                return Json(new { error = 1, message = ex.Message });
             }
         }
 

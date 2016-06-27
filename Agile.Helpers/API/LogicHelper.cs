@@ -2707,5 +2707,144 @@ namespace Agile.Helpers.API
                 count = count
             };
         }
+
+        /// <summary>
+        /// 粤语词典 - 获取我的计划
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10061Response H10061(H10061Request request)
+        {
+            var userid = request.userid.GetValueOrDefault(0);
+            if (userid <= 0)
+            {
+                return new H10061Response
+                {
+                    error = 1,
+                    message = "userid不能为空"
+                };
+            }
+
+            var sqlstr = "SELECT Id as sceneid,name,(SELECT COUNT(1) FROM CAN_scenewordrelation WHERE CAN_scenewordrelation.SceneId = CAN_scene.Id) AS total,(SELECT COUNT(1) FROM CAN_plan WHERE CAN_plan.SceneId=CAN_scene.Id AND CAN_plan.UserId=" + userid + ") AS finished FROM CAN_scene";
+            var sb1 = String.Format("SELECT COUNT(1) FROM ({0}) AS Q", sqlstr);
+            var obj = DataHelper.ExecuteScalar(sb1);
+            var recordcount = Convert.ToInt32(obj);
+
+            var page = request.page.GetValueOrDefault(1);
+            var pagesize = request.pagesize.GetValueOrDefault(10);
+            var begin = pagesize * (page - 1);
+            var end = pagesize * page;
+
+            var sb2 = String.Format("SELECT * FROM(SELECT *,ROW_NUMBER() OVER(ORDER BY Q.sceneid DESC) AS RW FROM ({0}) AS Q) AS W WHERE W.RW>{1} AND W.RW<={2}", sqlstr, begin, end);
+            var list = DataHelper.ExecuteList<H10061ResponseListItem>(sb2);
+            return new H10061Response
+            {
+                error = 0,
+                data = new PagedListDto<H10061ResponseListItem>
+                {
+                    Page = page,
+                    PageSize = pagesize,
+                    RecordCount = recordcount,
+                    RecordList = list ?? new List<H10061ResponseListItem>()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 完成任务
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10063Response H10063(H10063Request request)
+        {
+            if (request.sceneid.HasValue == false)
+            {
+                return new H10063Response
+                {
+                    error = 1,
+                    message = "sceneid不能为空"
+                };
+            }
+
+            if (request.vocabularyid.HasValue == false)
+            {
+                return new H10063Response
+                {
+                    error = 1,
+                    message = "vocabularyid不能为空"
+                };
+            }
+
+            if (request.userid.HasValue == false)
+            {
+                return new H10063Response
+                {
+                    error = 1,
+                    message = "userid不能为空"
+                };
+            }
+
+            var sqlstr = @"INSERT INTO CAN_plan(SceneId,VocabularyId,UserId,CreatedAt) VALUES(@SceneId,@VocabularyId,@UserId,GETDATE())";
+
+            var sp1 = new SqlParameter("@UserId", SqlDbType.Int, 11);
+            sp1.Value = request.userid.Value;
+
+            var sp2 = new SqlParameter("@SceneId", SqlDbType.Int, 11);
+            sp2.Value = request.sceneid.Value;
+
+            var sp3 = new SqlParameter("@VocabularyId", SqlDbType.Int, 11);
+            sp3.Value = request.vocabularyid.Value;
+
+            DataHelper.ExecuteNonQuery(sqlstr, sp1, sp2, sp3);
+            return new H10063Response
+            {
+                error = 0
+            };
+        }
+
+        public static H10062Response H10062(H10062Request request)
+        {
+            if (request.sceneid.HasValue == false)
+            {
+                return new H10062Response
+                {
+                    error = 1,
+                    message = "sceneid不能为空"
+                };
+            }
+
+            if (request.userid.HasValue == false)
+            {
+                return new H10062Response
+                {
+                    error = 1,
+                    message = "userid不能为空"
+                };
+            }
+
+            var sqlstr = @"SELECT TOP 1 
+                           t2.Id,
+                           t2.ChnText,
+                           t2.CanText,
+                           t2.CanPronounce,
+                           (SELECT COUNT(1) FROM CAN_plan p WHERE p.VocabularyId=t1.VocabularyId AND p.SceneId=t1.SceneId AND p.UserId=@UserId) Finished 
+                           FROM CAN_scenewordrelation t1
+                           JOIN CAN_sceneword t2 on t2.Id = t1.VocabularyId
+                           WHERE t1.SceneId = @SceneId
+                           ORDER BY NEWID();";
+
+            var sp1 = new SqlParameter("@UserId", SqlDbType.Int, 11);
+            sp1.Value = request.userid.Value;
+
+            var sp2 = new SqlParameter("@SceneId", SqlDbType.Int, 11);
+            sp2.Value = request.sceneid.Value;
+
+            var list = DataHelper.ExecuteList<H10062ResponseListItem>(sqlstr, sp1, sp2);
+            return new H10062Response
+            {
+                error = 0,
+                data = list == null ? null : list.FirstOrDefault()
+            };
+        }
     }
 }

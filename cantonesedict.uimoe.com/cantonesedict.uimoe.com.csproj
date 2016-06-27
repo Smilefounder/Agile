@@ -145,6 +145,7 @@
     <Compile Include="ViewModels\Home\ScoreListItemVM.cs" />
     <Compile Include="ViewModels\Home\VocabularyVM.cs" />
     <Compile Include="ViewModels\UserInfoVM.cs" />
+    <Compile Include="ViewModels\User\DoPlanVM.cs" />
     <Compile Include="ViewModels\User\FeedbackListVM.cs" />
     <Compile Include="ViewModels\User\ScoreListItemVM.cs" />
     <Compile Include="ViewModels\User\UserListVM.cs" />
@@ -297,6 +298,7 @@
     <Content Include="Views\User\NoResultList.cshtml" />
     <Content Include="Views\User\PermissionList.cshtml" />
     <Content Include="Views\User\AddPermission.cshtml" />
+    <Content Include="Views\User\DoPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

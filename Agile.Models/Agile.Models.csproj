@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Can_feedback.cs" />
     <Compile Include="Can_noresult.cs" />
+    <Compile Include="CAN_plan.cs" />
     <Compile Include="Can_scene.cs" />
     <Compile Include="Can_sceneword.cs" />
     <Compile Include="Can_scenewordrelation.cs" />

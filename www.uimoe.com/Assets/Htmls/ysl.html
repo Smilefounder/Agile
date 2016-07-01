@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>YSL刻字</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        .form {
+            margin: 10px;
+        }
+
+        .form-control {
+            margin: 10px;
+        }
+
+        .button-reverse {
+            background-color: #ff8080;
+            border: 0;
+            border-radius: 3px;
+            color: #fff;
+            padding: 5px;
+        }
+
+        .button, .text {
+            background-color: #fff0f0;
+            border: 1px solid #ff8080;
+            border-radius: 3px;
+            color: #ff8080;
+            padding: 5px;
+        }
+
+            .button:hover, .button-reverse:hover {
+                cursor: pointer;
+                opacity: 0.8;
+            }
+
+            .text:focus {
+                box-shadow: 0 0 2px #ff8080;
+            }
+
+        .label {
+            display: none;
+            position: fixed;
+            z-index: 10010;
+            color: #d5d5d5;
+            text-shadow: 0 0 2px #000;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-weight: bold;
+            writing-mode: vertical-lr;
+        }
+    </style>
+</head>
+<body>
+    <div style="width:1000px;margin:0 auto;">
+        <div style="width:520px;float:left;border-right:1px solid #ff8080;">
+            <div style="text-align:center;">
+                <img src="ysl.jpg" />
+            </div>
+        </div>
+        <div class="form" style="margin-left:550px;">
+            <div style="height:260px;width:100%;"></div>
+            <div class="form-control">
+                <label style="color:#ff8080;">要刻的字符（数字，字母，.-_!@.#）</label>
+            </div>
+            <div class="form-control">
+                <input class="text" id="text1" type="text" style="width:240px;" placeholder="最多15个字符" maxlength="15" />
+            </div>
+            <div class="form-control">
+                <button id="button1" class="button-reverse" onclick="view.showText(this)">预览</button>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <label id="label1" class="label"></label>
+</body>
+</html>
+<script type="text/javascript">
+    var view = {
+        showText: function (sender) {
+            var text1 = document.getElementById("text1");
+            if (!text1 || !text1.value) {
+                text1.focus();
+                return;
+            }
+
+            var rgx = /^[0-9a-zA-Z.-_!@.#]{1,15}$/;
+            if (!rgx.test(text1.value)) {
+                text1.focus();
+                return;
+            }
+
+            var left = 425;
+            var top = 385 - 4 * text1.value.length;
+
+            var label1 = document.getElementById("label1");
+            label1.innerHTML = text1.value;
+            label1.style.display = "block";
+            label1.style.left = left + "px";
+            label1.style.top = top + "px";
+        }
+    };
+
+    window.onload = function () {
+        var text1 = document.getElementById("text1");
+        text1.setAttribute("value", "G.Jing");
+
+        var button1 = document.getElementById("button1");
+        view.showText(button1);
+    }
+</script>

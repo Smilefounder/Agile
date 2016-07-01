@@ -145,6 +145,8 @@
     <Content Include="Assets\Htmls\mouse_click_speed_test.html" />
     <Content Include="Assets\Htmls\rp_calc.html" />
     <Content Include="Assets\Htmls\rp_test.html" />
+    <Content Include="Assets\Htmls\ysl.html" />
+    <Content Include="Assets\Htmls\ysl.jpg" />
     <Content Include="Assets\Images\cover.jpg" />
     <Content Include="Assets\bootstrap-3.3.5-dist\css\bootstrap-theme.css" />
     <Content Include="Assets\bootstrap-3.3.5-dist\css\bootstrap-theme.min.css" />

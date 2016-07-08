@@ -10,6 +10,48 @@ namespace UME_Music.Helpers
 {
     public class CoreHelper
     {
+        private static T_appConfig appConfig;
+
+        public static T_appConfig AppConfig
+        {
+            get
+            {
+                if (appConfig == null)
+                {
+                    appConfig = new T_appConfig
+                    {
+                        ThisStartUpAt = DateTime.Now
+                    };
+                }
+
+                return appConfig;
+            }
+
+            set
+            {
+                appConfig = value;
+            }
+        }
+
+        private static T_playerConfig playerConfig;
+
+        public static T_playerConfig PlayerConfig
+        {
+            get
+            {
+                if (playerConfig == null)
+                {
+                    playerConfig = new T_playerConfig();
+                }
+
+                return playerConfig;
+            }
+            set
+            {
+                playerConfig = value;
+            }
+        }
+
         private static List<T_music> musiclist;
 
         public static List<T_music> Musiclist
@@ -29,6 +71,45 @@ namespace UME_Music.Helpers
                 musiclist = value;
             }
         }
+
+        private static T_music currentMusic;
+
+        public static T_music CurrentMusic
+        {
+            get
+            {
+                if (currentMusic == null)
+                {
+                    currentMusic = new T_music();
+                }
+
+                return currentMusic;
+            }
+
+            set
+            {
+                currentMusic = value;
+            }
+        }
+
+        /// <summary>
+        /// 播放器状态
+        /// </summary>
+        public static int? PlayerState { get; set; }
+
+        public delegate void PlayerStateChangedEventHandler();
+
+        public delegate void PlayerMediaChangedEventHandler();
+
+        /// <summary>
+        /// 播放器状态变化时
+        /// </summary>
+        public static event PlayerStateChangedEventHandler PlayerStateChanged;
+
+        /// <summary>
+        /// 播放器媒体变化时
+        /// </summary>
+        public static event PlayerMediaChangedEventHandler PlayerMediaChanged;
 
         private static MediaPlayer player;
 

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UME_Music.Helpers;
+using UME_Music.Models;
 using UME_Music.UserControls;
 
 namespace UME_Music
@@ -32,12 +33,47 @@ namespace UME_Music
         {
             LoadAllMusicUserControl();
 
+            CoreHelper.PlayerStateChanged += CoreHelper_PlayerStateChanged;
+            CoreHelper.PlayerMediaChanged += CoreHelper_PlayerMediaChanged;
+
             UIHelper._backgroundBorder = _backgroundBorder;
             UIHelper._mainBorder = _mainBorder;
             UIHelper._maskBorder = _maskBorder;
             UIHelper._dialogBorder = _dialogBorder;
             UIHelper._menuGrid = _menuGrid;
             UIHelper._userControlGrid = _userControlGrid;
+        }
+
+        private void CoreHelper_PlayerMediaChanged()
+        {
+            this.Title = CoreHelper.CurrentMusic.FilePath;
+        }
+
+        private void CoreHelper_PlayerStateChanged()
+        {
+            if (!CoreHelper.PlayerState.HasValue)
+            {
+                return;
+            }
+
+            switch (CoreHelper.PlayerState.Value)
+            {
+                case (int)PlayerStateEnum.Paused:
+                    {
+
+                    }
+                    break;
+                case (int)PlayerStateEnum.Playing:
+                    {
+
+                    }
+                    break;
+                case (int)PlayerStateEnum.Ready:
+                    {
+
+                    }
+                    break;
+            }
         }
 
         private void LoadAllMusicUserControl()

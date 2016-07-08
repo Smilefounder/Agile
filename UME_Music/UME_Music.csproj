@@ -60,7 +60,9 @@
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Helpers\SerializeHelper.cs" />
     <Compile Include="Helpers\UIHelper.cs" />
+    <Compile Include="Models\T_appConfig.cs" />
     <Compile Include="Models\T_music.cs" />
+    <Compile Include="Models\T_playerConfig.cs" />
     <Compile Include="UserControls\AllMusicUserControl.xaml.cs">
       <DependentUpon>AllMusicUserControl.xaml</DependentUpon>
     </Compile>

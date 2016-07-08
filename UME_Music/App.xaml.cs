@@ -52,6 +52,18 @@ namespace UME_Music
                 CoreHelper.Musiclist = SerializeHelper.ParseFromXmlFile<List<T_music>>(musiclistfilepath);
             }
 
+            var appconfigfilepath = System.IO.Path.Combine(new string[] { baseDirectory, "Repository", "AppConfig.ume" });
+            if (System.IO.File.Exists(appconfigfilepath))
+            {
+                CoreHelper.AppConfig = SerializeHelper.ParseFromXmlFile<T_appConfig>(appconfigfilepath);
+            }
+
+            var playerConfigFilePath = System.IO.Path.Combine(new string[] { baseDirectory, "Repository", "AppConfig.ume" });
+            if (System.IO.File.Exists(playerConfigFilePath))
+            {
+                CoreHelper.PlayerConfig = SerializeHelper.ParseFromXmlFile<T_playerConfig>(playerConfigFilePath);
+            }
+
             LogHelper.Write("程序启动");
         }
     }

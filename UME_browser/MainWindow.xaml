@@ -1,0 +1,57 @@
+﻿<Window x:Class="UME_browser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UME_browser"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800" MinHeight="600" MinWidth="800">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button>返回</Button>
+                    <Button>前进</Button>
+                    <Button>刷新</Button>
+                    <Button>恢复</Button>
+                    <Button>历史</Button>
+                    <TextBox Width="200"></TextBox>
+                    <Button>转到</Button>
+                    <TextBox Width="200"></TextBox>
+                    <Button>搜索</Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button>截图</Button>
+                    <Button>下载</Button>
+                    <Button>代理</Button>
+                    <Button>资源</Button>
+                    <Button>设置</Button>
+                    <Button>账号</Button>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Canvas x:Name="_mainCanvas"></Canvas>
+            </Grid>
+            <Grid Grid.Row="2">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <TextBlock>这里显示可定制插件内容，例如笑话，诗词，名言，英语词汇等</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button>CPU%</Button>
+                    <Button>内存%（剩余MB）</Button>
+                    <Button>网络上行</Button>
+                    <Button>网络下行</Button>
+                    <Button>静音</Button>
+                    <Button>-</Button>
+                    <Button>100%</Button>
+                    <Button>+</Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

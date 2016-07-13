@@ -2750,6 +2750,51 @@ namespace Agile.Helpers.API
             };
         }
 
+        public static H10062Response H10062(H10062Request request)
+        {
+            if (request.sceneid.HasValue == false)
+            {
+                return new H10062Response
+                {
+                    error = 1,
+                    message = "sceneid不能为空"
+                };
+            }
+
+            if (request.userid.HasValue == false)
+            {
+                return new H10062Response
+                {
+                    error = 1,
+                    message = "userid不能为空"
+                };
+            }
+
+            var sqlstr = @"SELECT TOP 1 
+                           t2.Id,
+                           t2.ChnText,
+                           t2.CanText,
+                           t2.CanPronounce,
+                           (SELECT COUNT(1) FROM CAN_plan p WHERE p.VocabularyId=t1.VocabularyId AND p.SceneId=t1.SceneId AND p.UserId=@UserId) Finished 
+                           FROM CAN_scenewordrelation t1
+                           JOIN CAN_sceneword t2 on t2.Id = t1.VocabularyId
+                           WHERE t1.SceneId = @SceneId
+                           ORDER BY NEWID();";
+
+            var sp1 = new SqlParameter("@UserId", SqlDbType.Int, 11);
+            sp1.Value = request.userid.Value;
+
+            var sp2 = new SqlParameter("@SceneId", SqlDbType.Int, 11);
+            sp2.Value = request.sceneid.Value;
+
+            var list = DataHelper.ExecuteList<H10062ResponseListItem>(sqlstr, sp1, sp2);
+            return new H10062Response
+            {
+                error = 0,
+                data = list == null ? null : list.FirstOrDefault()
+            };
+        }
+
         /// <summary>
         /// 粤语词典 - 完成任务
         /// </summary>
@@ -2802,48 +2847,14 @@ namespace Agile.Helpers.API
             };
         }
 
-        public static H10062Response H10062(H10062Request request)
+        public static HBaseResponse H10064(H10064Request request)
         {
-            if (request.sceneid.HasValue == false)
-            {
-                return new H10062Response
-                {
-                    error = 1,
-                    message = "sceneid不能为空"
-                };
-            }
-
-            if (request.userid.HasValue == false)
-            {
-                return new H10062Response
-                {
-                    error = 1,
-                    message = "userid不能为空"
-                };
-            }
-
-            var sqlstr = @"SELECT TOP 1 
-                           t2.Id,
-                           t2.ChnText,
-                           t2.CanText,
-                           t2.CanPronounce,
-                           (SELECT COUNT(1) FROM CAN_plan p WHERE p.VocabularyId=t1.VocabularyId AND p.SceneId=t1.SceneId AND p.UserId=@UserId) Finished 
-                           FROM CAN_scenewordrelation t1
-                           JOIN CAN_sceneword t2 on t2.Id = t1.VocabularyId
-                           WHERE t1.SceneId = @SceneId
-                           ORDER BY NEWID();";
-
-            var sp1 = new SqlParameter("@UserId", SqlDbType.Int, 11);
-            sp1.Value = request.userid.Value;
-
-            var sp2 = new SqlParameter("@SceneId", SqlDbType.Int, 11);
-            sp2.Value = request.sceneid.Value;
-
-            var list = DataHelper.ExecuteList<H10062ResponseListItem>(sqlstr, sp1, sp2);
-            return new H10062Response
+            var sqlstr = "SELECT AppType as IKey,COUNT(1) as IValue FROM UME_app GROUP BY AppType";
+            var recordlist = DataHelper.ExecuteList<KeyValueDto>(sqlstr);
+            return new H10064Response
             {
                 error = 0,
-                data = list == null ? null : list.FirstOrDefault()
+                data = recordlist ?? new List<KeyValueDto>()
             };
         }
     }

@@ -17,5 +17,21 @@ namespace Agile.Models
 
         [TableField(MaxLength = 200)]
         public string Href { get; set; }
+
+        [TableField]
+        public int AppType { get; set; }
+    }
+
+    public enum AppTypeEnum
+    {
+        WebPage = 0,
+
+        Weixin = 1,
+
+        Desktop = 2,
+
+        IOS = 3,
+
+        Android = 4
     }
 }

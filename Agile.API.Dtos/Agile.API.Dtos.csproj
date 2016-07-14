@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9DB18EDF-B447-4F64-8DA6-86BAC8CEE0E3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Agile.API.Dtos</RootNamespace>
+    <AssemblyName>Agile.API.Dtos</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="H10000Request.cs" />
+    <Compile Include="H10000Response.cs" />
+    <Compile Include="H10001Request.cs" />
+    <Compile Include="H10001Response.cs" />
+    <Compile Include="H10002Request.cs" />
+    <Compile Include="H10002Response.cs" />
+    <Compile Include="H10003Request.cs" />
+    <Compile Include="H10003Response.cs" />
+    <Compile Include="H10004Request.cs" />
+    <Compile Include="H10004Response.cs" />
+    <Compile Include="H10005Request.cs" />
+    <Compile Include="H10005Response.cs" />
+    <Compile Include="H10006Request.cs" />
+    <Compile Include="H10006Response.cs" />
+    <Compile Include="H10007Request.cs" />
+    <Compile Include="H10007Response.cs" />
+    <Compile Include="H10008Request.cs" />
+    <Compile Include="H10008Response.cs" />
+    <Compile Include="H10009Request.cs" />
+    <Compile Include="H10009Response.cs" />
+    <Compile Include="H10010Request.cs" />
+    <Compile Include="H10010Response.cs" />
+    <Compile Include="H10011Request.cs" />
+    <Compile Include="H10011Response.cs" />
+    <Compile Include="H10012Request.cs" />
+    <Compile Include="H10012Response.cs" />
+    <Compile Include="H10013Request.cs" />
+    <Compile Include="H10013Response.cs" />
+    <Compile Include="H10014Request.cs" />
+    <Compile Include="H10014Response.cs" />
+    <Compile Include="H10015Request.cs" />
+    <Compile Include="H10015Response.cs" />
+    <Compile Include="H10016Request.cs" />
+    <Compile Include="H10016Response.cs" />
+    <Compile Include="H10017Request.cs" />
+    <Compile Include="H10017Response.cs" />
+    <Compile Include="H10018Request.cs" />
+    <Compile Include="H10018Response.cs" />
+    <Compile Include="H10019Request.cs" />
+    <Compile Include="H10019Response.cs" />
+    <Compile Include="H10020Request.cs" />
+    <Compile Include="H10020Response.cs" />
+    <Compile Include="H10021Request.cs" />
+    <Compile Include="H10021Response.cs" />
+    <Compile Include="H10022Request.cs" />
+    <Compile Include="H10022Response.cs" />
+    <Compile Include="H10023Request.cs" />
+    <Compile Include="H10023Response.cs" />
+    <Compile Include="H10024Request.cs" />
+    <Compile Include="H10024Response.cs" />
+    <Compile Include="H10025Request.cs" />
+    <Compile Include="H10025Response.cs" />
+    <Compile Include="H10026Request.cs" />
+    <Compile Include="H10026Response.cs" />
+    <Compile Include="H10027Request.cs" />
+    <Compile Include="H10027Response.cs" />
+    <Compile Include="H10028Request.cs" />
+    <Compile Include="H10028Response.cs" />
+    <Compile Include="H10029Request.cs" />
+    <Compile Include="H10029Response.cs" />
+    <Compile Include="H10030Request.cs" />
+    <Compile Include="H10030Response.cs" />
+    <Compile Include="H10031Request.cs" />
+    <Compile Include="H10031Response.cs" />
+    <Compile Include="H10032Request.cs" />
+    <Compile Include="H10032Response.cs" />
+    <Compile Include="H10033Request.cs" />
+    <Compile Include="H10033Response.cs" />
+    <Compile Include="H10034Request.cs" />
+    <Compile Include="H10034Response.cs" />
+    <Compile Include="H10035Request.cs" />
+    <Compile Include="H10035Response.cs" />
+    <Compile Include="H10036Request.cs" />
+    <Compile Include="H10036Response.cs" />
+    <Compile Include="H10037Request.cs" />
+    <Compile Include="H10037Response.cs" />
+    <Compile Include="H10038Request.cs" />
+    <Compile Include="H10038Response.cs" />
+    <Compile Include="H10039Request.cs" />
+    <Compile Include="H10039Response.cs" />
+    <Compile Include="H10040Request.cs" />
+    <Compile Include="H10040Response.cs" />
+    <Compile Include="H10041Request.cs" />
+    <Compile Include="H10041Response.cs" />
+    <Compile Include="H10042Request.cs" />
+    <Compile Include="H10042Response.cs" />
+    <Compile Include="H10043Request.cs" />
+    <Compile Include="H10043Response.cs" />
+    <Compile Include="H10044Request.cs" />
+    <Compile Include="H10044Response.cs" />
+    <Compile Include="H10045Request.cs" />
+    <Compile Include="H10045Response.cs" />
+    <Compile Include="H10046Request.cs" />
+    <Compile Include="H10046Response.cs" />
+    <Compile Include="H10047Request.cs" />
+    <Compile Include="H10047Response.cs" />
+    <Compile Include="H10048Request.cs" />
+    <Compile Include="H10048Response.cs" />
+    <Compile Include="H10049Request.cs" />
+    <Compile Include="H10049Response.cs" />
+    <Compile Include="H10050Request.cs" />
+    <Compile Include="H10050Response.cs" />
+    <Compile Include="H10051Request.cs" />
+    <Compile Include="H10051Response.cs" />
+    <Compile Include="H10052Request.cs" />
+    <Compile Include="H10052Response.cs" />
+    <Compile Include="H10053Request.cs" />
+    <Compile Include="H10053Response.cs" />
+    <Compile Include="H10054Request.cs" />
+    <Compile Include="H10054Response.cs" />
+    <Compile Include="H10055Request.cs" />
+    <Compile Include="H10055Response.cs" />
+    <Compile Include="H10056Request.cs" />
+    <Compile Include="H10056Response.cs" />
+    <Compile Include="H10057Request.cs" />
+    <Compile Include="H10057Response.cs" />
+    <Compile Include="H10058Request.cs" />
+    <Compile Include="H10058Response.cs" />
+    <Compile Include="H10059Request.cs" />
+    <Compile Include="H10059Response.cs" />
+    <Compile Include="H10060Request.cs" />
+    <Compile Include="H10060Response.cs" />
+    <Compile Include="H10061Request.cs" />
+    <Compile Include="H10061Response.cs" />
+    <Compile Include="H10062Request.cs" />
+    <Compile Include="H10062Response.cs" />
+    <Compile Include="H10063Request.cs" />
+    <Compile Include="H10063Response.cs" />
+    <Compile Include="H10064Request.cs" />
+    <Compile Include="H10064Response.cs" />
+    <Compile Include="HBaseResponse.cs" />
+    <Compile Include="HPagedListRequest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Agile.Dtos\Agile.Dtos.csproj">
+      <Project>{40bae020-6862-4b12-989c-754055de1561}</Project>
+      <Name>Agile.Dtos</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

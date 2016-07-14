@@ -1,7 +1,7 @@
 ﻿using Agile.Attributes;
-using Agile.Dtos.API;
+using Agile.API.Dtos;
 using Agile.Helpers;
-using Agile.Helpers.API;
+using Agile.API.Helpers;
 using api.uimoe.com.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -314,16 +314,6 @@ namespace api.uimoe.com.Controllers
                     case "H10014":
                         {
                             response = LogicHelper.H10014(ReflectHelper.ParseFromRequest<H10014Request>());
-                            break;
-                        }
-                    case "H10015":
-                        {
-                            response = LogicHelper.H10015(ReflectHelper.ParseFromRequest<H10015Request>());
-                            break;
-                        }
-                    case "H10016":
-                        {
-                            response = LogicHelper.H10016(ReflectHelper.ParseFromRequest<H10016Request>());
                             break;
                         }
                     case "H10017":

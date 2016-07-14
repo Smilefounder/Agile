@@ -45,14 +45,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PanGu, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\PanGu.dll</HintPath>
-    </Reference>
-    <Reference Include="PanGu.HighLight, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\PanGu.HighLight.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -231,24 +223,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Dict\ChsDoubleName1.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Dict\ChsDoubleName2.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Dict\ChsSingleName.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Dict\Stopword.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Dict\Synonym.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Dict\Wildcard.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Assets\bootstrap-3.3.5-dist\css\bootstrap-theme.css.map" />
@@ -258,13 +232,8 @@
     <Content Include="Assets\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Assets\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Dict\Dict.dct">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Properties\PublishProfiles\cantonesedict.uimoe.com.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="PanGu.dll" />
-    <Content Include="PanGu.HighLight.dll" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -339,6 +308,14 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Agile.API.Dtos\Agile.API.Dtos.csproj">
+      <Project>{9db18edf-b447-4f64-8da6-86bac8cee0e3}</Project>
+      <Name>Agile.API.Dtos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Agile.API.Helpers\Agile.API.Helpers.csproj">
+      <Project>{e1015345-16fd-4174-a81d-cee55b20d533}</Project>
+      <Name>Agile.API.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Agile.Attributes\Agile.Attributes.csproj">
       <Project>{a0456b6f-ce1e-48dc-bc27-a6e038988383}</Project>
       <Name>Agile.Attributes</Name>

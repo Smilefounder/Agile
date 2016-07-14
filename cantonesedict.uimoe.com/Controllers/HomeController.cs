@@ -1,9 +1,9 @@
-﻿using Agile.Attributes;
+﻿using Agile.API.Dtos;
+using Agile.API.Helpers;
+using Agile.Attributes;
 using Agile.Cache;
 using Agile.Dtos;
-using Agile.Dtos.API;
 using Agile.Helpers;
-using Agile.Helpers.API;
 using cantonesedict.uimoe.com.ViewModels;
 using cantonesedict.uimoe.com.ViewModels.Home;
 using cantonesedict.uimoe.com.ViewModels.User;
@@ -40,66 +40,21 @@ namespace cantonesedict.uimoe.com.Controllers
                 input = Server.UrlDecode(input);
 
                 vm.Input = input;
-                var h10015responsebase = LogicHelper.H10015(new H10015Request
+                var h10014responsebase = LogicHelper.H10014(new H10014Request
                 {
                     input = input
                 });
 
-                var invokeh10016 = true;
-                var h10015response = h10015responsebase as H10015Response;
-                if (h10015response != null && h10015response.data != null && h10015response.data.Any())
+                var h10014response = h10014responsebase as H10014Response;
+                if (h10014response != null && h10014response.data != null && h10014response.data.Any())
                 {
-                    var allMatched = h10015response.data.FirstOrDefault();
-                    if (allMatched != null)
+                    vm.OneMatches = h10014response.data.Select(o => new IndexListItemVM
                     {
-                        //如果查单个字成功了
-                        //就不需要再调用后面的H10016单个字查询接口了
-                        if (input.Length == 1)
-                        {
-                            invokeh10016 = false;
-                        }
-
-                        vm.AllMatched = new IndexListItemVM
-                        {
-                            CanPronounce = allMatched.canpronounce,
-                            CanText = allMatched.cantext,
-                            CanVoice = allMatched.canvoice,
-                            ChnText = allMatched.chntext
-                        };
-                    }
-                }
-
-                if (invokeh10016)
-                {
-                    var h10016responsebase = LogicHelper.H10016(new H10016Request
-                    {
-                        input = input
-                    });
-
-                    var h10016response = h10016responsebase as H10016Response;
-                    if (h10016response != null)
-                    {
-                        vm.OneMatches = h10016response.data.Select(o => new IndexListItemVM
-                        {
-                            CanPronounce = o.canpronounce,
-                            CanText = o.cantext,
-                            CanVoice = o.canvoice,
-                            ChnText = o.chntext
-                        }).ToList();
-
-                        var sb = "";
-                        foreach (var ch in input)
-                        {
-                            var chstr = ch.ToString();
-                            var cnt = vm.OneMatches.Count(w => w.ChnText == chstr);
-                            if (cnt == 0)
-                            {
-                                sb += chstr;
-                            }
-                        }
-
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(SaveFeedbackUseThread), sb);
-                    }
+                        CanPronounce = o.canpronounce,
+                        CanText = o.canpronounce,
+                        CanVoice = o.canvoice,
+                        ChnText = o.chntext
+                    }).ToList();
                 }
             }
             catch (Exception ex)

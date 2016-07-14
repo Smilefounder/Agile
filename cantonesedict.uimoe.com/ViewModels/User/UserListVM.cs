@@ -1,5 +1,5 @@
 ﻿using Agile.Dtos;
-using Agile.Dtos.API;
+using Agile.API.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

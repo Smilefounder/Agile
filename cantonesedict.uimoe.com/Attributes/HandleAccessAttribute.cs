@@ -1,7 +1,7 @@
 ﻿using Agile.Attributes;
-using Agile.Dtos.API;
+using Agile.API.Dtos;
 using Agile.Helpers;
-using Agile.Helpers.API;
+using Agile.API.Helpers;
 using cantonesedict.uimoe.com.ViewModels;
 using System;
 using System.Collections.Generic;

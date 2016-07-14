@@ -1,6 +1,6 @@
-﻿using Agile.Dtos.API;
+﻿using Agile.API.Dtos;
 using Agile.Helpers;
-using Agile.Helpers.API;
+using Agile.API.Helpers;
 using mp.uimoe.com.Helpers;
 using mp.uimoe.com.Models;
 using System;

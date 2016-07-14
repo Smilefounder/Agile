@@ -260,6 +260,14 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Agile.API.Dtos\Agile.API.Dtos.csproj">
+      <Project>{9db18edf-b447-4f64-8da6-86bac8cee0e3}</Project>
+      <Name>Agile.API.Dtos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Agile.API.Helpers\Agile.API.Helpers.csproj">
+      <Project>{e1015345-16fd-4174-a81d-cee55b20d533}</Project>
+      <Name>Agile.API.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Agile.Attributes\Agile.Attributes.csproj">
       <Project>{a0456b6f-ce1e-48dc-bc27-a6e038988383}</Project>
       <Name>Agile.Attributes</Name>

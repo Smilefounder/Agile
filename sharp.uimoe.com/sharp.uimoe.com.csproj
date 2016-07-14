@@ -100,6 +100,14 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Agile.API.Dtos\Agile.API.Dtos.csproj">
+      <Project>{9db18edf-b447-4f64-8da6-86bac8cee0e3}</Project>
+      <Name>Agile.API.Dtos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Agile.API.Helpers\Agile.API.Helpers.csproj">
+      <Project>{e1015345-16fd-4174-a81d-cee55b20d533}</Project>
+      <Name>Agile.API.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Agile.Dtos\Agile.Dtos.csproj">
       <Project>{40bae020-6862-4b12-989c-754055de1561}</Project>
       <Name>Agile.Dtos</Name>

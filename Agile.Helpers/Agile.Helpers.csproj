@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\LogicHelper.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DateTimeHelper.cs" />
     <Compile Include="ExpressionHelper.cs" />

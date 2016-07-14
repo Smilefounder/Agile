@@ -1,7 +1,7 @@
 ﻿using Agile.Dtos;
-using Agile.Dtos.API;
+using Agile.API.Dtos;
 using Agile.Helpers;
-using Agile.Helpers.API;
+using Agile.API.Helpers;
 using sharp.uimoe.com.Dtos;
 using System;
 using System.Collections.Generic;

@@ -1,8 +1,8 @@
 ﻿using Agile.Attributes;
 using Agile.Dtos;
-using Agile.Dtos.API;
+using Agile.API.Dtos;
 using Agile.Helpers;
-using Agile.Helpers.API;
+using Agile.API.Helpers;
 using cantonesedict.uimoe.com.ViewModels;
 using cantonesedict.uimoe.com.ViewModels.Home;
 using cantonesedict.uimoe.com.ViewModels.User;

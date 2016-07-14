@@ -138,6 +138,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\eb32191d4054b89ff9ea3d0df193ba93.png" />
     <Content Include="Assets\Htmls\choose_color.html" />
     <Content Include="Assets\Htmls\fate_calc.html" />
     <Content Include="Assets\Htmls\get_rand_num.html" />

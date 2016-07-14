@@ -48,14 +48,14 @@
                     <div class="weui_cell_bd weui_cell_primary">
                         <p>
                             <div style="color:#22b14c;">@item.UserName</div>
-                            @if (item.Status.GetValueOrDefault(0) == (int)Agile.Dtos.API.H10047UserStatusEnum.Normal)
+                            @if (item.Status.GetValueOrDefault(0) == (int)Agile.API.Dtos.H10047UserStatusEnum.Normal)
                             {
                                 <div>
                                     <a href="javascript:void(0);" onclick="view.forbid(this,'@item.UserName')">封禁</a>
                                 </div>
                             }
 
-                            @if (item.Status.GetValueOrDefault(0) == (int)Agile.Dtos.API.H10047UserStatusEnum.Pending)
+                            @if (item.Status.GetValueOrDefault(0) == (int)Agile.API.Dtos.H10047UserStatusEnum.Pending)
                             {
                                 <div>
                                     <span style="color:#ed1c24;">@item.StatusDisplay</span>&nbsp;
@@ -64,7 +64,7 @@
                                 </div>
                             }
 
-                            @if (item.Status.GetValueOrDefault(0) == (int)Agile.Dtos.API.H10047UserStatusEnum.Forbidden)
+                            @if (item.Status.GetValueOrDefault(0) == (int)Agile.API.Dtos.H10047UserStatusEnum.Forbidden)
                             {
                                 <div>
                                     <span style="color:#ed1c24;">@item.StatusDisplay</span>&nbsp;

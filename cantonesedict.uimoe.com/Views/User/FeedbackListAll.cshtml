@@ -55,7 +55,7 @@
                                 <div>[粤]<span>@item.CanText</span></div>
                             }
 
-                            @if (item.Status == (int)Agile.Dtos.API.H10022ResponseFeedbackStatusEnum.Pending)
+                            @if (item.Status == (int)Agile.API.Dtos.H10022ResponseFeedbackStatusEnum.Pending)
                             {
                                 <div><span style="color:#ed1c24;">@item.StatusDisplay</span>&nbsp;<a href="javascript:void(0);" onclick="view.pass(this,'@item.ChnText')">处理</a></div>
                             }

@@ -1,4 +1,5 @@
 ﻿using Agile.Helpers;
+using Agile.Web.Helpers;
 using sharp.uimoe.com.Dtos;
 using sharp.uimoe.com.Helpers;
 using System;
@@ -27,17 +28,17 @@ namespace sharp.uimoe.com
             {
                 case "select":
                     {
-                        obj = CoreHelper.Select(ReflectHelper.ParseFromRequest<SelectDto>());
+                        obj = CoreHelper.Select(WebHelper.ParseFromRequest<SelectDto>());
                     }
                     break;
                 case "ul":
                     {
-                        obj = CoreHelper.Ul(ReflectHelper.ParseFromRequest<UlDto>());
+                        obj = CoreHelper.Ul(WebHelper.ParseFromRequest<UlDto>());
                     }
                     break;
                 case "table":
                     {
-                        obj = CoreHelper.Table(ReflectHelper.ParseFromRequest<TableDto>());
+                        obj = CoreHelper.Table(WebHelper.ParseFromRequest<TableDto>());
                     }
                     break;
             }

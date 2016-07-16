@@ -4,6 +4,7 @@ using Agile.Attributes;
 using Agile.Cache;
 using Agile.Dtos;
 using Agile.Helpers;
+using Agile.Web.Helpers;
 using cantonesedict.uimoe.com.ViewModels;
 using cantonesedict.uimoe.com.ViewModels.Home;
 using cantonesedict.uimoe.com.ViewModels.User;
@@ -168,7 +169,7 @@ namespace cantonesedict.uimoe.com.Controllers
 
             try
             {
-                var h10051request = ReflectHelper.ParseFromRequest<H10051Request>();
+                var h10051request = WebHelper.ParseFromRequest<H10051Request>();
                 var h10051response = LogicHelper.H10051(h10051request);
                 if (h10051response != null &&
                     h10051response.error == 0 &&
@@ -286,7 +287,7 @@ namespace cantonesedict.uimoe.com.Controllers
         {
             try
             {
-                var responsebase = LogicHelper.H10037(ReflectHelper.ParseFromRequest<H10037Request>());
+                var responsebase = LogicHelper.H10037(WebHelper.ParseFromRequest<H10037Request>());
                 var response = responsebase as H10037Response;
                 if (response != null && response.error == 0)
                 {
@@ -305,7 +306,7 @@ namespace cantonesedict.uimoe.com.Controllers
         {
             try
             {
-                var responsebase = LogicHelper.H10038(ReflectHelper.ParseFromRequest<H10038Request>());
+                var responsebase = LogicHelper.H10038(WebHelper.ParseFromRequest<H10038Request>());
                 var response = responsebase as H10038Response;
                 if (response != null && response.error == 0)
                 {
@@ -409,7 +410,7 @@ namespace cantonesedict.uimoe.com.Controllers
                 return Json(new { error = 1, message = "请先登录" });
             }
 
-            var request = ReflectHelper.ParseFromRequest<H10040Request>();
+            var request = WebHelper.ParseFromRequest<H10040Request>();
             request.userid = userinfo.UserId;
 
             ThreadPool.QueueUserWorkItem(new WaitCallback(MakeScoreUseThread), request);
@@ -665,7 +666,7 @@ namespace cantonesedict.uimoe.com.Controllers
         {
             try
             {
-                var request = ReflectHelper.ParseFromRequest<H10009Request>();
+                var request = WebHelper.ParseFromRequest<H10009Request>();
                 var responsebase = LogicHelper.H10009(request);
                 var response = responsebase as H10009Response;
                 if (response != null && response.error == 0)
@@ -750,7 +751,7 @@ namespace cantonesedict.uimoe.com.Controllers
         {
             try
             {
-                var response = LogicHelper.H10010(ReflectHelper.ParseFromRequest<H10010Request>());
+                var response = LogicHelper.H10010(WebHelper.ParseFromRequest<H10010Request>());
                 return Json(response);
             }
             catch (Exception ex)

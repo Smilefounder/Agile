@@ -1,0 +1,53 @@
+﻿@{
+    Layout = "~/Views/Shared/_WithFrameLayout.cshtml";
+}
+
+@RenderSection("styles", required: false)
+
+<div style="width:1000px;margin:0 auto;">
+    <div style="width:700px;float:left;">
+        <div class="newline"></div>
+        <div style="height:40px;line-height:40px;">
+            <span style="color:#22b14c;">@ViewBag.apptypedisplay</span>&nbsp;-&nbsp;
+            <span style="color:#22b14c;">@ViewBag.apptitle</span>
+        </div>
+        <div class="splitter-d"></div>
+        <div class="newline"></div>
+        @RenderBody()
+    </div>
+    <div style="margin-left:720px;">
+        <div class="newline"></div>
+        <div style="height:40px;line-height:40px;">
+            <span style="color:#22b14c;">打赏</span>
+        </div>
+        <div class="splitter-d"></div>
+        <div class="newline"></div>
+        <div style="color:#22b14c;">
+            <span style="color:#00a2e8;" onclick="showqrcode('alipay')">支付宝</span>&nbsp;|&nbsp;<span onclick="showqrcode('tenpay')">微信</span>
+        </div>
+        <div class="newline"></div>
+        <div id="alipaydiv">
+            <img style="max-width:100%;" src="@Url.Content("~/Assets/Images/alipay.jpg")" />
+        </div>
+        <div id="tenpaydiv" style="display:none;">
+            <img style="max-width:100%;" src="@Url.Content("~/Assets/Images/tenpay.jpg")" />
+        </div>
+    </div>
+    <div style="clear:both;"></div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function showqrcode(pay) {
+            if (pay == "alipay") {
+                $("#alipaydiv").show();
+                $("#tenpaydiv").hide();
+                return;
+            }
+
+            $("#tenpaydiv").show();
+            $("#alipaydiv").hide();
+        }
+    </script>
+}

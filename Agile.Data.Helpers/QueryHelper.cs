@@ -1,5 +1,6 @@
 ﻿using Agile.Attributes;
 using Agile.Dtos;
+using Agile.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,7 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Agile.Helpers
+namespace Agile.Data.Helpers
 {
     public class QueryHelper
     {

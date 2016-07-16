@@ -5,7 +5,7 @@
 @section styles
 {
     <style type="text/css">
-        .navbar {
+        .mynavbar {
             position: fixed;
             height: 40px;
             line-height: 40px;
@@ -16,18 +16,20 @@
             top: 0;
         }
 
-            .navbar li {
+            .mynavbar li {
                 list-style: none;
                 display: inline;
             }
     </style>
 }
 
-<div class="navbar">
+@RenderSection("styles", required: false)
+
+<div class="mynavbar">
     <div style="width:1000px;margin:0 auto;">
         <ul>
             <li>
-                柚萌 - design &amp; develop
+                <a href="@Url.Content("~/Home/Index")">柚萌 - design &amp; develop</a>
             </li>
         </ul>
     </div>
@@ -39,9 +41,4 @@
     </div>
 </div>
 
-<div style="position:fixed;bottom:0;background-color:#f7f7fa;width:100%;">
-    <div style="width:1000px;margin:0 auto;height:32px;line-height:32px;">
-        <a href="http://www.uimoe.com" target="_blank">uimoe design</a>&nbsp;<span style="color:#22b14c;">all rights reserved.</span>
-        <a href="http://www.miitbeian.gov.cn" target="_blank">赣ICP备16000344号</a>
-    </div>
-</div>
+@RenderSection("scripts", required: false)

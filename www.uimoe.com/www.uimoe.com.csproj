@@ -131,6 +131,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -139,15 +140,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\eb32191d4054b89ff9ea3d0df193ba93.png" />
-    <Content Include="Assets\Htmls\choose_color.html" />
-    <Content Include="Assets\Htmls\fate_calc.html" />
-    <Content Include="Assets\Htmls\get_rand_num.html" />
-    <Content Include="Assets\Htmls\get_rand_str.html" />
-    <Content Include="Assets\Htmls\mouse_click_speed_test.html" />
-    <Content Include="Assets\Htmls\rp_calc.html" />
-    <Content Include="Assets\Htmls\rp_test.html" />
-    <Content Include="Assets\Htmls\ysl.html" />
-    <Content Include="Assets\Htmls\ysl.jpg" />
+    <Content Include="Assets\Images\tenpay.jpg" />
+    <Content Include="Assets\Images\alipay.jpg" />
+    <Content Include="Assets\Images\ysl.jpg" />
     <Content Include="Assets\Images\cover.jpg" />
     <Content Include="Assets\bootstrap-3.3.5-dist\css\bootstrap-theme.css" />
     <Content Include="Assets\bootstrap-3.3.5-dist\css\bootstrap-theme.min.css" />
@@ -252,6 +247,16 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_WithFrameLayout.cshtml" />
+    <Content Include="Views\App\ChooseColor.cshtml" />
+    <Content Include="Views\App\FateCalc.cshtml" />
+    <Content Include="Views\App\GetRandNum.cshtml" />
+    <Content Include="Views\App\GetRandStr.cshtml" />
+    <Content Include="Views\App\MouseClickSpeedTest.cshtml" />
+    <Content Include="Views\App\RpCalc.cshtml" />
+    <Content Include="Views\App\RpTest.cshtml" />
+    <Content Include="Views\App\YSL.cshtml" />
+    <Content Include="Views\Shared\_AppDetailLayout.cshtml" />
+    <Content Include="Views\Home\AppList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -273,6 +278,10 @@
       <Project>{a0456b6f-ce1e-48dc-bc27-a6e038988383}</Project>
       <Name>Agile.Attributes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Agile.Data.Helpers\Agile.Data.Helpers.csproj">
+      <Project>{36ae6e88-5247-42dc-be02-46ec03556cba}</Project>
+      <Name>Agile.Data.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Agile.Dtos\Agile.Dtos.csproj">
       <Project>{40bae020-6862-4b12-989c-754055de1561}</Project>
       <Name>Agile.Dtos</Name>
@@ -280,6 +289,10 @@
     <ProjectReference Include="..\Agile.Helpers\Agile.Helpers.csproj">
       <Project>{535e896a-71fb-42a0-a79e-1225aed49489}</Project>
       <Name>Agile.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Agile.Web.Helpers\Agile.Web.Helpers.csproj">
+      <Project>{f8d9f19b-b68f-4807-995e-0173187cc34a}</Project>
+      <Name>Agile.Web.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

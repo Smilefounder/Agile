@@ -3,45 +3,214 @@
     Layout = "~/Views/Shared/_WithFrameLayout.cshtml";
 }
 
-@if (Model.data != null && Model.data.Any())
-{
-    <div>
-        <div class="newline"></div>
-        <div>
-            <div style="float:left;color:#22b14c;">
-                网页小工具
-            </div>
-            <div style="float:right;">
-                <a onclick="changeapplist()" href="javascript:void(0);">换一批</a>&nbsp;&nbsp;<span style="color:#d5d5d5;">|</span>&nbsp;
-                <a onclick="changeapplist()" href="javascript:void(0);">全部</a>
-            </div>
-            <div style="clear:both;"></div>
-        </div>
-        <div class="newline"></div>
-        <div class="splitter-d"></div>
-    </div>
-    foreach (var item in Model.data)
-    {
-        <div class="newline"></div>
-        <div style="background-color:#f7f7fa;padding:10px;">
-            <div style="color:#22b14c;">@item.title</div>
-            <a href="javascript:void(0);" onclick="openlink('@item.href')">@item.href</a>
-        </div>
+<style type="text/css">
+    .applist {
+        width: 1000px;
+        height: 70px;
     }
+
+        .applist li {
+            float: left;
+            list-style: none;
+            width: 240px;
+            height: 70px;
+            margin-right: 10px;
+        }
+</style>
+
+<div>
+    <div class="newline"></div>
+    <div>
+        <div style="float:left;color:#22b14c;">
+            网页小工具
+        </div>
+        <div style="float:right;margin-right:10px;">
+            <a onclick="changeapplist('@((int)Agile.API.Dtos.H10013ResponseListItemAppTypeEnum.WebPage)')" href="javascript:void(0);">更多</a>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div class="newline"></div>
+    <div class="splitter-d" style="width:990px;"></div>
+</div>
+@if (Model.webapps != null && Model.webapps.Any())
+{
+    <ul class="applist">
+        @foreach (var item in Model.webapps)
+        {
+            <li>
+                <div class="newline"></div>
+                <div style="background-color:#f7f7fa;padding:10px;">
+                    <div style="color:#22b14c;">@item.title</div>
+                    <a href="javascript:void(0);" onclick="openlink('@item.href')">@item.href</a>
+                </div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <div class="newline"></div>
+    <div style="background-color:#f7f7fa;padding:10px;width:970px;">
+        <div style="color:#22b14c;">没有相关数据</div>
+    </div>
+}
+
+<div>
+    <div class="newline"></div>
+    <div>
+        <div style="float:left;color:#22b14c;">
+            微信公众号
+        </div>
+        <div style="float:right;margin-right:10px;">
+            <a onclick="changeapplist('@((int)Agile.API.Dtos.H10013ResponseListItemAppTypeEnum.Weixin)')" href="javascript:void(0);">更多</a>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div class="newline"></div>
+    <div class="splitter-d" style="width:990px;"></div>
+</div>
+@if (Model.wxapps != null && Model.wxapps.Any())
+{
+    <ul class="applist">
+        @foreach (var item in Model.wxapps)
+        {
+            <li>
+                <div class="newline"></div>
+                <div style="background-color:#f7f7fa;padding:10px;">
+                    <div style="color:#22b14c;">@item.title</div>
+                    <a href="javascript:void(0);" onclick="openlink('@item.href')">@item.href</a>
+                </div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <div class="newline"></div>
+    <div style="background-color:#f7f7fa;padding:10px;width:970px;">
+        <div style="color:#22b14c;">没有相关数据</div>
+    </div>
+}
+
+<div>
+    <div class="newline"></div>
+    <div>
+        <div style="float:left;color:#22b14c;">
+            Windows应用
+        </div>
+        <div style="float:right;margin-right:10px;">
+            <a onclick="changeapplist('@((int)Agile.API.Dtos.H10013ResponseListItemAppTypeEnum.Desktop)')" href="javascript:void(0);">更多</a>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div class="newline"></div>
+    <div class="splitter-d" style="width:990px;"></div>
+</div>
+@if (Model.winapps != null && Model.winapps.Any())
+{
+    <ul class="applist">
+        @foreach (var item in Model.winapps)
+        {
+            <li>
+                <div class="newline"></div>
+                <div style="background-color:#f7f7fa;padding:10px;">
+                    <div style="color:#22b14c;">@item.title</div>
+                    <a href="javascript:void(0);" onclick="openlink('@item.href')">@item.href</a>
+                </div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <div class="newline"></div>
+    <div style="background-color:#f7f7fa;padding:10px;width:970px;">
+        <div style="color:#22b14c;">没有相关数据</div>
+    </div>
+}
+
+<div>
+    <div class="newline"></div>
+    <div>
+        <div style="float:left;color:#22b14c;">
+            iOS应用
+        </div>
+        <div style="float:right;margin-right:10px;">
+            <a onclick="changeapplist('@((int)Agile.API.Dtos.H10013ResponseListItemAppTypeEnum.IOS)')" href="javascript:void(0);">更多</a>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div class="newline"></div>
+    <div class="splitter-d" style="width:990px;"></div>
+</div>
+@if (Model.iosapps != null && Model.iosapps.Any())
+{
+    <ul class="applist">
+        @foreach (var item in Model.iosapps)
+        {
+            <li>
+                <div class="newline"></div>
+                <div style="background-color:#f7f7fa;padding:10px;">
+                    <div style="color:#22b14c;">@item.title</div>
+                    <a href="javascript:void(0);" onclick="openlink('@item.href')">@item.href</a>
+                </div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <div class="newline"></div>
+    <div style="background-color:#f7f7fa;padding:10px;width:970px;">
+        <div style="color:#22b14c;">没有相关数据</div>
+    </div>
+}
+
+<div>
+    <div class="newline"></div>
+    <div>
+        <div style="float:left;color:#22b14c;">
+            Android应用
+        </div>
+        <div style="float:right;margin-right:10px;">
+            <a onclick="changeapplist('@((int)Agile.API.Dtos.H10013ResponseListItemAppTypeEnum.Android)')" href="javascript:void(0);">更多</a>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div class="newline"></div>
+    <div class="splitter-d" style="width:990px;"></div>
+</div>
+@if (Model.androidapps != null && Model.androidapps.Any())
+{
+    <ul class="applist">
+        @foreach (var item in Model.androidapps)
+        {
+            <li>
+                <div class="newline"></div>
+                <div style="background-color:#f7f7fa;padding:10px;">
+                    <div style="color:#22b14c;">@item.title</div>
+                    <a href="javascript:void(0);" onclick="openlink('@item.href')">@item.href</a>
+                </div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <div class="newline"></div>
+    <div style="background-color:#f7f7fa;padding:10px;width:970px;">
+        <div style="color:#22b14c;">没有相关数据</div>
+    </div>
 }
 
 <script type="text/javascript">
-    function openlink(link) {
-        if (link && link.indexOf("http://") >= 0) {
-            linkto(link, 'newtab');
-            return;
-        }
-
-        var url = '@Url.Content("~/")' + 'Assets/Htmls/' + link;
-        linkto(url, 'newtab');
+    function openlink(href) {
+        var url = '@Url.Content("~/")' + 'App/' + href;
+        window.location.href = url;
     }
 
-    function changeapplist() {
-        window.location.reload();
+    function changeapplist(apptype) {
+        var url = '@Url.Content("~/")' + "Home/AppList?apptype=" + apptype;
+        window.location.href = url;
     }
 </script>

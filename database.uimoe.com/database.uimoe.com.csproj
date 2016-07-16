@@ -266,6 +266,10 @@
       <Project>{a0456b6f-ce1e-48dc-bc27-a6e038988383}</Project>
       <Name>Agile.Attributes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Agile.Data.Helpers\Agile.Data.Helpers.csproj">
+      <Project>{36ae6e88-5247-42dc-be02-46ec03556cba}</Project>
+      <Name>Agile.Data.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Agile.Dtos\Agile.Dtos.csproj">
       <Project>{40bae020-6862-4b12-989c-754055de1561}</Project>
       <Name>Agile.Dtos</Name>
@@ -273,6 +277,10 @@
     <ProjectReference Include="..\Agile.Helpers\Agile.Helpers.csproj">
       <Project>{535e896a-71fb-42a0-a79e-1225aed49489}</Project>
       <Name>Agile.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Agile.Web.Helpers\Agile.Web.Helpers.csproj">
+      <Project>{f8d9f19b-b68f-4807-995e-0173187cc34a}</Project>
+      <Name>Agile.Web.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

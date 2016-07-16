@@ -1,4 +1,5 @@
 ﻿using Agile.API.Dtos;
+using Agile.Data.Helpers;
 using Agile.Dtos;
 using Agile.Helpers;
 using Agile.Models;
@@ -607,13 +608,25 @@ namespace Agile.API.Helpers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public static HBaseResponse H10013(H10013Request request)
+        public static H10013Response H10013(H10013Request request)
         {
-            var take = new SqlParameter("@take", SqlDbType.Int, 11);
-            take.Value = request.take.GetValueOrDefault(1);
+            var take = request.take.GetValueOrDefault(1);
 
-            var sqlstr = "SELECT TOP (@take) * FROM UME_app ORDER BY NEWID()";
-            var recordlist = DataHelper.ExecuteList<H10013ResponseListItem>(sqlstr, take);
+            var sb = new StringBuilder();
+            var apptypes = Enum.GetValues(typeof(AppTypeEnum));
+            foreach (var apptype in apptypes)
+            {
+                sb.AppendFormat(" SELECT * FROM (SELECT TOP ({0}) * FROM UME_app WHERE AppType={1} ORDER BY NEWID()) AS t{1}\r\n", take, (int)apptype);
+                sb.AppendFormat(" UNION ALL\r\n");
+            }
+
+            var sqlstr = sb.ToString();
+            if (sqlstr.Length > 12)
+            {
+                sqlstr = sqlstr.Substring(0, sqlstr.Length - 12);
+            }
+
+            var recordlist = DataHelper.ExecuteList<H10013ResponseListItem>(sqlstr);
             return new H10013Response
             {
                 error = 0,
@@ -2860,6 +2873,32 @@ namespace Agile.API.Helpers
                 error = 0,
                 data = recordlist ?? new List<KeyValueDto>()
             };
+        }
+
+        public static H10013ResponseListItem H10065(int? id)
+        {
+            if (!id.HasValue)
+            {
+                throw new Exception("id不能为空");
+            }
+
+            var item = new H10013ResponseListItem();
+            var sqlstr = "SELECT * FROM UME_app WHERE Id=" + id.Value;
+            var list = DataHelper.ExecuteList<UME_app>(sqlstr);
+            if (list != null && list.Any())
+            {
+                var first = list[0];
+                item = new H10013ResponseListItem
+                {
+                    apptype = first.AppType,
+                    description = first.Description,
+                    href = first.Href,
+                    id = first.Id,
+                    title = first.Title
+                };
+            }
+
+            return item;
         }
     }
 }

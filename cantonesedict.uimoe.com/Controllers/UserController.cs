@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Agile.Web.Helpers;
 
 namespace cantonesedict.uimoe.com.Controllers
 {
@@ -27,7 +28,7 @@ namespace cantonesedict.uimoe.com.Controllers
 
             try
             {
-                var request = ReflectHelper.ParseFromRequest<H10039Request>();
+                var request = WebHelper.ParseFromRequest<H10039Request>();
                 request.userid = userinfo.UserId;
 
                 var responsebase = LogicHelper.H10039(request);
@@ -129,7 +130,7 @@ namespace cantonesedict.uimoe.com.Controllers
 
             try
             {
-                var h10061request = ReflectHelper.ParseFromRequest<H10061Request>();
+                var h10061request = WebHelper.ParseFromRequest<H10061Request>();
                 h10061request.userid = userinfo.UserId;
 
                 var h10061response = LogicHelper.H10061(h10061request);
@@ -171,7 +172,7 @@ namespace cantonesedict.uimoe.com.Controllers
 
             try
             {
-                var h10062request = ReflectHelper.ParseFromRequest<H10062Request>();
+                var h10062request = WebHelper.ParseFromRequest<H10062Request>();
                 h10062request.userid = userinfo.UserId;
 
                 var h10062response = LogicHelper.H10062(h10062request);
@@ -251,7 +252,7 @@ namespace cantonesedict.uimoe.com.Controllers
 
             try
             {
-                var responsebase = LogicHelper.H10047(ReflectHelper.ParseFromRequest<H10047Request>());
+                var responsebase = LogicHelper.H10047(WebHelper.ParseFromRequest<H10047Request>());
                 var response = responsebase as H10047Response;
                 if (response != null &&
                     response.error == 0 &&
@@ -292,7 +293,7 @@ namespace cantonesedict.uimoe.com.Controllers
 
             try
             {
-                var responsebase = LogicHelper.H10018(ReflectHelper.ParseFromRequest<H10018Request>());
+                var responsebase = LogicHelper.H10018(WebHelper.ParseFromRequest<H10018Request>());
                 var response = responsebase as H10018Response;
                 if (response != null &&
                     response.error == 0 &&
@@ -334,7 +335,7 @@ namespace cantonesedict.uimoe.com.Controllers
 
             try
             {
-                var responsebase = LogicHelper.H10045(ReflectHelper.ParseFromRequest<H10045Request>());
+                var responsebase = LogicHelper.H10045(WebHelper.ParseFromRequest<H10045Request>());
                 var response = responsebase as H10045Response;
                 if (response != null &&
                     response.error == 0 &&
@@ -478,7 +479,7 @@ namespace cantonesedict.uimoe.com.Controllers
 
             try
             {
-                var h10053request = ReflectHelper.ParseFromRequest<H10053Request>();
+                var h10053request = WebHelper.ParseFromRequest<H10053Request>();
                 var h10053response = LogicHelper.H10053(h10053request);
             }
             catch (Exception ex)

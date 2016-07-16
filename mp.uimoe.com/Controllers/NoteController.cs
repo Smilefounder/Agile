@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Agile.Web.Helpers;
 
 namespace mp.uimoe.com.Controllers
 {
@@ -17,7 +18,7 @@ namespace mp.uimoe.com.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var request = ReflectHelper.ParseFromRequest<MP_AuthorizeRequest>();
+            var request = WebHelper.ParseFromRequest<MP_AuthorizeRequest>();
             //var response = WeixinHelper.CheckWeixinMessage(request);
             return Content(request.echostr);
         }

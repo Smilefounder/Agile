@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Agile.Web.Helpers;
 
 namespace haha.uimoe.com.Controllers
 {
@@ -30,7 +31,7 @@ namespace haha.uimoe.com.Controllers
 
             try
             {
-                var h10058request = ReflectHelper.ParseFromRequest<H10058Request>();
+                var h10058request = WebHelper.ParseFromRequest<H10058Request>();
                 var h10058response = LogicHelper.H10058(h10058request);
                 if (h10058response != null &&
                     h10058response.error == 0 &&

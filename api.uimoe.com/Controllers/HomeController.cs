@@ -10,6 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using Agile.Web.Helpers;
 
 namespace api.uimoe.com.Controllers
 {
@@ -238,52 +239,52 @@ namespace api.uimoe.com.Controllers
                 {
                     case "H10000":
                         {
-                            response = LogicHelper.H10000(ReflectHelper.ParseFromRequest<H10000Request>());
+                            response = LogicHelper.H10000(WebHelper.ParseFromRequest<H10000Request>());
                             break;
                         }
                     case "H10001":
                         {
-                            response = LogicHelper.H10001(ReflectHelper.ParseFromRequest<H10001Request>());
+                            response = LogicHelper.H10001(WebHelper.ParseFromRequest<H10001Request>());
                             break;
                         }
                     case "H10002":
                         {
-                            response = LogicHelper.H10002(ReflectHelper.ParseFromRequest<H10002Request>());
+                            response = LogicHelper.H10002(WebHelper.ParseFromRequest<H10002Request>());
                             break;
                         }
                     case "H10003":
                         {
-                            response = LogicHelper.H10003(ReflectHelper.ParseFromRequest<H10003Request>());
+                            response = LogicHelper.H10003(WebHelper.ParseFromRequest<H10003Request>());
                             break;
                         }
                     case "H10004":
                         {
-                            response = LogicHelper.H10004(ReflectHelper.ParseFromRequest<H10004Request>());
+                            response = LogicHelper.H10004(WebHelper.ParseFromRequest<H10004Request>());
                             break;
                         }
                     case "H10005":
                         {
-                            response = LogicHelper.H10005(ReflectHelper.ParseFromRequest<H10005Request>());
+                            response = LogicHelper.H10005(WebHelper.ParseFromRequest<H10005Request>());
                             break;
                         }
                     case "H10006":
                         {
-                            response = LogicHelper.H10006(ReflectHelper.ParseFromRequest<H10006Request>());
+                            response = LogicHelper.H10006(WebHelper.ParseFromRequest<H10006Request>());
                             break;
                         }
                     case "H10007":
                         {
-                            response = LogicHelper.H10007(ReflectHelper.ParseFromRequest<H10007Request>());
+                            response = LogicHelper.H10007(WebHelper.ParseFromRequest<H10007Request>());
                             break;
                         }
                     case "H10008":
                         {
-                            response = LogicHelper.H10008(ReflectHelper.ParseFromRequest<H10008Request>());
+                            response = LogicHelper.H10008(WebHelper.ParseFromRequest<H10008Request>());
                             break;
                         }
                     case "H10009":
                         {
-                            var h10009request = ReflectHelper.ParseFromRequest<H10009Request>();
+                            var h10009request = WebHelper.ParseFromRequest<H10009Request>();
                             response = LogicHelper.H10009(h10009request);
                             if (response.error == 0)
                             {
@@ -293,107 +294,107 @@ namespace api.uimoe.com.Controllers
                         }
                     case "H10010":
                         {
-                            response = LogicHelper.H10010(ReflectHelper.ParseFromRequest<H10010Request>());
+                            response = LogicHelper.H10010(WebHelper.ParseFromRequest<H10010Request>());
                             break;
                         }
                     case "H10011":
                         {
-                            response = LogicHelper.H10011(ReflectHelper.ParseFromRequest<H10011Request>());
+                            response = LogicHelper.H10011(WebHelper.ParseFromRequest<H10011Request>());
                             break;
                         }
                     case "H10012":
                         {
-                            response = LogicHelper.H10012(ReflectHelper.ParseFromRequest<H10012Request>());
+                            response = LogicHelper.H10012(WebHelper.ParseFromRequest<H10012Request>());
                             break;
                         }
                     case "H10013":
                         {
-                            response = LogicHelper.H10013(ReflectHelper.ParseFromRequest<H10013Request>());
+                            response = LogicHelper.H10013(WebHelper.ParseFromRequest<H10013Request>());
                             break;
                         }
                     case "H10014":
                         {
-                            response = LogicHelper.H10014(ReflectHelper.ParseFromRequest<H10014Request>());
+                            response = LogicHelper.H10014(WebHelper.ParseFromRequest<H10014Request>());
                             break;
                         }
                     case "H10017":
                         {
-                            response = LogicHelper.H10017(ReflectHelper.ParseFromRequest<H10017Request>());
+                            response = LogicHelper.H10017(WebHelper.ParseFromRequest<H10017Request>());
                             break;
                         }
                     case "H10018":
                         {
-                            response = LogicHelper.H10018(ReflectHelper.ParseFromRequest<H10018Request>());
+                            response = LogicHelper.H10018(WebHelper.ParseFromRequest<H10018Request>());
                             break;
                         }
                     case "H10019":
                         {
-                            response = LogicHelper.H10019(ReflectHelper.ParseFromRequest<H10019Request>());
+                            response = LogicHelper.H10019(WebHelper.ParseFromRequest<H10019Request>());
                             break;
                         }
                     case "H10022":
                         {
-                            response = LogicHelper.H10022(ReflectHelper.ParseFromRequest<H10022Request>());
+                            response = LogicHelper.H10022(WebHelper.ParseFromRequest<H10022Request>());
                             break;
                         }
                     case "H10023":
                         {
-                            response = LogicHelper.H10023(ReflectHelper.ParseFromRequest<H10023Request>());
+                            response = LogicHelper.H10023(WebHelper.ParseFromRequest<H10023Request>());
                             break;
                         }
                     case "H10024":
                         {
-                            response = LogicHelper.H10024(ReflectHelper.ParseFromRequest<H10024Request>());
+                            response = LogicHelper.H10024(WebHelper.ParseFromRequest<H10024Request>());
                             break;
                         }
                     case "H10025":
                         {
-                            response = LogicHelper.H10025(ReflectHelper.ParseFromRequest<H10025Request>());
+                            response = LogicHelper.H10025(WebHelper.ParseFromRequest<H10025Request>());
                             break;
                         }
                     case "H10026":
                         {
-                            response = LogicHelper.H10026(ReflectHelper.ParseFromRequest<H10026Request>());
+                            response = LogicHelper.H10026(WebHelper.ParseFromRequest<H10026Request>());
                             break;
                         }
                     case "H10027":
                         {
-                            response = LogicHelper.H10027(ReflectHelper.ParseFromRequest<H10027Request>());
+                            response = LogicHelper.H10027(WebHelper.ParseFromRequest<H10027Request>());
                             break;
                         }
                     case "H10028":
                         {
-                            response = LogicHelper.H10028(ReflectHelper.ParseFromRequest<H10028Request>());
+                            response = LogicHelper.H10028(WebHelper.ParseFromRequest<H10028Request>());
                             break;
                         }
                     case "H10029":
                         {
-                            response = LogicHelper.H10029(ReflectHelper.ParseFromRequest<H10029Request>());
+                            response = LogicHelper.H10029(WebHelper.ParseFromRequest<H10029Request>());
                             break;
                         }
                     case "H10030":
                         {
-                            response = LogicHelper.H10030(ReflectHelper.ParseFromRequest<H10030Request>());
+                            response = LogicHelper.H10030(WebHelper.ParseFromRequest<H10030Request>());
                             break;
                         }
                     case "H10032":
                         {
-                            response = LogicHelper.H10032(ReflectHelper.ParseFromRequest<H10032Request>());
+                            response = LogicHelper.H10032(WebHelper.ParseFromRequest<H10032Request>());
                             break;
                         }
                     case "H10033":
                         {
-                            response = LogicHelper.H10033(ReflectHelper.ParseFromRequest<H10033Request>());
+                            response = LogicHelper.H10033(WebHelper.ParseFromRequest<H10033Request>());
                             break;
                         }
                     case "H10034":
                         {
-                            response = LogicHelper.H10034(ReflectHelper.ParseFromRequest<H10034Request>());
+                            response = LogicHelper.H10034(WebHelper.ParseFromRequest<H10034Request>());
                             break;
                         }
                     case "H10035":
                         {
-                            response = LogicHelper.H10035(ReflectHelper.ParseFromRequest<H10035Request>());
+                            response = LogicHelper.H10035(WebHelper.ParseFromRequest<H10035Request>());
                             break;
                         }
                 }

@@ -80,6 +80,10 @@
       <Project>{9db18edf-b447-4f64-8da6-86bac8cee0e3}</Project>
       <Name>Agile.API.Dtos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Agile.Data.Helpers\Agile.Data.Helpers.csproj">
+      <Project>{36ae6e88-5247-42dc-be02-46ec03556cba}</Project>
+      <Name>Agile.Data.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Agile.Dtos\Agile.Dtos.csproj">
       <Project>{40bae020-6862-4b12-989c-754055de1561}</Project>
       <Name>Agile.Dtos</Name>

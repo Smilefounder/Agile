@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Agile.Helpers
+namespace Agile.Data.Helpers
 {
     public class ExpressionHelper
     {

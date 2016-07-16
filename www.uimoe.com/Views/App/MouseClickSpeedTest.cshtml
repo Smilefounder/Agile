@@ -1,25 +1,14 @@
-﻿<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>鼠标点击速度测试</title>
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "网页小工具";
+    ViewBag.apptitle = "鼠标点击速度测试";
+}
+
+@section styles
+{
     <style type="text/css">
-        * {
-            margin: 0px;
-            padding: 0px;
-        }
-
-        html, body {
-            height: 100%;
-            width: 100%;
-        }
-
-        body {
-            background-color: #a349a4;
-        }
-
         #div0 {
-            color: #ffffff;
+            color: #22b14c;
             font-size: 96px;
         }
 
@@ -32,15 +21,14 @@
             background-color: #ffffff;
             border: 1px solid #ffffff;
             border-radius: 10px;
-            color: #a349a4;
-            line-height:300px;
+            color: #22b14c;
+            line-height: 300px;
             text-align: center;
             font-size: 18px;
         }
 
             #div11:hover {
                 cursor: pointer;
-                opacity: 0.8;
             }
 
         #div2 {
@@ -51,24 +39,22 @@
         #ul1 li {
             list-style: none;
             line-height: 28px;
-            color: #ffffff;
+            color: #22b14c;
         }
     </style>
-</head>
-<body>
-    <div id="containerdiv" style="width:400px;height:300px;">
-        <div id="div1" style="float:left;width:180px;" onclick="tryTest()">
-            <div id="div11">点这里点这里！</div>
-        </div>
-        <div id="div2" style="margin-left:200px;">
-            <div id="div0" style="display:none;"></div>
-            <ul id="ul1"></ul>
-        </div>
-        <div style="clear:left;"></div>
+}
+
+<div id="containerdiv" style="width:700px;height:300px;">
+    <div id="div1" style="float:left;width:400px;" onclick="tryTest()">
+        <div id="div11">点这里点这里！</div>
     </div>
-</body>
-</html>
-<script src="../sharp.js"></script>
+    <div id="div2" style="margin-left:410px;">
+        <div id="div0" style="display:none;"></div>
+        <ul id="ul1"></ul>
+    </div>
+    <div style="clear:left;"></div>
+</div>
+
 <script type="text/javascript">
     var isEnabled = true;
     var isFirst = true;
@@ -118,9 +104,5 @@
 
     function getDateTimeString(dt) {
         return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds() + " " + dt.getMilliseconds();
-    }
-
-    window.onload = function () {
-        sharp.center("containerdiv");
     }
 </script>

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Agile.Web.Helpers;
 
 namespace nasa.uimoe.com.Controllers
 {
@@ -21,7 +22,7 @@ namespace nasa.uimoe.com.Controllers
 
             try
             {
-                var responsebase = LogicHelper.H10033(ReflectHelper.ParseFromRequest<H10033Request>());
+                var responsebase = LogicHelper.H10033(WebHelper.ParseFromRequest<H10033Request>());
                 response = responsebase as H10033Response;
             }
             catch (Exception ex)

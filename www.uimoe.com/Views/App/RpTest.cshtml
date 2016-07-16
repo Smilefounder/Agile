@@ -1,10 +1,12 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>手气测试</title>
-    <link href="../bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "网页小工具";
+    ViewBag.apptitle = "手气测试";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
     <style type="text/css">
         .mask {
             position: fixed;
@@ -26,14 +28,14 @@
             margin-left: -150px;
             margin-top: -100px;
             z-index: 10010;
-            border: 1px solid #00a2e8;
+            border: 1px solid #22b14c;
             border-radius: 5px;
-            box-shadow: 0 0 2px #00a2e8;
+            box-shadow: 0 0 2px #22b14c;
         }
 
         .line, .line50, .line100 {
             text-align: center;
-            color: #00a2e8;
+            color: #22b14c;
         }
 
         .line {
@@ -51,29 +53,30 @@
             line-height: 100px;
         }
     </style>
-</head>
-<body>
-    <div class="well">
-        测试你手气的时候到了：A,B,C,D中随便选一个，选对得分（越往后的题分值越高），选错游戏结束。
+}
+
+<div class="well" style="color:#22b14c;">
+    测试你手气的时候到了：A,B,C,D中随便选一个，选对得分（越往后的题分值越高），选错游戏结束。
+</div>
+<ul class="list-group">
+    <li id="titlea" class="list-group-item" style="background-color:#22b14c;color:#fff;">第1题,得分0</li>
+</ul>
+<div class="list-group">
+    <a class="list-group-item" onclick="mychoose(1)">A</a>
+    <a class="list-group-item" onclick="mychoose(2)">B</a>
+    <a class="list-group-item" onclick="mychoose(3)">C</a>
+    <a class="list-group-item" onclick="mychoose(4)">D</a>
+</div>
+<div id="mask" class="mask" style="display:none;"></div>
+<div id="result" class="result" style="display:none;">
+    <div class="line"></div>
+    <div class="line">游戏结束，你的得分为：</div>
+    <div class="line50" id="scorediv" style="font-size:48px;font-weight:bold;">0</div>
+    <div class="line">
+        <a href="javascript:window.location.reload();">再试一次</a>
     </div>
-    <div class="list-group">
-        <a id="titlea" class="list-group-item active">第1题,得分0</a>
-        <a class="list-group-item" onclick="mychoose(1)">A</a>
-        <a class="list-group-item" onclick="mychoose(2)">B</a>
-        <a class="list-group-item" onclick="mychoose(3)">C</a>
-        <a class="list-group-item" onclick="mychoose(4)">D</a>
-    </div>
-    <div id="mask" class="mask" style="display:none;"></div>
-    <div id="result" class="result" style="display:none;">
-        <div class="line"></div>
-        <div class="line">游戏结束，你的得分为：</div>
-        <div class="line50" id="scorediv" style="font-size:48px;font-weight:bold;">0</div>
-        <div class="line">
-            <a href="javascript:window.location.reload();">再试一次</a>
-        </div>
-    </div>
-</body>
-</html>
+</div>
+
 <script type="text/javascript">
     var count = 1;
     var score = 0;
@@ -105,3 +108,4 @@
         return mul;
     }
 </script>
+

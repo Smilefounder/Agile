@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "网页小工具";
+    ViewBag.apptitle = "粤语词典";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+}
+
+<div class="well" style="color:#22b14c;">
+    提供粤语的翻译和注音。
+</div>
+<button onclick="linkto('http://cantonesedict.uimoe.com','newtab')" class="btn btn-success">点此访问</button>

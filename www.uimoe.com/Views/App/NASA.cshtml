@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "网页小工具";
+    ViewBag.apptitle = "NASA图片精选";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+}
+
+<div class="well" style="color:#22b14c;">
+    NASA图片精选，图片来源于微博NASA中文。
+</div>
+<button onclick="linkto('http://nasa.uimoe.com', 'newtab')" class="btn btn-success">点此访问</button>

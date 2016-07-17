@@ -1,5 +1,63 @@
-﻿@{
-    ViewBag.Title = "AppList";
+﻿@model IEnumerable<Agile.API.Dtos.H10013ResponseListItem>
+@{
+    Layout = "~/Views/Shared/_WithFrameLayout.cshtml";
 }
 
-<h2>AppList</h2>
+<style type="text/css">
+    .applist {
+        width: 1000px;
+        height: 70px;
+    }
+
+        .applist li {
+            float: left;
+            list-style: none;
+            width: 240px;
+            height: 70px;
+            margin-right: 10px;
+        }
+</style>
+
+<div>
+    <div class="newline"></div>
+    <div>
+        <div style="float:left;color:#22b14c;">
+            @ViewBag.apptypedisplay
+        </div>
+        <div style="float:right;margin-right:10px;">
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div class="newline"></div>
+    <div class="splitter-d" style="width:990px;"></div>
+</div>
+@if (Model != null && Model.Any())
+{
+    <ul class="applist">
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="newline"></div>
+                <div style="background-color:#f7f7fa;padding:10px;">
+                    <div style="color:#22b14c;">@item.title</div>
+                    <a href="javascript:void(0);" onclick="openlink('@item.href')">@item.href</a>
+                </div>
+            </li>
+        }
+    </ul>
+    <div style="clear:left;"></div>
+}
+else
+{
+    <div class="newline"></div>
+    <div style="background-color:#f7f7fa;padding:10px;width:970px;">
+        <div style="color:#22b14c;">没有相关数据</div>
+    </div>
+}
+
+<script type="text/javascript">
+    function openlink(href) {
+        var url = '@Url.Content("~/")' + 'App/' + href;
+        window.location.href = url;
+    }
+</script>

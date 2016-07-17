@@ -6,7 +6,6 @@
 {
     <style type="text/css">
         .mynavbar {
-            position: fixed;
             height: 40px;
             line-height: 40px;
             background-color: #f7f7fa;
@@ -27,17 +26,17 @@
 
 <div class="mynavbar">
     <div style="width:1000px;margin:0 auto;">
-        <ul>
-            <li>
-                <a href="@Url.Content("~/Home/Index")">柚萌 - design &amp; develop</a>
-            </li>
-        </ul>
+        <div style="float:left;">
+            <a href="@Url.Content("~/Home/Index")">柚萌 - design &amp; develop</a>
+        </div>
+        <div style="clear:both;"></div>
     </div>
 </div>
 
-<div style="position:fixed;width:100%;top:40px;">
+<div style="width:100%;">
     <div style="width:1000px;margin:0 auto;">
         @RenderBody()
+        <div class="newline"></div>
     </div>
 </div>
 

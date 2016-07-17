@@ -2875,30 +2875,28 @@ namespace Agile.API.Helpers
             };
         }
 
-        public static H10013ResponseListItem H10065(int? id)
+        public static List<H10013ResponseListItem> H10065(int? apptype)
         {
-            if (!id.HasValue)
+            if (!apptype.HasValue)
             {
-                throw new Exception("id不能为空");
+                throw new Exception("apptype不能为空");
             }
 
-            var item = new H10013ResponseListItem();
-            var sqlstr = "SELECT * FROM UME_app WHERE Id=" + id.Value;
+            var sqlstr = "SELECT * FROM UME_app WHERE AppType=" + apptype.Value;
             var list = DataHelper.ExecuteList<UME_app>(sqlstr);
             if (list != null && list.Any())
             {
-                var first = list[0];
-                item = new H10013ResponseListItem
+                return list.Select(o => new H10013ResponseListItem
                 {
-                    apptype = first.AppType,
-                    description = first.Description,
-                    href = first.Href,
-                    id = first.Id,
-                    title = first.Title
-                };
+                    apptype = o.AppType,
+                    description = o.Description,
+                    href = o.Href,
+                    id = o.Id,
+                    title = o.Title
+                }).ToList();
             }
 
-            return item;
+            return new List<H10013ResponseListItem>();
         }
     }
 }

@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "Windows应用";
+    ViewBag.apptitle = "柚萌浏览器";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+}
+
+<div class="well" style="color:#22b14c;">
+    柚萌浏览器，C#开发的自主内核，个性化的浏览器。
+</div>
+<button onclick="javascript:alert('很抱歉，此应用暂时不可用')" class="btn btn-success">点此下载</button>

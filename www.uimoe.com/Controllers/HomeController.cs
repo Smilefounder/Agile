@@ -44,24 +44,49 @@ namespace www.uimoe.com.Controllers
 
         public ActionResult AppList()
         {
-            var id = 0;
-            int.TryParse(Request.Params["id"], out id);
+            var apptype = 0;
+            int.TryParse(Request.Params["apptype"], out apptype);
 
-            var vm = new H10013ResponseListItem();
+            var apptypedisplay = "";
+            switch (apptype)
+            {
+                case (int)H10013ResponseListItemAppTypeEnum.Android:
+                    {
+                        apptypedisplay = "Android应用";
+                    }
+                    break;
+                case (int)H10013ResponseListItemAppTypeEnum.Desktop:
+                    {
+                        apptypedisplay = "Windows应用";
+                    }
+                    break;
+                case (int)H10013ResponseListItemAppTypeEnum.IOS:
+                    {
+                        apptypedisplay = "iOS应用";
+                    }
+                    break;
+                case (int)H10013ResponseListItemAppTypeEnum.WebPage:
+                    {
+                        apptypedisplay = "网页小工具";
+                    }
+                    break;
+                case (int)H10013ResponseListItemAppTypeEnum.Weixin:
+                    {
+                        apptypedisplay = "微信公众号";
+                    }
+                    break;
+            }
+
+            ViewBag.apptypedisplay = apptypedisplay;
+            var vm = new List<H10013ResponseListItem>();
 
             try
             {
-                var response = LogicHelper.H10065(id);
-                if (response != null)
+                var response = LogicHelper.H10065(apptype);
+                if (response != null &&
+                    response.Any())
                 {
-                    vm = new H10013ResponseListItem
-                    {
-                        apptype = response.apptype,
-                        description = response.description,
-                        href = response.href,
-                        id = response.id,
-                        title = response.title
-                    };
+                    vm = response;
                 }
             }
             catch (Exception ex)

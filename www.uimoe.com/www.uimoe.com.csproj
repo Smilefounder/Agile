@@ -257,6 +257,17 @@
     <Content Include="Views\App\YSL.cshtml" />
     <Content Include="Views\Shared\_AppDetailLayout.cshtml" />
     <Content Include="Views\Home\AppList.cshtml" />
+    <Content Include="Views\App\CantoneseDict.cshtml" />
+    <Content Include="Views\App\CantoneseDictAndroid.cshtml" />
+    <Content Include="Views\App\CantoneseDictWeixin.cshtml" />
+    <Content Include="Views\App\NASA.cshtml" />
+    <Content Include="Views\App\NASAAndroid.cshtml" />
+    <Content Include="Views\App\GzMetroFullVer.cshtml" />
+    <Content Include="Views\App\UMENote.cshtml" />
+    <Content Include="Views\App\UMEMoney.cshtml" />
+    <Content Include="Views\App\UMEBrowser.cshtml" />
+    <Content Include="Views\App\UMEMusic.cshtml" />
+    <Content Include="Views\App\HahaMx.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -47,5 +47,60 @@ namespace www.uimoe.com.Controllers
         {
             return View();
         }
+
+        public ActionResult CantoneseDict()
+        {
+            return View();
+        }
+
+        public ActionResult CantoneseDictAndroid()
+        {
+            return View();
+        }
+
+        public ActionResult CantoneseDictWeixin()
+        {
+            return View();
+        }
+
+        public ActionResult NASA()
+        {
+            return View();
+        }
+
+        public ActionResult NASAAndroid()
+        {
+            return View();
+        }
+
+        public ActionResult GzMetroFullVer()
+        {
+            return View();
+        }
+
+        public ActionResult UMENote()
+        {
+            return View();
+        }
+
+        public ActionResult UMEMoney()
+        {
+            return View();
+        }
+
+        public ActionResult HahaMx()
+        {
+            return View();
+        }
+
+        public ActionResult UMEBrowser()
+        {
+            return View();
+        }
+
+        public ActionResult UMEMusic()
+        {
+            return View();
+        }
     }
 }

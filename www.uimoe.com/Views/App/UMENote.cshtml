@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "微信公众号";
+    ViewBag.apptitle = "柚萌笔记";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+}
+
+<div class="well" style="color:#22b14c;">
+    柚萌笔记。发送消息给我，我会帮你记录哦。
+</div>
+<button class="btn btn-success">打开微信，关注公众号：UME_note</button>

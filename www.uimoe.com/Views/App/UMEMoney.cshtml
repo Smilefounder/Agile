@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "微信公众号";
+    ViewBag.apptitle = "我的记账本";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+}
+
+<div class="well" style="color:#22b14c;">
+    我的记账本。发送金额给我，我会帮你统计哦。
+</div>
+<button class="btn btn-success">打开微信，关注公众号：UME_money</button>

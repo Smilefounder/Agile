@@ -4,11 +4,10 @@
 
 @RenderSection("styles", required: false)
 
-<div style="width:1000px;margin:0 auto;">
+<div style="width:100%;">
     <div style="width:700px;float:left;">
-        <div class="newline"></div>
         <div style="height:40px;line-height:40px;">
-            <span style="color:#22b14c;">@ViewBag.apptypedisplay</span>&nbsp;-&nbsp;
+            <span style="color:#22b14c;">@ViewBag.apptypedisplay</span>&nbsp;<span style="color:#22b14c;">-</span>&nbsp;
             <span style="color:#22b14c;">@ViewBag.apptitle</span>
         </div>
         <div class="splitter-d"></div>
@@ -16,7 +15,6 @@
         @RenderBody()
     </div>
     <div style="margin-left:720px;">
-        <div class="newline"></div>
         <div style="height:40px;line-height:40px;">
             <span style="color:#22b14c;">打赏</span>
         </div>

@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "Windows应用";
+    ViewBag.apptitle = "Model转Sql";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+}
+
+<div class="well" style="color:#22b14c;">
+    Model转Sql，选择实体的DLL文件，将自动生成CREATE TABLE数据库语句。
+</div>
+<button onclick="javascript:alert('很抱歉，此应用暂时不可用')" class="btn btn-success">点此下载</button>

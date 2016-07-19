@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "网页小工具";
+    ViewBag.apptitle = "SHA1加密";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+}
+
+<form id="form1">
+    <div class="form-group">
+        <label style="color:#22b14c;" for="yourinput">要加密的字符</label>
+        <input class="form-control" id="yourinput" name="yourinput" type="text" maxlength="64" placeholder="最多可以输入64个字符" />
+    </div>
+</form>
+<button class="btn btn-success btn-block" onclick="trycalc(this)">加密</button>
+<div style="text-align:center;color:#22b14c;margin-top:10px;">
+    <h2 id="strh3"></h2>
+</div>
+
+<script src="@Url.Content("~/Assets/sha1.js")"></script>
+<script type="text/javascript">
+    function trycalc(sender) {
+        var yourinput = $("#yourinput").val();
+        if (!yourinput) {
+            alert("请输入要加密的字符");
+            return;
+        }
+
+        var sha1str = hex_sha1(yourinput);
+        $("#strh3").html(sha1str);
+    }
+</script>

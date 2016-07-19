@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "网页小工具";
+    ViewBag.apptitle = "MD5和SHA1加密";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+}
+
+<div class="well" style="color:#22b14c;">
+    MD5和SHA1加密，加密后的结果将显示在输入框中，你可以再次加密。
+</div>
+
+<form id="form1">
+    <div class="form-group">
+        <label style="color:#22b14c;" for="yourinput">要加密的字符</label>
+        <input class="form-control" id="yourinput" name="yourinput" type="text" maxlength="64" placeholder="最多可以输入64个字符" />
+        <div class="newline"></div>
+        <label style="color:#22b14c;">加密方式</label>
+        <div class="newline"></div>
+        <input type="radio" name="entype" id="md5radio" />
+        <label style="color:#22b14c;" for="md5radio">MD5</label>
+        <input type="radio" name="entype" id="sha1radio" />
+        <label style="color:#22b14c;" for="sha1radio">SHA1</label>
+    </div>
+</form>
+<button class="btn btn-success btn-block" onclick="trycalc(this)">加密</button>
+<div style="color:#22b14c;margin-top:10px;line-height:40px;display:none;" id="strh3"></div>
+
+<script src="@Url.Content("~/Assets/md5.js")"></script>
+<script src="@Url.Content("~/Assets/sha1.js")"></script>
+<script type="text/javascript">
+    function trycalc(sender) {
+        var yourinput = $("#yourinput").val();
+        if (!yourinput) {
+            alert("请输入要加密的字符");
+            return;
+        }
+
+        var md5selected = $("#md5radio").is(":checked");
+        var sha1selected = $("#sha1radio").is(":checked");
+        if (!md5selected && !sha1selected) {
+            alert("请选择一种加密方式");
+            return;
+        }
+
+        var enstr = '';
+        var entypestr = '';
+        if (md5selected) {
+            enstr = hex_md5(yourinput);
+            entypestr = 'MD5加密';
+        }
+
+        if (sha1selected) {
+            enstr = hex_sha1(yourinput);
+            entypestr = 'SHA1加密';
+        }
+
+        $("#yourinput").val(enstr);
+
+        var html = $("#strh3").html();
+        var html2 = '<div style="border:1px dotted #00a2e8;padding:5px;margin-bottom:5px;"><div style="color:#00a2e8;">' + yourinput + '</div><div>' + entypestr + "后：" + enstr + '</div></div>';
+        var html3 = html2 + html;
+        $("#strh3").html(html3).show();
+    }
+</script>

@@ -107,5 +107,20 @@ namespace www.uimoe.com.Controllers
         {
             return View();
         }
+
+        public ActionResult Md5()
+        {
+            return View();
+        }
+
+        public ActionResult Sha1()
+        {
+            return View();
+        }
+
+        public ActionResult Md5AndSha1()
+        {
+            return View();
+        }
     }
 }

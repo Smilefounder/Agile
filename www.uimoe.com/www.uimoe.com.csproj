@@ -151,6 +151,7 @@
     <Content Include="Assets\bootstrap-3.3.5-dist\js\bootstrap.js" />
     <Content Include="Assets\bootstrap-3.3.5-dist\js\bootstrap.min.js" />
     <Content Include="Assets\bootstrap-3.3.5-dist\js\npm.js" />
+    <Content Include="Assets\jquery.qrcode.min.js" />
     <Content Include="Assets\md5.js" />
     <Content Include="Assets\sha1.js" />
     <Content Include="Assets\weui.css" />
@@ -272,6 +273,8 @@
     <Content Include="Views\App\Md5.cshtml" />
     <Content Include="Views\App\Sha1.cshtml" />
     <Content Include="Views\App\Md5AndSha1.cshtml" />
+    <Content Include="Views\App\QrCode.cshtml" />
+    <Content Include="Views\App\UrlEncode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

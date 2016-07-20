@@ -1,0 +1,190 @@
+﻿@{ 
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>柚萌 - design &amp; develop</title>
+    <link href="/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            color: #22b14c;
+            font-size: 14px;
+        }
+
+        a {
+            color: #22b14c !important;
+            text-decoration: none !important;
+        }
+
+            a:active {
+                color: #22b14c !important;
+                text-decoration: none !important;
+            }
+
+            a:hover {
+                color: #22b14c !important;
+                text-decoration: underline !important;
+            }
+
+        .splitter-d, .splitter-s {
+            width: 100%;
+            height: 2px;
+        }
+
+        .splitter-d {
+            border-top: 1px dotted #d5d5d5;
+        }
+
+        .splitter-s {
+            border-top: 1px solid #d5d5d5;
+        }
+
+        .newline, .newline2, .newline5 {
+            width: 100%;
+        }
+
+        .newline {
+            height: 10px;
+        }
+
+        .newline2 {
+            height: 2px;
+        }
+
+        .newline5 {
+            height: 2px;
+        }
+
+        .mynavbar {
+            height: 40px;
+            line-height: 40px;
+            background-color: #f7f7fa;
+            color: #22b14c;
+            width: 100%;
+            left: 0;
+            top: 0;
+        }
+
+            .mynavbar li {
+                list-style: none;
+                display: inline;
+            }
+    </style>
+</head>
+<body>
+    <div class="mynavbar">
+        <div style="width:1000px;margin:0 auto;">
+            <div style="float:left;">
+                <a href="/Home/Index">柚萌 - design &amp; develop</a>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+    <div style="width:100%;">
+        <div style="width:1000px;margin:0 auto;">
+            <div style="width:100%;">
+                <div style="width:700px;float:left;">
+                    <div style="height:40px;line-height:40px;">
+                        <span style="color:#22b14c;">网页小工具</span>&nbsp;<span style="color:#22b14c;">-</span>&nbsp;
+                        <span style="color:#22b14c;">二维码生成</span>
+                    </div>
+                    <div class="splitter-d"></div>
+                    <div class="newline"></div>
+                    <form id="form1">
+                        <div class="form-group">
+                            <label style="color:#22b14c;" for="yourinput">要转成二维码的字符</label>
+                            <textarea class="form-control" id="yourinput" name="yourinput" style="width:100%;min-height:100px;" type="text" maxlength="500" placeholder="最多可以输入500个字符"></textarea>
+                        </div>
+                    </form>
+                    <button class="btn btn-success btn-block" onclick="trycalc(this)">生成</button>
+                    <div style="height:100px;width:100%;"></div>
+                    <div style="text-align:center;color:#22b14c;margin-top:10px;">
+                        <div id="QrCode"></div>
+                    </div>
+                </div>
+                <div style="margin-left:720px;">
+                    <div style="height:40px;line-height:40px;">
+                        <span style="color:#22b14c;">打赏</span>
+                    </div>
+                    <div class="splitter-d"></div>
+                    <div class="newline"></div>
+                    <div style="color:#22b14c;">
+                        <span style="color:#00a2e8;" onclick="showqrcode('alipay')">支付宝</span>&nbsp;|&nbsp;<span onclick="showqrcode('tenpay')">微信</span>
+                    </div>
+                    <div class="newline"></div>
+                    <div id="alipaydiv">
+                        <img style="max-width:100%;" src="/Assets/Images/alipay.jpg" />
+                    </div>
+                    <div id="tenpaydiv" style="display:none;">
+                        <img style="max-width:100%;" src="/Assets/Images/tenpay.jpg" />
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="newline"></div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="/Scripts/jquery-1.8.2.js"></script>
+<script src="/Assets/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+    function showqrcode(pay) {
+        if (pay == "alipay") {
+            $("#alipaydiv").show();
+            $("#tenpaydiv").hide();
+            return;
+        }
+
+        $("#tenpaydiv").show();
+        $("#alipaydiv").hide();
+    }
+
+    function toUtf8(str) {
+        var out, i, len, c;
+        out = "";
+        len = str.length;
+        for (i = 0; i < len; i++) {
+            c = str.charCodeAt(i);
+            if ((c >= 0x0001) && (c <= 0x007F)) {
+                out += str.charAt(i);
+            } else if (c > 0x07FF) {
+                out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            } else {
+                out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            }
+        }
+        return out;
+    }
+
+    function trycalc(sender) {
+        var yourinput = $("#yourinput").val();
+        if (!yourinput) {
+            alert("请输入要加密的字符");
+            return;
+        }
+
+        $("#QrCode").empty();
+        $("#QrCode").qrcode({
+            render: "canvas",
+            width: 182,
+            height: 182,
+            typeNumber: -1,
+            text: toUtf8(yourinput)
+        });
+    }
+</script>

@@ -122,5 +122,15 @@ namespace www.uimoe.com.Controllers
         {
             return View();
         }
+
+        public ActionResult QrCode()
+        {
+            return View();
+        }
+
+        public ActionResult UrlEncode()
+        {
+            return View();
+        }
     }
 }

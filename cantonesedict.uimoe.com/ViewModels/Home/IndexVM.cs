@@ -10,41 +10,20 @@ namespace cantonesedict.uimoe.com.ViewModels.Home
     {
         public string Input { get; set; }
 
-        public bool IsAllMatched
-        {
-            get
-            {
-                if (AllMatched != null)
-                {
-                    return true;
-                }
+        public List<IndexGroupItemVM> Data { get; set; }
+    }
 
-                return false;
-            }
-        }
+    public class IndexGroupItemVM
+    {
+        public int RW { get; set; }
 
-        public bool IsNoneMatched
-        {
-            get
-            {
-                if (AllMatched == null && (OneMatches == null || OneMatches.Count == 0))
-                {
-                    return true;
-                }
+        public string ChnText { get; set; }
 
-                return false;
-            }
-        }
-
-        public IndexListItemVM AllMatched { get; set; }
-
-        public List<IndexListItemVM> OneMatches { get; set; }
+        public List<IndexListItemVM> Items { get; set; }
     }
 
     public class IndexListItemVM
     {
-        public string ChnText { get; set; }
-
         public string CanText { get; set; }
 
         public string CanPronounce { get; set; }

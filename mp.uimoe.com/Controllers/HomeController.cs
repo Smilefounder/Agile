@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Web.Mvc;
 using Agile.Web.Helpers;
+using System.Collections.Generic;
 
 namespace mp.uimoe.com.Controllers
 {
@@ -109,70 +110,40 @@ namespace mp.uimoe.com.Controllers
 
             var textresponse = textresponsebase as H10014Response;
             if (textresponse == null ||
-                textresponse.data == null ||
-                textresponse.data.Count == 0)
+                textresponse.groups == null ||
+                textresponse.groups.Count == 0)
             {
                 sb.AppendFormat("未找到相关记录\r\n");
                 sb.AppendFormat("--------------------\r\n");
                 sb.AppendFormat("<a href='http://cantonesedict.uimoe.com/home/feedback?chntext={0}'>点这里反馈</a>\r\n", Server.UrlEncode(textrequest.Content));
                 response.Content = sb.ToString();
 
-                ThreadPool.QueueUserWorkItem(new WaitCallback(CreateFeedbackWithNoDataChars), textrequest.Content);
+                ThreadPool.QueueUserWorkItem(new WaitCallback(SaveNoResultUseThread), textrequest.Content);
                 return;
             }
 
-            if (textresponse.isallmatched)
+            foreach (var g in textresponse.groups)
             {
-                var model = textresponse.data.FirstOrDefault();
-                if (model != null)
-                {
-                    sb.AppendFormat("【普】{0}\r\n", model.chntext);
-                    sb.AppendFormat("【粤】{0}\r\n", model.cantext);
-                    sb.AppendFormat("【音】{0}\r\n", model.canpronounce ?? "");
-                    sb.AppendFormat("--------------------\r\n");
-                    sb.AppendFormat("<a href='http://cantonesedict.uimoe.com/Home/Index?input={0}'>点这里查看发音</a>\r\n", Server.UrlEncode(textrequest.Content));
-                    response.Content = sb.ToString();
-                }
-
-                return;
-            }
-
-            foreach (var item in textresponse.data)
-            {
-                sb.AppendFormat("{0}:{1}\r\n", item.chntext, item.canpronounce ?? "");
+                var plist = g.items.Select(o => o.canpronounce);
+                sb.AppendFormat("{0}:{1}\r\n", g.chntext, string.Join(",", plist));
             }
 
             sb.AppendFormat("--------------------\r\n");
             sb.AppendFormat("<a href='http://cantonesedict.uimoe.com/Home/Index?input={0}'>点这里查看发音</a>\r\n", Server.UrlEncode(textrequest.Content));
             response.Content = sb.ToString();
 
-            var nodatachars = "";
-            foreach (var ch in textrequest.Content)
+            if (textresponse.noresult != null && textresponse.noresult.Any())
             {
-                var chstr = ch.ToString();
-                var cnt = textresponse.data.Count(w => w.chntext == chstr);
-                if (cnt == 0)
-                {
-                    nodatachars += chstr;
-                }
-            }
-
-            if (!String.IsNullOrEmpty(nodatachars))
-            {
-                ThreadPool.QueueUserWorkItem(new WaitCallback(CreateFeedbackWithNoDataChars), nodatachars);
+                ThreadPool.QueueUserWorkItem(new WaitCallback(SaveNoResultUseThread), textresponse.noresult);
             }
         }
 
-        private void CreateFeedbackWithNoDataChars(object state)
+        private void SaveNoResultUseThread(object state)
         {
             try
             {
                 var chntext = state as string;
-                LogicHelper.H10025(new H10025Request
-                {
-                    chntext = chntext,
-                    createdby = "reimu"
-                });
+                LogicHelper.H10066(chntext);
             }
             catch
             { }

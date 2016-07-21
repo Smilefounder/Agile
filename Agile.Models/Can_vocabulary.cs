@@ -13,12 +13,6 @@ namespace Agile.Models
         public string ChnText { get; set; }
 
         [TableField(MaxLength = 50)]
-        public string ChnPronounce { get; set; }
-
-        [TableField(MaxLength = 50)]
-        public string ChnVoice { get; set; }
-
-        [TableField(MaxLength = 50)]
         public string CanText { get; set; }
 
         [TableField(MaxLength = 50)]

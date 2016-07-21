@@ -670,7 +670,7 @@ namespace Agile.API.Helpers
             var sb = new StringBuilder();
             for (var i = 0; i < words.Count; i++)
             {
-                sb.AppendFormat(" SELECT TOP 1 *,{0} as rw FROM CAN_vocabulary WHERE ChnText=N'{1}'\r\n", i, words[i]);
+                sb.AppendFormat(" SELECT *,{0} as rw FROM CAN_vocabulary WHERE ChnText=N'{1}'\r\n", i, words[i]);
                 sb.AppendFormat(" UNION ALL\r\n");
             }
 
@@ -680,78 +680,56 @@ namespace Agile.API.Helpers
                 sqlstr = sqlstr.Substring(0, sqlstr.Length - 11);
             }
 
-            var list = DataHelper.ExecuteList<H10014ResponseListItem>(sqlstr);
-            return new H10014Response
+            var response = new H10014Response
             {
                 error = 0,
-                data = list.OrderBy(o => o.rw).Select(o => new H10014ResponseListItem
+                groups = new List<H10014ResponseGroupItem>(),
+                noresult = new List<string>()
+            };
+
+            var list = DataHelper.ExecuteList<H10014ResponseOrderItem>(sqlstr);
+            foreach (var w in words)
+            {
+                var cnt = list.Count(c => c.chntext == w);
+                if (cnt == 0)
+                {
+                    response.noresult.Add(w);
+                }
+            }
+
+            var groups = list.GroupBy(g => g.chntext);
+            foreach (var g in groups)
+            {
+                var rg = new H10014ResponseGroupItem
+                {
+                    rw = g.FirstOrDefault().rw,
+                    chntext = g.Key,
+                    items = new List<H10014ResponseListItem>()
+                };
+
+                var items = g.Select(o => new H10014ResponseListItem
                 {
                     canpronounce = o.canpronounce,
                     cantext = o.cantext,
                     canvoice = o.canvoice,
-                    chntext = o.chntext
-                }).ToList()
-            };
-        }
+                }).ToList();
 
-        /// <summary>
-        /// 查询粤语(全匹配)
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [Obsolete("此接口已弃用，请使用H10014", true)]
-        public static HBaseResponse H10015(H10015Request request)
-        {
-            var input = new SqlParameter("@input", SqlDbType.NVarChar, 50);
-            input.Value = request.input;
-
-            var sqlstr = "SELECT TOP 10 * FROM CAN_vocabulary WHERE ChnText=@input";
-            var recordlist = DataHelper.ExecuteList<H10015ResponseListItem>(sqlstr, input);
-            return new H10015Response
-            {
-                error = 0,
-                data = recordlist ?? new List<H10015ResponseListItem>()
-            };
-
-
-        }
-
-        /// <summary>
-        /// 查询粤语(单个匹配)
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [Obsolete("此接口已弃用，请使用H10014", true)]
-        public static HBaseResponse H10016(H10016Request request)
-        {
-            if (String.IsNullOrEmpty(request.input))
-            {
-                return new HBaseResponse
+                foreach (var i in items)
                 {
-                    error = 1
-                };
+                    var cnt2 = rg.items.Count(c => c.canpronounce == i.canpronounce);
+                    if (cnt2 > 0)
+                    {
+                        continue;
+                    }
+
+                    rg.items.Add(i);
+                }
+
+                response.groups.Add(rg);
             }
 
-            var input_arr = request.input.ToList().Distinct();
-            request.input = String.Join("", input_arr);
-
-            var sqlstr = "";
-            foreach (var ch in request.input)
-            {
-                sqlstr += " SELECT  TOP 1 * FROM CAN_vocabulary WHERE ChnText='" + ch + "' UNION";
-            }
-
-            if (sqlstr.Length > 5)
-            {
-                sqlstr = sqlstr.Substring(0, sqlstr.Length - 5);
-            }
-
-            var recordlist = DataHelper.ExecuteList<H10016ResponseListItem>(sqlstr);
-            return new H10016Response
-            {
-                error = 0,
-                data = recordlist ?? new List<H10016ResponseListItem>()
-            };
+            response.groups = response.groups.OrderBy(o => o.rw).ToList();
+            return response;
         }
 
         /// <summary>
@@ -865,61 +843,6 @@ namespace Agile.API.Helpers
                 error = 0,
                 items = items,
                 options = options
-            };
-        }
-
-        /// <summary>
-        /// 粤语词典 - 绑定微信用户
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [Obsolete("此接口已废弃，请勿使用", true)]
-        public static HBaseResponse H10020(H10020Request request)
-        {
-            var h10021responsebase = H10021(new H10021Request
-            {
-                username = request.username
-            });
-
-            if (h10021responsebase.error > 0)
-            {
-                return new H10020Response
-                {
-                    error = 1,
-                    message = "用户已绑定过"
-                };
-            }
-
-            var sqlstr = "INSERT INTO T_user(UserName,CreatedAt) VALUES(N'" + request.username + "',GETDATE())";
-            var rows = DataHelper.ExecuteNonQuery(sqlstr);
-            if (rows > 0)
-            {
-                return new H10020Response
-                {
-                    error = 0
-                };
-            }
-
-            return new HBaseResponse
-            {
-                error = 1
-            };
-        }
-
-        /// <summary>
-        /// 粤语词典 - 是否存在微信用户
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [Obsolete("此接口已废弃，请勿使用", true)]
-        public static HBaseResponse H10021(H10021Request request)
-        {
-            var sqlstr = "SELECT COUNT(1) FROM T_user WHERE UserName=N'" + request.username + "'";
-            var obj = DataHelper.ExecuteScalar(sqlstr);
-            var count = Convert.ToInt32(obj);
-            return new H10021Response
-            {
-                error = count
             };
         }
 
@@ -1480,52 +1403,6 @@ namespace Agile.API.Helpers
             return new HBaseResponse
             {
                 error = 1,
-            };
-        }
-
-        /// <summary>
-        /// 获取笔记列表（llyn23.com）
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [Obsolete("此接口已废弃，请勿使用", true)]
-        public static HBaseResponse H10031(H10031Request request)
-        {
-            if (!request.page.HasValue)
-            {
-                request.page = 1;
-            }
-
-            if (!request.pagesize.HasValue)
-            {
-                request.pagesize = 10;
-            }
-
-            var sqlstr = "SELECT ROW_NUMBER() OVER(ORDER BY ID DESC) AS RW,Content,CreatedAt FROM LYN_note";
-            var sb = String.Format("SELECT COUNT(1) AS ICount FROM ({0}) AS Q;", sqlstr);
-
-            var obj = DataHelper.ExecuteScalar(sb);
-            var recordcount = Convert.ToInt32(obj);
-
-            var begin = new SqlParameter("@begin", SqlDbType.Int, 11);
-            begin.Value = request.pagesize * (request.page - 1);
-
-            var end = new SqlParameter("@end", SqlDbType.Int, 11);
-            end.Value = request.pagesize * request.page;
-
-            sb = String.Format("SELECT Q.Content,Q.CreatedAt FROM ({0}) AS Q WHERE Q.RW>@begin AND Q.RW<=@end;", sqlstr);
-            var recordlist = DataHelper.ExecuteList<H10031ResponseListItem>(sb, begin, end);
-
-            return new H10031Response
-            {
-                error = 0,
-                data = new PagedListDto<H10031ResponseListItem>
-                {
-                    Page = request.page.Value,
-                    PageSize = request.pagesize.Value,
-                    RecordCount = recordcount,
-                    RecordList = recordlist ?? new List<H10031ResponseListItem>()
-                }
             };
         }
 
@@ -2881,7 +2758,7 @@ namespace Agile.API.Helpers
                 throw new Exception("apptype不能为空");
             }
 
-            var sqlstr = "SELECT * FROM UME_app WHERE AppType=" + apptype.Value;
+            var sqlstr = String.Format("SELECT * FROM UME_app WHERE AppType={0} ORDER BY Id DESC", apptype.Value);
             var list = DataHelper.ExecuteList<UME_app>(sqlstr);
             if (list != null && list.Any())
             {
@@ -2896,6 +2773,24 @@ namespace Agile.API.Helpers
             }
 
             return new List<H10013ResponseListItem>();
+        }
+
+        /// <summary>
+        /// 粤语词典 - 保存查询无结果的字词
+        /// </summary>
+        /// <param name="words"></param>
+        /// <returns></returns>
+        public static int H10066(params string[] words)
+        {
+            var sb = new StringBuilder();
+            foreach (var w in words)
+            {
+                sb.AppendFormat(" INSERT INTO CAN_noresult(ChnText,CreatedAt) VALUES(N'{0}',GETDATE());\r\n", w);
+            }
+
+            var sqlstr = sb.ToString();
+            var rows = DataHelper.ExecuteNonQuery(sqlstr);
+            return rows;
         }
     }
 }

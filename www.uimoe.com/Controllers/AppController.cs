@@ -154,5 +154,28 @@ namespace www.uimoe.com.Controllers
 
             return Json(new { error = 0, data = words });
         }
+
+        [HttpGet]
+        public ActionResult ResolveUserAgent()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ResolveUserAgent(FormCollection collect)
+        {
+            var ua = Request.UserAgent;
+            var device = StringHelper.GetDeviceFromUserAgent(ua);
+            var os = StringHelper.GetOsFromUserAgent(ua);
+            var browser = Request.Browser.Browser;
+            var verstr = Request.Browser.MajorVersion;
+            if (verstr > 0)
+            {
+                browser = browser + " " + verstr;
+            }
+
+            var isphone = StringHelper.IsPhoneRequest(ua);
+            return Json(new { error = 0, device = device, os = os, browser = browser, isphone = isphone });
+        }
     }
 }

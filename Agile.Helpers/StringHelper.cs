@@ -222,7 +222,7 @@ namespace Agile.Helpers
             userAgent = userAgent.ToLower();
             if (userAgent.Contains("windows nt"))
             {
-                return "Desktop";
+                return "PC";
             }
 
             if (userAgent.Contains("iphone"))

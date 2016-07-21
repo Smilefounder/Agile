@@ -15,12 +15,12 @@
     <a href="javascript:" class="weui_btn weui_btn_primary" onclick="tryquery(this)">查询</a>
 </div>
 
-@if (Model.IsNoneMatched)
+@if (Model.Data == null || Model.Data.Count == 0)
 {
     if (!String.IsNullOrEmpty(Model.Input))
     {
         <div class="weui_cells weui_cells_access">
-            <a href="@Url.Content("~/Home/Feedback")" class="weui_cell">
+            <a href="@Url.Content("~/Home/Feedback?chntext="+Model.Input)" class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>
                         没有查询到相关记录,你可以点此反馈
@@ -34,46 +34,25 @@
 }
 else
 {
-    if (Model.IsAllMatched)
-    {
-        <div class="weui_cells weui_cells_access">
-            <a href="javascript:void(0);" class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>
-                        <div>【普】<span>@Model.AllMatched.ChnText</span></div>
-                        <div class="newline5"></div>
-                        <div>【粤】<span>@Model.AllMatched.CanText</span></div>
-                        <div class="newline5"></div>
-                        <div>【音】<span>@Model.AllMatched.CanPronounce</span></div>
-                        @if (Model.Input.Length == 1)
-                        {
-                            <div class="newline"></div>
-                            <div>
-                                <audio src="http://yueyv.cn/voice/@(Model.AllMatched.CanVoice)" controls="controls">你的浏览器不支持播放此音频</audio>
-                            </div>
-                        }
-                    </p>
-                </div>
-                <div class="weui_cell_ft">
-                </div>
-            </a>
-        </div>
-    }
-
     <div class="weui_cells weui_cells_access">
-        @foreach (var item in Model.OneMatches)
+        @foreach (var item in Model.Data)
         {
             <a href="javascript:void(0);" class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>
                         <div>
                             <span>@item.ChnText</span>&nbsp;&#58;&nbsp;
-                            <span>@item.CanPronounce</span>
                         </div>
                         <div class="newline"></div>
-                        <div>
-                            <audio src="http://yueyv.cn/voice/@(item.CanVoice)" controls="controls">你的浏览器不支持播放此音频</audio>
-                        </div>
+                        @foreach (var gp in item.Items)
+                        {
+                            <div>
+                                <span>@gp.CanPronounce</span>&nbsp;&#58;&nbsp;
+                            </div>
+                            <div>
+                                <audio src="http://yueyv.cn/voice/@(gp.CanVoice)" controls="controls">你的浏览器不支持播放此音频</audio>
+                            </div>
+                        }
                     </p>
                 </div>
                 <div class="weui_cell_ft">

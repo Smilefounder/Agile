@@ -1,0 +1,312 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>柚萌 - design &amp; develop</title>
+    <link href="/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            color: #22b14c;
+            font-size: 14px;
+        }
+
+        a {
+            color: #22b14c !important;
+            text-decoration: none !important;
+        }
+
+            a:active {
+                color: #22b14c !important;
+                text-decoration: none !important;
+            }
+
+            a:hover {
+                color: #22b14c !important;
+                text-decoration: underline !important;
+            }
+
+        .splitter-d, .splitter-s {
+            width: 100%;
+            height: 2px;
+        }
+
+        .splitter-d {
+            border-top: 1px dotted #d5d5d5;
+        }
+
+        .splitter-s {
+            border-top: 1px solid #d5d5d5;
+        }
+
+        .newline, .newline2, .newline5 {
+            width: 100%;
+        }
+
+        .newline {
+            height: 10px;
+        }
+
+        .newline2 {
+            height: 2px;
+        }
+
+        .newline5 {
+            height: 2px;
+        }
+
+        .mynavbar {
+            height: 40px;
+            line-height: 40px;
+            background-color: #f7f7fa;
+            color: #22b14c;
+            width: 100%;
+            left: 0;
+            top: 0;
+        }
+
+            .mynavbar li {
+                list-style: none;
+                display: inline;
+            }
+    </style>
+</head>
+<body>
+    <div class="mynavbar">
+        <div style="width:1000px;margin:0 auto;">
+            <div style="float:left;">
+                <a href="/Home/Index">柚萌 - design &amp; develop</a>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+    <div style="width:100%;">
+        <div style="width:1000px;margin:0 auto;">
+            <div style="width:100%;">
+                <div style="width:700px;float:left;">
+                    <div style="height:40px;line-height:40px;">
+                        <span style="color:#22b14c;">网页小工具</span>&nbsp;<span style="color:#22b14c;">-</span>&nbsp;
+                        <span style="color:#22b14c;">UserAgent解析</span>
+                    </div>
+                    <div class="splitter-d"></div>
+                    <div class="newline"></div>
+                    <div class="well" style="color:#22b14c;" id="uadiv"></div>
+                    <div class="newline"></div>
+                    <label>JS解析</label>
+                    <div class="newline"></div>
+                    <label class="form-control" style="color:#22b14c;">设备：<span id="devicesp"></span></label>
+                    <label class="form-control" style="color:#22b14c;">系统：<span id="ossp"></span></label>
+                    <label class="form-control" style="color:#22b14c;">浏览器：<span id="browsersp"></span></label>
+                    <label class="form-control" style="color:#00a2e8;">手机请求：<span id="isphonesp"></span></label>
+                    <div class="newline"></div>
+                    <label>服务器解析</label>
+                    <div class="newline"></div>
+                    <label class="form-control" style="color:#22b14c;">设备：<span id="devicesp2"></span></label>
+                    <label class="form-control" style="color:#22b14c;">系统：<span id="ossp2"></span></label>
+                    <label class="form-control" style="color:#22b14c;">浏览器：<span id="browsersp2"></span></label>
+                    <label class="form-control" style="color:#00a2e8;">手机请求：<span id="isphonesp2"></span></label>
+                </div>
+                <div style="margin-left:720px;">
+                    <div style="height:40px;line-height:40px;">
+                        <span style="color:#22b14c;">打赏</span>
+                    </div>
+                    <div class="splitter-d"></div>
+                    <div class="newline"></div>
+                    <div style="color:#22b14c;">
+                        <span style="color:#00a2e8;" onclick="showqrcode('alipay')">支付宝</span>&nbsp;|&nbsp;<span onclick="showqrcode('tenpay')">微信</span>
+                    </div>
+                    <div class="newline"></div>
+                    <div id="alipaydiv">
+                        <img style="max-width:100%;" src="/Assets/Images/alipay.jpg" />
+                    </div>
+                    <div id="tenpaydiv" style="display:none;">
+                        <img style="max-width:100%;" src="/Assets/Images/tenpay.jpg" />
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="newline"></div>
+        </div>
+    </div>
+    <script src="/Scripts/jquery-1.8.2.js"></script>
+    <script type="text/javascript">
+        function showqrcode(pay) {
+            if (pay == "alipay") {
+                $("#alipaydiv").show();
+                $("#tenpaydiv").hide();
+                return;
+            }
+
+            $("#tenpaydiv").show();
+            $("#alipaydiv").hide();
+        }
+
+        function isphonerequest() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.indexOf("iphone") >= 0) {
+                return true;
+            }
+
+            if (ua.indexOf("android") >= 0) {
+                return true;
+            }
+
+            if (ua.indexOf("windows phone") >= 0) {
+                return true;
+            }
+
+            if (ua.indexOf("mobile") >= 0) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function getua() {
+            var ua = navigator.userAgent;
+            return ua;
+        }
+
+        function getdevice() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.indexOf("Macintosh") >= 0) {
+                return "MAC";
+            }
+
+            if (ua.indexOf("windows nt") >= 0) {
+                return "PC";
+            }
+
+            if (ua.indexOf("iphone") >= 0) {
+                return "iPhone";
+            }
+
+            if (ua.indexOf("ipad") >= 0) {
+                return "iPad";
+            }
+
+            return "未知设备";
+        }
+
+        function getos() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.indexOf("windows nt 10.0") >= 0) {
+                return "Windows10";
+            }
+
+            if (ua.indexOf("windows nt 6.3") >= 0) {
+                return "Windows8.1";
+            }
+
+            if (ua.indexOf("windows nt 6.3") >= 0) {
+                return "Windows8.1";
+            }
+
+            if (ua.indexOf("windows nt 6.2") >= 0) {
+                return "Windows8";
+            }
+
+            if (ua.indexOf("windows nt 6.1") >= 0) {
+                return "Windows7";
+            }
+
+            if (ua.indexOf("windows nt 6.0") >= 0) {
+                return "Vista";
+            }
+
+            if (ua.indexOf("windows nt 5.2") >= 0) {
+                return "Server2003";
+            }
+
+            if (ua.indexOf("windows nt 5.1") >= 0) {
+                return "Xp";
+            }
+
+            if (ua.indexOf("windows nt 5.0") >= 0) {
+                return "Windows2000";
+            }
+
+            if (ua.indexOf("iphone") >= 0) {
+                return "iOS";
+            }
+
+            if (ua.indexOf("ipad") >= 0) {
+                return "iOS";
+            }
+
+            if (ua.indexOf("os x") >= 0) {
+                return "OS X";
+            }
+
+            if (ua.indexOf("android") >= 0) {
+                return "Android";
+            }
+
+            if (ua.indexOf("windows phone") >= 0) {
+                return "Windows Phone";
+            }
+
+            if (ua.indexOf("solaris") >= 0) {
+                return "Solaris";
+            }
+
+            if (ua.indexOf("linux") >= 0) {
+                return "Linux";
+            }
+
+            if (ua.indexOf("unix") >= 0) {
+                return "UNIX";
+            }
+            return "未知系统";
+        }
+
+        function getbrowser() {
+            var browser = navigator.appName;
+            return browser;
+        }
+
+        $(function () {
+            $("#uadiv").html(getua());
+            $("#devicesp").html(getdevice());
+            $("#ossp").html(getos());
+            $("#browsersp").html(getbrowser());
+            $("#isphonesp").html(isphonerequest() ? "是" : "否");
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/App/ResolveUserAgent")',
+                complete: function (xhr, status) {
+                    var response = {};
+                    try {
+                        response = JSON.parse(xhr.responseText);
+                    }
+                    catch (e) {
+
+                    }
+
+                    if (!response || response.error != 0) {
+                        alert("从服务器解析失败，请稍后再试");
+                        return;
+                    }
+
+                    $("#devicesp2").html(response.device);
+                    $("#ossp2").html(response.os);
+                    $("#browsersp2").html(response.browser);
+                    $("#isphonesp2").html(response.isphone ? "是" : "否");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

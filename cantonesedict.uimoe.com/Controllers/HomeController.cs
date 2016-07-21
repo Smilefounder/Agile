@@ -26,8 +26,7 @@ namespace cantonesedict.uimoe.com.Controllers
         {
             var vm = new IndexVM
             {
-                AllMatched = null,
-                OneMatches = new List<IndexListItemVM>()
+                Data = new List<IndexGroupItemVM>()
             };
 
             var input = Request.Params["input"];
@@ -47,25 +46,35 @@ namespace cantonesedict.uimoe.com.Controllers
                 });
 
                 var h10014response = h10014responsebase as H10014Response;
-                if (h10014response != null && h10014response.data != null && h10014response.data.Any())
+                if (h10014response != null)
                 {
-                    vm.OneMatches = h10014response.data.Select(o => new IndexListItemVM
+                    if (h10014response.groups != null && h10014response.groups.Any())
                     {
-                        CanPronounce = o.canpronounce,
-                        CanText = o.canpronounce,
-                        CanVoice = o.canvoice,
-                        ChnText = o.chntext
-                    }).ToList();
+                        foreach (var g in h10014response.groups)
+                        {
+                            vm.Data.Add(new IndexGroupItemVM
+                            {
+                                RW = g.rw,
+                                ChnText = g.chntext,
+                                Items = g.items.Select(o => new IndexListItemVM
+                                {
+                                    CanPronounce = o.canpronounce,
+                                    CanText = o.cantext,
+                                    CanVoice = o.canvoice
+                                }).ToList()
+                            });
+                        }
+                    }
+
+                    if (h10014response.noresult != null && h10014response.noresult.Any())
+                    {
+                        ThreadPool.QueueUserWorkItem(new WaitCallback(SaveNoResultUseThread), h10014response.noresult);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 LogHelper.Write(ex.Message);
-            }
-
-            if (vm.OneMatches == null)
-            {
-                vm.OneMatches = new List<IndexListItemVM>();
             }
 
             //查询获得积分
@@ -82,6 +91,22 @@ namespace cantonesedict.uimoe.com.Controllers
             }
 
             return View(vm);
+        }
+
+        private void SaveNoResultUseThread(object state)
+        {
+            try
+            {
+                var words = state as List<string>;
+                if (words == null || words.Count == 0)
+                {
+                    return;
+                }
+
+                LogicHelper.H10066(words.ToArray());
+            }
+            catch
+            { }
         }
 
         private void SaveFeedbackUseThread(object state)

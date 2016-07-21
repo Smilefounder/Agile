@@ -280,6 +280,7 @@
     <Content Include="Views\App\QrCode.cshtml" />
     <Content Include="Views\App\UrlEncode.cshtml" />
     <Content Include="Views\App\ChnStopWord.cshtml" />
+    <Content Include="Views\App\ResolveUserAgent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

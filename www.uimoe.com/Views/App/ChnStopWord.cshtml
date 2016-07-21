@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "网页小工具";
+    ViewBag.apptitle = "中文分词";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+}
+
+<form id="form1">
+    <div class="form-group">
+        <label style="color:#22b14c;" for="yourinput">请输入一段中文</label>
+        <textarea class="form-control" style="width:100%;min-height:100px;" id="yourinput" name="yourinput" type="text" maxlength="255" placeholder="最多可以输入255个字符"></textarea>
+    </div>
+</form>
+<button class="btn btn-success btn-block" onclick="trycalc(this)">分词</button>
+<div class="newline"></div>
+<div class="form-group">
+    <label style="color:#22b14c;" for="yourresult">分词结果</label>
+    <textarea class="form-control" style="width:100%;min-height:100px;" id="yourresult" name="yourresult" type="text"></textarea>
+</div>
+
+<script type="text/javascript">
+    function trycalc(sender) {
+        var yourinput = $("#yourinput").val();
+        if (!yourinput) {
+            alert("请输入一段中文");
+            return;
+        }
+
+        $(sender).attr("disabled", "disabled");
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/App/ChnStopWord")',
+            data: { input: yourinput },
+            complete: function (xhr, status) {
+                $(sender).removeAttr("disabled");
+                var response = {};
+                try {
+                    response = JSON.parse(xhr.responseText);
+                }
+                catch (e) {
+
+                }
+
+                if (!response || response.error != 0) {
+                    alert("操作失败，请稍后再试");
+                    return;
+                }
+
+                if (!response.data || response.data.length == 0) {
+                    alert("很抱歉，未找到相关结果");
+                    return;
+                }
+
+                var sb = '';
+                for (var i = 0; i < response.data.length; i++) {
+                    sb += response.data[i] + ' ';
+                }
+
+                $("#yourresult").val(sb);
+            }
+        });
+    }
+</script>

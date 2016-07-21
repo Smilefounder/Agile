@@ -1,9 +1,9 @@
 ﻿using Agile.API.Dtos;
+using Agile.Cache;
 using Agile.Data.Helpers;
 using Agile.Dtos;
 using Agile.Helpers;
 using Agile.Models;
-using PanGu;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -664,8 +664,7 @@ namespace Agile.API.Helpers
             }
             else
             {
-                var segment = new Segment();
-                words = segment.DoSegment(request.input).Select(o => o.Word).ToList();
+                words = ChineseDictionary.GetWords(request.input);
             }
 
             var sb = new StringBuilder();

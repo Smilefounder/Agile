@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Agile.Cache;
+using Agile.Helpers;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace www.uimoe.com.Controllers
@@ -131,6 +131,28 @@ namespace www.uimoe.com.Controllers
         public ActionResult UrlEncode()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult ChnStopWord()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChnStopWord(string input)
+        {
+            var words = new List<string>();
+            try
+            {
+                words = ChineseDictionary.GetWords(input);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(new { error = 0, data = words });
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Agile.API.Dtos
 {
     public class H10014Response : HBaseResponse
     {
+        public bool isallmatched { get; set; }
+
         public List<H10014ResponseGroupItem> groups { get; set; }
 
         public List<string> noresult { get; set; }

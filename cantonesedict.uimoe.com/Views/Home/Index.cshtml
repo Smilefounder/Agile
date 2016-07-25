@@ -41,13 +41,13 @@ else
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>
                         <div>
-                            <span>@item.ChnText</span>&nbsp;&#58;&nbsp;
+                            [普]<span>@item.ChnText</span>&nbsp;&#58;&nbsp;
                         </div>
                         <div class="newline"></div>
                         @foreach (var gp in item.Items)
                         {
                             <div>
-                                <span>@gp.CanPronounce</span>&nbsp;&#58;&nbsp;
+                                <span>[粤]@gp.CanText</span>&nbsp;&#58;&nbsp;<span>[音]@gp.CanPronounce</span>
                             </div>
                             <div>
                                 <audio src="http://yueyv.cn/voice/@(gp.CanVoice)" controls="controls">你的浏览器不支持播放此音频</audio>

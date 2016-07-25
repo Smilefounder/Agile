@@ -125,7 +125,8 @@ namespace mp.uimoe.com.Controllers
             foreach (var g in textresponse.groups)
             {
                 var plist = g.items.Select(o => o.canpronounce);
-                sb.AppendFormat("{0}:{1}\r\n", g.chntext, string.Join(",", plist));
+                var clist = g.items.Select(o => o.cantext);
+                sb.AppendFormat("[普]{0} \r\n[粤]{1} \r\n[音]{2}\r\n", g.chntext, clist.FirstOrDefault(), string.Join(",", plist));
             }
 
             sb.AppendFormat("--------------------\r\n");

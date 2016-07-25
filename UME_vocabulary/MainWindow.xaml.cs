@@ -1,20 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using UME_vocabulary.Helpers;
-using UME_vocabulary.Models;
 
 namespace UME_vocabulary
 {
@@ -82,25 +70,11 @@ namespace UME_vocabulary
 
             this.DataContext = model;
             _vocabularyTextBlock.Text = model.ToString();
-            _rememberedRadioButton.IsChecked = false;
         }
 
-        private void _exitRadioButton_Checked(object sender, RoutedEventArgs e)
+        private void _rememberedTextBlock_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (_exitRadioButton.IsChecked == true)
-            {
-                Close();
-            }
-        }
-
-        private void _rememberedRadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (_rememberedRadioButton.IsChecked != true)
-            {
-                return;
-            }
-
-            var model = this.DataContext as T_word;
+            var model = this.DataContext as string;
             if (model == null)
             {
                 return;
@@ -108,6 +82,11 @@ namespace UME_vocabulary
 
             CoreHelper.RememberOne(model);
             DisplayNextVocabulary();
+        }
+
+        private void _exitTextBlock_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Close();
         }
     }
 }

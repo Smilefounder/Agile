@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using UME_vocabulary.Models;
 
 namespace UME_vocabulary.Helpers
 {
@@ -11,22 +9,45 @@ namespace UME_vocabulary.Helpers
     {
         static CoreHelper()
         {
-            Vocabulary = new List<T_word>();
+            Vocabulary = new List<string>();
             Remembered = new List<string>();
         }
 
-        private static List<T_word> Vocabulary { get; set; }
+        private static List<string> Vocabulary { get; set; }
 
         private static List<string> Remembered { get; set; }
 
-        public static void RememberOne(T_word model)
+        private static List<string> NewWords
         {
-            Remembered.Add(model.Text);
+            get
+            {
+                if (Remembered.Count == 0)
+                {
+                    return Vocabulary;
+                }
+
+                var list = new List<string>();
+                foreach (var v in Vocabulary)
+                {
+                    var cnt = Remembered.Count(c => c == v);
+                    if (cnt == 0)
+                    {
+                        list.Add(v);
+                    }
+                }
+
+                return list;
+            }
         }
 
-        public static T_word NextOne()
+        public static void RememberOne(string model)
         {
-            var num = Vocabulary.Count;
+            Remembered.Add(model);
+        }
+
+        public static string NextOne()
+        {
+            var num = NewWords.Count;
             if (num == 0)
             {
                 return null;
@@ -34,7 +55,7 @@ namespace UME_vocabulary.Helpers
 
             var r = new Random();
             var idx = r.Next(0, num);
-            return Vocabulary[idx];
+            return NewWords[idx];
         }
 
         public static string GetRememberedStr()
@@ -60,45 +81,22 @@ namespace UME_vocabulary.Helpers
                 foreach (var i in lines)
                 {
                     var word = ParseWordFromStr(i);
-                    Vocabulary.Add(word);
+                    if (!string.IsNullOrEmpty(word))
+                    {
+                        Vocabulary.Add(word);
+                    }
                 }
             }
         }
 
-        private static T_word ParseWordFromStr(string line)
+        private static string ParseWordFromStr(string line)
         {
-            var parts = line.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length == 1)
+            if (string.IsNullOrWhiteSpace(line) || line.Trim().Length < 4)
             {
-                return new T_word
-                {
-                    Text = parts[0]
-                };
+                return null;
             }
 
-            var word = new T_word
-            {
-                Text = parts[0],
-                Translates = new List<T_translation>()
-            };
-
-            var subparts = parts[1].Split(new char[] { '$' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var sp in subparts)
-            {
-                var subparts2 = sp.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
-                if (subparts2.Length != 2)
-                {
-                    continue;
-                }
-
-                word.Translates.Add(new T_translation
-                {
-                    Text = subparts2[1],
-                    WordType = subparts2[0]
-                });
-            }
-
-            return word;
+            return line;
         }
 
         public static void BuildRemembered(params string[] lines)

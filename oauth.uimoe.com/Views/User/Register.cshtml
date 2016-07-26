@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="weui_tab_bd">
+    <div class="weui_cells weui_cells_form">
+        <form id="form1">
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">账号</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input type="text" class="weui_input" pattern="*" placeholder="账号" id="username" name="username">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">邮箱</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input type="text" class="weui_input" pattern="*" placeholder="邮箱" id="email" name="email">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">密码</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input type="password" class="weui_input" pattern="*" placeholder="密码" id="userpass1">
+                    <input type="hidden" id="userpass" name="userpass" />
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">确认</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input type="password" class="weui_input" pattern="*" placeholder="密码" id="userpass2">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="weui_btn_area">
+        <a onclick="trytoregister(this)" class="weui_btn weui_btn_warn" href="javascript:">注册</a>
+    </div>
+    <div class="weui_btn_area">
+        <a class="weui_btn weui_btn_primary" href="@Url.Content("~/User/Login")">已有账号？点此登录</a>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Assets/sha1.js")"></script>
+<script src="@Url.Content("~/Assets/md5.js")"></script>
+<script type="text/javascript">
+    function trytoregister() {
+        var username = $("#username").val();
+        if (!username || username.length < 6 || username.length > 14) {
+            alert("账号不能为空，且最少6位，最多14位的数字字母组合");
+            return;
+        }
+
+        var usernamergx = /[a-zA-Z0-9]{6,14}/;
+        if (!usernamergx.test(username)) {
+            alert("账号只能由数字字母组成");
+            return;
+        }
+
+        var email = $("#email").val();
+        if (!email || email.length < 6 || email.length > 14) {
+            alert("邮箱不能为空，且最少6位，最多14位");
+            return;
+        }
+
+        var emailrgx = /.+[@@].+[.].+/;
+        if (!emailrgx.test(email)) {
+            alert("邮箱格式不正确");
+            return;
+        }
+
+        var userpass = $("#userpass1").val();
+        if (!userpass || userpass.length < 6 || userpass.length > 14) {
+            alert("密码不能为空，且最少6位，最多14位");
+            return;
+        }
+
+        var userpass2 = $("#userpass2").val();
+        if (userpass2 != userpass) {
+            alert("两次密码输入不一致");
+            $("#userpass2").val("");
+            return;
+        }
+
+        var userpass2 = hex_md5(userpass);
+        var userpass3 = hex_sha1(userpass2);
+
+        $("#userpass").val(userpass3);
+
+        var url = '@Url.Content("~/User/Register")';
+        $.ajax({
+            type: "POST",
+            url:url,
+            data: $("#form1").serialize(),
+            dataType: "json",
+            success: function (response) {
+            },
+            error: function () {
+                alert("注册失败，请稍后重试");
+            }
+        });
+    }
+</script>

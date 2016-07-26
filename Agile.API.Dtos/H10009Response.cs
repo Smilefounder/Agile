@@ -11,5 +11,7 @@ namespace Agile.API.Dtos
         public string token { get; set; }
 
         public int userid { get; set; }
+
+        public string username { get; set; }
     }
 }

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>柚萌 - design &amp; develop</title>
+    <link href="@Url.Content("~/Assets/weui.css")" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    @RenderBody()
+    <script src="~/scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        function linkto(url, target, features, replace) {
+            switch (target) {
+                default: {
+                    window.location.href = url;
+                    break;
+                }
+                case "newtab": {
+                    window.open(url);
+                    break;
+                }
+                case "newwindow": {
+                    window.open(url, "newwindow", features, replace);
+                    break;
+                }
+            }
+        }
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

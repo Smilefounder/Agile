@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "粤语词典";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .a1 {
+        color: #22b14c;
+        text-decoration: none;
+    }
+
+        .a1:hover {
+            color: #22b14c;
+            text-decoration: underline;
+        }
+
+    nav ul {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .nav {
+        color: #fff;
+    }
+
+        .nav a {
+            display: block;
+            padding: 0 16px;
+            line-height: inherit;
+            cursor: pointer;
+            color: #fff;
+            text-decoration: none;
+        }
+
+            .nav a:hover {
+                color: #fff;
+                text-decoration: none;
+            }
+
+    .nav-menu {
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .nav-menu-item {
+        display: inline-block;
+        position: relative;
+    }
+
+        .nav-menu-item:hover {
+            background-color: #b5e61d;
+        }
+
+            .nav-menu-item:hover .nav-submenu {
+                display: block;
+            }
+
+    .nav-submenu {
+        font-weight: 300;
+        text-transform: none;
+        display: none;
+        position: absolute;
+        width: 220px;
+        background-color: #b5e61d;
+    }
+
+    .nav-submenu-item:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div style="background-color:#22b14c;position:fixed;left:0;top:0;height:40px;line-height:40px;width:100%;z-index:10010;">
+    <nav class="nav" style="width:1000px;margin:0 auto;">
+        <ul class="nav-menu">
+            <li class="nav-menu-item"><a id="homea" href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/Statistics")');">粤语词典</a></li>
+            <li class="nav-menu-item">
+                <a href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/Vocabulary")');">词汇</a>
+                <ul class="nav-submenu">
+                    <li class="nav-submenu-item"><a href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/AddVocabulary")');">新增词汇</a></li>
+                </ul>
+            </li>
+            <li class="nav-menu-item">
+                <a href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/Category")');">情景</a>
+                <ul class="nav-submenu">
+                    <li class="nav-submenu-item"><a href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/AddCategory")');">新增情景</a></li>
+                </ul>
+            </li>
+            <li class="nav-menu-item"><a href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/UserList")');">用户</a></li>
+        </ul>
+    </nav>
+</div>
+<div style="position:absolute;width:100%;background-color:#f0fff0;height:100%;">
+    <div style="height:50px;width:100%;"></div>
+    <div style="width:1000px;margin:0 auto;border:1px solid #22b14c;border-radius:3px;">
+        <div style="height:40px;line-height:40px;border-bottom:1px dotted #22b14c;width:980px;margin:0 auto;">
+            <a class="a1" style="padding-left:6px;" href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/Statistics")');">粤语词典</a>&nbsp;&nbsp;<span style="color:#22b14c;">&gt;</span>&nbsp;&nbsp;<span id="frametitlespan" style="color:#22b14c;">统计</span>
+        </div>
+        <iframe id="iframe1" src="#" frameborder="0" height="500" width="1000"></iframe>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        var homea = document.getElementById("#homea");
+        var url = '@Url.Content("~/Reimu/Statistics")';
+        loadview(homea, url);
+    }
+
+    function loadview(sender, url) {
+        var iframe1 = document.getElementById("iframe1");
+        iframe1.setAttribute("src", url);
+        iframe1.onload = function () {
+            if (iframe1.contentDocument) {
+                var frametitlespan = document.getElementById("frametitlespan");
+                frametitlespan.innerHTML = iframe1.contentDocument.body.title;
+            }
+        }
+    }
+</script>

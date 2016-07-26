@@ -137,6 +137,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\HandleAccessAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReimuController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -303,6 +304,13 @@
     <Content Include="Views\User\PermissionList.cshtml" />
     <Content Include="Views\User\AddPermission.cshtml" />
     <Content Include="Views\User\DoPlan.cshtml" />
+    <Content Include="Views\Reimu\Index.cshtml" />
+    <Content Include="Views\Reimu\Statistics.cshtml" />
+    <Content Include="Views\Reimu\Vocabulary.cshtml" />
+    <Content Include="Views\Reimu\AddVocabulary.cshtml" />
+    <Content Include="Views\Reimu\Category.cshtml" />
+    <Content Include="Views\Reimu\AddCategory.cshtml" />
+    <Content Include="Views\Reimu\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

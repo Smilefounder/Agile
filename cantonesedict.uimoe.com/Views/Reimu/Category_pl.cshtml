@@ -1,0 +1,118 @@
+﻿@model Agile.API.Dtos.H10073Response
+@{
+    Layout = null;
+}
+
+<div class="newline"></div>
+<table class="table">
+    <tr>
+        <th>情景</th>
+        <th>时间</th>
+        <th>操作</th>
+    </tr>
+    @if (Model.data.RecordList.Count == 0)
+    {
+        <tr>
+            <td colspan="3">
+                <div style="text-align:center;">未找到相关数据</div>
+            </td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model.data.RecordList)
+        {
+            <tr>
+                <td>@item.name</td>
+                <td>@item.createdat.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>
+                    <a class="a1" href="javascript:void(0);" onclick="top.loaddialog(this,'@Url.Content("~/Reimu/UpdateCategory?id="+item.id)');">修改</a>
+                    <a class="a1" href="javascript:void(0);" onclick="view.deletemodel(this,'@item.id');">删除</a>
+                </td>
+            </tr>
+        }
+    }
+</table>
+<div class="newline"></div>
+<div style="height:32px;line-height:32px;">
+    <div style="float:left;text-align:left;">第<span>@Model.data.Page</span>/<span>@Model.data.PageCount</span>页&nbsp;共<span>@Model.data.RecordCount</span>条记录</div>
+    <div style="float:right;">
+        <button class="button-reverse" onclick="view.chagepage(this,'1','@Model.data.PageSize','@Model.data.PageCount');">首页</button>
+        <button class="button-reverse" onclick="view.chagepage(this,'@(Model.data.Page-1)','@Model.data.PageSize','@Model.data.PageCount');">上一页</button>
+        <button class="button-reverse" onclick="view.chagepage(this,'@(Model.data.Page+1)','@Model.data.PageSize','@Model.data.PageCount');">下一页</button>
+        <button class="button-reverse" onclick="view.chagepage(this,'@Model.data.PageCount','@Model.data.PageSize','@Model.data.PageCount');">尾页</button>
+        <input id="pageinput1" type="text" class="input" style="width:70px;" placeholder="输入页码" />
+        <button class="button" onclick="view.chagepage(this, null, '@Model.data.PageSize', '@Model.data.PageCount')">跳转</button>
+    </div>
+    <div style="clear:both;"></div>
+</div>
+
+<script type="text/javascript">
+    var view = {
+        deletemodel: function (sender, id) {
+            if (!confirm("确定要删除吗")) {
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/Reimu/DeleteCategory")',
+                data: { id: id },
+                complete: function (xhr, status) {
+                    if (status != "success") {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    var response = {};
+
+                    try {
+                        response = JSON.parse(xhr.responseText);
+                    }
+                    catch (e) {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    if (!response || response.error != 0) {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    var page = '@Model.data.Page';
+                    var pagesize = '@Model.data.PageSize';
+                    loaddata(sender, page, pagesize);
+                }
+            });
+        },
+        chagepage: function (sender, page, pagesize, pagecount) {
+            if (!page) {
+                var pageinput1 = document.getElementById("pageinput1");
+                page1 = pageinput1.value;
+                if (!page1 || isNaN(page1)) {
+                    pageinput1.focus();
+                    return;
+                }
+
+                if (page1 > pagecount) {
+                    pageinput1.focus();
+                    return;
+                }
+
+                page = page1;
+            }
+
+            if (page < 1) {
+                alert("没有上一页了");
+                return;
+            }
+
+            if (page > pagecount) {
+                alert("没有下一页了");
+                return;
+            }
+
+            loaddata(sender, page, pagesize);
+        }
+    };
+</script>

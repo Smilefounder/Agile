@@ -1,5 +1,56 @@
 ﻿@{
-    ViewBag.Title = "AddCategory";
+    ViewBag.Title = "添加情景";
 }
 
-<h2>AddCategory</h2>
+<div style="padding:10px;color:#22b14c;">
+    <form class="form" id="form1">
+        <label>情景</label><br />
+        <input class="input" type="text" id="name" name="name" /><br />
+    </form>
+    <button class="button" onclick="view.addmodel(this)">添加</button>
+    <button class="button-reverse" onclick="top.closedialog(this)">关闭</button>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        top.resizedialog(null, 290, 320);
+    })
+
+    var view = {
+        addmodel: function (sender) {
+            $(sender).attr("disabled", "disabled");
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/Reimu/AddCategory")',
+                data: $("#form1").serialize(),
+                complete: function (xhr, status) {
+                    $(sender).removeAttr("disabled");
+
+                    if (status != "success") {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    var response = {};
+
+                    try {
+                        response = JSON.parse(xhr.responseText);
+                    }
+                    catch (e) {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    if (!response || response.error != 0) {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    top.closedialog(sender);
+                    top.reloadview();
+                }
+            });
+        }
+    };
+</script>

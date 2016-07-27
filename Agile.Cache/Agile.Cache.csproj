@@ -81,14 +81,13 @@
     <Content Include="PanGu.dll" />
     <Content Include="PanGu.HighLight.dll" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="CantoneseDict\Dict.dct">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Dict\Dict.dct">
+    <Content Include="Dict\Dict.dct">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

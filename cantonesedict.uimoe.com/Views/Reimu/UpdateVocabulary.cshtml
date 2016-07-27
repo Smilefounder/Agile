@@ -1,34 +1,38 @@
-﻿@{
-    ViewBag.Title = "添加词汇";
+﻿@model Agile.API.Dtos.H10071ResponseListItem
+@{
+    ViewBag.Title = "修改词汇";
 }
 
 <div style="padding:10px;color:#22b14c;">
     <form class="form" id="form1">
+        <input type="hidden" id="id" name="id" value="@Model.id" />
         <label>普通话</label><br />
-        <input class="input" type="text" id="chntext" name="chntext" /><br />
+        <input class="input" type="text" id="chntext" name="chntext" value="@Model.chntext" /><br />
         <label>粤语</label><br />
-        <input class="input" type="text" id="cantext" name="cantext" /><br />
+        <input class="input" type="text" id="cantext" name="cantext" value="@Model.cantext" /><br />
         <label>注音</label><br />
-        <input class="input" type="text" id="canpronounce" name="canpronounce" /><br />
+        <input class="input" type="text" id="canpronounce" name="canpronounce" value="@Model.canpronounce" /><br />
         <label>文件</label><br />
-        <input class="input" type="text" id="canvoice" name="canvoice" /><br />
+        <input class="input" type="text" id="canvoice" name="canvoice" value="@Model.canvoice" /><br />
+        <label>时间</label><br />
+        <input class="input" type="text" id="createdat" name="createdat" value="@Model.createdat.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")" /><br />
     </form>
-    <button class="button" onclick="view.addvocabulary(this)">添加</button>
-    <button class="button-reverse" onclick="top.closedialog(this)">关闭</button>
+    <button class="button" onclick="view.updatevocabulary(this)">修改</button>
+    <button class="button-reverse" onclick="top.closedialog(this);">取消</button>
 </div>
 
 <script type="text/javascript">
     $(function () {
-        top.resizedialog(null, 290, 320);
+        top.resizedialog(null, 290, 380);
     })
 
     var view = {
-        addvocabulary: function (sender) {
+        updatevocabulary: function (sender) {
             $(sender).attr("disabled", "disabled");
 
             $.ajax({
                 type: 'POST',
-                url: '@Url.Content("~/Reimu/AddVocabulary")',
+                url: '@Url.Content("~/Reimu/UpdateVocabulary")',
                 data: $("#form1").serialize(),
                 complete: function (xhr, status) {
                     $(sender).removeAttr("disabled");

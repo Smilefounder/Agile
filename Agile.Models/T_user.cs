@@ -20,5 +20,8 @@ namespace Agile.Models
 
         [TableField]
         public int? Status { get; set; }
+
+        [TableField]
+        public int? Domain { get; set; }
     }
 }

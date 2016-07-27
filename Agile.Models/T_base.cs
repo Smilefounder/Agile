@@ -15,4 +15,13 @@ namespace Agile.Models
         [TableField]
         public DateTime? CreatedAt { get; set; }
     }
+
+    public enum DomainEnum
+    {
+        llyn23 = 0,
+
+        uimoe = 1,
+
+        cantonesedict = 2
+    }
 }

@@ -149,6 +149,7 @@
     <Compile Include="ViewModels\Home\LyricResultVM.cs" />
     <Compile Include="ViewModels\Home\ScoreListItemVM.cs" />
     <Compile Include="ViewModels\Home\VocabularyVM.cs" />
+    <Compile Include="ViewModels\Reimu\StatisticsVM.cs" />
     <Compile Include="ViewModels\UserInfoVM.cs" />
     <Compile Include="ViewModels\User\DoPlanVM.cs" />
     <Compile Include="ViewModels\User\FeedbackListVM.cs" />
@@ -311,6 +312,12 @@
     <Content Include="Views\Reimu\Category.cshtml" />
     <Content Include="Views\Reimu\AddCategory.cshtml" />
     <Content Include="Views\Reimu\UserList.cshtml" />
+    <Content Include="Views\Reimu\Feedback.cshtml" />
+    <Content Include="Views\Reimu\NoResult.cshtml" />
+    <Content Include="Views\Reimu\UpdateVocabulary.cshtml" />
+    <Content Include="Views\Reimu\Vocabulary_pl.cshtml" />
+    <Content Include="Views\Reimu\Category_pl.cshtml" />
+    <Content Include="Views\Reimu\UpdateCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

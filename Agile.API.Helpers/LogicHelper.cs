@@ -654,7 +654,7 @@ namespace Agile.API.Helpers
             var list1 = DataHelper.ExecuteList<Can_vocabulary>(sqlstr1);
             if (list1 != null && list1.Count > 0)
             {
-                var response1= new H10014Response
+                var response1 = new H10014Response
                 {
                     error = 0,
                     isallmatched = true,
@@ -664,12 +664,12 @@ namespace Agile.API.Helpers
                 response1.groups.Add(new H10014ResponseGroupItem
                 {
                     rw = 1,
-                    chntext =request.input,
-                    items= list1.Select(o=>new H10014ResponseListItem
+                    chntext = request.input,
+                    items = list1.Select(o => new H10014ResponseListItem
                     {
-                        canpronounce=o.CanPronounce,
-                        cantext=o.CanText,
-                        canvoice=o.CanVoice
+                        canpronounce = o.CanPronounce,
+                        cantext = o.CanText,
+                        canvoice = o.CanVoice
                     }).ToList()
                 });
 
@@ -2825,6 +2825,260 @@ namespace Agile.API.Helpers
             var sqlstr = sb.ToString();
             var rows = DataHelper.ExecuteNonQuery(sqlstr);
             return rows;
+        }
+
+        /// <summary>
+        /// 粤语词典 - 统计
+        /// </summary>
+        /// <returns></returns>
+        public static List<GroupItemDto> H10067()
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'wordcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=1\r\n");
+            sb.AppendFormat(" UNION\r\n");
+            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'termcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=2\r\n");
+            sb.AppendFormat(" UNION\r\n");
+            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'usercount' AS IName FROM T_user WHERE Domain={0}\r\n", (int)DomainEnum.cantonesedict);
+            sb.AppendFormat(" UNION\r\n");
+            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'feedbackcount' AS IName FROM CAN_feedback WHERE DATEDIFF(DAY,GETDATE(),CreatedAt)=0\r\n");
+            sb.AppendFormat(" UNION\r\n");
+            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'noresultcount' AS IName FROM CAN_noresult\r\n");
+
+            var sqlstr = sb.ToString();
+            var list = DataHelper.ExecuteList<GroupItemDto>(sqlstr);
+            return list;
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取词汇列表
+        /// </summary>
+        /// <returns></returns>
+        public static H10068Response H10068(H10068Request request)
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat(" SELECT *,ROW_NUMBER() OVER(ORDER BY Id DESC) AS RW FROM CAN_vocabulary WHERE 1=1");
+
+            if (!string.IsNullOrEmpty(request.chntext))
+            {
+                sb.AppendFormat(" AND ChnText LIKE N'%{0}%'", request.chntext);
+            }
+
+            if (!string.IsNullOrEmpty(request.cantext))
+            {
+                sb.AppendFormat(" AND CanText=N'{0}'", request.cantext);
+            }
+
+            if (!string.IsNullOrEmpty(request.canpronounce))
+            {
+                sb.AppendFormat(" AND CanPronounce=N'{0}'", request.canpronounce);
+            }
+
+            if (!string.IsNullOrEmpty(request.canvoice))
+            {
+                sb.AppendFormat(" AND CanVoice=N'{0}'", request.canvoice);
+            }
+
+            if (request.createdat.HasValue)
+            {
+                sb.AppendFormat(" AND DATEDIFF(DAY,CreatedAt,'{0}')=0", request.createdat.Value.ToString("yyyy-MM-dd"));
+            }
+
+            if (request.textlength.HasValue)
+            {
+                sb.AppendFormat(" AND LEN(ChnText)={0}", request.textlength.Value);
+            }
+
+            var sqlstr = sb.ToString();
+            var sqlstr2 = string.Format("SELECT COUNT(1) FROM ({0}) AS Q", sqlstr);
+            var obj = DataHelper.ExecuteScalar(sqlstr2);
+            var count = Convert.ToInt32(obj);
+
+            var page = request.page.GetValueOrDefault(1);
+            var pagesize = request.pagesize.GetValueOrDefault(10);
+            var begin = pagesize * (page - 1);
+            var end = pagesize * page;
+            var sqlstr3 = string.Format("SELECT * FROM ({0}) AS Q WHERE Q.RW>{1} AND Q.RW<={2}", sqlstr, begin, end);
+            var pagedlist = DataHelper.ExecuteList<H10068ResponseListItem>(sqlstr3);
+            return new H10068Response
+            {
+                error = 0,
+                data = new PagedListDto<H10068ResponseListItem>
+                {
+                    Page = page,
+                    PageSize = pagesize,
+                    RecordCount = count,
+                    RecordList = pagedlist ?? new List<H10068ResponseListItem>()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 删除词汇
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static int H10069(int id)
+        {
+            return QueryHelper.Delete<Can_vocabulary>(new Can_vocabulary
+            {
+                Id = id
+            });
+        }
+
+        /// <summary>
+        /// 粤语词典 - 添加词汇
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static int H10070(H10070Request request)
+        {
+            var model = new Can_vocabulary
+            {
+                CanPronounce = request.canpronounce,
+                CanText = request.cantext,
+                CanVoice = request.canvoice,
+                ChnText = request.chntext,
+                CreatedAt = DateTime.Now
+            };
+
+            return QueryHelper.Save<Can_vocabulary>(model);
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取词汇
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static H10071Response H10071(int id)
+        {
+            var sqlstr = "SELECT * FROM CAN_vocabulary WHERE Id=" + id;
+            var list = DataHelper.ExecuteList<H10071ResponseListItem>(sqlstr);
+            return new H10071Response
+            {
+                error = 0,
+                data = list == null ? null : list[0]
+            };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 更新词汇
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int H10072(H10071ResponseListItem request)
+        {
+            return QueryHelper.Update<Can_vocabulary>(new Can_vocabulary
+            {
+                CanPronounce = request.canpronounce,
+                CanText = request.cantext,
+                CanVoice = request.canvoice,
+                ChnText = request.chntext,
+                CreatedAt = request.createdat,
+                Id = request.id
+            });
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取情景列表
+        /// </summary>
+        /// <returns></returns>
+        public static H10073Response H10073(H10073Request request)
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat(" SELECT *,ROW_NUMBER() OVER(ORDER BY Id DESC) AS RW FROM CAN_scene WHERE 1=1");
+
+            if (!string.IsNullOrEmpty(request.name))
+            {
+                sb.AppendFormat(" AND Name LIKE N'%{0}%'", request.name);
+            }
+
+            if (request.createdat.HasValue)
+            {
+                sb.AppendFormat(" AND DATEDIFF(DAY,CreatedAt,'{0}')=0", request.createdat.Value.ToString("yyyy-MM-dd"));
+            }
+
+            var sqlstr = sb.ToString();
+            var sqlstr2 = string.Format("SELECT COUNT(1) FROM ({0}) AS Q", sqlstr);
+            var obj = DataHelper.ExecuteScalar(sqlstr2);
+            var count = Convert.ToInt32(obj);
+
+            var page = request.page.GetValueOrDefault(1);
+            var pagesize = request.pagesize.GetValueOrDefault(10);
+            var begin = pagesize * (page - 1);
+            var end = pagesize * page;
+            var sqlstr3 = string.Format("SELECT * FROM ({0}) AS Q WHERE Q.RW>{1} AND Q.RW<={2}", sqlstr, begin, end);
+            var pagedlist = DataHelper.ExecuteList<H10073ResponseListItem>(sqlstr3);
+            return new H10073Response
+            {
+                error = 0,
+                data = new PagedListDto<H10073ResponseListItem>
+                {
+                    Page = page,
+                    PageSize = pagesize,
+                    RecordCount = count,
+                    RecordList = pagedlist ?? new List<H10073ResponseListItem>()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 删除情景
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static int H10074(int id)
+        {
+            return QueryHelper.Delete<Can_scene>(new Can_scene
+            {
+                Id = id
+            });
+        }
+
+        /// <summary>
+        /// 粤语词典 - 添加情景
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static int H10075(H10075Request request)
+        {
+            var model = new Can_scene
+            {
+                CreatedAt = DateTime.Now,
+                Name = request.name
+            };
+
+            return QueryHelper.Save<Can_scene>(model);
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取情景
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static H10076Response H10076(int id)
+        {
+            var sqlstr = "SELECT * FROM CAN_scene WHERE Id=" + id;
+            var list = DataHelper.ExecuteList<H10076ResponseListItem>(sqlstr);
+            return new H10076Response
+            {
+                error = 0,
+                data = list == null ? null : list[0]
+            };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 更新情景
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int H10077(H10076ResponseListItem request)
+        {
+            return QueryHelper.Update<Can_scene>(new Can_scene
+            {
+                Name = request.name,
+                CreatedAt = request.createdat,
+                Id = request.id
+            });
         }
     }
 }

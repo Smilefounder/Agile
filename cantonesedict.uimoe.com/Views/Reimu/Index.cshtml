@@ -4,16 +4,6 @@
 }
 
 <style type="text/css">
-    .a1 {
-        color: #22b14c;
-        text-decoration: none;
-    }
-
-        .a1:hover {
-            color: #22b14c;
-            text-decoration: underline;
-        }
-
     nav ul {
         list-style: none;
         padding-left: 0;
@@ -71,34 +61,44 @@
     }
 </style>
 
-<div style="background-color:#22b14c;position:fixed;left:0;top:0;height:40px;line-height:40px;width:100%;z-index:10010;">
+<div style="background-color:#22b14c;position:fixed;left:0;top:0;height:40px;line-height:40px;width:100%;z-index:10020;">
     <nav class="nav" style="width:1000px;margin:0 auto;">
         <ul class="nav-menu">
             <li class="nav-menu-item"><a id="homea" href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/Statistics")');">粤语词典</a></li>
             <li class="nav-menu-item">
                 <a href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/Vocabulary")');">词汇</a>
                 <ul class="nav-submenu">
-                    <li class="nav-submenu-item"><a href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/AddVocabulary")');">新增词汇</a></li>
+                    <li class="nav-submenu-item"><a href="javascript:void(0);" onclick="loaddialog(this,'@Url.Content("~/Reimu/AddVocabulary")');">新增词汇</a></li>
                 </ul>
             </li>
             <li class="nav-menu-item">
                 <a href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/Category")');">情景</a>
                 <ul class="nav-submenu">
-                    <li class="nav-submenu-item"><a href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/AddCategory")');">新增情景</a></li>
+                    <li class="nav-submenu-item"><a href="javascript:void(0);" onclick="loaddialog(this,'@Url.Content("~/Reimu/AddCategory")');">新增情景</a></li>
                 </ul>
             </li>
             <li class="nav-menu-item"><a href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/UserList")');">用户</a></li>
         </ul>
     </nav>
 </div>
-<div style="position:absolute;width:100%;background-color:#f0fff0;height:100%;">
+<div style="position:absolute;width:100%;height:100%;">
     <div style="height:50px;width:100%;"></div>
     <div style="width:1000px;margin:0 auto;border:1px solid #22b14c;border-radius:3px;">
-        <div style="height:40px;line-height:40px;border-bottom:1px dotted #22b14c;width:980px;margin:0 auto;">
-            <a class="a1" style="padding-left:6px;" href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/Statistics")');">粤语词典</a>&nbsp;&nbsp;<span style="color:#22b14c;">&gt;</span>&nbsp;&nbsp;<span id="frametitlespan" style="color:#22b14c;">统计</span>
+        <div style="height:32px;line-height:32px;border-bottom:1px dotted #22b14c;width:980px;margin:0 auto;">
+            <a class="a1" href="javascript:void(0);" onclick="loadview(this,'@Url.Content("~/Reimu/Statistics")');">粤语词典</a>&nbsp;&nbsp;<span style="color:#22b14c;">&gt;</span>&nbsp;&nbsp;<span id="frametitlespan" style="color:#22b14c;">统计</span>
         </div>
         <iframe id="iframe1" src="#" frameborder="0" height="500" width="1000"></iframe>
     </div>
+</div>
+<div style="position:fixed;left:0;top:50px;width:100%;z-index:10010;display:none;" id="dialogdiv1">
+    <div style="width:800px;margin:0 auto;border:1px solid #22b14c;border-radius:3px;background-color:#fff;">
+        <div id="titlediv2" style="height: 32px; line-height: 32px; border-bottom: 1px dotted #22b14c; width: 780px; margin: 0 auto;">
+            <span id="frametitlespan2" style="color: #22b14c;">标题</span>
+        </div>
+        <iframe id="iframe2" src="#" frameborder="0" height="468" width="800"></iframe>
+    </div>
+</div>
+<div style="position:fixed;left:0;top:40px;width:100%;height:100%;z-index:10000;display:none;background-color:#000;opacity:0.8;" id="maskdiv1">
 </div>
 
 <script type="text/javascript">
@@ -109,13 +109,73 @@
     }
 
     function loadview(sender, url) {
+        closedialog(sender);
+
         var iframe1 = document.getElementById("iframe1");
         iframe1.setAttribute("src", url);
         iframe1.onload = function () {
             if (iframe1.contentDocument) {
                 var frametitlespan = document.getElementById("frametitlespan");
-                frametitlespan.innerHTML = iframe1.contentDocument.body.title;
+                frametitlespan.innerHTML = iframe1.contentDocument.title;
             }
+        }
+    }
+
+    function reloadview() {
+        closedialog(null);
+
+        var iframe1 = document.getElementById("iframe1");
+        iframe1.contentDocument.location.reload();
+    }
+
+    function loaddialog(sender, url, nomask) {
+        var dialogdiv1 = document.getElementById("dialogdiv1");
+        dialogdiv1.style.display = "block";
+
+        var iframe2 = document.getElementById("iframe2");
+        iframe2.setAttribute("src", url);
+        iframe2.onload = function () {
+            if (iframe1.contentDocument) {
+                var frametitlespan2 = document.getElementById("frametitlespan2");
+                frametitlespan2.innerHTML = iframe2.contentDocument.title;
+            }
+        }
+
+        if (!nomask) {
+            var maskdiv1 = document.getElementById("maskdiv1");
+            maskdiv1.style.display = "block";
+        }
+    }
+
+    function closedialog(sender) {
+        var dialogdiv1 = document.getElementById("dialogdiv1");
+        dialogdiv1.style.display = "none";
+
+        var maskdiv1 = document.getElementById("maskdiv1");
+        maskdiv1.style.display = "none";
+    }
+
+    function resizedialog(sender, wt, ht) {
+        var dialogdiv1 = document.getElementById("dialogdiv1");
+        var titlediv2 = document.getElementById("titlediv2");
+        var iframe2 = document.getElementById("iframe2");
+        var fdv = {};
+        for (var i = 0; i < dialogdiv1.childNodes.length; i++) {
+            var child = dialogdiv1.childNodes[i];
+            if (child && child.getAttribute) {
+                fdv = child;
+                break;
+            }
+        }
+
+        if (wt && !isNaN(wt)) {
+            iframe2.setAttribute("width", wt);
+            titlediv2.style.width = wt - 20 + "px";
+            fdv.style.width = wt + "px";
+        }
+
+        if (ht && !isNaN(ht)) {
+            iframe2.setAttribute("height", ht - 42);
         }
     }
 </script>

@@ -3,12 +3,22 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>粤语词典</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="@Url.Content("~/Assets/weui.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Assets/example.css")" rel="stylesheet" />
     <style type="text/css">
+        .a1 {
+            color: #22b14c;
+            text-decoration: none;
+        }
+
+            .a1:hover {
+                color: #22b14c;
+                text-decoration: underline;
+            }
+
         .splitter-d, .splitter-s {
             width: 100%;
             height: 2px;
@@ -37,12 +47,89 @@
         .newline5 {
             height: 2px;
         }
+
+        .form label, .form input {
+            margin-bottom: 5px;
+        }
+
+        .table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .table tr:hover {
+                background-color: #b0ffb0;
+            }
+
+            .table tr:nth-child(2n+1) {
+                background-color: #e0ffe0;
+            }
+
+            .table th, .table td {
+                border: 1px solid #22b14c;
+                color: #22b14c;
+                padding: 5px;
+                text-align: left;
+            }
+
+        .table2 {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .table2 th, .table2 td {
+                border: 1px solid #22b14c;
+                color: #22b14c;
+                padding: 5px;
+            }
+
+            .table2 th {
+                background-color: #e0ffe0;
+                text-align: right;
+            }
+
+            .table2 td {
+                text-align: left;
+            }
+
+
+        .button {
+            background-color: #22b14c;
+            border: 0;
+            border-radius: 3px;
+            padding: 5px;
+            color: #fff;
+        }
+
+        .button-reverse {
+            background-color: #f0f0f0;
+            border: 1px solid #d5d5d5;
+            border-radius: 3px;
+            padding: 5px;
+            color: #555;
+        }
+
+            .button:hover, .button-reverse:hover {
+                opacity: 0.8;
+                cursor: pointer;
+            }
+
+        .input {
+            border: 1px solid #22b14c;
+            border-radius: 3px;
+            color: #22b14c;
+            width: 240px;
+            padding: 5px;
+        }
+
+            .input:focus {
+                box-shadow: 0 0 2px #22b14c;
+            }
     </style>
 </head>
 <body>
-    @RenderBody()
-
     @Scripts.Render("~/bundles/jquery")
+    @RenderBody()
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
         function linkto(url, target, features, replace) {

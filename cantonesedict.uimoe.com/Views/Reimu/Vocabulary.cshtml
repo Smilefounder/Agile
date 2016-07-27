@@ -1,5 +1,87 @@
 ﻿@{
-    ViewBag.Title = "Vocabulary";
+    ViewBag.Title = "词汇";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Vocabulary</h2>
+<div style="padding:10px;color:#22b14c;">
+    <div style="color:#ff0080;">查询条件</div>
+    <div style="height:2px;width:100%;border-bottom:1px dotted #ff0080;"></div>
+    <div class="newline"></div>
+    <form id="form1">
+        <table class="table2">
+            <tr>
+                <th style="width:20%;">普通话：</th>
+                <td style="width:30%;">
+                    <input id="chntext" name="chntext" type="text" class="input" />
+                </td>
+                <th style="width:20%;">粤语：</th>
+                <td>
+                    <input id="cantext" name="cantext" type="text" class="input" />
+                </td>
+            </tr>
+            <tr>
+                <th>注音：</th>
+                <td>
+                    <input id="canpronounce" name="canpronounce" type="text" class="input" />
+                </td>
+                <th>文件：</th>
+                <td>
+                    <input id="canvoice" name="canvoice" type="text" class="input" />
+                </td>
+            </tr>
+            <tr>
+                <th>时间：</th>
+                <td>
+                    <input id="createdat" name="createdat" type="text" class="input" />
+                </td>
+                <th>字词长度（普通话）：</th>
+                <td>
+                    <input id="textlength" name="textlength" type="text" class="input" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div class="newline"></div>
+    <div>
+        <button class="button" onclick="loaddata(this);">查询</button>
+        <button class="button-reverse" onclick="top.loaddialog(this,'@Url.Content("~/Reimu/AddVocabulary")');">新增词汇</button>
+    </div>
+    <div class="newline"></div>
+    <div style="color:#ff0080;">查询结果</div>
+    <div style="height:2px;width:100%;border-bottom:1px dotted #ff0080;"></div>
+    <div id="tablediv1"></div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        loaddata();
+    })
+
+    function loaddata(sender, page, pagesize) {
+        if (!page) {
+            page = 1;
+        }
+
+        if (!pagesize) {
+            pagesize = 10;
+        }
+
+        var datastr = $("#form1").serialize();
+        if (datastr) {
+            datastr += '&page=' + page + '&pagesize=' + pagesize;
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Content("~/Reimu/Vocabulary_pl")',
+            data: datastr,
+            complete: function (xhr, status) {
+                if (status != "success") {
+                    return;
+                }
+
+                $("#tablediv1").html(xhr.responseText);
+            }
+        });
+    }
+</script>

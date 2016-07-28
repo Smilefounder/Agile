@@ -22,6 +22,16 @@ namespace Agile.Models
 
         uimoe = 1,
 
-        cantonesedict = 2
+        api = 2,
+
+        cantonesedict = 3,
+
+        database = 4,
+
+        mp = 5,
+
+        nasa = 6,
+
+        sharp = 7
     }
 }

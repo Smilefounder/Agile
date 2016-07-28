@@ -179,6 +179,12 @@
     <Compile Include="H10073Response.cs" />
     <Compile Include="H10075Request.cs" />
     <Compile Include="H10076Response.cs" />
+    <Compile Include="H10078Request.cs" />
+    <Compile Include="H10078Response.cs" />
+    <Compile Include="H10079Request.cs" />
+    <Compile Include="H10079Response.cs" />
+    <Compile Include="H10080Request.cs" />
+    <Compile Include="H10080Response.cs" />
     <Compile Include="HBaseResponse.cs" />
     <Compile Include="HPagedListRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

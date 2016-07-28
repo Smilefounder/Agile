@@ -318,6 +318,9 @@
     <Content Include="Views\Reimu\Vocabulary_pl.cshtml" />
     <Content Include="Views\Reimu\Category_pl.cshtml" />
     <Content Include="Views\Reimu\UpdateCategory.cshtml" />
+    <Content Include="Views\Reimu\UserList_pl.cshtml" />
+    <Content Include="Views\Reimu\Feedback_pl.cshtml" />
+    <Content Include="Views\Reimu\NoResult_pl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

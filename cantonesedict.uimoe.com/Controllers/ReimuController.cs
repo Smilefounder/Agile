@@ -225,6 +225,7 @@ namespace cantonesedict.uimoe.com.Controllers
         }
         #endregion
 
+        #region 情景
         public ActionResult Category()
         {
             return View();
@@ -372,20 +373,87 @@ namespace cantonesedict.uimoe.com.Controllers
 
             return Json(response);
         }
+        #endregion
 
+        #region 用户
         public ActionResult UserList()
         {
             return View();
         }
+
+        public ActionResult UserList_pl()
+        {
+            var vm = new H10078Response
+            {
+                error = 0,
+                data = new PagedListDto<H10078ResponseListItem>()
+            };
+
+            try
+            {
+                var request = WebHelper.ParseFromRequest<H10078Request>();
+                request.domain = (int)H10044RequestDomainEnum.cantonesedict;
+                vm = LogicHelper.H10078(request);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
+        }
+        #endregion
 
         public ActionResult Feedback()
         {
             return View();
         }
 
+        public ActionResult Feedback_pl()
+        {
+            var vm = new H10079Response
+            {
+                error = 0,
+                data = new PagedListDto<H10079ResponseListItem>()
+            };
+
+            try
+            {
+                var request = WebHelper.ParseFromRequest<H10079Request>();
+                vm = LogicHelper.H10079(request);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
+        }
+
         public ActionResult NoResult()
         {
             return View();
+        }
+
+        public ActionResult NoResult_pl()
+        {
+            var vm = new H10080Response
+            {
+                error = 0,
+                data = new PagedListDto<H10080ResponseListItem>()
+            };
+
+            try
+            {
+                var request = WebHelper.ParseFromRequest<H10080Request>();
+                vm = LogicHelper.H10080(request);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
         }
     }
 }

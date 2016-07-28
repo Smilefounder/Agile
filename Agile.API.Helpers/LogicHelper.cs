@@ -3080,5 +3080,167 @@ namespace Agile.API.Helpers
                 Id = request.id
             });
         }
+
+        /// <summary>
+        /// 获取用户列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10078Response H10078(H10078Request request)
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat(" SELECT *,ROW_NUMBER() OVER(ORDER BY Id DESC) AS RW FROM T_user WHERE 1=1");
+
+            if (!string.IsNullOrEmpty(request.username))
+            {
+                sb.AppendFormat(" AND UserName LIKE N'%{0}%'", request.username);
+            }
+
+            if (!string.IsNullOrEmpty(request.email))
+            {
+                sb.AppendFormat(" AND Email = N'{0}'", request.email);
+            }
+
+            if (request.domain.HasValue)
+            {
+                sb.AppendFormat(" AND Domain = {0}", request.domain.Value);
+            }
+
+            if (request.status.HasValue)
+            {
+                sb.AppendFormat(" AND Status = {0}", request.status.Value);
+            }
+
+            if (request.createdat.HasValue)
+            {
+                sb.AppendFormat(" AND DATEDIFF(DAY,CreatedAt,'{0}')=0", request.createdat.Value.ToString("yyyy-MM-dd"));
+            }
+
+            var sqlstr = sb.ToString();
+            var sqlstr2 = string.Format("SELECT COUNT(1) FROM ({0}) AS Q", sqlstr);
+            var obj = DataHelper.ExecuteScalar(sqlstr2);
+            var count = Convert.ToInt32(obj);
+
+            var page = request.page.GetValueOrDefault(1);
+            var pagesize = request.pagesize.GetValueOrDefault(10);
+            var begin = pagesize * (page - 1);
+            var end = pagesize * page;
+            var sqlstr3 = string.Format("SELECT * FROM ({0}) AS Q WHERE Q.RW>{1} AND Q.RW<={2}", sqlstr, begin, end);
+            var pagedlist = DataHelper.ExecuteList<H10078ResponseListItem>(sqlstr3);
+            return new H10078Response
+            {
+                error = 0,
+                data = new PagedListDto<H10078ResponseListItem>
+                {
+                    Page = page,
+                    PageSize = pagesize,
+                    RecordCount = count,
+                    RecordList = pagedlist ?? new List<H10078ResponseListItem>()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取反馈列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10079Response H10079(H10079Request request)
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat(" SELECT *,ROW_NUMBER() OVER(ORDER BY Id DESC) AS RW FROM CAN_feedback WHERE 1=1");
+
+            if (!string.IsNullOrEmpty(request.chntext))
+            {
+                sb.AppendFormat(" AND ChnText LIKE N'%{0}%'", request.chntext);
+            }
+
+            if (!string.IsNullOrEmpty(request.cantext))
+            {
+                sb.AppendFormat(" AND CanText = N'{0}'", request.cantext);
+            }
+
+            if (!string.IsNullOrEmpty(request.createdby))
+            {
+                sb.AppendFormat(" AND CreatedBy = N'{0}'", request.createdby);
+            }
+
+            if (request.status.HasValue)
+            {
+                sb.AppendFormat(" AND Status = {0}", request.status.Value);
+            }
+
+            if (request.createdat.HasValue)
+            {
+                sb.AppendFormat(" AND DATEDIFF(DAY,CreatedAt,'{0}')=0", request.createdat.Value.ToString("yyyy-MM-dd"));
+            }
+
+            var sqlstr = sb.ToString();
+            var sqlstr2 = string.Format("SELECT COUNT(1) FROM ({0}) AS Q", sqlstr);
+            var obj = DataHelper.ExecuteScalar(sqlstr2);
+            var count = Convert.ToInt32(obj);
+
+            var page = request.page.GetValueOrDefault(1);
+            var pagesize = request.pagesize.GetValueOrDefault(10);
+            var begin = pagesize * (page - 1);
+            var end = pagesize * page;
+            var sqlstr3 = string.Format("SELECT * FROM ({0}) AS Q WHERE Q.RW>{1} AND Q.RW<={2}", sqlstr, begin, end);
+            var pagedlist = DataHelper.ExecuteList<H10079ResponseListItem>(sqlstr3);
+            return new H10079Response
+            {
+                error = 0,
+                data = new PagedListDto<H10079ResponseListItem>
+                {
+                    Page = page,
+                    PageSize = pagesize,
+                    RecordCount = count,
+                    RecordList = pagedlist ?? new List<H10079ResponseListItem>()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取无结果列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10080Response H10080(H10080Request request)
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat(" SELECT *,ROW_NUMBER() OVER(ORDER BY Id DESC) AS RW FROM CAN_noresult WHERE 1=1");
+
+            if (!string.IsNullOrEmpty(request.chntext))
+            {
+                sb.AppendFormat(" AND ChnText LIKE N'%{0}%'", request.chntext);
+            }
+
+            if (request.createdat.HasValue)
+            {
+                sb.AppendFormat(" AND DATEDIFF(DAY,CreatedAt,'{0}')=0", request.createdat.Value.ToString("yyyy-MM-dd"));
+            }
+
+            var sqlstr = sb.ToString();
+            var sqlstr2 = string.Format("SELECT COUNT(1) FROM ({0}) AS Q", sqlstr);
+            var obj = DataHelper.ExecuteScalar(sqlstr2);
+            var count = Convert.ToInt32(obj);
+
+            var page = request.page.GetValueOrDefault(1);
+            var pagesize = request.pagesize.GetValueOrDefault(10);
+            var begin = pagesize * (page - 1);
+            var end = pagesize * page;
+            var sqlstr3 = string.Format("SELECT * FROM ({0}) AS Q WHERE Q.RW>{1} AND Q.RW<={2}", sqlstr, begin, end);
+            var pagedlist = DataHelper.ExecuteList<H10080ResponseListItem>(sqlstr3);
+            return new H10080Response
+            {
+                error = 0,
+                data = new PagedListDto<H10080ResponseListItem>
+                {
+                    Page = page,
+                    PageSize = pagesize,
+                    RecordCount = count,
+                    RecordList = pagedlist ?? new List<H10080ResponseListItem>()
+                }
+            };
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace Agile.Web.Helpers
@@ -7,7 +8,7 @@ namespace Agile.Web.Helpers
     public class WebHelper
     {
         public static T ParseFromRequest<T>()
-    where T : class
+            where T : class
         {
             var ttype = typeof(T);
             var tps = ttype.GetProperties();
@@ -62,6 +63,11 @@ namespace Agile.Web.Helpers
             }
 
             return entity;
+        }
+
+        public static string UrlEncode(string input)
+        {
+            return HttpUtility.UrlEncode(input, Encoding.GetEncoding("GBK"));
         }
     }
 }

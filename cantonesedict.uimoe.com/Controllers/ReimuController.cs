@@ -1,6 +1,7 @@
 ﻿using Agile.API.Dtos;
 using Agile.API.Helpers;
 using Agile.Attributes;
+using Agile.Cache;
 using Agile.Dtos;
 using Agile.Helpers;
 using Agile.Web.Helpers;
@@ -102,6 +103,7 @@ namespace cantonesedict.uimoe.com.Controllers
         [HttpGet]
         public ActionResult AddVocabulary()
         {
+            ViewBag.chntext = Request.Params["chntext"];
             return View();
         }
 
@@ -122,6 +124,35 @@ namespace cantonesedict.uimoe.com.Controllers
                     response = new HBaseResponse
                     {
                         error = 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(response);
+        }
+
+        [HttpPost]
+        public ActionResult GetVocabularyRef(string chntext)
+        {
+            var response = new HBaseResponse
+            {
+                error = 1
+            };
+
+            try
+            {
+                var chntext2 = WebHelper.UrlEncode(chntext);
+                var str = CantoneseDictionary.GetFromWeb(chntext2);
+                if (!string.IsNullOrEmpty(str))
+                {
+                    response = new HBaseResponse
+                    {
+                        error = 0,
+                        message = str
                     };
                 }
             }
@@ -430,6 +461,37 @@ namespace cantonesedict.uimoe.com.Controllers
             return View(vm);
         }
 
+        [HttpPost]
+        public ActionResult DeleteFeedback()
+        {
+            var response = new HBaseResponse
+            {
+                error = 1,
+                message = "操作失败，请稍后再试"
+            };
+
+            var id = 0;
+            int.TryParse(Request.Params["id"], out id);
+
+            try
+            {
+                var rows = LogicHelper.H10081(id);
+                if (rows > 0)
+                {
+                    response = new HBaseResponse
+                    {
+                        error = 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(response);
+        }
+
         public ActionResult NoResult()
         {
             return View();
@@ -455,5 +517,36 @@ namespace cantonesedict.uimoe.com.Controllers
 
             return View(vm);
         }
+        [HttpPost]
+        public ActionResult DeleteNoResult()
+        {
+            var response = new HBaseResponse
+            {
+                error = 1,
+                message = "操作失败，请稍后再试"
+            };
+
+            var id = 0;
+            int.TryParse(Request.Params["id"], out id);
+
+            try
+            {
+                var rows = LogicHelper.H10082(id);
+                if (rows > 0)
+                {
+                    response = new HBaseResponse
+                    {
+                        error = 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(response);
+        }
+
     }
 }

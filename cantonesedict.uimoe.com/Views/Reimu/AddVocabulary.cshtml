@@ -4,8 +4,8 @@
 
 <div style="padding:10px;color:#22b14c;">
     <form class="form" id="form1">
-        <label>普通话</label><br />
-        <input class="input" type="text" id="chntext" name="chntext" /><br />
+        <label>普通话</label>&nbsp;<a href="javascript:void(0);" onclick="view.query(this)">查询</a><br />
+        <input class="input" type="text" id="chntext" name="chntext" value="@ViewBag.chntext" /><br />
         <label>粤语</label><br />
         <input class="input" type="text" id="cantext" name="cantext" /><br />
         <label>注音</label><br />
@@ -23,6 +23,41 @@
     })
 
     var view = {
+        query: function (sender) {
+            var chntext = '@ViewBag.chntext';
+            $(sender).attr("disabled", "disabled");
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/Reimu/GetVocabularyRef")',
+                data: $("#form1").serialize(),
+                complete: function (xhr, status) {
+                    $(sender).removeAttr("disabled");
+
+                    if (status != "success") {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    var response = {};
+
+                    try {
+                        response = JSON.parse(xhr.responseText);
+                    }
+                    catch (e) {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    if (!response || response.error != 0) {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    $("#cantext").val(response.message);
+                }
+            });
+        },
         addvocabulary: function (sender) {
             $(sender).attr("disabled", "disabled");
 

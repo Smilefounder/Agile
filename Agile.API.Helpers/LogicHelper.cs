@@ -3242,5 +3242,31 @@ namespace Agile.API.Helpers
                 }
             };
         }
+
+        /// <summary>
+        /// 粤语词典 - 删除反馈
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static int H10081(int id)
+        {
+            return QueryHelper.Delete<Can_feedback>(new Can_feedback
+            {
+                Id = id
+            });
+        }
+
+        /// <summary>
+        /// 粤语词典 - 删除无结果
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static int H10082(int id)
+        {
+            return QueryHelper.Delete<Can_noresult>(new Can_noresult
+            {
+                Id = id
+            });
+        }
     }
 }

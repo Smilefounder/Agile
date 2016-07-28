@@ -22,6 +22,8 @@ namespace Agile.API.Dtos
 
         public DateTime? createdat { get; set; }
 
+        public int id { get; set; }
+
         public int? status { get; set; }
     }
 }

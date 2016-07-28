@@ -8,11 +8,12 @@
     <tr>
         <th>字词</th>
         <th>时间</th>
+        <th>操作</th>
     </tr>
     @if (Model.data.RecordList.Count == 0)
     {
         <tr>
-            <td colspan="2">
+            <td colspan="3">
                 <div style="text-align:center;">未找到相关数据</div>
             </td>
         </tr>
@@ -24,6 +25,10 @@
             <tr>
                 <td>@item.chntext</td>
                 <td>@item.createdat.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>
+                    <a class="a1" href="javascript:void(0);" onclick="top.loaddialog(this,'@Url.Content("~/Reimu/AddVocabulary?chntext="+item.chntext)');">处理</a>
+                    <a class="a1" href="javascript:void(0);" onclick="view.deletemodel(this,'@item.id');">删除</a>
+                </td>
             </tr>
         }
     }
@@ -44,6 +49,42 @@
 
 <script type="text/javascript">
     var view = {
+        deletemodel: function (sender, id) {
+            if (!confirm("确定要删除吗")) {
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Content("~/Reimu/DeleteNoResult")',
+                data: { id: id },
+                complete: function (xhr, status) {
+                    if (status != "success") {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    var response = {};
+
+                    try {
+                        response = JSON.parse(xhr.responseText);
+                    }
+                    catch (e) {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    if (!response || response.error != 0) {
+                        alert("操作失败，请稍后再试");
+                        return;
+                    }
+
+                    var page = '@Model.data.Page';
+                    var pagesize = '@Model.data.PageSize';
+                    loaddata(sender, page, pagesize);
+                }
+            });
+        },
         chagepage: function (sender, page, pagesize, pagecount) {
             if (!page) {
                 var pageinput1 = document.getElementById("pageinput1");

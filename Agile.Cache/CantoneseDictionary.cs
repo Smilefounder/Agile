@@ -73,7 +73,10 @@ namespace Agile.Cache
             {
                 if (child.Name.ToUpper() == "AUDIO")
                 {
-                    sb += child.GetAttributeValue("src", "") + " ";
+                    var src = child.GetAttributeValue("src", "");
+                    src = src.Replace("voice/","");
+                    src = src.Replace(".mp3", "");
+                    sb += src + " ";
                 }
             }
 

@@ -4,7 +4,7 @@
 
 <div style="padding:10px;color:#22b14c;">
     <form class="form" id="form1">
-        <label>普通话</label>&nbsp;<a href="javascript:void(0);" onclick="view.query(this)">查询</a><br />
+        <label>普通话</label>&nbsp;<a class="a1" href="javascript:void(0);" onclick="view.query(this)">查询</a><br />
         <input class="input" type="text" id="chntext" name="chntext" value="@ViewBag.chntext" /><br />
         <label>粤语</label><br />
         <input class="input" type="text" id="cantext" name="cantext" /><br />
@@ -54,7 +54,7 @@
                         return;
                     }
 
-                    $("#cantext").val(response.message);
+                    $("#canpronounce").val(response.message);
                 }
             });
         },

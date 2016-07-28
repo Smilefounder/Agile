@@ -20,8 +20,8 @@
                     <Button>刷新</Button>
                     <Button>恢复</Button>
                     <Button>历史</Button>
-                    <TextBox Width="200"></TextBox>
-                    <Button>转到</Button>
+                    <TextBox x:Name="_addressTextBox" Width="200" KeyUp="_addressTextBox_KeyUp"></TextBox>
+                    <Button x:Name="_navigateButton" Click="_navigateButton_Click">转到</Button>
                     <TextBox Width="200"></TextBox>
                     <Button>搜索</Button>
                 </StackPanel>
@@ -34,9 +34,7 @@
                     <Button>账号</Button>
                 </StackPanel>
             </Grid>
-            <Grid Grid.Row="1">
-                <Canvas x:Name="_mainCanvas"></Canvas>
-            </Grid>
+            <Grid Grid.Row="1" x:Name="_mainGrid"></Grid>
             <Grid Grid.Row="2">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <TextBlock>这里显示可定制插件内容，例如笑话，诗词，名言，英语词汇等</TextBlock>

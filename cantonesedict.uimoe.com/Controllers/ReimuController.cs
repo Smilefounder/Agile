@@ -46,21 +46,27 @@ namespace cantonesedict.uimoe.com.Controllers
                         continue;
                     }
 
+                    if (item.IName == "wordcount")
+                    {
+                        vm.wordcount = Convert.ToInt32(item.ICount);
+                        continue;
+                    }
+
                     if (item.IName == "termcount")
                     {
                         vm.termcount = Convert.ToInt32(item.ICount);
                         continue;
                     }
 
-                    if (item.IName == "usercount")
+                    if (item.IName == "sentencecount")
                     {
-                        vm.usercount = Convert.ToInt32(item.ICount);
+                        vm.sentencecount = Convert.ToInt32(item.ICount);
                         continue;
                     }
 
-                    if (item.IName == "wordcount")
+                    if (item.IName == "usercount")
                     {
-                        vm.wordcount = Convert.ToInt32(item.ICount);
+                        vm.usercount = Convert.ToInt32(item.ICount);
                         continue;
                     }
                 }

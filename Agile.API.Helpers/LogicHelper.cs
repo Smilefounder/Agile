@@ -2836,7 +2836,9 @@ namespace Agile.API.Helpers
             var sb = new StringBuilder();
             sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'wordcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=1\r\n");
             sb.AppendFormat(" UNION\r\n");
-            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'termcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=2\r\n");
+            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'termcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=2 OR LEN(Q.ChnText)=3\r\n");
+            sb.AppendFormat(" UNION\r\n");
+            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'sentencecount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)>3\r\n");
             sb.AppendFormat(" UNION\r\n");
             sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'usercount' AS IName FROM T_user WHERE Domain={0}\r\n", (int)DomainEnum.cantonesedict);
             sb.AppendFormat(" UNION\r\n");

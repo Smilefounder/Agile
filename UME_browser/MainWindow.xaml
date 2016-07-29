@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UME_browser"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800" MinHeight="600" MinWidth="800">
+        Title="柚萌浏览器" Height="600" Width="820" MinHeight="600" MinWidth="820">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -26,7 +26,7 @@
                     <Button>搜索</Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button>截图</Button>
+                    <Button x:Name="_copyScreenButton" Click="_copyScreenButton_Click">截图</Button>
                     <Button>下载</Button>
                     <Button>代理</Button>
                     <Button>资源</Button>
@@ -51,5 +51,6 @@
                 </StackPanel>
             </Grid>
         </Grid>
+        <Grid x:Name="_foreGrid"></Grid>
     </Grid>
 </Window>

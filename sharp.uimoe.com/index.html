@@ -8,26 +8,30 @@
 </head>
 <body>
     <div class="panel" style="width:92%;">
-        <select id="select1" class="form-control strech">
+        <select id="select1" class="select strech" data-url="ajax.ashx?action=select">
             <option value="@Code">@Code @Name</option>
         </select>
-        <ul id="ul1" class="list strech">
+        <ul id="ul1" class="list strech" data-url="ajax.ashx?action=ul">
             <li>@Code @Name</li>
         </ul>
-        <table id="table1" class="table table-border table-alternating table-hover strech">
-            <thead>
-                <tr>
-                    <th>接口编码</th>
-                    <th>接口名称</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@Code</td>
-                    <td>@Name</td>
-                </tr>
-            </tbody>
+        <table id="table1" class="table" data-url="ajax.ashx?action=table" data-showpager="1" data-pager="pager1">
+            <tr>
+                <th>接口编码</th>
+                <th>接口名称</th>
+            </tr>
+            <tr>
+                <td>@Code</td>
+                <td>@Name</td>
+            </tr>
         </table>
+        <div id="pager1"></div>
+        <div>
+            <input type="text" class="input" />
+        </div>
+        <div>
+            <button class="button">确定</button>
+            <button class="button-reverse">取消</button>
+        </div>
     </div>
 </body>
 </html>

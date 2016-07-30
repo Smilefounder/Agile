@@ -103,6 +103,11 @@ namespace www.uimoe.com.Controllers
             return View();
         }
 
+        public ActionResult UMEVocabulary()
+        {
+            return View();
+        }
+
         public ActionResult ModelToSql()
         {
             return View();

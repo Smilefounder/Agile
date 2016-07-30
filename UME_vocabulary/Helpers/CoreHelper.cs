@@ -17,32 +17,47 @@ namespace UME_vocabulary.Helpers
 
         private static List<string> Remembered { get; set; }
 
+        private static bool IsRememberedChanged { get; set; }
+
+        private static List<string> _newWords = null;
+
         private static List<string> NewWords
         {
             get
             {
-                if (Remembered.Count == 0)
+                if (Remembered.Count == 0 || _newWords == null)
                 {
                     return Vocabulary;
                 }
 
-                var list = new List<string>();
-                foreach (var v in Vocabulary)
+                if (!IsRememberedChanged && _newWords != null)
                 {
-                    var cnt = Remembered.Count(c => c == v);
-                    if (cnt == 0)
-                    {
-                        list.Add(v);
-                    }
+                    return _newWords;
                 }
 
-                return list;
+                if (IsRememberedChanged)
+                {
+                    _newWords = new List<string>();
+                    foreach (var v in Vocabulary)
+                    {
+                        var cnt = Remembered.Count(c => c == v);
+                        if (cnt == 0)
+                        {
+                            _newWords.Add(v);
+                        }
+                    }
+
+                    IsRememberedChanged = false;
+                }
+
+                return _newWords;
             }
         }
 
         public static void RememberOne(string model)
         {
             Remembered.Add(model);
+            IsRememberedChanged = true;
         }
 
         public static string NextOne()

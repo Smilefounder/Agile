@@ -144,8 +144,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\eb32191d4054b89ff9ea3d0df193ba93.png" />
+    <Content Include="Assets\Images\ModelToSql1.jpg" />
     <Content Include="Assets\Images\tenpay.jpg" />
     <Content Include="Assets\Images\alipay.jpg" />
+    <Content Include="Assets\Images\UME_browser1.jpg" />
+    <Content Include="Assets\Images\UME_music1.png" />
+    <Content Include="Assets\Images\UME_vocabulary1.png" />
     <Content Include="Assets\Images\ysl.jpg" />
     <Content Include="Assets\Images\cover.jpg" />
     <Content Include="Assets\bootstrap-3.3.5-dist\css\bootstrap-theme.css" />
@@ -222,6 +226,10 @@
     <Content Include="Assets\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Assets\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Assets\Files\UME_vocabulary.rar" />
+    <Content Include="Assets\Files\ModelToSql.rar" />
+    <Content Include="Assets\Files\UME_Music.rar" />
+    <Content Include="Assets\Files\UME_browser.rar" />
     <None Include="Properties\PublishProfiles\www.uimoe.com.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -281,6 +289,7 @@
     <Content Include="Views\App\UrlEncode.cshtml" />
     <Content Include="Views\App\ChnStopWord.cshtml" />
     <Content Include="Views\App\ResolveUserAgent.cshtml" />
+    <Content Include="Views\App\UMEVocabulary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

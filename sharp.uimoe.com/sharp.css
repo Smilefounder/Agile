@@ -8,50 +8,148 @@ html, body {
     width: 100%;
 }
 
+.newline, .newline1, .newline2, .newline5, .newline10, .newline20 {
+    width: 100%;
+}
+
+.newline {
+    height: 5px;
+}
+
+.newline1 {
+    height: 1px;
+}
+
+.newline2 {
+    height: 2px;
+}
+
+.newline5 {
+    height: 5px;
+}
+
+.newline10 {
+    height: 10px;
+}
+
+.newline20 {
+    height: 20px;
+}
+
+.splitter, .splitter-d {
+    height: 2px;
+}
+
+.splitter {
+    border-bottom: 1px solid #d5d5d5;
+}
+
+.splitter-dotted {
+    border-bottom: 1px dotted #d5d5d5;
+}
+
+.flex {
+    display: flex;
+}
+
+.col1 {
+    flex: 1;
+}
+
+.col2 {
+    flex: 2;
+}
+
+.col3 {
+    flex: 3;
+}
+
+.col4 {
+    flex: 4;
+}
+
+.col5 {
+    flex: 5;
+}
+
+.col6 {
+    flex: 6;
+}
+
+.col7 {
+    flex: 7;
+}
+
+.col8 {
+    flex: 8;
+}
+
+.col9 {
+    flex: 9;
+}
+
+.col10 {
+    flex: 10;
+}
+
 .strech {
     width: 100%;
+}
+
+.border {
+    border: 1px solid #d5d5d5;
+}
+
+.radius {
+    border-radius: 3px;
 }
 
 .panel {
     margin: 5px;
 }
 
-    .panel div, .panel input, .panel select, .panel ul, .panel table {
+    .panel > * {
         margin: 5px;
     }
 
-.form-control {
+.form {
+    margin: 5px;
+}
+
+    .form > * {
+        margin: 5px;
+    }
+
+.input, .select {
     border: 1px solid #d5d5d5;
-    color: #555555;
+    border-radius: 3px;
+    color: #555;
     padding: 5px;
 }
 
-    .form-control:focus {
+    .input:focus, .select:focus {
         box-shadow: 0 0 2px #d5d5d5;
     }
 
 .table {
     border-collapse: collapse;
+    width: 100%;
 }
 
+    .table tr:hover {
+        background-color: #f0f0f0;
+    }
+
+    .table tr:nth-child(2n+1) {
+        background-color: #f9f9f9;
+    }
+
     .table th, .table td {
-        border-bottom: 1px solid #d5d5d5;
-        color: #555555;
+        border: 1px solid #d5d5d5;
+        color: #d5d5d5;
         padding: 5px;
         text-align: left;
     }
-
-.table-alternating tr:nth-child(2n+1) {
-    background-color: #f9f9f9;
-}
-
-.table-border th, .table-border td {
-    border: 1px solid #d5d5d5;
-}
-
-.table-hover tr:hover {
-    background-color: #f0f0f0;
-}
 
 .list {
     border: 1px solid #d5d5d5;
@@ -61,8 +159,32 @@ html, body {
         list-style: none;
         border-bottom: 1px solid #d5d5d5;
         padding: 5px;
+        color: #555;
     }
 
         .list li:last-child {
             border-bottom: 0;
         }
+
+.button, .button-reverse {
+    border-radius: 3px;
+}
+
+    .button:hover, .button-reverse:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+
+.button {
+    background-color: #d5d5d5;
+    border: 0px;
+    color: #fff;
+    padding: 5px;
+}
+
+.button-reverse {
+    background-color: #f0f0f0;
+    border: 1px solid #d5d5d5;
+    color: #555;
+    padding: 4px;
+}

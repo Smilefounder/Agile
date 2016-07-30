@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UME_Music"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800" MinHeight="500" MinWidth="800">
+        Title="柚萌音乐" Height="500" Width="800" MinHeight="500" MinWidth="800">
     <Grid>
         <Border x:Name="_backgroundBorder"></Border>
         <Border x:Name="_mainBorder">

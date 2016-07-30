@@ -42,6 +42,11 @@ namespace ModelToSql
             var types = assembly.GetTypes();
             foreach (var t in types)
             {
+                if (!t.IsClass)
+                {
+                    continue;
+                }
+
                 if (t.Name.ToUpper() == "T_BASE")
                 {
                     continue;
@@ -95,7 +100,7 @@ namespace ModelToSql
             }
 
             var fieldstr = "";
-            fieldstr += string.Format("    {0} ", p.Name);
+            fieldstr += string.Format("    [{0}] ", p.Name);
 
             var ptstr = p.PropertyType.ToString();
             if (ptstr.Contains(typeof(int).FullName))

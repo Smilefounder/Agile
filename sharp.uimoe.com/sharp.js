@@ -294,7 +294,7 @@
                 }
 
                 var data = {
-                    action: "select"
+                    action: "table"
                 };
 
                 sharp.fn.ajax({
@@ -339,14 +339,25 @@
                                     tagName = child.tagName.toLowerCase();
                                 }
 
-                                if (tagName == "thead") {
-                                    template_th = child.innerHTML;
-                                    continue;
-                                }
-
                                 if (tagName == "tbody") {
-                                    template_td = child.innerHTML;
-                                    continue;
+                                    var trs = [];
+                                    for (var i2 = 0; i2 < child.childNodes.length; i2++) {
+                                        var subchild = child.childNodes[i2];
+                                        var tagName2 = "";
+                                        if (subchild && subchild.tagName) {
+                                            tagName2 = subchild.tagName.toLowerCase()
+                                        }
+
+                                        if (tagName2 == "tr") {
+                                            trs.push(subchild);
+                                        }
+                                    }
+
+                                    if (trs.length >= 2) {
+                                        template_th = trs[0].outerHTML;
+                                        template_td = trs[1].outerHTML;
+                                    }
+                                    break;
                                 }
                             }
 

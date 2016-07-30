@@ -128,7 +128,7 @@ namespace UME_Music.UserControls
 
         private void _closeButton_Click(object sender, RoutedEventArgs e)
         {
-
+            UIHelper.ResetDialog();
         }
     }
 }

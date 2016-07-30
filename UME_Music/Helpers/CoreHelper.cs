@@ -145,7 +145,17 @@ namespace UME_Music.Helpers
 
         private static void Player_MediaOpened(object sender, EventArgs e)
         {
-            LogHelper.Write("播放开始：" + Player.Source.AbsolutePath);
+            LogHelper.Write("播放开始：" + Player.Source.LocalPath);
+            var music = Musiclist.Where(w => w.FilePath == Player.Source.LocalPath).FirstOrDefault();
+            if (music != null)
+            {
+                CurrentMusic = music;
+            }
+
+            if (PlayerMediaChanged != null)
+            {
+                PlayerMediaChanged.Invoke();
+            }
         }
 
         public static void AddMusicFromFile(string filepath)

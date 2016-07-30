@@ -30,6 +30,7 @@ namespace UME_Music.UserControls
 
         private void AllMusicUserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            _recordcountTextBlock.Text = string.Format("共{0}首歌曲", CoreHelper.Musiclist.Count);
             DisplayMusicList();
         }
 

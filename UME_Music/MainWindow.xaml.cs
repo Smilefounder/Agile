@@ -46,7 +46,13 @@ namespace UME_Music
 
         private void CoreHelper_PlayerMediaChanged()
         {
-            this.Title = CoreHelper.CurrentMusic.FilePath;
+            var fp = CoreHelper.CurrentMusic.FilePath;
+            if (string.IsNullOrEmpty(fp))
+            {
+                fp = "柚萌音乐";
+            }
+
+            Title = fp;
         }
 
         private void CoreHelper_PlayerStateChanged()

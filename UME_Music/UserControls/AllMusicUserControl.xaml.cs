@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UME_Music.Helpers;
 using UME_Music.Models;
 
@@ -30,7 +22,10 @@ namespace UME_Music.UserControls
 
         private void AllMusicUserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            //显示歌曲总数
             _recordcountTextBlock.Text = string.Format("共{0}首歌曲", CoreHelper.Musiclist.Count);
+
+            //显示歌曲列表
             DisplayMusicList();
         }
 
@@ -82,6 +77,7 @@ namespace UME_Music.UserControls
 
         private void FetchFile(string directory)
         {
+            //找到目录下的文件
             var files = System.IO.Directory.GetFiles(directory, "*.*", System.IO.SearchOption.TopDirectoryOnly);
             if (files != null && files.Any())
             {
@@ -98,6 +94,7 @@ namespace UME_Music.UserControls
                 }
             }
 
+            //找到目录下的目录
             var folders = System.IO.Directory.GetDirectories(directory);
             if (folders != null && folders.Any())
             {
@@ -108,15 +105,21 @@ namespace UME_Music.UserControls
             }
         }
 
+        /// <summary>
+        /// 显示歌曲列表
+        /// </summary>
         private void DisplayMusicList()
         {
+            //先清空列表
             if (_itemlistStackPanel.Children.Count > 0)
             {
                 _itemlistStackPanel.Children.Clear();
             }
 
+            //添加列表头
             _itemlistStackPanel.Children.Add(CreateDataGridHeader());
 
+            //逐个添加列表项
             foreach (var music in CoreHelper.Musiclist)
             {
                 _itemlistStackPanel.Children.Add(CreateDataGridBody(music));

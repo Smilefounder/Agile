@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UME_Music.Helpers;
 using UME_Music.Models;
 using UME_Music.UserControls;
@@ -25,8 +14,52 @@ namespace UME_Music
     {
         public MainWindow()
         {
+            AllowDrop = true;
             InitializeComponent();
             Loaded += MainWindow_Loaded;
+            DragEnter += MainWindow_DragEnter;
+            Drop += MainWindow_Drop;
+
+        }
+
+        private void MainWindow_Drop(object sender, DragEventArgs e)
+        {
+            var paths = e.Data.GetData(DataFormats.FileDrop) as string[];
+            if (System.IO.Directory.Exists(paths[0]))
+            {
+                try
+                {
+                    CoreHelper.AddMusicFromDirectory(paths[0]);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Write(ex.ToString());
+                    UIHelper.ShowMessage(ex.Message);
+                }
+
+                return;
+            }
+
+            if (System.IO.File.Exists(paths[0]))
+            {
+                try
+                {
+                    CoreHelper.AddMusicFromFile(paths[0]);
+                    CoreHelper.Play(paths[0]);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Write(ex.ToString());
+                    UIHelper.ShowMessage(ex.Message);
+                }
+
+                return;
+            }
+        }
+
+        private void MainWindow_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.None;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -40,6 +73,7 @@ namespace UME_Music
             UIHelper._mainBorder = _mainBorder;
             UIHelper._maskBorder = _maskBorder;
             UIHelper._dialogBorder = _dialogBorder;
+            UIHelper._messageBorder = _messageBorder;
             UIHelper._menuGrid = _menuGrid;
             UIHelper._userControlGrid = _userControlGrid;
         }

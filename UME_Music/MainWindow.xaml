@@ -28,5 +28,6 @@
         </Border>
         <Border x:Name="_maskBorder"></Border>
         <Border x:Name="_dialogBorder"></Border>
+        <Border x:Name="_messageBorder"></Border>
     </Grid>
 </Window>

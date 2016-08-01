@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Threading;
 using UME_Music.Models;
 
 namespace UME_Music.Helpers
@@ -11,7 +10,9 @@ namespace UME_Music.Helpers
     public class CoreHelper
     {
         private static T_appConfig appConfig;
-
+        /// <summary>
+        /// 程序配置
+        /// </summary>
         public static T_appConfig AppConfig
         {
             get
@@ -34,7 +35,9 @@ namespace UME_Music.Helpers
         }
 
         private static T_playerConfig playerConfig;
-
+        /// <summary>
+        /// 播放器配置
+        /// </summary>
         public static T_playerConfig PlayerConfig
         {
             get
@@ -53,7 +56,9 @@ namespace UME_Music.Helpers
         }
 
         private static List<T_music> musiclist;
-
+        /// <summary>
+        /// 所有歌曲
+        /// </summary>
         public static List<T_music> Musiclist
         {
             get
@@ -73,7 +78,9 @@ namespace UME_Music.Helpers
         }
 
         private static T_music currentMusic;
-
+        /// <summary>
+        /// 当前正在播放的歌曲
+        /// </summary>
         public static T_music CurrentMusic
         {
             get
@@ -112,7 +119,9 @@ namespace UME_Music.Helpers
         public static event PlayerMediaChangedEventHandler PlayerMediaChanged;
 
         private static MediaPlayer player;
-
+        /// <summary>
+        /// 播放器
+        /// </summary>
         public static MediaPlayer Player
         {
             get
@@ -123,6 +132,12 @@ namespace UME_Music.Helpers
                     player.MediaOpened += Player_MediaOpened;
                     player.MediaEnded += Player_MediaEnded;
                     player.MediaFailed += Player_MediaFailed;
+
+                    MainTimer = new DispatcherTimer();
+                    MainTimer.Interval = TimeSpan.FromSeconds(1);
+                    MainTimer.Tick += MainTimer_Tick;
+                    MainTimer.Start();
+
                 }
                 return player;
             }
@@ -133,16 +148,44 @@ namespace UME_Music.Helpers
             }
         }
 
+        private static void MainTimer_Tick(object sender, EventArgs e)
+        {
+            if (PlayerState == (int)PlayerStateEnum.Playing)
+            {
+                if (PlayerStateChanged != null)
+                {
+                    PlayerStateChanged.Invoke();
+                }
+            }
+        }
+
+        private static DispatcherTimer MainTimer;
+
+        /// <summary>
+        /// 播放失败时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void Player_MediaFailed(object sender, ExceptionEventArgs e)
         {
             LogHelper.Write("播放失败：" + Player.Source.AbsolutePath);
         }
 
+        /// <summary>
+        /// 播放结束时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void Player_MediaEnded(object sender, EventArgs e)
         {
             LogHelper.Write("播放结束：" + Player.Source.AbsolutePath);
         }
 
+        /// <summary>
+        /// 播放开始时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void Player_MediaOpened(object sender, EventArgs e)
         {
             LogHelper.Write("播放开始：" + Player.Source.LocalPath);
@@ -158,7 +201,11 @@ namespace UME_Music.Helpers
             }
         }
 
-        public static void AddMusicFromFile(string filepath)
+        /// <summary>
+        /// 从文件添加音乐
+        /// </summary>
+        /// <param name="filepath"></param>
+        public static int AddMusicFromFile(string filepath)
         {
             var fileinfo = new System.IO.FileInfo(filepath);
             var ext = fileinfo.Extension.ToUpper();
@@ -193,19 +240,69 @@ namespace UME_Music.Helpers
                 FileLength = fileinfo.Length,
                 FilePath = filepath
             });
+
+            return 0;
         }
 
+        /// <summary>
+        /// 从目录添加音乐
+        /// </summary>
+        /// <param name="filepath"></param>
+        public static void AddMusicFromDirectory(string directory)
+        {
+            //找到目录下的文件
+            var files = System.IO.Directory.GetFiles(directory, "*.*", System.IO.SearchOption.TopDirectoryOnly);
+            if (files != null && files.Any())
+            {
+                foreach (var f in files)
+                {
+                    try
+                    {
+                        CoreHelper.AddMusicFromFile(f);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogHelper.Write(f + ": " + ex.Message);
+                        continue;
+                    }
+                }
+            }
+
+            //找到目录下的目录
+            var folders = System.IO.Directory.GetDirectories(directory);
+            if (folders != null && folders.Any())
+            {
+                foreach (var f in folders)
+                {
+                    AddMusicFromDirectory(f);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 播放（从暂停转为播放）
+        /// </summary>
         public static void Play()
         {
             Player.Play();
         }
 
+        /// <summary>
+        /// 播放（重新开始播放指定歌曲）
+        /// </summary>
+        /// <param name="filepath"></param>
         public static void Play(string filepath)
         {
             Player.Open(new Uri(filepath));
             Player.Play();
         }
 
+
+        /// <summary>
+        /// 播放（播放指定歌曲，可以预设播放进度）
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <param name="position"></param>
         public static void Play(string filepath, double position)
         {
             Player.Open(new Uri(filepath));

@@ -22,9 +22,6 @@ namespace UME_Music.UserControls
 
         private void AllMusicUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //显示歌曲总数
-            _recordcountTextBlock.Text = string.Format("共{0}首歌曲", CoreHelper.Musiclist.Count);
-
             //显示歌曲列表
             DisplayMusicList();
         }
@@ -132,6 +129,9 @@ namespace UME_Music.UserControls
         /// </summary>
         private void DisplayMusicList()
         {
+            //显示歌曲总数
+            _recordcountTextBlock.Text = string.Format("共{0}首歌曲", CoreHelper.Musiclist.Count);
+
             //先清空列表
             if (_itemlistStackPanel.Children.Count > 0)
             {

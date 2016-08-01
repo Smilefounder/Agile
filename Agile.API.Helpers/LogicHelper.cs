@@ -684,85 +684,71 @@ namespace Agile.API.Helpers
                 noresult = new List<string>()
             };
 
-            var needquery = true;
+            //整体匹配未成功
+            response.noresult.Add(request.input);
+
+            //开始逐个匹配
             var words = new List<string>();
-            if (request.input.Length == 1)
+            foreach (var ch in request.input)
             {
-                needquery = false;
-                words.Add(request.input);
-                response.noresult.Add(request.input);
-            }
-            else if (request.input.Length == 2)
-            {
-                foreach (var ch in request.input)
-                {
-                    words.Add(ch.ToString());
-                }
-            }
-            else
-            {
-                words = ChineseDictionary.GetWords(request.input);
+                words.Add(ch.ToString());
             }
 
-            if (needquery)
+            var sb = new StringBuilder();
+            for (var i = 0; i < words.Count; i++)
             {
-                var sb = new StringBuilder();
-                for (var i = 0; i < words.Count; i++)
+                sb.AppendFormat(" SELECT *,{0} as rw FROM CAN_vocabulary WHERE ChnText=N'{1}'\r\n", i, words[i]);
+                sb.AppendFormat(" UNION ALL\r\n");
+            }
+
+            var sqlstr = sb.ToString();
+            if (sqlstr.Length > 11)
+            {
+                sqlstr = sqlstr.Substring(0, sqlstr.Length - 11);
+            }
+
+            var list = DataHelper.ExecuteList<H10014ResponseOrderItem>(sqlstr);
+            foreach (var w in words)
+            {
+                var cnt = list.Count(c => c.chntext == w);
+                if (cnt == 0)
                 {
-                    sb.AppendFormat(" SELECT *,{0} as rw FROM CAN_vocabulary WHERE ChnText=N'{1}'\r\n", i, words[i]);
-                    sb.AppendFormat(" UNION ALL\r\n");
+                    response.noresult.Add(w);
                 }
+            }
 
-                var sqlstr = sb.ToString();
-                if (sqlstr.Length > 11)
+            var groups = list.GroupBy(g => g.chntext);
+            foreach (var g in groups)
+            {
+                var rg = new H10014ResponseGroupItem
                 {
-                    sqlstr = sqlstr.Substring(0, sqlstr.Length - 11);
-                }
+                    rw = g.FirstOrDefault().rw,
+                    chntext = g.Key,
+                    items = new List<H10014ResponseListItem>()
+                };
 
-                var list = DataHelper.ExecuteList<H10014ResponseOrderItem>(sqlstr);
-                foreach (var w in words)
+                var items = g.Select(o => new H10014ResponseListItem
                 {
-                    var cnt = list.Count(c => c.chntext == w);
-                    if (cnt == 0)
-                    {
-                        response.noresult.Add(w);
-                    }
-                }
+                    canpronounce = o.canpronounce,
+                    cantext = o.cantext,
+                    canvoice = o.canvoice,
+                }).ToList();
 
-                var groups = list.GroupBy(g => g.chntext);
-                foreach (var g in groups)
+                foreach (var i in items)
                 {
-                    var rg = new H10014ResponseGroupItem
+                    var cnt2 = rg.items.Count(c => c.canpronounce == i.canpronounce);
+                    if (cnt2 > 0)
                     {
-                        rw = g.FirstOrDefault().rw,
-                        chntext = g.Key,
-                        items = new List<H10014ResponseListItem>()
-                    };
-
-                    var items = g.Select(o => new H10014ResponseListItem
-                    {
-                        canpronounce = o.canpronounce,
-                        cantext = o.cantext,
-                        canvoice = o.canvoice,
-                    }).ToList();
-
-                    foreach (var i in items)
-                    {
-                        var cnt2 = rg.items.Count(c => c.canpronounce == i.canpronounce);
-                        if (cnt2 > 0)
-                        {
-                            continue;
-                        }
-
-                        rg.items.Add(i);
+                        continue;
                     }
 
-                    response.groups.Add(rg);
+                    rg.items.Add(i);
                 }
 
-                response.groups = response.groups.OrderBy(o => o.rw).ToList();
+                response.groups.Add(rg);
             }
 
+            response.groups = response.groups.OrderBy(o => o.rw).ToList();
             return response;
         }
 

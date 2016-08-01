@@ -130,5 +130,19 @@ namespace UME_Music.UserControls
         {
             UIHelper.ResetDialog();
         }
+
+        private void _addressTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter)
+            {
+                return;
+            }
+
+            var path = _addressTextBox.Text.Trim();
+            if (System.IO.Directory.Exists(path))
+            {
+                DisplaySubDirectory(path);
+            }
+        }
     }
 }

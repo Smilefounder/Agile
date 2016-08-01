@@ -51,7 +51,29 @@ namespace UME_Music.UserControls
 
         private void _addFromFileTextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            var chooseFile = new ChooseFileUserControl();
+            chooseFile.Width = 525;
+            chooseFile.Height = 350;
+            chooseFile.Choosed += ChooseFile_Choosed;
+            UIHelper.ShowDialog<ChooseFileUserControl>(chooseFile);
+        }
 
+        private void ChooseFile_Choosed(string filepath)
+        {
+            if (string.IsNullOrEmpty(filepath))
+            {
+                return;
+            }
+
+            try
+            {
+                CoreHelper.AddMusicFromFile(filepath);
+                DisplayMusicList();
+            }
+            catch (Exception ex)
+            {
+                UIHelper.ShowMessage(ex.Message);
+            }
         }
 
         private void _addFromDirectoryTextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -164,6 +186,8 @@ namespace UME_Music.UserControls
             return br;
         }
 
+        private Border _choosedBorder = null;
+
         private void Br_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var br = sender as Border;
@@ -173,9 +197,35 @@ namespace UME_Music.UserControls
             }
 
             var filepath = br.Tag as string;
+            if (e.ClickCount == 1)
+            {
+                if (br.Background != null)
+                {
+                    br.Background = null;
+                    _choosedBorder = null;
+                    return;
+                }
+
+                br.Background = new SolidColorBrush(Color.FromArgb(255, 231, 231, 231));
+                if (_choosedBorder != null)
+                {
+                    _choosedBorder.Background = null;
+                }
+
+                _choosedBorder = br;
+                return;
+            }
+
             if (e.ClickCount == 2)
             {
                 CoreHelper.Play(filepath);
+                if (_choosedBorder != null)
+                {
+                    _choosedBorder.Background = null;
+                }
+
+                _choosedBorder = null;
+                return;
             }
         }
 
@@ -217,12 +267,30 @@ namespace UME_Music.UserControls
 
         private void _removeSelectedTextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (_choosedBorder == null)
+            {
+                UIHelper.ShowMessage("请选择一首歌曲");
+                return;
+            }
 
+            if (_choosedBorder.Tag == null)
+            {
+                return;
+            }
+
+            var path = _choosedBorder.Tag.ToString();
+            if (!string.IsNullOrEmpty(path))
+            {
+                CoreHelper.RemoveMusic(path);
+                DisplayMusicList();
+            }
         }
 
         private void _removeAllTextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            CoreHelper.Musiclist.Clear();
+            CoreHelper.IsMusicListChanged = true;
+            DisplayMusicList();
         }
     }
 }

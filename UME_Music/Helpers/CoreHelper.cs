@@ -77,6 +77,23 @@ namespace UME_Music.Helpers
             }
         }
 
+        private static bool _isMusicListChanged = false;
+        /// <summary>
+        /// 歌曲库是否发生改变
+        /// </summary>
+        public static bool IsMusicListChanged
+        {
+            get
+            {
+                return _isMusicListChanged;
+            }
+
+            set
+            {
+                _isMusicListChanged = value;
+            }
+        }
+
         private static T_music currentMusic;
         /// <summary>
         /// 当前正在播放的歌曲
@@ -247,6 +264,7 @@ namespace UME_Music.Helpers
                 FilePath = filepath
             });
 
+            IsMusicListChanged = true;
             return 0;
         }
 
@@ -314,6 +332,16 @@ namespace UME_Music.Helpers
             Player.Open(new Uri(filepath));
             Player.Position = TimeSpan.FromSeconds(position);
             Player.Play();
+        }
+
+        public static void RemoveMusic(string path)
+        {
+            var music = Musiclist.Where(w => w.FilePath == path).FirstOrDefault();
+            if (music != null)
+            {
+                Musiclist.Remove(music);
+                IsMusicListChanged = true;
+            }
         }
     }
 }

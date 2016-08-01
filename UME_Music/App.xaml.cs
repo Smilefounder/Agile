@@ -35,8 +35,18 @@ namespace UME_Music
                 System.IO.Directory.CreateDirectory(repositoryDirectory);
             }
 
-            var musiclistfilepath = System.IO.Path.Combine(new string[] { repositoryDirectory, "Musiclist.ume" });
-            SerializeHelper.ToXmlFile<List<T_music>>(musiclistfilepath, CoreHelper.Musiclist);
+            if (CoreHelper.IsMusicListChanged)
+            {
+                var musiclistfilepath = System.IO.Path.Combine(new string[] { repositoryDirectory, "Musiclist.ume" });
+                if (CoreHelper.Musiclist.Count == 0 && System.IO.File.Exists(musiclistfilepath))
+                {
+                    System.IO.File.Delete(musiclistfilepath);
+                }
+                else
+                {
+                    SerializeHelper.ToXmlFile<List<T_music>>(musiclistfilepath, CoreHelper.Musiclist);
+                }
+            }
         }
 
         private void App_Startup(object sender, StartupEventArgs e)

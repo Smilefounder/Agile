@@ -14,7 +14,7 @@
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <TextBox x:Name="_addressTextBox"></TextBox>
+            <TextBox x:Name="_addressTextBox" KeyUp="_addressTextBox_KeyUp"></TextBox>
         </Grid>
         <Grid Grid.Row="1">
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">

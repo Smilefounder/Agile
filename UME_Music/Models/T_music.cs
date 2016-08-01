@@ -10,7 +10,38 @@ namespace UME_Music.Models
     {
         public string Title { get; set; }
 
+        public string TitleDisplay
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(FilePath))
+                {
+                    return "柚萌音乐";
+                }
+
+                if (string.IsNullOrEmpty(Title))
+                {
+                    return System.IO.Path.GetFileNameWithoutExtension(FilePath);
+                }
+
+                return Title;
+            }
+        }
+
         public string Artists { get; set; }
+
+        public string ArtistsDisplay
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Artists))
+                {
+                    return "未知歌手";
+                }
+
+                return Artists;
+            }
+        }
 
         public string Album { get; set; }
 

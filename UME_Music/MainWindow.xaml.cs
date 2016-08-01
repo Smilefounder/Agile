@@ -87,32 +87,29 @@ namespace UME_Music
             }
 
             Title = fp;
+
+            _musicTitleTextBlock.Text = CoreHelper.CurrentMusic.TitleDisplay;
+            _musicArtistsTextBlock.Text = CoreHelper.CurrentMusic.ArtistsDisplay;
         }
 
         private void CoreHelper_PlayerStateChanged()
         {
-            if (!CoreHelper.PlayerState.HasValue)
+            if (CoreHelper.PlayerState != (int)PlayerStateEnum.Playing)
             {
                 return;
             }
 
-            switch (CoreHelper.PlayerState.Value)
+            if (CoreHelper.Player.NaturalDuration.HasTimeSpan)
             {
-                case (int)PlayerStateEnum.Paused:
-                    {
-
-                    }
-                    break;
-                case (int)PlayerStateEnum.Playing:
-                    {
-
-                    }
-                    break;
-                case (int)PlayerStateEnum.Ready:
-                    {
-
-                    }
-                    break;
+                var duration = CoreHelper.Player.NaturalDuration.TimeSpan;
+                var position = CoreHelper.Player.Position;
+                var percent = position.TotalSeconds / duration.TotalSeconds;
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    _positionBorder.Width = _durationBorder.Width * percent;
+                    _positionTextBlock.Text = StringHelper.GetTimeSpanStr(position);
+                    _durationTextBlock.Text = StringHelper.GetTimeSpanStr(duration);
+                }));
             }
         }
 

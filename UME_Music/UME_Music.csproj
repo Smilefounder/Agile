@@ -59,6 +59,7 @@
     <Compile Include="Helpers\ID3Helper.cs" />
     <Compile Include="Helpers\LogHelper.cs" />
     <Compile Include="Helpers\SerializeHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\UIHelper.cs" />
     <Compile Include="Models\T_appConfig.cs" />
     <Compile Include="Models\T_music.cs" />

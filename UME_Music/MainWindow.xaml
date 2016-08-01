@@ -22,6 +22,22 @@
                             </Border>
                         </StackPanel>
                     </Border>
+                    <Border VerticalAlignment="Bottom">
+                        <Grid>
+                            <StackPanel>
+                                <TextBlock x:Name="_musicTitleTextBlock" Margin="5">标题</TextBlock>
+                                <TextBlock x:Name="_musicArtistsTextBlock" Margin="5">艺术家</TextBlock>
+                                <Grid Margin="5">
+                                    <Border x:Name="_durationBorder" Height="4" HorizontalAlignment="Left" Width="180" Background="#f0f0f0"></Border>
+                                    <Border x:Name="_positionBorder" Height="4" HorizontalAlignment="Left" Width="0" Background="#555555"></Border>
+                                </Grid>
+                                <Grid Margin="5">
+                                    <TextBlock x:Name="_positionTextBlock" HorizontalAlignment="Left">已播放</TextBlock>
+                                    <TextBlock x:Name="_durationTextBlock" HorizontalAlignment="Right">未播放</TextBlock>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
                 </Grid>
                 <Grid Grid.Column="1" x:Name="_userControlGrid"></Grid>
             </Grid>

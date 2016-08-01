@@ -179,6 +179,9 @@ namespace UME_Music.Helpers
         private static void Player_MediaEnded(object sender, EventArgs e)
         {
             LogHelper.Write("播放结束：" + Player.Source.AbsolutePath);
+
+            //清除播放器状态
+            PlayerState = null;
         }
 
         /// <summary>
@@ -199,6 +202,9 @@ namespace UME_Music.Helpers
             {
                 PlayerMediaChanged.Invoke();
             }
+
+            //设置播放器状态为正在播放
+            PlayerState = (int)PlayerStateEnum.Playing;
         }
 
         /// <summary>

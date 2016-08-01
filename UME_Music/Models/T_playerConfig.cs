@@ -56,18 +56,13 @@ namespace UME_Music.Models
     public enum PlayerStateEnum
     {
         /// <summary>
-        /// 就绪
-        /// </summary>
-        Ready = 0,
-
-        /// <summary>
         /// 播放中
         /// </summary>
-        Playing = 1,
+        Playing = 0,
 
         /// <summary>
         /// 已暂停
         /// </summary>
-        Paused = 2
+        Paused = 1
     }
 }

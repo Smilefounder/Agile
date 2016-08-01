@@ -182,5 +182,10 @@ namespace www.uimoe.com.Controllers
             var isphone = StringHelper.IsPhoneRequest(ua);
             return Json(new { error = 0, device = device, os = os, browser = browser, isphone = isphone });
         }
+
+        public ActionResult NewProject()
+        {
+            return View();
+        }
     }
 }

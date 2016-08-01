@@ -1,0 +1,122 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>新项目</title>
+    <meta charset="utf-8" />
+    <link href="@Url.Content("~/Assets/sharp.css")" rel="stylesheet" />
+</head>
+<body>
+    <div style="width:1000px;margin:0 auto;">
+        <div class="panel">
+            <div class="radius" style="padding:5px;border:1px solid #22b14c;color:#22b14c;">功能点列表</div>
+            <table class="table" style="width:99%;">
+                <tr>
+                    <th style="width:5%;">序号</th>
+                    <th style="width:20%;">功能点</th>
+                    <th style="width:60%;">描述</th>
+                    <th>计划用时(小时)</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>首页框架布局</td>
+                    <td>导航栏，滚动横幅，内容体，底部信息</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>首页内容加载和显示</td>
+                    <td>滚动产品介绍，关于我们，公司动态，合作伙伴，站点目录，公司联系方式，版权信息</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>产品介绍详细页</td>
+                    <td>从首页的滚动横幅产品点进去到产品介绍详细页，或从产品列表页点击进入到产品详细页</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>产品列表页</td>
+                    <td>从首页的导航栏的产品中心点击到产品列表页</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>公司介绍详细页</td>
+                    <td>从首页的【关于我们】点进去到公司介绍详细页面</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>公司动态列表页</td>
+                    <td>从首页的【公司动态】点进去到公司动态列表页，列表页点击每一条动态可以到详情页</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>公司动态详情页</td>
+                    <td>从公司动态列表页点击每一条动态可以到详情页</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>后台管理框架布局</td>
+                    <td>顶部菜单和页面内容体</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>产品管理</td>
+                    <td>产品的新增，修改，删除</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>公司动态管理</td>
+                    <td>公司动态的新增，修改，删除</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>后台管理系统的用户登录</td>
+                    <td>仅登录功能（固定用户名密码），不包含用户注册，用户密码修改，验证码机制</td>
+                    <td>2</td>
+                </tr>
+            </table>
+            <div>
+                合计：11个功能点，计划用时16小时
+            </div>
+            <div class="newline"></div>
+            <div class="radius" style="padding:5px;border:1px solid #22b14c;color:#22b14c;">费用计算</div>
+            <div>
+                按计划用时计费，每小时50元，另外因为是休息时间开发，所以需要总费用*1.2。<br />
+                根据以上功能点列表，预计费用为：16*50*1.2=<span style="color:#22b14c;">960</span>元，开始开发后需要支付<span style="color:#22b14c;">480</span>元(50%)，验收后支付余下<span style="color:#22b14c;">480</span>元(50%)
+            </div>
+            <div class="newline"></div>
+            <div class="radius" style="padding:5px;border:1px solid #22b14c;color:#22b14c;">网站发布(可选）</div>
+            <div>
+                域名注册与DNS解析：使用<a href="http://www.xinnet.com/">新网</a>域名服务，首年48元。<br />
+                服务器与数据库：10元每月使用费，5元每月维护费，共计15元每月
+            </div>
+            <div class="newline"></div>
+            <div class="radius" style="padding:5px;border:1px solid #22b14c;color:#22b14c;">其他事项</div>
+            <div>
+                因为是休息时间开发，每天大概有3小时时间开发，预计总开发时间为16/3=6天。<br />
+                开发中不接受新功能点的加入，若要加入新功能，请在此次开发完成交付后再提交新的功能需求。<br />
+                开发完成交付后，请仔细查验各项功能，验收通过后，除了功能不能运行的严重错误，将不做修改。<br />
+                开发完成交付后，对于小的不影响功能的问题，修改将加收维护费（5元/个）。
+            </div>
+            <div class="newline"></div>
+            <div style="text-align:center;">
+                <button class="button" style="background-color:#22b14c;" onclick="javascript:window.close();">我已熟知以上内容</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

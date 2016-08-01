@@ -162,6 +162,8 @@
     <Content Include="Assets\jquery.qrcode.min.js" />
     <Content Include="Assets\md5.js" />
     <Content Include="Assets\sha1.js" />
+    <Content Include="Assets\sharp.css" />
+    <Content Include="Assets\sharp.js" />
     <Content Include="Assets\weui.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -290,6 +292,7 @@
     <Content Include="Views\App\ChnStopWord.cshtml" />
     <Content Include="Views\App\ResolveUserAgent.cshtml" />
     <Content Include="Views\App\UMEVocabulary.cshtml" />
+    <Content Include="Views\App\NewProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

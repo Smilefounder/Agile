@@ -162,17 +162,17 @@ namespace UME_Music.UserControls
             gd.ColumnDefinitions.Add(col3);
 
             var tbk1 = new TextBlock();
-            tbk1.Text = music.Title;
+            tbk1.Text = music.TitleDisplay;
             gd.Children.Add(tbk1);
             Grid.SetColumn(tbk1, 0);
 
             var tbk2 = new TextBlock();
-            tbk2.Text = music.Artists;
+            tbk2.Text = music.ArtistsDisplay;
             gd.Children.Add(tbk2);
             Grid.SetColumn(tbk2, 1);
 
             var tbk3 = new TextBlock();
-            tbk3.Text = music.Album;
+            tbk3.Text = music.AlbumDisplay;
             gd.Children.Add(tbk3);
             Grid.SetColumn(tbk3, 2);
 

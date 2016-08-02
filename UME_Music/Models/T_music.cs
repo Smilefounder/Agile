@@ -45,6 +45,19 @@ namespace UME_Music.Models
 
         public string Album { get; set; }
 
+        public string AlbumDisplay
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Album))
+                {
+                    return "未知专辑";
+                }
+
+                return Album;
+            }
+        }
+
         public double Duration { get; set; }
 
         public string FileExtension { get; set; }

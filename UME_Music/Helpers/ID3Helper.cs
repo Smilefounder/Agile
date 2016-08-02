@@ -65,6 +65,10 @@ namespace UME_Music.Helpers
                 buffer = new byte[4];
                 fs.Read(buffer, 0, buffer.Length);
                 var framesize = 0x1000000 * buffer[0] + 0x10000 * buffer[1] + 0x100 * buffer[2] + buffer[3];
+                if (framesize == 0)
+                {
+                    return;
+                }
 
                 offset += buffer.Length;
                 fs.Seek(offset, System.IO.SeekOrigin.Begin);

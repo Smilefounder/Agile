@@ -64,10 +64,11 @@ namespace UME_Music
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadAllMusicUserControl();
-
             CoreHelper.PlayerStateChanged += CoreHelper_PlayerStateChanged;
             CoreHelper.PlayerMediaChanged += CoreHelper_PlayerMediaChanged;
+
+            DisplayPlayMode();
+            LoadAllMusicUserControl();
 
             UIHelper._backgroundBorder = _backgroundBorder;
             UIHelper._mainBorder = _mainBorder;
@@ -96,8 +97,11 @@ namespace UME_Music
         {
             if (CoreHelper.PlayerState != (int)PlayerStateEnum.Playing)
             {
+                _playPauseTextBlock.Text = "播放";
                 return;
             }
+
+           _playPauseTextBlock.Text = "暂停";
 
             if (CoreHelper.Player.NaturalDuration.HasTimeSpan)
             {
@@ -122,6 +126,69 @@ namespace UME_Music
         private void _allMusicBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             LoadAllMusicUserControl();
+        }
+
+        private void _playRecordBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            LoadPlayRecordUserControl();
+        }
+
+        private void LoadPlayRecordUserControl()
+        {
+            _userControlGrid.Children.Clear();
+            _userControlGrid.Children.Add(PlayRecordUserControl.Instance);
+        }
+
+        private void _playThePrevTextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            CoreHelper.PlayThePrev();
+        }
+
+        private void _playPauseTextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            CoreHelper.PlayPause();
+        }
+
+        private void _playTheNextTextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            CoreHelper.PlayTheNext();
+        }
+
+        private void _playModeTextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            CoreHelper.SetPlayMode();
+            DisplayPlayMode();
+        }
+
+        /// <summary>
+        /// 显示播放模式
+        /// </summary>
+        private void DisplayPlayMode()
+        {
+            var mode = CoreHelper.PlayerConfig.PlayMode.GetValueOrDefault();
+            switch (mode)
+            {
+                case (int)PlayModeEnum.Order:
+                    {
+                        _playModeTextBlock.Text = "顺序播放";
+                    }
+                    break;
+                case (int)PlayModeEnum.Random:
+                    {
+                        _playModeTextBlock.Text = "随机播放";
+                    }
+                    break;
+                case (int)PlayModeEnum.Recycle:
+                    {
+                        _playModeTextBlock.Text = "列表循环";
+                    }
+                    break;
+                case (int)PlayModeEnum.Repeat:
+                    {
+                        _playModeTextBlock.Text = "单曲循环";
+                    }
+                    break;
+            }
         }
     }
 }

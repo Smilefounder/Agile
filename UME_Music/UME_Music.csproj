@@ -64,6 +64,7 @@
     <Compile Include="Models\T_appConfig.cs" />
     <Compile Include="Models\T_music.cs" />
     <Compile Include="Models\T_playerConfig.cs" />
+    <Compile Include="Models\T_playRecord.cs" />
     <Compile Include="UserControls\AllMusicUserControl.xaml.cs">
       <DependentUpon>AllMusicUserControl.xaml</DependentUpon>
     </Compile>
@@ -76,9 +77,13 @@
     <Compile Include="UserControls\ChooseMusicUserControl.xaml.cs">
       <DependentUpon>ChooseMusicUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PlayRecordUserControl.xaml.cs">
+      <DependentUpon>PlayRecordUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\RecentPlayUserControl.xaml.cs">
       <DependentUpon>RecentPlayUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\PlayRecordVM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,6 +109,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ChooseMusicUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PlayRecordUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

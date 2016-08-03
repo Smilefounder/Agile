@@ -24,6 +24,40 @@ namespace UME_Music.UserControls
         {
             //显示歌曲列表
             DisplayMusicList();
+
+            CoreHelper.PlayerMediaChanged += CoreHelper_PlayerMediaChanged;
+        }
+
+        private void CoreHelper_PlayerMediaChanged()
+        {
+            foreach (var child in _itemlistStackPanel.Children)
+            {
+                var br = child as Border;
+                if (br == null)
+                {
+                    continue;
+                }
+
+                if (br.Tag == null)
+                {
+                    continue;
+                }
+
+                var filepath = br.Tag.ToString();
+                if (string.IsNullOrEmpty(filepath))
+                {
+                    continue;
+                }
+
+                if (filepath == CoreHelper.CurrentMusic.FilePath)
+                {
+                    br.BorderBrush = Brushes.Green;
+                }
+                else
+                {
+                    br.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
+                }
+            }
         }
 
         private static AllMusicUserControl _instance;

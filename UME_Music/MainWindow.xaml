@@ -20,6 +20,9 @@
                             <Border x:Name="_allMusicBorder" MouseLeftButtonDown="_allMusicBorder_MouseLeftButtonDown" Padding="5"  BorderBrush="#d5d5d5" BorderThickness="0,0,0,1">
                                 <TextBlock>所有歌曲</TextBlock>
                             </Border>
+                            <Border x:Name="_playRecordBorder" MouseLeftButtonDown="_playRecordBorder_MouseLeftButtonDown" Padding="5"  BorderBrush="#d5d5d5" BorderThickness="0,0,0,1">
+                                <TextBlock>播放记录</TextBlock>
+                            </Border>
                         </StackPanel>
                     </Border>
                     <Border VerticalAlignment="Bottom">
@@ -28,12 +31,20 @@
                                 <TextBlock x:Name="_musicTitleTextBlock" Margin="5">标题</TextBlock>
                                 <TextBlock x:Name="_musicArtistsTextBlock" Margin="5">艺术家</TextBlock>
                                 <Grid Margin="5">
+                                    <TextBlock x:Name="_positionTextBlock" HorizontalAlignment="Left">已播放</TextBlock>
+                                    <TextBlock x:Name="_durationTextBlock" HorizontalAlignment="Right">未播放</TextBlock>
+                                </Grid>
+                                <Grid Margin="5">
                                     <Border x:Name="_durationBorder" Height="4" HorizontalAlignment="Left" Width="180" Background="#f0f0f0"></Border>
                                     <Border x:Name="_positionBorder" Height="4" HorizontalAlignment="Left" Width="0" Background="#555555"></Border>
                                 </Grid>
                                 <Grid Margin="5">
-                                    <TextBlock x:Name="_positionTextBlock" HorizontalAlignment="Left">已播放</TextBlock>
-                                    <TextBlock x:Name="_durationTextBlock" HorizontalAlignment="Right">未播放</TextBlock>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Name="_playThePrevTextBlock" MouseLeftButtonUp="_playThePrevTextBlock_MouseLeftButtonUp">上一曲</TextBlock>
+                                        <TextBlock x:Name="_playPauseTextBlock" MouseLeftButtonUp="_playPauseTextBlock_MouseLeftButtonUp"  Margin="5,0,0,0">播放</TextBlock>
+                                        <TextBlock x:Name="_playTheNextTextBlock" MouseLeftButtonUp="_playTheNextTextBlock_MouseLeftButtonUp" Margin="5,0,0,0">下一曲</TextBlock>
+                                        <TextBlock x:Name="_playModeTextBlock" MouseLeftButtonUp="_playModeTextBlock_MouseLeftButtonUp" Margin="5,0,0,0">顺序播放</TextBlock>
+                                    </StackPanel>
                                 </Grid>
                             </StackPanel>
                         </Grid>

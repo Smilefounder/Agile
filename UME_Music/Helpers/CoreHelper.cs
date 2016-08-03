@@ -77,6 +77,28 @@ namespace UME_Music.Helpers
             }
         }
 
+        private static List<T_playRecord> _playRecords;
+        /// <summary>
+        /// 播放记录
+        /// </summary>
+        public static List<T_playRecord> PlayRecords
+        {
+            get
+            {
+                if (_playRecords == null)
+                {
+                    _playRecords = new List<T_playRecord>();
+                }
+
+                return _playRecords;
+            }
+
+            set
+            {
+                _playRecords = value;
+            }
+        }
+
         private static bool _isMusicListChanged = false;
         /// <summary>
         /// 歌曲库是否发生改变
@@ -91,6 +113,23 @@ namespace UME_Music.Helpers
             set
             {
                 _isMusicListChanged = value;
+            }
+        }
+
+        private static bool _isPlayRecordsChanged = false;
+        /// <summary>
+        /// 播放记录是否发生改变
+        /// </summary>
+        public static bool IsPlayRecordsChanged
+        {
+            get
+            {
+                return _isPlayRecordsChanged;
+            }
+
+            set
+            {
+                _isPlayRecordsChanged = value;
             }
         }
 
@@ -167,7 +206,7 @@ namespace UME_Music.Helpers
 
         private static void MainTimer_Tick(object sender, EventArgs e)
         {
-            if (PlayerState == (int)PlayerStateEnum.Playing)
+            if (PlayerState.HasValue)
             {
                 if (PlayerStateChanged != null)
                 {
@@ -185,7 +224,10 @@ namespace UME_Music.Helpers
         /// <param name="e"></param>
         private static void Player_MediaFailed(object sender, ExceptionEventArgs e)
         {
-            LogHelper.Write("播放失败：" + Player.Source.AbsolutePath);
+            LogHelper.Write("播放失败：" + Player.Source.LocalPath);
+
+            //清除播放器状态
+            PlayerState = null;
         }
 
         /// <summary>
@@ -195,10 +237,228 @@ namespace UME_Music.Helpers
         /// <param name="e"></param>
         private static void Player_MediaEnded(object sender, EventArgs e)
         {
-            LogHelper.Write("播放结束：" + Player.Source.AbsolutePath);
+            LogHelper.Write("播放结束：" + Player.Source.LocalPath);
 
             //清除播放器状态
             PlayerState = null;
+
+            //添加播放记录
+            PlayRecords.Add(new T_playRecord
+            {
+                CreatedAt = DateTime.Now,
+                FilePath = Player.Source.LocalPath
+            });
+
+            //设置标识，退出程序时保存播放记录
+            IsPlayRecordsChanged = true;
+
+            //按播放模式进行下一次播放
+            var mode = PlayerConfig.PlayMode.GetValueOrDefault();
+            switch (mode)
+            {
+                case (int)PlayModeEnum.Order:
+                    {
+                        PlayByOrder();
+                    }
+                    break;
+                case (int)PlayModeEnum.Random:
+                    {
+                        PlayByOrder();
+                    }
+                    break;
+                case (int)PlayModeEnum.Recycle:
+                    {
+                        PlayByRecycle();
+                    }
+                    break;
+                case (int)PlayModeEnum.Repeat:
+                    {
+                        PlayByRepeat();
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 获取歌曲位置索引
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        private static int GetMusicIndex(string filepath)
+        {
+            for (var i = 0; i < Musiclist.Count; i++)
+            {
+                var music = Musiclist[i];
+                if (music.FilePath == filepath)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 顺序播放
+        /// </summary>
+        private static void PlayByOrder()
+        {
+            var idx = GetMusicIndex(CurrentMusic.FilePath);
+            if (idx < 0)
+            {
+                return;
+            }
+
+            if (idx == Musiclist.Count - 1)
+            {
+                return;
+            }
+
+            idx += 1;
+
+            var music = Musiclist[idx];
+            Play(music.FilePath);
+        }
+
+        /// <summary>
+        /// 随机播放
+        /// </summary>
+        private static void PlayByRandom()
+        {
+            var r = new Random();
+            var idx = r.Next(0, Musiclist.Count);
+
+            var music = Musiclist[idx];
+            Play(music.FilePath);
+        }
+
+        /// <summary>
+        /// 列表循环
+        /// </summary>
+        private static void PlayByRecycle()
+        {
+            var idx = GetMusicIndex(CurrentMusic.FilePath);
+            if (idx < 0)
+            {
+                return;
+            }
+
+            if (idx == Musiclist.Count - 1)
+            {
+                idx = 0;
+            }
+            else
+            {
+                idx += 1;
+            }
+
+            var music = Musiclist[idx];
+            Play(music.FilePath);
+        }
+
+        /// <summary>
+        /// 单曲循环
+        /// </summary>
+        private static void PlayByRepeat()
+        {
+            Play(CurrentMusic.FilePath);
+        }
+
+        /// <summary>
+        /// 播放上一曲
+        /// </summary>
+        public static void PlayThePrev()
+        {
+            if (Musiclist.Count <= 1)
+            {
+                return;
+            }
+
+            var idx = GetMusicIndex(CurrentMusic.FilePath);
+            if (idx < 0)
+            {
+                return;
+            }
+
+            if (idx == 0)
+            {
+                idx = Musiclist.Count - 1;
+            }
+            else
+            {
+                idx -= 1;
+            }
+
+            var music = Musiclist[idx];
+            Play(music.FilePath);
+        }
+
+        /// <summary>
+        /// 播放下一首一曲
+        /// </summary>
+        public static void PlayTheNext()
+        {
+            if (Musiclist.Count <= 1)
+            {
+                return;
+            }
+
+            var idx = GetMusicIndex(CurrentMusic.FilePath);
+            if (idx < 0)
+            {
+                return;
+            }
+
+            if (idx == Musiclist.Count-1)
+            {
+                idx = 0;
+            }
+            else
+            {
+                idx += 1;
+            }
+
+            var music = Musiclist[idx];
+            Play(music.FilePath);
+        }
+
+        /// <summary>
+        /// 播放或暂停
+        /// </summary>
+        public static void PlayPause()
+        {
+            if (!PlayerState.HasValue && Musiclist.Count>0)
+            {
+                var music = Musiclist[0];
+                Play(music.FilePath);
+                return;
+            }
+
+            if (PlayerState == (int)PlayerStateEnum.Playing)
+            {
+                Pause();
+                return;
+            }
+
+            Play();
+        }
+
+        /// <summary>
+        /// 设置播放模式
+        /// </summary>
+        public static void SetPlayMode()
+        {
+            var mode = PlayerConfig.PlayMode.GetValueOrDefault();
+            if (mode < 3)
+            {
+                mode += 1;
+            }
+            else
+            {
+                mode = 0;
+            }
+
+            PlayerConfig.PlayMode = mode;
         }
 
         /// <summary>
@@ -219,9 +479,6 @@ namespace UME_Music.Helpers
             {
                 PlayerMediaChanged.Invoke();
             }
-
-            //设置播放器状态为正在播放
-            PlayerState = (int)PlayerStateEnum.Playing;
         }
 
         /// <summary>
@@ -304,11 +561,24 @@ namespace UME_Music.Helpers
         }
 
         /// <summary>
+        /// 暂停（从播放转为暂停）
+        /// </summary>
+        public static void Pause()
+        {
+            if (Player.CanPause)
+            {
+                Player.Pause();
+                PlayerState = (int)PlayerStateEnum.Paused;
+            }
+        }
+
+        /// <summary>
         /// 播放（从暂停转为播放）
         /// </summary>
         public static void Play()
         {
             Player.Play();
+            PlayerState = (int)PlayerStateEnum.Playing;
         }
 
         /// <summary>
@@ -319,6 +589,7 @@ namespace UME_Music.Helpers
         {
             Player.Open(new Uri(filepath));
             Player.Play();
+            PlayerState = (int)PlayerStateEnum.Playing;
         }
 
 
@@ -332,6 +603,7 @@ namespace UME_Music.Helpers
             Player.Open(new Uri(filepath));
             Player.Position = TimeSpan.FromSeconds(position);
             Player.Play();
+            PlayerState = (int)PlayerStateEnum.Playing;
         }
 
         public static void RemoveMusic(string path)

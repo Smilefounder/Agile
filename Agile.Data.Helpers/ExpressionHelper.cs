@@ -22,55 +22,15 @@ namespace Agile.Data.Helpers
                     if (memberExp != null)
                     {
                         var ttype = memberExp.Type;
-                        if (ttype == typeof(string))
+                        if (ttype == typeof(string) || ttype.IsValueType)
                         {
                             names.Add(memberExp.Member.Name);
                         }
-                        else
-                        {
-                            var tps = ttype.GetProperties();
-                            foreach (var tp in tps)
-                            {
-                                if (tp.PropertyType.IsPrimitive)
-                                {
-                                    names.Add(tp.Name);
-                                }
-                            }
-                        }
-
-                        continue;
                     }
                 }
             }
 
             return names.ToArray();
-        }
-
-        private static List<string> GetMemberNames(MemberExpression memberExp)
-        {
-            var names = new List<string>();
-            if (memberExp == null)
-            {
-                return names;
-            }
-
-            var ttype = memberExp.Type;
-            if (ttype == typeof(string) || ttype.IsValueType)
-            {
-                names.Add(memberExp.Member.Name);
-                return names;
-            }
-
-            var tps = ttype.GetProperties();
-            foreach (var tp in tps)
-            {
-                if (tp.PropertyType.IsPrimitive)
-                {
-                    names.Add(tp.Name);
-                }
-            }
-
-            return names;
         }
 
         public static string MakeWhereStr(params Expression[] explist)

@@ -69,10 +69,7 @@ namespace Agile.API.Helpers
                 };
             }
 
-            var options = new DeleteOptions();
-            options.Where<T_interface>(w => w.Code == request.code);
-
-            QueryHelper.Delete<T_interface>(options);
+            QueryHelper.Delete<T_interface>(w => w.Code == request.code);
             return new H10001Response
             {
                 error = 0
@@ -2353,9 +2350,7 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static H10054Response H10054(H10054Request request)
         {
-            var options = new DeleteOptions();
-            options.Where<Can_noresult>(w => w.ChnText == request.chntext);
-            QueryHelper.Delete<Can_noresult>(options);
+            QueryHelper.Delete<Can_noresult>(w => w.ChnText == request.chntext);
             return new H10054Response
             {
                 error = 0

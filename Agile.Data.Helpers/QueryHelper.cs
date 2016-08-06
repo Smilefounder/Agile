@@ -20,9 +20,13 @@ namespace Agile.Data.Helpers
             var ttype = typeof(T);
             var tps = ttype.GetProperties();
 
-            var fieldstr = "";
-            var parameterstr = "";
+            var idattr = default(TableFieldAttribute);
+            var idparameter = default(SqlParameter);
+            var idproperty = default(PropertyInfo);
+
+            var fields = new List<string>();
             var parameters = new List<SqlParameter>();
+
             foreach (var tp in tps)
             {
                 var attr = tp.GetCustomAttribute(typeof(TableFieldAttribute)) as TableFieldAttribute;
@@ -33,22 +37,34 @@ namespace Agile.Data.Helpers
 
                 if (attr.IsPrimaryKey)
                 {
+                    idattr = attr;
+                    idproperty = tp;
+                    idparameter = CreateSqlParameter<T>(obj, tp, attr.MaxLength, true);
+                    parameters.Add(idparameter);
                     continue;
                 }
 
-                fieldstr += String.Format("{0},", tp.Name);
-                parameterstr += String.Format("@{0},", tp.Name);
-                parameters.Add(CreateSqlParameter<T>(obj, tp, attr));
+                fields.Add(tp.Name);
+                parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
             }
 
-            fieldstr = fieldstr.TrimEnd(new char[] { ',' });
-            parameterstr = parameterstr.TrimEnd(new char[] { ',' });
+            var fieldstr = string.Join(",", fields.Select(o => string.Format("[{0}]", o)));
+            var parametestr = string.Join(",", fields.Select(o => string.Format("@{0}", o)));
 
-            var sb = new StringBuilder();
-            sb.AppendFormat(" INSERT INTO {0}({1}) VALUES({2});", ttype.Name, fieldstr, parameterstr);
-
-            var sqlstr = sb.ToString();
+            var sqlstr = string.Format(" INSERT INTO {0}({1}) VALUES({2});SELECT @{3}=@@IDENTITY;", ttype.Name, fieldstr, parametestr, idproperty.Name);
             var rows = DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
+            if (rows > 0)
+            {
+                try
+                {
+                    idproperty.SetValue(obj, idparameter.Value);
+                }
+                catch
+                {
+
+                }
+            }
+
             return rows;
         }
 
@@ -79,7 +95,7 @@ namespace Agile.Data.Helpers
                     }
 
                     fieldstr += String.Format("{0}=@{0},", tp.Name);
-                    parameters.Add(CreateSqlParameter<T>(obj, tp, attr));
+                    parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
                 }
             }
 
@@ -110,10 +126,9 @@ namespace Agile.Data.Helpers
             var ttype = typeof(T);
             var tps = ttype.GetProperties();
             var idproperty = default(PropertyInfo);
-            var fieldstr = "";
+
+            var fields = new List<string>();
             var parameters = new List<SqlParameter>();
-            var sb = new StringBuilder();
-            sb.AppendFormat(" UPDATE {0} ", ttype.Name);
 
             foreach (var tp in tps)
             {
@@ -126,35 +141,21 @@ namespace Agile.Data.Helpers
                 if (attr.IsPrimaryKey)
                 {
                     idproperty = tp;
+                    parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
                     continue;
                 }
 
-                fieldstr += String.Format("{0}=@{0},", tp.Name);
-                parameters.Add(CreateSqlParameter<T>(obj, tp, attr));
+                fields.Add(tp.Name);
+                parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
             }
 
-            fieldstr = fieldstr.TrimEnd(new char[] { ',' });
-            sb.AppendFormat(" SET {0}", fieldstr);
-
-            var tkey = "";
-            var tvalue = default(object);
-            if (idproperty != null)
+            if (idproperty == null)
             {
-                tkey = idproperty.Name;
-                tvalue = idproperty.GetValue(obj, null);
+                throw new Exception(string.Format("请先给{0}设置主键", ttype.Name));
             }
 
-            if (!String.IsNullOrEmpty(tkey) && tvalue != null)
-            {
-                sb.AppendFormat(" WHERE {1}='{2}'", ttype.Name, tkey, tvalue.ToString());
-            }
-
-            var sqlstr = sb.ToString();
-            if (!sqlstr.Contains("WHERE"))
-            {
-                return -1;
-            }
-
+            var fieldstr = string.Join(",", fields.Select(o => string.Format("[{0}]=@{0}", o)));
+            var sqlstr = string.Format(" UPDATE {0} SET {1} WHERE {2}=@{2}", ttype.Name, fieldstr, idproperty.Name);
             var rows = DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
             return rows;
         }
@@ -162,6 +163,7 @@ namespace Agile.Data.Helpers
         public static int Delete<T>(T obj)
         {
             var ttype = typeof(T);
+            var idattr = default(TableFieldAttribute);
             var idproperty = default(PropertyInfo);
             var sb = new StringBuilder();
             sb.AppendFormat(" DELETE FROM {0} ", ttype.Name);
@@ -177,23 +179,21 @@ namespace Agile.Data.Helpers
 
                 if (attr.IsPrimaryKey)
                 {
+                    idattr = attr;
                     idproperty = tp;
                     break;
                 }
             }
 
-            var tkey = "";
-            var tvalue = default(object);
-            if (idproperty != null)
+            if (idproperty == null || idattr == null)
             {
-                tkey = idproperty.Name;
-                tvalue = idproperty.GetValue(obj, null);
+                throw new Exception(string.Format("请先给{0}设置主键", ttype.Name));
             }
 
-            if (!String.IsNullOrEmpty(tkey) && tvalue != null)
-            {
-                sb.AppendFormat(" WHERE {1}='{2}'", ttype.Name, tkey, tvalue.ToString());
-            }
+            var tkey = idproperty.Name;
+            var tvalue = idproperty.GetValue(obj, null);
+
+            CreateSqlParameter<T>(obj, idproperty, idattr.MaxLength);
 
             var sqlstr = sb.ToString();
             if (!sqlstr.Contains("WHERE"))
@@ -205,27 +205,21 @@ namespace Agile.Data.Helpers
             return rows;
         }
 
-        public static int Delete<T>(DeleteOptions options)
+        public static int Delete<T>(Expression<Func<T, bool>> exp)
         {
             var ttype = typeof(T);
             var sb = new StringBuilder();
             sb.AppendFormat(" DELETE FROM {0} ", ttype.Name);
 
-            if (options.WhereExpList != null)
+            var whereStr = ExpressionHelper.MakeWhereStr(exp);
+            if (string.IsNullOrEmpty(whereStr))
             {
-                var whereStr = ExpressionHelper.MakeWhereStr(options.WhereExpList.ToArray());
-                if (!String.IsNullOrEmpty(whereStr))
-                {
-                    sb.AppendFormat(" WHERE {0}", whereStr);
-                }
+                throw new Exception("删除操作必须传入条件");
             }
+
+            sb.AppendFormat(" WHERE {0}", whereStr);
 
             var sqlstr = sb.ToString();
-            if (!sqlstr.Contains("WHERE"))
-            {
-                return -1;
-            }
-
             var rows = DataHelper.ExecuteNonQuery(sqlstr);
             return rows;
         }
@@ -483,18 +477,24 @@ namespace Agile.Data.Helpers
             return sb.ToString();
         }
 
-        private static SqlParameter CreateSqlParameter<T>(T obj, PropertyInfo p, TableFieldAttribute attr)
+        private static SqlParameter CreateSqlParameter<T>(T obj, PropertyInfo p, int maxLength, bool isoutput = false)
         {
-            var maxLength = 50;
             var dbValue = p.GetValue(obj, null);
-            var dbType = DbTypeConverter(p.PropertyType, dbValue, attr, ref maxLength);
+            var dbType = DbTypeConverter(p.PropertyType);
             if (dbValue == null)
             {
                 dbValue = DBNull.Value;
             }
 
+            var direction = ParameterDirection.Input;
+            if (isoutput)
+            {
+                direction = ParameterDirection.Output;
+            }
+
             return new SqlParameter
             {
+                Direction = direction,
                 ParameterName = "@" + p.Name,
                 DbType = dbType,
                 Size = maxLength,
@@ -503,12 +503,16 @@ namespace Agile.Data.Helpers
             };
         }
 
-        private static DbType DbTypeConverter(Type ttype, object dbvalue, TableFieldAttribute attr, ref int maxLength)
+        private static DbType DbTypeConverter(Type ttype)
         {
-            if (ttype == typeof(string))
+            if (ttype == typeof(bool))
             {
-                maxLength = attr.MaxLength;
-                return DbType.String;
+                return DbType.Boolean;
+            }
+
+            if (ttype == typeof(decimal))
+            {
+                return DbType.Decimal;
             }
 
             if (ttype == typeof(int))
@@ -516,19 +520,9 @@ namespace Agile.Data.Helpers
                 return DbType.Int32;
             }
 
-            if (ttype == typeof(bool))
-            {
-                return DbType.Boolean;
-            }
-
             if (ttype == typeof(DateTime))
             {
                 return DbType.DateTime;
-            }
-
-            if (dbvalue != null)
-            {
-                dbvalue = dbvalue.ToString();
             }
 
             return DbType.String;

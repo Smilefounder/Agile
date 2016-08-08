@@ -163,11 +163,8 @@ namespace Agile.Data.Helpers
         public static int Delete<T>(T obj)
         {
             var ttype = typeof(T);
-            var idattr = default(TableFieldAttribute);
             var idproperty = default(PropertyInfo);
-            var sb = new StringBuilder();
-            sb.AppendFormat(" DELETE FROM {0} ", ttype.Name);
-
+            var parameters = new List<SqlParameter>();
             var tps = ttype.GetProperties();
             foreach (var tp in tps)
             {
@@ -179,13 +176,13 @@ namespace Agile.Data.Helpers
 
                 if (attr.IsPrimaryKey)
                 {
-                    idattr = attr;
                     idproperty = tp;
+                    parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
                     break;
                 }
             }
 
-            if (idproperty == null || idattr == null)
+            if (idproperty == null)
             {
                 throw new Exception(string.Format("请先给{0}设置主键", ttype.Name));
             }
@@ -193,33 +190,21 @@ namespace Agile.Data.Helpers
             var tkey = idproperty.Name;
             var tvalue = idproperty.GetValue(obj, null);
 
-            CreateSqlParameter<T>(obj, idproperty, idattr.MaxLength);
-
-            var sqlstr = sb.ToString();
-            if (!sqlstr.Contains("WHERE"))
-            {
-                return -1;
-            }
-
-            var rows = DataHelper.ExecuteNonQuery(sqlstr);
+            var sqlstr = string.Format(" DELETE FROM {0} WHERE {1}=@{1}", ttype.Name, tkey);
+            var rows = DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
             return rows;
         }
 
         public static int Delete<T>(Expression<Func<T, bool>> exp)
         {
             var ttype = typeof(T);
-            var sb = new StringBuilder();
-            sb.AppendFormat(" DELETE FROM {0} ", ttype.Name);
-
             var whereStr = ExpressionHelper.MakeWhereStr(exp);
             if (string.IsNullOrEmpty(whereStr))
             {
                 throw new Exception("删除操作必须传入条件");
             }
 
-            sb.AppendFormat(" WHERE {0}", whereStr);
-
-            var sqlstr = sb.ToString();
+            var sqlstr = string.Format(" DELETE FROM {0} WHERE {1}", ttype.Name);
             var rows = DataHelper.ExecuteNonQuery(sqlstr);
             return rows;
         }

@@ -1,0 +1,55 @@
+﻿2016-08-08 16:24:37
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 Agile.Data.Helpers.QueryHelper.CreateSqlParameter[T](T obj, PropertyInfo p, Int32 maxLength, Boolean isoutput) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 468
+   在 Agile.Data.Helpers.QueryHelper.Delete[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 179
+   在 Agile.API.Helpers.LogicHelper.H10069(Int32 id) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2907
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.DeleteVocabulary() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 247
+
+2016-08-08 16:24:53
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 Agile.Data.Helpers.QueryHelper.CreateSqlParameter[T](T obj, PropertyInfo p, Int32 maxLength, Boolean isoutput) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 468
+   在 Agile.Data.Helpers.QueryHelper.Delete[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 179
+   在 Agile.API.Helpers.LogicHelper.H10069(Int32 id) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2907
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.DeleteVocabulary() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 247
+
+2016-08-08 16:25:19
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 Agile.Data.Helpers.QueryHelper.CreateSqlParameter[T](T obj, PropertyInfo p, Int32 maxLength, Boolean isoutput) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 468
+   在 Agile.Data.Helpers.QueryHelper.Delete[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 179
+   在 Agile.API.Helpers.LogicHelper.H10069(Int32 id) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2907
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.DeleteVocabulary() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 247
+
+2016-08-08 16:25:34
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 Agile.Data.Helpers.QueryHelper.CreateSqlParameter[T](T obj, PropertyInfo p, Int32 maxLength, Boolean isoutput) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 468
+   在 Agile.Data.Helpers.QueryHelper.Delete[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 179
+   在 Agile.API.Helpers.LogicHelper.H10069(Int32 id) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2907
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.DeleteVocabulary() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 247
+
+2016-08-08 16:26:36
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 Agile.Data.Helpers.QueryHelper.CreateSqlParameter[T](T obj, PropertyInfo p, Int32 maxLength, Boolean isoutput) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 468
+   在 Agile.Data.Helpers.QueryHelper.Delete[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 179
+   在 Agile.API.Helpers.LogicHelper.H10069(Int32 id) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2907
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.DeleteVocabulary() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 247
+
+2016-08-08 16:27:52
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 Agile.Data.Helpers.QueryHelper.Delete[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 179
+   在 Agile.API.Helpers.LogicHelper.H10069(Int32 id) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2907
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.DeleteVocabulary() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 247
+
+2016-08-08 16:28:56
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 Agile.Data.Helpers.QueryHelper.CreateSqlParameter[T](T obj, PropertyInfo p, Int32 maxLength, Boolean isoutput) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 468
+   在 Agile.Data.Helpers.QueryHelper.Delete[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 179
+   在 Agile.API.Helpers.LogicHelper.H10069(Int32 id) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2907
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.DeleteVocabulary() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 247
+
+2016-08-08 16:29:16
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 Agile.Data.Helpers.QueryHelper.CreateSqlParameter[T](T obj, PropertyInfo p, Int32 maxLength, Boolean isoutput) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 468
+   在 Agile.Data.Helpers.QueryHelper.Delete[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 179
+   在 Agile.API.Helpers.LogicHelper.H10069(Int32 id) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2907
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.DeleteVocabulary() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 247
+

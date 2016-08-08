@@ -308,9 +308,9 @@ namespace cantonesedict.uimoe.com.Controllers
             return View(response);
         }
 
-        private List<H10037ResponseListItem> _sceneList;
+        private static List<H10037ResponseListItem> _sceneList;
 
-        private List<H10037ResponseListItem> SceneList
+        private static List<H10037ResponseListItem> SceneList
         {
             get
             {

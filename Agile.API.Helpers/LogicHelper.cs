@@ -1689,11 +1689,13 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static HBaseResponse H10037(H10037Request request)
         {
-            var sqlstr = "SELECT id,name FROM CAN_scene ORDER BY ID DESC";
+            var sqlstr = " SELECT";
             if (request.take.HasValue)
             {
-                sqlstr = String.Format("SELECT TOP({0}) id,name FROM CAN_scene ORDER BY ID DESC", request.take.Value);
+                sqlstr = string.Format(" TOP({0})", request.take.Value);
             }
+
+            sqlstr += " id,name,(SELECT COUNT(1) FROM CAN_scenewordrelation WHERE CAN_scenewordrelation.SceneId=CAN_scene.Id) AS total FROM CAN_scene ORDER BY ID DESC";
 
             var recordlist = DataHelper.ExecuteList<H10037ResponseListItem>(sqlstr);
             return new H10037Response
@@ -1723,12 +1725,12 @@ namespace Agile.API.Helpers
                 };
             }
 
-            var sqlstr = "SELECT t3.ChnText, t3.CanText,t3.CanPronounce FROM CAN_scenewordrelation t1 LEFT JOIN CAN_scene t2 on t2.Id=t1.SceneId LEFT JOIN CAN_sceneword t3 on t3.Id=t1.VocabularyId WHERE t2.Id=@SceneId;";
+            var sqlstr = "SELECT t3.ChnText, t3.CanText,t3.CanPronounce FROM CAN_scenewordrelation t1 LEFT JOIN CAN_scene t2 on t2.Id=t1.SceneId LEFT JOIN Can_vocabulary t3 on t3.Id=t1.VocabularyId WHERE t2.Id=@SceneId;";
             if (request.page.HasValue && request.pagesize.HasValue)
             {
                 var skip = request.pagesize.Value * (request.page.Value - 1);
                 var take = request.pagesize;
-                sqlstr = String.Format("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY t1.Id DESC) AS RW, t3.ChnText, t3.CanText,t3.CanPronounce FROM CAN_scenewordrelation t1 LEFT JOIN CAN_scene t2 on t2.Id=t1.SceneId LEFT JOIN CAN_vocabulary t3 on t3.Id=t1.VocabularyId WHERE t2.Id=@SceneId) AS Q WHERE Q.RW>{0} AND Q.RW<={1}", skip, skip + take);
+                sqlstr = String.Format("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY t1.Id DESC) AS RW, t3.ChnText, t3.CanText,t3.CanPronounce FROM CAN_scenewordrelation t1 LEFT JOIN CAN_scene t2 on t2.Id=t1.SceneId LEFT JOIN Can_vocabulary t3 on t3.Id=t1.VocabularyId WHERE t2.Id=@SceneId) AS Q WHERE Q.RW>{0} AND Q.RW<={1}", skip, skip + take);
             }
 
             var sceneid = new SqlParameter("@SceneId", SqlDbType.Int, 11);

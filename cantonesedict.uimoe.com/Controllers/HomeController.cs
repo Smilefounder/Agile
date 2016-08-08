@@ -308,23 +308,36 @@ namespace cantonesedict.uimoe.com.Controllers
             return View(response);
         }
 
+        private List<H10037ResponseListItem> _sceneList;
+
+        private List<H10037ResponseListItem> SceneList
+        {
+            get
+            {
+                if (_sceneList == null)
+                {
+                    try
+                    {
+                        var responsebase = LogicHelper.H10037(WebHelper.ParseFromRequest<H10037Request>());
+                        var response = responsebase as H10037Response;
+                        if (response != null && response.error == 0)
+                        {
+                            _sceneList = response.data;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        LogHelper.Write(ex.ToString());
+                    }
+                }
+
+                return _sceneList = _sceneList != null ? _sceneList : new List<H10037ResponseListItem>();
+            }
+        }
+
         public ActionResult Scene()
         {
-            try
-            {
-                var responsebase = LogicHelper.H10037(WebHelper.ParseFromRequest<H10037Request>());
-                var response = responsebase as H10037Response;
-                if (response != null && response.error == 0)
-                {
-                    return View(response.data);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-            }
-
-            return View(new List<H10037ResponseListItem>());
+            return View(SceneList);
         }
 
         public ActionResult SceneVocabulary()

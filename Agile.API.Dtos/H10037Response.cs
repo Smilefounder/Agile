@@ -16,5 +16,7 @@ namespace Agile.API.Dtos
         public int id { get; set; }
 
         public string name { get; set; }
+
+        public int total { get; set; }
     }
 }

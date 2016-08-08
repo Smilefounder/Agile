@@ -8,7 +8,7 @@ namespace cantonesedict.uimoe.com
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleAccessAttribute());
+            //filters.Add(new HandleAccessAttribute());
             filters.Add(new HandleErrorAttribute());
         }
     }

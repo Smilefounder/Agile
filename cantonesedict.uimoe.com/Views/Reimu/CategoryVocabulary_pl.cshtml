@@ -1,4 +1,4 @@
-﻿@model Agile.API.Dtos.H10073Response
+﻿@model Agile.API.Dtos.H10084Response
 @{
     Layout = null;
 }
@@ -6,8 +6,8 @@
 <div class="newline"></div>
 <table class="table">
     <tr>
-        <th>情景</th>
-        <th>时间</th>
+        <th>编号</th>
+        <th>字词</th>
         <th>操作</th>
     </tr>
     @if (Model.data.RecordList.Count == 0)
@@ -23,12 +23,10 @@
         foreach (var item in Model.data.RecordList)
         {
             <tr>
-                <td>@item.name</td>
-                <td>@item.createdat.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@item.id</td>
+                <td>@item.chntext</td>
                 <td>
-                    <a class="a1" href="javascript:void(0);" onclick="top.loadview(this,'@Url.Content("~/Reimu/CategoryVocabulary?categoryid="+item.id)');">查看词汇</a>
-                    <a class="a1" href="javascript:void(0);" onclick="top.loaddialog(this,'@Url.Content("~/Reimu/AddCategoryVocabulary?categoryid="+item.id)');">添加词汇</a>
-                    <a class="a1" href="javascript:void(0);" onclick="top.loaddialog(this,'@Url.Content("~/Reimu/UpdateCategory?id="+item.id)');">修改</a>
+                    <a class="a1" href="javascript:void(0);" onclick="top.loaddialog(this,'@Url.Content("~/Reimu/UpdateCategoryVocabulary?id="+item.id)');">修改</a>
                     <a class="a1" href="javascript:void(0);" onclick="view.deletemodel(this,'@item.id');">删除</a>
                 </td>
             </tr>
@@ -58,7 +56,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '@Url.Content("~/Reimu/DeleteCategory")',
+                url: '@Url.Content("~/Reimu/DeleteCategoryVocabulary")',
                 data: { id: id },
                 complete: function (xhr, status) {
                     if (status != "success") {

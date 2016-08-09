@@ -3253,5 +3253,105 @@ namespace Agile.API.Helpers
                 Id = id
             });
         }
+
+        /// <summary>
+        /// 粤语词典 - 添加情景词汇
+        /// </summary>
+        /// <param name="sceneid"></param>
+        /// <param name="vocabularyid"></param>
+        /// <returns></returns>
+        public static int H10083(int sceneid, int vocabularyid)
+        {
+            if (sceneid <= 0 || vocabularyid <= 0)
+            {
+                return -1;
+            }
+
+            var sqlstr = string.Format("INSERT INTO CAN_scenewordrelation(SceneId,VocabularyId,CreatedAt) VALUES({0},{1},GETDATE())", sceneid, vocabularyid);
+            var rows = DataHelper.ExecuteNonQuery(sqlstr);
+            return rows;
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取情景词汇列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10084Response H10084(H10084Request request)
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat(" SELECT t1.Id,t1.VocabularyId,t2.ChnText,ROW_NUMBER() OVER(ORDER BY t1.Id DESC) AS RW FROM CAN_scenewordrelation t1 JOIN CAN_vocabulary t2 on t2.Id=t1.VocabularyId  WHERE 1=1");
+
+            if (request.sceneid.HasValue)
+            {
+                sb.AppendFormat(" AND sceneid ={0}", request.sceneid.Value);
+            }
+
+            var sqlstr = sb.ToString();
+            var sqlstr2 = string.Format("SELECT COUNT(1) FROM ({0}) AS Q", sqlstr);
+            var obj = DataHelper.ExecuteScalar(sqlstr2);
+            var count = Convert.ToInt32(obj);
+
+            var page = request.page.GetValueOrDefault(1);
+            var pagesize = request.pagesize.GetValueOrDefault(10);
+            var begin = pagesize * (page - 1);
+            var end = pagesize * page;
+            var sqlstr3 = string.Format("SELECT * FROM ({0}) AS Q WHERE Q.RW>{1} AND Q.RW<={2}", sqlstr, begin, end);
+            var pagedlist = DataHelper.ExecuteList<H10084ResponseListItem>(sqlstr3);
+            return new H10084Response
+            {
+                error = 0,
+                data = new PagedListDto<H10084ResponseListItem>
+                {
+                    Page = page,
+                    PageSize = pagesize,
+                    RecordCount = count,
+                    RecordList = pagedlist ?? new List<H10084ResponseListItem>()
+                }
+            };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取情景词汇详细
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static H10084ResponseListItem H10085(int id)
+        {
+            var sqlstr = "SELECT t1.Id,t1.VocabularyId,t2.ChnText FROM CAN_scenewordrelation t1 JOIN CAN_vocabulary t2 on t2.Id=t1.VocabularyId WHERE t1.Id=" + id;
+            var list = DataHelper.ExecuteList<H10084ResponseListItem>(sqlstr);
+            return list.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 粤语词典 - 修改情景词汇
+        /// </summary>
+        /// <param name="vocabularyid"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int H10086(int vocabularyid ,int id)
+        {
+            if (id <= 0 || vocabularyid <= 0)
+            {
+                return -1;
+            }
+
+            var sqlstr = string.Format("UPDATE CAN_scenewordrelation SET VocabularyId={1} WHERE Id={0}", id, vocabularyid);
+            var rows = DataHelper.ExecuteNonQuery(sqlstr);
+            return rows;
+        }
+
+        /// <summary>
+        /// 粤语词典 - 删除情景词汇
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static int H10087(int id)
+        {
+            return QueryHelper.Delete<Can_scenewordrelation>(new Can_scenewordrelation
+            {
+                Id = id
+            });
+        }
     }
 }

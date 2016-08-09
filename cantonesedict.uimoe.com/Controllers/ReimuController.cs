@@ -142,6 +142,28 @@ namespace cantonesedict.uimoe.com.Controllers
         }
 
         [HttpPost]
+        public ActionResult QueryVocabulary()
+        {
+            var vm = new H10068Response
+            {
+                error = 0,
+                data = new PagedListDto<H10068ResponseListItem>()
+            };
+
+            try
+            {
+                var request = WebHelper.ParseFromRequest<H10068Request>();
+                vm = LogicHelper.H10068(request);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(new { error = 0, data = vm.data });
+        }
+
+        [HttpPost]
         public ActionResult GetVocabularyRef(string chntext)
         {
             var response = new HBaseResponse
@@ -395,6 +417,161 @@ namespace cantonesedict.uimoe.com.Controllers
             try
             {
                 var rows = LogicHelper.H10074(id);
+                if (rows > 0)
+                {
+                    response = new HBaseResponse
+                    {
+                        error = 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(response);
+        }
+
+        public ActionResult CategoryVocabulary()
+        {
+            int categoryid;
+            int.TryParse(Request.Params["categoryid"], out categoryid);
+
+            ViewBag.categoryid = categoryid;
+            return View();
+        }
+
+        public ActionResult CategoryVocabulary_pl()
+        {
+            var vm = new H10084Response
+            {
+                error = 0,
+                data = new PagedListDto<H10084ResponseListItem>()
+            };
+
+            try
+            {
+                var request = WebHelper.ParseFromRequest<H10084Request>();
+                vm = LogicHelper.H10084(request);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public ActionResult AddCategoryVocabulary()
+        {
+            int categoryid;
+            int.TryParse(Request.Params["categoryid"], out categoryid);
+
+            ViewBag.categoryid = categoryid;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddCategoryVocabulary(int? categoryid, int? vocabularyid)
+        {
+            var response = new HBaseResponse
+            {
+                error = 1,
+                message = "操作失败，请稍后再试"
+            };
+
+            try
+            {
+                var rows = LogicHelper.H10083(categoryid.GetValueOrDefault(), vocabularyid.GetValueOrDefault());
+                if (rows > 0)
+                {
+                    response = new HBaseResponse
+                    {
+                        error = 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(response);
+        }
+
+        [HttpGet]
+        public ActionResult UpdateCategoryVocabulary()
+        {
+            var model = new H10084ResponseListItem();
+            var id = 0;
+            int.TryParse(Request.Params["id"], out id);
+
+            try
+            {
+                var response = LogicHelper.H10085(id);
+                if (response != null)
+                {
+                    model = new H10084ResponseListItem
+                    {
+                        chntext = response.chntext,
+                        vocabularyid=response.vocabularyid,
+                        id = response.id
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCategoryVocabulary(int? vocabularyid,int? id)
+        {
+            var response = new HBaseResponse
+            {
+                error = 1,
+                message = "操作失败，请稍后再试"
+            };
+
+            try
+            {
+                var rows = LogicHelper.H10086(vocabularyid.GetValueOrDefault(), id.GetValueOrDefault());
+                if (rows > 0)
+                {
+                    response = new HBaseResponse
+                    {
+                        error = 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(response);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCategoryVocabulary()
+        {
+            var response = new HBaseResponse
+            {
+                error = 1,
+                message = "操作失败，请稍后再试"
+            };
+
+            var id = 0;
+            int.TryParse(Request.Params["id"], out id);
+
+            try
+            {
+                var rows = LogicHelper.H10087(id);
                 if (rows > 0)
                 {
                     response = new HBaseResponse

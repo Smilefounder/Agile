@@ -9,6 +9,8 @@ namespace Agile.API.Dtos
     public class H10084Request : HPagedListRequest
     {
 
-        public int? sceneid { get; set; }
+        public int? categoryid { get; set; }
+
+        public string chntext { get; set; }
     }
 }

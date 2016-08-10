@@ -50,12 +50,12 @@
                         return;
                     }
 
-                    if (!response || response.error != 0 || !response.data || !response.data.RecordList) {
+                    if (!response || response.error != 0) {
                         alert("操作失败，请稍后再试");
                         return;
                     }
 
-                    if (response.data.RecordList.length == 0)
+                    if (!response.data)
                     {
                         $("#chntext").css("background-color", "#fff0f0");
                         $("#vocabularyid").val("");
@@ -63,7 +63,7 @@
                     }
 
                     $("#chntext").css("background-color", "#fff");
-                    $("#vocabularyid").val(response.data.RecordList[0].Id);
+                    $("#vocabularyid").val(response.data);
                 }
             });
         },

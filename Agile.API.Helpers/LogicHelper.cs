@@ -3280,11 +3280,16 @@ namespace Agile.API.Helpers
         public static H10084Response H10084(H10084Request request)
         {
             var sb = new StringBuilder();
-            sb.AppendFormat(" SELECT t1.Id,t1.VocabularyId,t2.ChnText,ROW_NUMBER() OVER(ORDER BY t1.Id DESC) AS RW FROM CAN_scenewordrelation t1 JOIN CAN_vocabulary t2 on t2.Id=t1.VocabularyId  WHERE 1=1");
+            sb.AppendFormat(" SELECT t1.Id,t1.VocabularyId,t2.ChnText,ROW_NUMBER() OVER(ORDER BY t1.Id DESC) AS RW FROM CAN_scenewordrelation t1 LEFT JOIN CAN_vocabulary t2 on t2.Id=t1.VocabularyId  WHERE 1=1");
 
-            if (request.sceneid.HasValue)
+            if (request.categoryid.HasValue)
             {
-                sb.AppendFormat(" AND sceneid ={0}", request.sceneid.Value);
+                sb.AppendFormat(" AND t1.sceneid ={0}", request.categoryid.Value);
+            }
+
+            if (string.IsNullOrEmpty(request.chntext))
+            {
+                sb.AppendFormat(" AND t2.ChnText LIKE '%{0}%'", request.chntext);
             }
 
             var sqlstr = sb.ToString();
@@ -3318,7 +3323,7 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static H10084ResponseListItem H10085(int id)
         {
-            var sqlstr = "SELECT t1.Id,t1.VocabularyId,t2.ChnText FROM CAN_scenewordrelation t1 JOIN CAN_vocabulary t2 on t2.Id=t1.VocabularyId WHERE t1.Id=" + id;
+            var sqlstr = "SELECT t1.Id,t1.VocabularyId,t2.ChnText FROM CAN_scenewordrelation t1 LEFT JOIN CAN_vocabulary t2 on t2.Id=t1.VocabularyId WHERE t1.Id=" + id;
             var list = DataHelper.ExecuteList<H10084ResponseListItem>(sqlstr);
             return list.FirstOrDefault();
         }
@@ -3352,6 +3357,29 @@ namespace Agile.API.Helpers
             {
                 Id = id
             });
+        }
+
+        /// <summary>
+        /// 获取词汇id
+        /// </summary>
+        /// <param name="chntext"></param>
+        /// <returns></returns>
+        public static GroupItemDto H10088(string chntext)
+        {
+            var sqlstr = "SELECT CAST(Id AS NVARCHAR(50)) AS IName,1 AS ICount FROM CAN_vocabulary WHERE ChnText=@ChnText";
+            var sp = new SqlParameter("@ChnText",SqlDbType.NVarChar,50);
+            sp.IsNullable = true;
+            if (string.IsNullOrEmpty(chntext))
+            {
+                sp.Value = DBNull.Value;
+            }
+            else
+            {
+                sp.Value = chntext;
+            }
+
+            var list = DataHelper.ExecuteList<GroupItemDto>(sqlstr, sp);
+            return list.FirstOrDefault();
         }
     }
 }

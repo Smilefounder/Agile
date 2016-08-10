@@ -144,23 +144,32 @@ namespace cantonesedict.uimoe.com.Controllers
         [HttpPost]
         public ActionResult QueryVocabulary()
         {
-            var vm = new H10068Response
-            {
-                error = 0,
-                data = new PagedListDto<H10068ResponseListItem>()
-            };
+            var item = default(GroupItemDto);
 
             try
             {
-                var request = WebHelper.ParseFromRequest<H10068Request>();
-                vm = LogicHelper.H10068(request);
+                var chntext = Request.Params["chntext"];
+                var response = LogicHelper.H10088(chntext);
+                if (response != null)
+                {
+                    item = new GroupItemDto
+                    {
+                        ICount = response.ICount,
+                        IName = response.IName
+                    };
+                }
             }
             catch (Exception ex)
             {
                 LogHelper.Write(ex.ToString());
             }
 
-            return Json(new { error = 0, data = vm.data });
+            if (item == null)
+            {
+                return Json(new { error = 1, message = "未找到相关结果" });
+            }
+
+            return Json(new { error = 0, data = item.IName });
         }
 
         [HttpPost]
@@ -516,7 +525,7 @@ namespace cantonesedict.uimoe.com.Controllers
                     model = new H10084ResponseListItem
                     {
                         chntext = response.chntext,
-                        vocabularyid=response.vocabularyid,
+                        vocabularyid = response.vocabularyid,
                         id = response.id
                     };
                 }
@@ -530,7 +539,7 @@ namespace cantonesedict.uimoe.com.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateCategoryVocabulary(int? vocabularyid,int? id)
+        public ActionResult UpdateCategoryVocabulary(int? vocabularyid, int? id)
         {
             var response = new HBaseResponse
             {

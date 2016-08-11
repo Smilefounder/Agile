@@ -8,8 +8,10 @@
     <select id="tableselect" class="form-control">
         @foreach (var name in Model)
         {
-            <option>@name</option>
+            <option value="@name">@name</option>
         }
     </select>
-    <input class="btn btn-success" type="button" value="查询" onclick="trygetitemlist(this)" />
 </div>
+<input class="btn btn-success" type="button" value="查询" onclick="trygetitemlist(this)" />
+<input class="btn btn-default" type="button" value="新增" onclick="tryinsert(this)" />
+<div style="height:10px;width:100%;"></div>

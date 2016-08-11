@@ -49,76 +49,70 @@ namespace database.uimoe.com.Controllers
 
             sqlstr = String.Format("select * from ({0}) as q where q.rw>{1} and q.rw<={2}", sb, begin, end);
             var table = DataHelper.ExecuteDataTable(sqlstr);
-            var html = DataTableToHtml(table, tablename, page, pagesize, recordcount, true, true, true);
+            var html = DataTableToHtml(table, tablename, page, pagesize, recordcount, true, true);
             return Content(html);
         }
 
-        public string DataTableToHtml(DataTable table, string tablename, int page, int pagesize, int recordcount, bool showInsertButton = false, bool showOperateColumn = false, bool showPager = false)
+        public string DataTableToHtml(DataTable table, string tablename, int page, int pagesize, int recordcount, bool showOperateColumn = false, bool showPager = false)
         {
             var collist = new List<string>();
             var sb = new StringBuilder();
 
-            if (showInsertButton)
-            {
-                sb.AppendLine("<div style=\"height:40px;line-height:40px;\">");
-                sb.AppendLine("<input class=\"btn btn-success\" type=\"button\" value=\"新增\" onclick=\"tryinsert(this,'" + tablename + "')\"/>");
-                sb.AppendLine("</div>");
-            }
-
             if (table == null || table.Rows.Count == 0)
             {
-                sb.AppendLine("<div style=\"border:1px solid #d5d5d5;border-radius:3px;height:40px;line-height:40px;\">未找到相关记录</div>");
-                return sb.ToString();
+                sb.AppendLine("<div class=\"well\">未找到相关记录</div>");
             }
-
-            sb.AppendLine("<table class=\"table table-bordered table-condensed table-hover\">");
-            sb.AppendLine("<tr>");
-            foreach (DataColumn col in table.Columns)
+            else
             {
-                sb.AppendLine("<td>" + col.ColumnName + "</td>");
-                collist.Add(col.ColumnName);
-            }
-
-            if (showOperateColumn)
-            {
-                sb.AppendLine("<td>操作</td>");
-            }
-
-            sb.AppendLine("</tr>");
-
-            foreach (DataRow row in table.Rows)
-            {
-                var id = "0";
+                sb.AppendLine("<table class=\"table table-bordered table-condensed table-hover\">");
                 sb.AppendLine("<tr>");
-
-                foreach (var col in collist)
+                foreach (DataColumn col in table.Columns)
                 {
-                    var val = "";
-                    var obj = row[col];
-                    if (obj != DBNull.Value)
-                    {
-                        val = Convert.ToString(obj);
-                    }
-
-                    sb.AppendLine("<td>" + val + "</td>");
-                    if (col.ToLower() == "id")
-                    {
-                        id = val;
-                    }
+                    sb.AppendLine("<td>" + col.ColumnName + "</td>");
+                    collist.Add(col.ColumnName);
                 }
 
                 if (showOperateColumn)
                 {
-                    sb.AppendLine("<td>");
-                    sb.AppendLine("<a href=\"javascript:void(0)\" onclick=\"tryupdate(this,'" + tablename + "','" + id + "')\">修改</a>&nbsp;|&nbsp;");
-                    sb.AppendLine("<a href=\"javascript:void(0)\" onclick=\"trydelete(this,'" + tablename + "','" + id + "')\">删除</a>");
-                    sb.AppendLine("</td>");
+                    sb.AppendLine("<td>操作</td>");
                 }
 
                 sb.AppendLine("</tr>");
-            }
 
-            sb.AppendLine("</table>");
+                foreach (DataRow row in table.Rows)
+                {
+                    var id = "0";
+                    sb.AppendLine("<tr>");
+
+                    foreach (var col in collist)
+                    {
+                        var val = "";
+                        var obj = row[col];
+                        if (obj != DBNull.Value)
+                        {
+                            val = Convert.ToString(obj);
+                        }
+
+                        sb.AppendLine("<td>" + val + "</td>");
+                        if (col.ToLower() == "id")
+                        {
+                            id = val;
+                        }
+                    }
+
+                    if (showOperateColumn)
+                    {
+                        sb.AppendLine("<td>");
+                        sb.AppendLine("<a href=\"javascript:void(0)\" onclick=\"tryupdate(this,'" + tablename + "','" + id + "')\">修改</a>&nbsp;|&nbsp;");
+                        sb.AppendLine("<a href=\"javascript:void(0)\" onclick=\"trydelete(this,'" + tablename + "','" + id + "')\">删除</a>");
+                        sb.AppendLine("</td>");
+                    }
+
+                    sb.AppendLine("</tr>");
+                }
+
+                sb.AppendLine("</table>");
+            }
 
             if (showPager)
             {
@@ -129,20 +123,27 @@ namespace database.uimoe.com.Controllers
                 sb.AppendLine(String.Format("第{0}/{1}页，共{2}条记录", page, pagecount, recordcount));
                 sb.AppendLine("</div>");
                 sb.AppendLine("<div style=\"float:right;\">");
+                sb.AppendLine("<button class=\"btn btn-default\" onclick=\"changepage('" + tablename + "',1," + pagesize + ")\">首页</button>");
 
+                var enabled1 = " disabled=disabled";
                 if (page > 1)
                 {
-                    sb.AppendLine("<a href=\"javascript:void(0)\" onclick=\"changepage('" + tablename + "'," + (page - 1) + "," + pagesize + ")\">上一页</a>");
+                    enabled1 = "";
                 }
 
+                var enabled2 = " disabled=disabled";
                 if (page < pagecount)
                 {
-                    sb.AppendLine("<a href=\"javascript:void(0)\" onclick=\"changepage('" + tablename + "'," + (page + 1) + "," + pagesize + ")\">下一页</a>");
+                    enabled2 = "";
                 }
 
+                sb.AppendLine("<button class=\"btn btn-default\"" + enabled1 + " onclick=\"changepage('" + tablename + "'," + (page - 1) + "," + pagesize + ")\">上一页</button>");
+                sb.AppendLine("<button class=\"btn btn-default\"" + enabled2 + " onclick=\"changepage('" + tablename + "'," + (page + 1) + "," + pagesize + ")\">下一页</button>");
+                sb.AppendLine("<button class=\"btn btn-default\" onclick=\"changepage('" + tablename + "'," + pagecount + "," + pagesize + ")\">尾页</button>");
+                sb.AppendLine("<input id=\"pageinput1\" type=\"text\" class=\"form-control\" style=\"display:inline-block;width:80px;\" placeholder=\"页码\" />");
+                sb.AppendLine("<button class=\"btn btn-success\" onclick=\"changepage('" + tablename + "',null," + pagesize + ")\">转到</button>");
                 sb.AppendLine("</div>");
-                sb.AppendLine("<div style=\"clear:both;\">");
-                sb.AppendLine("</div>");
+                sb.AppendLine("<div style=\"clear:both;\"></div>");
                 sb.AppendLine("</div>");
             }
 

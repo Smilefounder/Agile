@@ -2,9 +2,16 @@
     ViewBag.Title = "Index";
 }
 
-@Html.Action("Tables", "Home")
+@Html.Action("Execute", "Home")
 
-<div id="tablediv"></div>
+<div class="container">
+    <div class="panel">
+        <div class="panel-body">
+            @Html.Action("Tables", "Home")
+            <div id="tablediv"></div>
+        </div>
+    </div>
+</div>
 
 @section scripts
 {
@@ -18,12 +25,22 @@
         }
 
         function changepage(tablename, page, pagesize) {
+            if (!page) {
+                var page1 = $("#pageinput1").val();
+                if (!page1 || isNaN(page1)) {
+                    $("#pageinput1").focus();
+                }
+
+                page = page1;
+            }
+
             $.post('@Url.Content("~/Home/ItemList")', { tablename: tablename, page: page, pagesize: pagesize }, function (html) {
                 $("#tablediv").html(html);
             });
         }
 
-        function tryinsert(sender, tablename) {
+        function tryinsert(sender) {
+            var tablename = $("#tableselect").val();
             var container = document.getElementById("insertdiv");
             if (!container) {
                 container = document.createElement("div");

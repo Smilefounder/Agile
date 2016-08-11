@@ -9,7 +9,7 @@ namespace Agile.Data.Helpers
 {
     public class ExpressionHelper
     {
-        public static string[] GetMemberNames(params Expression[] explist)
+        public static string[] GetFields(params Expression[] explist)
         {
             var names = new List<string>();
 

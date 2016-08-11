@@ -68,55 +68,39 @@ namespace Agile.Data.Helpers
             return rows;
         }
 
-        public static int Update<T>(T obj, UpdateOptions options)
+        public static int Update<T>(T obj, UpdateOptions option)
         {
             var ttype = typeof(T);
             var tps = ttype.GetProperties();
             var fieldstr = "";
             var parameters = new List<SqlParameter>();
-            var sb = new StringBuilder();
-            sb.AppendFormat(" UPDATE {0} ", ttype.Name);
 
-            if (options.SelectExp != null)
+            var whereStr = ExpressionHelper.MakeWhereStr(option.WhereExpList.ToArray());
+            if (string.IsNullOrEmpty(whereStr))
             {
-                var fields = ExpressionHelper.GetMemberNames(options.SelectExp);
-                foreach (var f in fields)
+                throw new Exception("无法执行不带Where的Update语句");
+            }
+
+            var fields = ExpressionHelper.GetFields(option.SelectExp);
+            foreach (var f in fields)
+            {
+                var tp = tps.Where(w => w.Name == f).FirstOrDefault();
+                if (tp == null)
                 {
-                    var tp = tps.Where(w => w.Name == f).FirstOrDefault();
-                    if (tp == null)
-                    {
-                        continue;
-                    }
-
-                    var attr = tp.GetCustomAttribute(typeof(TableFieldAttribute)) as TableFieldAttribute;
-                    if (attr == null || attr.IsPrimaryKey)
-                    {
-                        continue;
-                    }
-
-                    fieldstr += String.Format("{0}=@{0},", tp.Name);
-                    parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
+                    continue;
                 }
-            }
 
-            fieldstr = fieldstr.TrimEnd(new char[] { ',' });
-            sb.AppendFormat(" SET {0}", fieldstr);
-
-            if (options.WhereExpList != null)
-            {
-                var whereStr = ExpressionHelper.MakeWhereStr(options.WhereExpList.ToArray());
-                if (!String.IsNullOrEmpty(whereStr))
+                var attr = tp.GetCustomAttribute(typeof(TableFieldAttribute)) as TableFieldAttribute;
+                if (attr == null || attr.IsPrimaryKey)
                 {
-                    sb.AppendFormat(" WHERE {0}", whereStr);
+                    continue;
                 }
+
+                fieldstr += String.Format("{0}=@{0},", tp.Name);
+                parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
             }
 
-            var sqlstr = sb.ToString();
-            if (!sqlstr.Contains("WHERE"))
-            {
-                return -1;
-            }
-
+            var sqlstr = string.Format(" UPDATE {0} SET {1} WHERE {2}", ttype.Name, fieldstr, whereStr);
             var rows = DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
             return rows;
         }
@@ -234,7 +218,7 @@ namespace Agile.Data.Helpers
 
             if (options.SelectExp != null)
             {
-                var fields = ExpressionHelper.GetMemberNames(options.SelectExp);
+                var fields = ExpressionHelper.GetFields(options.SelectExp);
                 sb.AppendFormat(" {0}", String.Join(",", fields));
             }
             else
@@ -259,16 +243,7 @@ namespace Agile.Data.Helpers
             }
 
             var sqlstr = sb.ToString();
-
-            try
-            {
-                return DataHelper.ExecuteList<T>(sqlstr);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-                return new List<T>();
-            }
+            return DataHelper.ExecuteList<T>(sqlstr);
         }
 
         public static List<T> GetRandomList<T>(RandomQueryOptions options)
@@ -284,7 +259,7 @@ namespace Agile.Data.Helpers
 
             if (options.SelectExp != null)
             {
-                var fields = ExpressionHelper.GetMemberNames(options.SelectExp);
+                var fields = ExpressionHelper.GetFields(options.SelectExp);
                 sb.AppendFormat(" {0}", String.Join(",", fields));
             }
             else
@@ -305,16 +280,27 @@ namespace Agile.Data.Helpers
             sb.AppendFormat(" ORDER BY NEWID();");
 
             var sqlstr = sb.ToString();
+            return DataHelper.ExecuteList<T>(sqlstr);
+        }
 
-            try
+        public static PagedListDto<T> GetPagedList<T>(int page, int pagesize, string sqlstr)
+        {
+            var sb1 = string.Format(" SELECT COUNT(1) FROM ({0}) AS Q", sqlstr);
+            var recordcount = Convert.ToInt32(DataHelper.ExecuteScalar(sqlstr));
+
+            var begin = pagesize * (page - 1);
+            var end = pagesize * page;
+
+            var sb2 = String.Format(" SELECT * FROM ({0}) AS Q WHERE Q.RW>{1} AND Q.RW<={2}", sqlstr, begin, end);
+            var recordlist = DataHelper.ExecuteList<T>(sqlstr);
+
+            return new PagedListDto<T>
             {
-                return DataHelper.ExecuteList<T>(sqlstr);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-                return new List<T>();
-            }
+                Page = page,
+                PageSize = pagesize,
+                RecordCount = recordcount,
+                RecordList = recordlist
+            };
         }
 
         public static PagedListDto<T> GetPagedList<T>(PagedQueryOptions options)
@@ -352,7 +338,7 @@ namespace Agile.Data.Helpers
             var fields = "*";
             if (options.SelectExp != null)
             {
-                var names = ExpressionHelper.GetMemberNames(options.SelectExp);
+                var names = ExpressionHelper.GetFields(options.SelectExp);
                 if (names.Length > 0)
                 {
                     fields = String.Join(",", names);
@@ -376,32 +362,15 @@ namespace Agile.Data.Helpers
             };
 
             var sqlstr = String.Format(" SELECT COUNT(1) FROM ({0}) AS Q", sb);
-
-            try
-            {
-                var recordcount = Convert.ToInt32(DataHelper.ExecuteScalar(sqlstr));
-                dto.RecordCount = recordcount;
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-            }
+            var recordcount = Convert.ToInt32(DataHelper.ExecuteScalar(sqlstr));
+            dto.RecordCount = recordcount;
 
             var begin = dto.PageSize * (dto.Page - 1);
             var end = dto.PageSize * dto.Page;
 
             sqlstr = String.Format(" SELECT * FROM ({0}) AS Q WHERE Q.RW>{1} AND Q.RW<={2}", sb, begin, end);
-
-            try
-            {
-                var recordlist = DataHelper.ExecuteList<T>(sqlstr);
-                dto.RecordList = recordlist;
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-                dto.RecordList = new List<T>();
-            }
+            var recordlist = DataHelper.ExecuteList<T>(sqlstr);
+            dto.RecordList = recordlist;
 
             return dto;
         }
@@ -416,7 +385,7 @@ namespace Agile.Data.Helpers
                 var orderBys1 = "";
                 if (options.OrderByAscExpList != null)
                 {
-                    var names1 = ExpressionHelper.GetMemberNames(options.OrderByAscExpList.ToArray());
+                    var names1 = ExpressionHelper.GetFields(options.OrderByAscExpList.ToArray());
                     if (names1 != null)
                     {
                         orderBys1 = string.Join(",", names1);
@@ -426,7 +395,7 @@ namespace Agile.Data.Helpers
                 var orderBys2 = "";
                 if (options.OrderByDescExpList != null)
                 {
-                    var names2 = ExpressionHelper.GetMemberNames(options.OrderByDescExpList.ToArray());
+                    var names2 = ExpressionHelper.GetFields(options.OrderByDescExpList.ToArray());
                     if (names2 != null)
                     {
                         foreach (var name in names2)
@@ -533,7 +502,6 @@ namespace Agile.Data.Helpers
 
     public class QueryOptions : UpdateOptions
     {
-
         public List<Expression> OrderByAscExpList { get; set; }
 
         public void OrderByAsc<T>(Expression<Func<T, object>> exp)
@@ -559,7 +527,7 @@ namespace Agile.Data.Helpers
         }
     }
 
-    public class UpdateOptions : DeleteOptions
+    public class UpdateOptions
     {
         public Expression SelectExp { get; set; }
 
@@ -567,10 +535,7 @@ namespace Agile.Data.Helpers
         {
             SelectExp = exp;
         }
-    }
 
-    public class DeleteOptions
-    {
         public List<Expression> WhereExpList { get; set; }
 
         public void Where<T>(Expression<Func<T, bool>> exp)

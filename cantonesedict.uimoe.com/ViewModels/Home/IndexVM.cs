@@ -34,7 +34,7 @@ namespace cantonesedict.uimoe.com.ViewModels.Home
         {
             get
             {
-                if (!string.IsNullOrEmpty(CanVoice))
+                if (!string.IsNullOrEmpty(CanPronounce))
                 {
                     return string.Format("http://yueyv.cn/voice/{0}.mp3", CanPronounce.Trim());
                 }

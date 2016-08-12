@@ -681,8 +681,11 @@ namespace Agile.API.Helpers
                 noresult = new List<string>()
             };
 
-            //整体匹配未成功
-            response.noresult.Add(request.input);
+            //整体匹配未成功(只记录单个字)
+            if (request.input.Length == 1)
+            {
+                response.noresult.Add(request.input);
+            }
 
             //开始逐个匹配
             var words = new List<string>();

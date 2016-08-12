@@ -29,18 +29,5 @@ namespace cantonesedict.uimoe.com.ViewModels.Home
         public string CanPronounce { get; set; }
 
         public string CanVoice { get; set; }
-
-        public string CanVoiceUrl
-        {
-            get
-            {
-                if (!string.IsNullOrEmpty(CanPronounce))
-                {
-                    return string.Format("http://yueyv.cn/voice/{0}.mp3", CanPronounce.Trim());
-                }
-
-                return CanVoice;
-            }
-        }
     }
 }

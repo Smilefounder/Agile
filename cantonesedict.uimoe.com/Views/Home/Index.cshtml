@@ -41,21 +41,19 @@ else
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>
                         <div>
-                            [普]<span>@item.ChnText</span>&nbsp;&#58;&nbsp;
+                            [普]<span>@item.ChnText</span>
                         </div>
                         <div class="newline"></div>
                         @foreach (var gp in item.Items)
                         {
-                            <div>
-                                <span>[粤]@gp.CanText</span>&nbsp;&#58;&nbsp;<span>[音]@gp.CanPronounce</span>
-                            </div>
-                            <div>
-                                <audio src="@gp.CanVoiceUrl" controls="controls">你的浏览器不支持播放此音频</audio>
+                            <div onclick="play('@gp.CanPronounce','@gp.CanVoice')">
+                                <span>[粤]@gp.CanText</span>&nbsp;<span>[音]@gp.CanPronounce</span>
                             </div>
                         }
                     </p>
                 </div>
                 <div class="weui_cell_ft">
+                    <img src="@Url.Content("~/Assets/Images/voice.gif")" />
                 </div>
             </a>
         }

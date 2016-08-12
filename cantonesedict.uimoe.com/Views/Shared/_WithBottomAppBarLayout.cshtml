@@ -29,6 +29,10 @@
     </div>
 </div>
 
+<div id="playerdiv1" style="display:none;">
+    <audio id="player1" src="#" controls="controls"></audio>
+</div>
+
 <div style="display: none;" id="dialog1" class="weui_dialog_confirm">
     <div class="weui_mask"></div>
     <div class="weui_dialog">
@@ -56,7 +60,46 @@
         $("#" + id).addClass("weui_bar_item_on");
     }
 
-    function weuialert(message, title,callback) {
+    function play(pronounce, voice) {
+        var urls = [];
+        if (voice) {
+            url.push(voice);
+        }
+        else {
+            var parts = pronounce.split(' ');
+            for (var i = 0; i < parts.length; i++) {
+                var url = 'http://yueyv.cn/voice/' + parts[i] + '.wav';
+                urls.push(url);
+            }
+        }
+
+        var idx = 0;
+        var player1 = document.getElementById("player1");
+        player1.onplay = function () {
+            idx += 1;
+        };
+        player1.onended = function () {
+            if (idx < urls.length - 1) {
+                player1.src = urls[idx];
+                try {
+                    player1.play();
+                }
+                catch (e) {
+                    weuialert("播放音频失败");
+                }
+            }
+        };
+
+        player1.src = urls[0];
+        try {
+            player1.play();
+        }
+        catch (e) {
+            weuialert("播放音频失败");
+        }
+    }
+
+    function weuialert(message, title, callback) {
         if (!title) {
             title = "提示";
         }

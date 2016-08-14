@@ -3337,7 +3337,7 @@ namespace Agile.API.Helpers
         /// <param name="vocabularyid"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static int H10086(int vocabularyid ,int id)
+        public static int H10086(int vocabularyid, int id)
         {
             if (id <= 0 || vocabularyid <= 0)
             {
@@ -3370,7 +3370,7 @@ namespace Agile.API.Helpers
         public static GroupItemDto H10088(string chntext)
         {
             var sqlstr = "SELECT CAST(Id AS NVARCHAR(50)) AS IName,1 AS ICount FROM CAN_vocabulary WHERE ChnText=@ChnText";
-            var sp = new SqlParameter("@ChnText",SqlDbType.NVarChar,50);
+            var sp = new SqlParameter("@ChnText", SqlDbType.NVarChar, 50);
             sp.IsNullable = true;
             if (string.IsNullOrEmpty(chntext))
             {

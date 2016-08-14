@@ -397,6 +397,21 @@ namespace api.uimoe.com.Controllers
                             response = LogicHelper.H10035(WebHelper.ParseFromRequest<H10035Request>());
                             break;
                         }
+                    case "H10036":
+                        {
+                            response = LogicHelper.H10036(WebHelper.ParseFromRequest<H10036Request>());
+                            break;
+                        }
+                    case "H10037":
+                        {
+                            response = LogicHelper.H10037(WebHelper.ParseFromRequest<H10037Request>());
+                            break;
+                        }
+                    case "H10038":
+                        {
+                            response = LogicHelper.H10038(WebHelper.ParseFromRequest<H10038Request>());
+                            break;
+                        }
                 }
             }
             catch (Exception ex)
@@ -598,6 +613,21 @@ namespace api.uimoe.com.Controllers
         public ActionResult H10035()
         {
             return HBase("H10035");
+        }
+
+        public ActionResult H10036()
+        {
+            return HBase("H10036");
+        }
+
+        public ActionResult H10037()
+        {
+            return HBase("H10037");
+        }
+
+        public ActionResult H10038()
+        {
+            return HBase("H10038");
         }
     }
 }

@@ -171,11 +171,15 @@
     <Content Include="Assets\icon_nav_cell.png" />
     <Content Include="Assets\icon_nav_search_bar.png" />
     <Content Include="Assets\icon_nav_tab.png" />
+    <Content Include="Assets\Images\ting.jpg" />
     <Content Include="Assets\Images\voice.gif" />
     <Content Include="Assets\jweixin-1.0.0.js" />
     <Content Include="Assets\md5.js" />
     <Content Include="Assets\sha1.js" />
     <Content Include="Assets\weui.css" />
+    <Content Include="Assets\xunfei\recorderWorker.js" />
+    <Content Include="Assets\xunfei\speex.js" />
+    <Content Include="Assets\xunfei\vad.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />

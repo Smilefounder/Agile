@@ -7,11 +7,65 @@
     .weui_bar_item_on {
         background-color: #e7e7e7;
     }
+
+    .weui_bar_item_on2 {
+        background-color: #99d9ea;
+    }
+
+    .bubbly-left {
+        position: relative;
+        max-width: 200px;
+        padding: 10px;
+        background: #22b14c;
+        border-radius: 5px;
+        float: left;
+        margin-left: 16px;
+        margin-bottom: 16px;
+        color: #fff;
+    }
+
+        .bubbly-left:before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: -16px;
+            width: 0;
+            height: 0;
+            font-size: 0;
+            border: solid 8px;
+            border-color: transparent #22b14c transparent transparent;
+        }
+
+    .bubbly-right {
+        position: relative;
+        max-width: 200px;
+        padding: 10px;
+        background: #00a2e8;
+        border-radius: 5px;
+        float: right;
+        margin-right: 16px;
+        margin-bottom: 16px;
+        color: #fff;
+    }
+
+        .bubbly-right:after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            right: -16px;
+            width: 0;
+            height: 0;
+            font-size: 0;
+            border: solid 8px;
+            border-color: transparent transparent transparent #00a2e8;
+        }
 </style>
 
 <div class="weui_tab">
     <div class="weui_tab_bd">
-        @RenderBody()
+        <div id="usercontroldiv1">
+            @RenderBody()
+        </div>
     </div>
     <div class="weui_tabbar">
         <a id="appbaritem1" class="weui_tabbar_item" href="@Url.Content("~/Home/Index")">
@@ -19,6 +73,12 @@
                 <img alt="" src="@Url.Content("~/Assets/icon_nav_search_bar.png")">
             </div>
             <p class="weui_tabbar_label">查询</p>
+        </a>
+        <a class="weui_tabbar_item" id="voicea" href="javascript:void(0);" onmousedown="voicemousedown(this)" onmouseup="voicemouseup(this)">
+            <div class="weui_tabbar_icon">
+                <img style="width:100%;" src="@Url.Content("~/Assets/Images/ting.jpg")" />
+            </div>
+            <p class="weui_tabbar_label">长按说话后松开</p>
         </a>
         <a id="appbaritem2" class="weui_tabbar_item" href="@Url.Content("~/Home/Scene")">
             <div class="weui_tabbar_icon">
@@ -54,10 +114,84 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     function showhighlight(id) {
         $("#" + id).addClass("weui_bar_item_on");
+    }
+
+    function start(callback) {
+        callback(null);
+    }
+
+    var timer1 = null;
+    var cnt = 0;
+    function voicemousedown(sender) {
+        $("#voicea").addClass("weui_bar_item_on2");
+        timer1 = setInterval(function () {
+            cnt += 1;
+        }, 100);
+    }
+
+    function voicemouseup(sender) {
+        if (cnt > 10) {
+            start(function (input) {
+                var voicea = document.getElementById("voicea");
+                if (!input) {
+                    showvoice(voicea, null, null);
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Content("~/Home/GetIndex")',
+                    complete: function (xhr, status) {
+                        if (status != "success") {
+                            showvoice(voicea, input, null);
+                            return;
+                        }
+
+                        var response = {};
+                        try {
+                            response = JSON.parse(xhr.responseText);
+                        }
+                        catch (e) {
+
+                        }
+
+                        showvoice(voicea, input, input);
+                    }
+                });
+            });
+        }
+
+        cnt = 0;
+        clearInterval(timer1);
+        $("#voicea").removeClass("weui_bar_item_on2");
+    }
+
+    function showvoice(sender, rtext, ltext) {
+        var show = $(sender).attr("data-show");
+        if (!show) {
+            $(sender).attr("data-show", "true");
+            $("#usercontroldiv1").html("");
+        }
+
+        var sb = '';
+        if (!rtext) {
+            rtext = "抱歉，未识别你的语音输入";
+            sb += '<div class="bubbly-right">' + rtext + '</div><div style="clear:right;"></div>';
+        }
+        else {
+            sb += '<div class="bubbly-right">' + rtext + '</div><div style="clear:right;"></div>';
+            if (!ltext) {
+                ltext = "抱歉，未找到相关结果";
+            }
+
+            sb += '<div class="bubbly-left">' + ltext + '</div><div style="clear:left;"></div>';
+        }
+
+        $("#usercontroldiv1").append(sb);
+        $("#usercontroldiv1").scrollTop(document.getElementById("usercontroldiv1").scrollHeight);
     }
 
     function play(pronounce, voice) {
@@ -68,7 +202,7 @@
         else {
             var parts = pronounce.split(' ');
             for (var i = 0; i < parts.length; i++) {
-                var url = 'http://yueyv.cn/voice/' + parts[i] + '.wav';
+                var url = 'http://www.yueyv.cn/index_url.asp?sound=' + parts[i];
                 urls.push(url);
             }
         }

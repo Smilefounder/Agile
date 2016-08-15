@@ -93,6 +93,78 @@ namespace cantonesedict.uimoe.com.Controllers
             return View(vm);
         }
 
+        [HttpPost]
+        public ActionResult GetIndex()
+        {
+            var input = Request.Params["input"];
+            if (string.IsNullOrEmpty(input))
+            {
+                return Json(new { error=1,message= "请输入参数：input" });
+            }
+
+            var response = new H10014Response
+            {
+                error=0,
+                noresult=new List<string>(),
+                groups=new List<H10014ResponseGroupItem>()
+            };
+
+            try
+            {
+                input = Server.UrlDecode(input);
+                var h10014responsebase = LogicHelper.H10014(new H10014Request
+                {
+                    input = input
+                });
+
+                var h10014response = h10014responsebase as H10014Response;
+                if (h10014response != null)
+                {
+                    if (h10014response.groups != null && h10014response.groups.Any())
+                    {
+                        foreach (var g in h10014response.groups)
+                        {
+                            response.groups.Add( new H10014ResponseGroupItem
+                            {
+                                rw = g.rw,
+                                chntext = g.chntext,
+                                items = g.items.Select(o => new H10014ResponseListItem
+                                {
+                                    canpronounce = o.canpronounce,
+                                    cantext = o.cantext,
+                                    canvoice = o.canvoice
+                                }).ToList()
+                            });
+                        }
+                    }
+
+                    if (h10014response.noresult != null && h10014response.noresult.Any())
+                    {
+                        ThreadPool.QueueUserWorkItem(new WaitCallback(SaveNoResultUseThread), h10014response.noresult);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.Message);
+            }
+
+            //查询获得积分
+            var userinfo = Session["userinfo"] as UserInfoVM;
+            if (userinfo != null)
+            {
+                ThreadPool.QueueUserWorkItem(new WaitCallback(MakeScoreUseThread), new H10040Request
+                {
+                    canrepeat = 1,
+                    score = 1,
+                    way = (int)ScoreListItemWayEnum.Query,
+                    userid = userinfo.UserId
+                });
+            }
+
+            return Json(response);
+        }
+
         private void SaveNoResultUseThread(object state)
         {
             try

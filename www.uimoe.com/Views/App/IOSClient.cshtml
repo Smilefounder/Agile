@@ -1,0 +1,61 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>柚萌 - design &amp; develop</title>
+    <link href="/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="list-group">
+                    <a class="list-group-item active">注：获取数据都需要先登录</a>
+                    <a class="list-group-item">请求方式：GET</a>
+                    <a class="list-group-item">
+                        <span>请求链接：http://api.uimoe.com/home/h10009?username=username&userpass=userpass</span><br />
+                        <span>username:用户名</span><br />
+                        <span>userpass:用户密码,为原始密码先MD5加密(小写),再SHA1加密(小写)后的结果</span><br />
+                    </a>
+                </div>
+                <div class="list-group">
+                    <a class="list-group-item active">1.查询</a>
+                    <a class="list-group-item">请求方式：GET</a>
+                    <a class="list-group-item">
+                        <span>请求链接：http://api.uimoe.com/home/h10014?input=字词</span><br />
+                        <span>input:要查询的字词</span>
+                    </a>
+                </div>
+                <img style="width:100%;" src="@Url.Content("~/Assets/Images/c1.png")" />
+                <div style="height:10px;width:100%;"></div>
+                <div class="list-group">
+                    <a class="list-group-item active">2.获取分类列表</a>
+                    <a class="list-group-item">请求方式：GET</a>
+                    <a class="list-group-item">
+                        <span>请求链接：http://api.uimoe.com/home/h10037?take=10</span><br />
+                        <span>take:取多少条数据</span>
+                    </a>
+                </div>
+                <img style="width:100%;" src="@Url.Content("~/Assets/Images/c2.png")" />
+                <div style="height:10px;width:100%;"></div>
+                <div class="list-group">
+                    <a class="list-group-item active">3.获取分类中的词汇</a>
+                    <a class="list-group-item">请求方式：GET</a>
+                    <a class="list-group-item">
+                        <span>请求链接：http://api.uimoe.com/home/h10038?sceneid=1&page=1&pagesize=10</span><br />
+                        <span>sceneid:分类id</span><br />
+                        <span>page:第几页</span><br />
+                        <span>pagesize:每页多少条数据</span>
+                    </a>
+                </div>
+                <img style="width:100%;" src="@Url.Content("~/Assets/Images/c3.png")" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

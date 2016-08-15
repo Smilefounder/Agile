@@ -187,5 +187,10 @@ namespace www.uimoe.com.Controllers
         {
             return View();
         }
+
+        public ActionResult IOSClient()
+        {
+            return View();
+        }
     }
 }

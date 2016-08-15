@@ -69,5 +69,36 @@ namespace Agile.Web.Helpers
         {
             return HttpUtility.UrlEncode(input, Encoding.GetEncoding("GBK"));
         }
+
+        public static string ToRequestStr<T>(T entity)
+            where T : class
+        {
+            var ttype = typeof(T);
+            var tps = ttype.GetProperties();
+
+            var sb = "";
+            foreach (var tp in tps)
+            {
+                object obj = null;
+                try
+                {
+                    if (entity != null)
+                    {
+                        obj = tp.GetValue(entity, null);
+                    }
+                }
+                catch
+                { }
+
+                sb += string.Format("&{0}={1}", tp.Name, obj == null ? "" : obj.ToString());
+            }
+
+            if (sb.Length > 0)
+            {
+                sb = sb.Substring(1);
+            }
+
+            return sb;
+        }
     }
 }

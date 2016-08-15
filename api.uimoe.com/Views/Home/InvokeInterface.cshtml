@@ -9,7 +9,7 @@
             <form id="form1">
                 <div class="form-group">
                     <label>选择接口</label>
-                    <select id="interfacelist" class="form-control">
+                    <select id="interfacelist" class="form-control" onchange="getinterface(this)">
                         @foreach (var item in Model)
                         {
                             var selected = "";
@@ -23,12 +23,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>请求报文&nbsp;<span style="color:#d5d5d5;">例如：page=1&amp;pagesize=10</span></label>
+                    <label>请求报文</label>
                     <textarea id="requeststr" class="form-control" style="height:100px;">@ViewBag.requeststr</textarea>
                 </div>
             </form>
             <div class="form-group">
-                <label>响应报文&nbsp;<span style="color:#d5d5d5;">例如：{"error":0,"message"="成功"}</span></label>
+                <label>响应报文</label>
                 <textarea id="responsestr" class="form-control" style="height:150px;"></textarea>
             </div>
             <button class="btn btn-success" onclick="trytoinvoke(this)">调用接口</button>
@@ -48,6 +48,24 @@
             dataType: "text",
             success: function (response) {
                 $("#responsestr").val(response);
+            },
+            error: function () {
+                alert("抱歉，出错了哦。。");
+            }
+        });
+    }
+
+    function getinterface(sender) {
+        var code = $("#interfacelist").val();
+        var url = '@Url.Content("~/Home/InterfaceInfo")';
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: { code: code },
+            dataType: "json",
+            success: function (response) {
+                $("#requeststr").val(response.req);
+                $("#responsestr").val(response.rsp);
             },
             error: function () {
                 alert("抱歉，出错了哦。。");

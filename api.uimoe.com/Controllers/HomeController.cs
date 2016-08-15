@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using Agile.Web.Helpers;
+using Agile.Dtos;
 
 namespace api.uimoe.com.Controllers
 {
@@ -225,6 +226,93 @@ namespace api.uimoe.com.Controllers
             }
 
             return View(vm);
+        }
+
+        [FreeAccess]
+        public ActionResult InterfaceInfo(string code)
+        {
+            var req = "";
+            var rsp = "";
+            switch (code)
+            {
+                case "H10014":
+                    {
+                        req = WebHelper.ToRequestStr<H10014Request>(null);
+                        rsp = SerializeHelper.ToJson(new H10014Response
+                        {
+                            error = 0,
+                            isallmatched = true,
+                            noresult = new List<string>(),
+                            message = "",
+                            time = 0,
+                            groups = new List<H10014ResponseGroupItem>
+                            {
+                                new H10014ResponseGroupItem
+                                {
+                                    chntext="",
+                                    rw=0,
+                                    items=new List<H10014ResponseListItem>
+                                    {
+                                       new H10014ResponseListItem
+                                       {
+                                           canpronounce="",
+                                           cantext="",
+                                           canvoice=""
+                                       }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    break;
+                case "H10037":
+                    {
+                        req = WebHelper.ToRequestStr<H10037Request>(null);
+                        rsp = SerializeHelper.ToJson(new H10037Response
+                        {
+                            error = 0,
+                            message = "",
+                            time = 0,
+                            data = new List<H10037ResponseListItem>
+                            {
+                               new H10037ResponseListItem
+                               {
+                                   id=0,
+                                   name="",
+                                   total=0
+                               }
+                            }
+                        });
+                    }
+                    break;
+                case "H10038":
+                    {
+                        req = WebHelper.ToRequestStr<H10038Request>(null);
+                        rsp = SerializeHelper.ToJson(new H10038Response
+                        {
+                            error = 0,
+                            message = "",
+                            time = 0,
+                            data = new PagedListDto<H10038ResponseListItem>
+                            {
+                                Page = 0,
+                                PageSize = 0,
+                                RecordCount = 0,
+                                RecordList = new List<H10038ResponseListItem>
+                                {
+                                    new H10038ResponseListItem
+                                    {
+                                        canpronounce="",
+                                        cantext="",
+                                        chntext=""
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    break;
+            }
+            return Json(new { error = 0, req = req, rsp = rsp });
         }
 
         public ActionResult HBase(string code)

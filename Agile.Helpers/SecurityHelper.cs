@@ -38,7 +38,7 @@ namespace Agile.Helpers
 
             for (int i = 0; i < hashed.Length; i++)
             {
-                sb.Append(hashed[i].ToString("x"));
+                sb.Append(hashed[i].ToString("x2"));
             }
 
             return sb.ToString();
@@ -74,7 +74,7 @@ namespace Agile.Helpers
 
             for (int i = 0; i < hashed.Length; i++)
             {
-                sb.Append(hashed[i].ToString("x"));
+                sb.Append(hashed[i].ToString("x2"));
             }
 
             return sb.ToString();

@@ -2805,10 +2805,18 @@ namespace Agile.API.Helpers
             var sb = new StringBuilder();
             foreach (var w in words)
             {
-                sb.AppendFormat(" INSERT INTO CAN_noresult(ChnText,CreatedAt) VALUES(N'{0}',GETDATE());\r\n", w);
+                if (!string.IsNullOrEmpty(w))
+                {
+                    sb.AppendFormat(" INSERT INTO CAN_noresult(ChnText,CreatedAt) VALUES(N'{0}',GETDATE());\r\n", w);
+                }
             }
 
             var sqlstr = sb.ToString();
+            if (sqlstr.Length == 0)
+            {
+                return -1;
+            }
+
             var rows = DataHelper.ExecuteNonQuery(sqlstr);
             return rows;
         }

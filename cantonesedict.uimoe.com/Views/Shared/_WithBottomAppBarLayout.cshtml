@@ -74,12 +74,12 @@
             </div>
             <p class="weui_tabbar_label">查询</p>
         </a>
-        <a class="weui_tabbar_item" id="voicea" href="javascript:void(0);" onmousedown="voicemousedown(this)" onmouseup="voicemouseup(this)">
+        @*<a class="weui_tabbar_item" id="voicea" href="javascript:void(0);" onclick="voiceclicked(this)">
             <div class="weui_tabbar_icon">
                 <img style="width:100%;" src="@Url.Content("~/Assets/Images/ting.jpg")" />
             </div>
-            <p class="weui_tabbar_label">长按说话后松开</p>
-        </a>
+            <p id="voicep" class="weui_tabbar_label">语音</p>
+        </a>*@
         <a id="appbaritem2" class="weui_tabbar_item" href="@Url.Content("~/Home/Scene")">
             <div class="weui_tabbar_icon">
                 <img alt="" src="@Url.Content("~/Assets/icon_nav_tab.png")">
@@ -114,33 +114,40 @@
         </div>
     </div>
 </div>
+<script src="@Url.Content("~/Assets/md5.js")"></script>
+<script src="http://webapi.openspeech.cn/socket.io/socket.io.js"></script>
+<script src='http://webapi.openspeech.cn/js/util/zepto.min.js'></script>
+<script src='http://webapi.openspeech.cn/js/util/jwav.min.js'></script>
+<script src='http://webapi.openspeech.cn/fingerprint.js'></script>
+<script src="http://webapi.openspeech.cn/iat.min.js"></script>
 <script type="text/javascript">
-    function showhighlight(id) {
-        $("#" + id).addClass("weui_bar_item_on");
-    }
+    var session = new IFlyIatSession({
+        url: 'http://webapi.openspeech.cn/',
+        reconnection: true,
+        reconnectionDelay: 30000,
+        compress: 'speex',
+        speex_path: '@Url.Content("~/Assets/xunfei/speex.js")',
+        vad_path: '@Url.Content("~/Assets/xunfei/vad.js")',
+        recorder_path: '@Url.Content("~/Assets/xunfei/recorderWorker.js")'
+    });
 
-    function start(callback) {
-        callback(null);
-    }
+    function start() {
+        var appid = '57b16bf9';
+        var timestamp = new Date().toLocaleTimeString();
+        var expires = 60000;
+        var secret_key = 'f53d194a2776679b';
+        var signature = hex_md5(appid + '&' + timestamp + '&' + expires + '&' + secret_key);
+        var params = { "grammar_list": null, "params": "aue=speex-wb;-1, usr = mkchen, ssm = 1, sub = iat, net_type = wifi, ent =sms16k, rst = plain, auf  = audio/L16;rate=16000, vad_enable = 1, vad_timeout = 5000, vad_speech_tail = 500, caller.appid = " + appid + ",timestamp = " + timestamp + ",expires = " + expires, "signature": signature };
 
-    var timer1 = null;
-    var cnt = 0;
-    function voicemousedown(sender) {
-        $("#voicea").addClass("weui_bar_item_on2");
-        timer1 = setInterval(function () {
-            cnt += 1;
-        }, 100);
-    }
+        session.start(params, function (volume) {
+            if (volume < 6 && volume > 0)
+                console.log("volume : " + volume);
 
-    function voicemouseup(sender) {
-        if (cnt > 10) {
-            start(function (input) {
-                var voicea = document.getElementById("voicea");
-                if (!input) {
-                    showvoice(voicea, null, null);
-                    return;
-                }
-
+            if (volume < 0)
+                console.log("麦克风启动失败");
+        }, function (err, result) {
+            var voicea = document.getElementById("voicea");
+            if (!err && result) {
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Content("~/Home/GetIndex")',
@@ -158,15 +165,47 @@
 
                         }
 
-                        showvoice(voicea, input, input);
+                        showvoice(voicea, result, result);
                     }
                 });
-            });
+            }
+            else {
+                showvoice(voicea, null, null);
+            }
+        }, function (message) {
+            if (message == 'onStop') {
+                console.log("录音停止");
+            } else if (message == 'onEnd') {
+                console.log("会话结束");
+            }
+        }, function (data) {
+            console.log(data);
+        });
+
+    };
+
+    function stop() {
+        session.stop(null);
+    };
+</script>
+<script type="text/javascript">
+    function showhighlight(id) {
+        $("#" + id).addClass("weui_bar_item_on");
+    }
+
+    function voiceclicked(sender) {
+        var pressed = $(sender).attr("data-pressed");
+        if (!pressed) {
+            $("#voicea").addClass("weui_bar_item_on2");
+            $("#voicep").html("现在请说话");
+            $(sender).attr("data-pressed", "data-pressed");
+            start();
+            return;
         }
 
-        cnt = 0;
-        clearInterval(timer1);
         $("#voicea").removeClass("weui_bar_item_on2");
+        $("#voicep").html("语音");
+        $(sender).removeAttr("data-pressed");
     }
 
     function showvoice(sender, rtext, ltext) {

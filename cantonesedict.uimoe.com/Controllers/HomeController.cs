@@ -99,14 +99,14 @@ namespace cantonesedict.uimoe.com.Controllers
             var input = Request.Params["input"];
             if (string.IsNullOrEmpty(input))
             {
-                return Json(new { error=1,message= "请输入参数：input" });
+                return Json(new { error = 1, message = "请输入参数：input" });
             }
 
             var response = new H10014Response
             {
-                error=0,
-                noresult=new List<string>(),
-                groups=new List<H10014ResponseGroupItem>()
+                error = 0,
+                noresult = new List<string>(),
+                groups = new List<H10014ResponseGroupItem>()
             };
 
             try
@@ -124,7 +124,7 @@ namespace cantonesedict.uimoe.com.Controllers
                     {
                         foreach (var g in h10014response.groups)
                         {
-                            response.groups.Add( new H10014ResponseGroupItem
+                            response.groups.Add(new H10014ResponseGroupItem
                             {
                                 rw = g.rw,
                                 chntext = g.chntext,

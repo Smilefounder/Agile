@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{B58D0617-C18D-495F-9413-C67E9D31F98F}"
 EndProject
@@ -68,6 +68,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataHelperTest", "DataHelperTest\DataHelperTest.csproj", "{7D039EB5-35EB-493F-AFB4-8472AAABA85F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "files.uimoe.com", "files.uimoe.com\files.uimoe.com.csproj", "{800E53F9-FE66-40A6-96EA-341A0BEFDAAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlToModel", "SqlToModel\SqlToModel.csproj", "{91995EAB-2BE5-47FC-B1C4-A7F57ABA3EBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -187,6 +189,10 @@ Global
 		{800E53F9-FE66-40A6-96EA-341A0BEFDAAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{800E53F9-FE66-40A6-96EA-341A0BEFDAAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{800E53F9-FE66-40A6-96EA-341A0BEFDAAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91995EAB-2BE5-47FC-B1C4-A7F57ABA3EBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91995EAB-2BE5-47FC-B1C4-A7F57ABA3EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91995EAB-2BE5-47FC-B1C4-A7F57ABA3EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91995EAB-2BE5-47FC-B1C4-A7F57ABA3EBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -223,5 +229,6 @@ Global
 		{64830A38-D31C-459B-A785-78FBF5D99F56} = {237B2D09-EC8D-464B-B247-35404E82DC93}
 		{7D039EB5-35EB-493F-AFB4-8472AAABA85F} = {C7365BAE-86CA-486E-AF35-65B0D98931E3}
 		{800E53F9-FE66-40A6-96EA-341A0BEFDAAD} = {64830A38-D31C-459B-A785-78FBF5D99F56}
+		{91995EAB-2BE5-47FC-B1C4-A7F57ABA3EBA} = {C7365BAE-86CA-486E-AF35-65B0D98931E3}
 	EndGlobalSection
 EndGlobal

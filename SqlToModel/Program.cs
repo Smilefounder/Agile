@@ -4,9 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SqlToModel
 {
@@ -89,32 +87,24 @@ namespace SqlToModel
             }
 
             var sb = new StringBuilder();
-            sb.AppendFormat("using System;\r\n\r\n");
+            sb.AppendFormat("using System;\r\n");
+            sb.AppendFormat("using System.ComponentModel.DataAnnotations;\r\n\r\n");
             sb.AppendFormat("namespace {0}\r\n", namespacestr);
             sb.AppendLine("{");
             sb.AppendFormat("    public class {0}\r\n", name);
             sb.AppendLine("    {");
             foreach (var item in recordlist)
             {
-                var attrs = new List<string>();
                 if (item.xtypestr == "string")
                 {
-                    var attr = "MaxLength=" + item.lengthx;
-                    attrs.Add(attr);
+                    sb.AppendFormat("        [MaxLength({0})]\r\n", item.lengthx);
                 }
 
                 if (!item.isnullable)
                 {
-                    attrs.Add("NotNull=true");
+                    sb.AppendFormat("        [Required]\r\n");
                 }
 
-                var attrstr = string.Join(",", attrs);
-                if (attrstr.Length > 0)
-                {
-                    attrstr = "(" + attrstr + ")";
-                }
-
-                sb.AppendFormat("        [TableField{0}]\r\n", attrstr);
                 sb.AppendLine("        public " + item.xtypestr + " " + item.name + " {get;set;}\r\n");
             }
 

@@ -71,7 +71,7 @@ namespace SqlToModel
 
         static void CreateClassFile(string name, string namespacestr, string folder)
         {
-            var sqlstr = string.Format("SELECT name,xtype,[length],collation,isnullable from syscolumns where id=OBJECT_ID('{0}');", name);
+            var sqlstr = string.Format("SELECT name,xtype,[length],collation,isnullable,colid from syscolumns where id=OBJECT_ID('{0}');", name);
             var recordlist = new List<tcolumn>();
             try
             {
@@ -95,6 +95,11 @@ namespace SqlToModel
             sb.AppendLine("    {");
             foreach (var item in recordlist)
             {
+                if (item.colid == 1)
+                {
+                    sb.AppendFormat("        [Key]\r\n");
+                }
+
                 if (item.xtypestr == "string")
                 {
                     sb.AppendFormat("        [MaxLength({0})]\r\n", item.lengthx);
@@ -127,7 +132,9 @@ namespace SqlToModel
 
         iint = 56,
 
-        idatetime = 61
+        idatetime = 61,
+
+        idecimal = 106
     }
 
     public class tcolumn
@@ -153,6 +160,11 @@ namespace SqlToModel
                             str = "int";
                         }
                         break;
+                    case (int)xtypeenum.idecimal:
+                        {
+                            str = "decimal";
+                        }
+                        break;
                 }
 
                 return str;
@@ -170,6 +182,16 @@ namespace SqlToModel
                     return length;
                 }
 
+                if (length == -1)
+                {
+                    return 4000;
+                }
+
+                if (length == 1)
+                {
+                    return 1;
+                }
+
                 return Convert.ToInt32(Math.Round(0.5 * length));
             }
         }
@@ -177,5 +199,7 @@ namespace SqlToModel
         public string collation { get; set; }
 
         public bool isnullable { get; set; }
+
+        public int colid { get; set; }
     }
 }

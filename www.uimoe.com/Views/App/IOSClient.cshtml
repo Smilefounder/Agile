@@ -12,50 +12,491 @@
 </head>
 <body>
     <div class="container">
-        <div class="panel">
+        <div style="height:20px;width:100%;"></div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">1.登录</div>
             <div class="panel-body">
                 <div class="list-group">
-                    <a class="list-group-item active">注：获取数据都需要先登录</a>
+                    <a class="list-group-item">调用其他接口前，请先登录</a>
                     <a class="list-group-item">请求方式：GET</a>
-                    <a class="list-group-item">
-                        <span>请求链接：http://api.uimoe.com/home/h10009?username=username&userpass=userpass</span><br />
-                        <span>username:用户名</span><br />
-                        <span>userpass:用户密码,为原始密码先MD5加密(小写),再SHA1加密(小写)后的结果</span><br />
-                    </a>
+                    <a class="list-group-item">请求链接：http://api.uimoe.com/home/h10009</a>
                 </div>
+                <ul class="list-group">
+                    <li class="list-group-item active">请求报文协议</li>
+                    <li class="list-group-item">
+                        <table class="table table-bordered table-condensed table-striped">
+                            <tr>
+                                <th>节点</th>
+                                <th>上级节点</th>
+                                <th>类型</th>
+                                <th>约束</th>
+                                <th>描述</th>
+                            </tr>
+                            <tr>
+                                <th>username</th>
+                                <th>-</th>
+                                <th>string</th>
+                                <th>1</th>
+                                <th>用户名</th>
+                            </tr>
+                            <tr>
+                                <th>userpass</th>
+                                <th>-</th>
+                                <th>string</th>
+                                <th>1</th>
+                                <th>密码，原密码先MD5加密（32位小写），再SHA1加密(小写)传入此节点</th>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item active">响应报文协议</li>
+                    <li class="list-group-item">
+                        <table class="table table-bordered table-condensed table-striped">
+                            <tr>
+                                <th>节点</th>
+                                <th>上级节点</th>
+                                <th>类型</th>
+                                <th>约束</th>
+                                <th>描述</th>
+                            </tr>
+                            <tr>
+                                <th>error</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>1</th>
+                                <th>成功时为0，出错时为具体的错误编码</th>
+                            </tr>
+                            <tr>
+                                <th>message</th>
+                                <th>-</th>
+                                <th>string</th>
+                                <th>*</th>
+                                <th>提示信息，error=0时可能为空，error!=0时一般为错误信息</th>
+                            </tr>
+                            <tr>
+                                <th>time</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>*</th>
+                                <th>接口调用耗时(毫秒)，error!=0时此节点没有或值为0</th>
+                            </tr>
+                            <tr>
+                                <th>token</th>
+                                <th>-</th>
+                                <th>string</th>
+                                <th>*</th>
+                                <th>可以访问其他站点用的token，error!=0时此节点为null</th>
+                            </tr>
+                            <tr>
+                                <th>userid</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>*</th>
+                                <th>用户的唯一标识</th>
+                            </tr>
+                            <tr>
+                                <th>username</th>
+                                <th>-</th>
+                                <th>string</th>
+                                <th>*</th>
+                                <th>用户名</th>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading" data-hide="1">2.查询</div>
+            <div class="panel-body" style="display:none;">
                 <div class="list-group">
-                    <a class="list-group-item active">1.查询</a>
                     <a class="list-group-item">请求方式：GET</a>
-                    <a class="list-group-item">
-                        <span>请求链接：http://api.uimoe.com/home/h10014?input=字词</span><br />
-                        <span>input:要查询的字词</span>
-                    </a>
+                    <a class="list-group-item">请求链接：http://api.uimoe.com/home/h10014</a>
                 </div>
-                <img style="width:100%;" src="@Url.Content("~/Assets/Images/c1.png")" />
-                <div style="height:10px;width:100%;"></div>
+                <ul class="list-group">
+                    <li class="list-group-item active">请求报文协议</li>
+                    <li class="list-group-item">
+                        <table class="table table-bordered table-condensed table-striped">
+                            <tr>
+                                <th>节点</th>
+                                <th>上级节点</th>
+                                <th>类型</th>
+                                <th>约束</th>
+                                <th>描述</th>
+                            </tr>
+                            <tr>
+                                <th>input</th>
+                                <th>-</th>
+                                <th>string</th>
+                                <th>1</th>
+                                <th>要翻译的字词，最多20字</th>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item active">响应报文协议</li>
+                    <li class="list-group-item">
+                        <table class="table table-bordered table-condensed table-striped">
+                            <tr>
+                                <th>节点</th>
+                                <th>上级节点</th>
+                                <th>类型</th>
+                                <th>约束</th>
+                                <th>描述</th>
+                            </tr>
+                            <tr>
+                                <th>error</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>1</th>
+                                <th>成功时为0，出错时为具体的错误编码</th>
+                            </tr>
+                            <tr>
+                                <th>message</th>
+                                <th>-</th>
+                                <th>string</th>
+                                <th>*</th>
+                                <th>提示信息，error=0时可能为空，error!=0时一般为错误信息</th>
+                            </tr>
+                            <tr>
+                                <th>time</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>*</th>
+                                <th>接口调用耗时(毫秒)，error!=0时此节点没有或值为0</th>
+                            </tr>
+                            <tr>
+                                <th>isallmatched</th>
+                                <th>-</th>
+                                <th>bool</th>
+                                <th>*</th>
+                                <th>是否整句匹配</th>
+                            </tr>
+                            <tr>
+                                <th>groups</th>
+                                <th>-</th>
+                                <th>group[]</th>
+                                <th>*</th>
+                                <th>查询的结果集</th>
+                            </tr>
+                            <tr>
+                                <th>group</th>
+                                <th>groups</th>
+                                <th>class</th>
+                                <th>*</th>
+                                <th>-</th>
+                            </tr>
+                            <tr>
+                                <th>rw</th>
+                                <th>group</th>
+                                <th>int</th>
+                                <th>1</th>
+                                <th>序号</th>
+                            </tr>
+                            <tr>
+                                <th>chntext</th>
+                                <th>group</th>
+                                <th>string</th>
+                                <th>1</th>
+                                <th>普通话</th>
+                            </tr>
+                            <tr>
+                                <th>items</th>
+                                <th>group</th>
+                                <th>item[]</th>
+                                <th>1</th>
+                                <th>粤语结果</th>
+                            </tr>
+                            <tr>
+                                <th>item</th>
+                                <th>items</th>
+                                <th>class</th>
+                                <th>*</th>
+                                <th>-</th>
+                            </tr>
+                            <tr>
+                                <th>cantext</th>
+                                <th>item</th>
+                                <th>string</th>
+                                <th>1</th>
+                                <th>粤语</th>
+                            </tr>
+                            <tr>
+                                <th>canpronounce</th>
+                                <th>item</th>
+                                <th>string</th>
+                                <th>1</th>
+                                <th>粤语注音</th>
+                            </tr>
+                            <tr>
+                                <th>canvoice</th>
+                                <th>item</th>
+                                <th>string</th>
+                                <th>1</th>
+                                <th>发音文件名,单个字时为空</th>
+                            </tr>
+                            <tr>
+                                <th>noresult</th>
+                                <th>-</th>
+                                <th>string[]</th>
+                                <th>*</th>
+                                <th>查询无结果的单个字</th>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item active">界面示例</li>
+                    <li class="list-group-item">
+                        <img style="width:100%;" src="@Url.Content("~/Assets/Images/c1.png")" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading" data-hide="1">3.获取分类列表</div>
+            <div class="panel-body" style="display:none;">
                 <div class="list-group">
-                    <a class="list-group-item active">2.获取分类列表</a>
                     <a class="list-group-item">请求方式：GET</a>
-                    <a class="list-group-item">
-                        <span>请求链接：http://api.uimoe.com/home/h10037?take=10</span><br />
-                        <span>take:取多少条数据</span>
-                    </a>
+                    <a class="list-group-item">请求链接：http://api.uimoe.com/home/h10037</a>
                 </div>
-                <img style="width:100%;" src="@Url.Content("~/Assets/Images/c2.png")" />
-                <div style="height:10px;width:100%;"></div>
+                <ul class="list-group">
+                    <li class="list-group-item active">请求报文协议</li>
+                    <li class="list-group-item">
+                        <table class="table table-bordered table-condensed table-striped">
+                            <tr>
+                                <th>节点</th>
+                                <th>上级节点</th>
+                                <th>类型</th>
+                                <th>约束</th>
+                                <th>描述</th>
+                            </tr>
+                            <tr>
+                                <th>take</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>*</th>
+                                <th>取多少条数据，不传此节点则为取全部</th>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item active">响应报文协议</li>
+                    <li class="list-group-item">
+                        <table class="table table-bordered table-condensed table-striped">
+                            <tr>
+                                <th>节点</th>
+                                <th>上级节点</th>
+                                <th>类型</th>
+                                <th>约束</th>
+                                <th>描述</th>
+                            </tr>
+                            <tr>
+                                <th>error</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>1</th>
+                                <th>成功时为0，出错时为具体的错误编码</th>
+                            </tr>
+                            <tr>
+                                <th>message</th>
+                                <th>-</th>
+                                <th>string</th>
+                                <th>*</th>
+                                <th>提示信息，error=0时可能为空，error!=0时一般为错误信息</th>
+                            </tr>
+                            <tr>
+                                <th>time</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>*</th>
+                                <th>接口调用耗时(毫秒)，error!=0时此节点没有或值为0</th>
+                            </tr>
+                            <tr>
+                                <th>data</th>
+                                <th>-</th>
+                                <th>item[]</th>
+                                <th>*</th>
+                                <th>分类列表</th>
+                            </tr>
+                            <tr>
+                                <th>item</th>
+                                <th>data</th>
+                                <th>class</th>
+                                <th>*</th>
+                                <th>-</th>
+                            </tr>
+                            <tr>
+                                <th>id</th>
+                                <th>item</th>
+                                <th>int</th>
+                                <th>1</th>
+                                <th>分类的sceneid，查询分类中的词汇时需要传递sceneid</th>
+                            </tr>
+                            <tr>
+                                <th>name</th>
+                                <th>item</th>
+                                <th>string</th>
+                                <th>1</th>
+                                <th>分类名</th>
+                            </tr>
+                            <tr>
+                                <th>total</th>
+                                <th>item</th>
+                                <th>int</th>
+                                <th>1</th>
+                                <th>分类中的词汇数量</th>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item active">界面示例</li>
+                    <li class="list-group-item">
+                        <img style="width:100%;" src="@Url.Content("~/Assets/Images/c2.png")" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading" data-hide="1">4.获取分类中的词汇</div>
+            <div class="panel-body" style="display:none;">
                 <div class="list-group">
-                    <a class="list-group-item active">3.获取分类中的词汇</a>
                     <a class="list-group-item">请求方式：GET</a>
-                    <a class="list-group-item">
-                        <span>请求链接：http://api.uimoe.com/home/h10038?sceneid=1&page=1&pagesize=10</span><br />
-                        <span>sceneid:分类id</span><br />
-                        <span>page:第几页</span><br />
-                        <span>pagesize:每页多少条数据</span>
-                    </a>
+                    <a class="list-group-item">请求链接：http://api.uimoe.com/home/h10038</a>
                 </div>
-                <img style="width:100%;" src="@Url.Content("~/Assets/Images/c3.png")" />
+                <ul class="list-group">
+                    <li class="list-group-item active">请求报文协议</li>
+                    <li class="list-group-item">
+                        <table class="table table-bordered table-condensed table-striped">
+                            <tr>
+                                <th>节点</th>
+                                <th>上级节点</th>
+                                <th>类型</th>
+                                <th>约束</th>
+                                <th>描述</th>
+                            </tr>
+                            <tr>
+                                <th>sceneid</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>1</th>
+                                <th>分类的sceneid，可以从分类列表中取得</th>
+                            </tr>
+                            <tr>
+                                <th>page</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>*</th>
+                                <th>页码，不传此节点时默认为1</th>
+                            </tr>
+                            <tr>
+                                <th>pagesize</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>*</th>
+                                <th>每页数据量，不传此节点时默认为10</th>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item active">响应报文协议</li>
+                    <li class="list-group-item">
+                        <table class="table table-bordered table-condensed table-striped">
+                            <tr>
+                                <th>节点</th>
+                                <th>上级节点</th>
+                                <th>类型</th>
+                                <th>约束</th>
+                                <th>描述</th>
+                            </tr>
+                            <tr>
+                                <th>error</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>1</th>
+                                <th>成功时为0，出错时为具体的错误编码</th>
+                            </tr>
+                            <tr>
+                                <th>message</th>
+                                <th>-</th>
+                                <th>string</th>
+                                <th>*</th>
+                                <th>提示信息，error=0时可能为空，error!=0时一般为错误信息</th>
+                            </tr>
+                            <tr>
+                                <th>time</th>
+                                <th>-</th>
+                                <th>int</th>
+                                <th>*</th>
+                                <th>接口调用耗时(毫秒)，error!=0时此节点没有或值为0</th>
+                            </tr>
+                            <tr>
+                                <th>data</th>
+                                <th>-</th>
+                                <th>item[]</th>
+                                <th>*</th>
+                                <th>分类列表</th>
+                            </tr>
+                            <tr>
+                                <th>item</th>
+                                <th>data</th>
+                                <th>class</th>
+                                <th>*</th>
+                                <th>-</th>
+                            </tr>
+                            <tr>
+                                <th>id</th>
+                                <th>item</th>
+                                <th>int</th>
+                                <th>1</th>
+                                <th>分类的sceneid，查询分类中的词汇时需要传递sceneid</th>
+                            </tr>
+                            <tr>
+                                <th>name</th>
+                                <th>item</th>
+                                <th>string</th>
+                                <th>1</th>
+                                <th>分类名</th>
+                            </tr>
+                            <tr>
+                                <th>total</th>
+                                <th>item</th>
+                                <th>int</th>
+                                <th>1</th>
+                                <th>分类中的词汇数量</th>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item active">界面示例</li>
+                    <li class="list-group-item">
+                        <img style="width:100%;" src="@Url.Content("~/Assets/Images/c3.png")" />
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </body>
 </html>
+<script src="@Url.Content("~/Scripts/jquery-1.8.2.js")"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".panel-heading").click(function () {
+            var hide = $(this).attr("data-hide");
+            if (hide) {
+                $(this).siblings().show();
+                $(this).removeAttr("data-hide");
+                return;
+            }
+
+            $(this).siblings().hide();
+            $(this).attr("data-hide", "1");
+        });
+    });
+</script>

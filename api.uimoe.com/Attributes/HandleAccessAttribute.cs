@@ -24,7 +24,7 @@ namespace api.uimoe.com.Attributes
             {
                 filterContext.Result = new JsonResult
                 {
-                    Data = new { error = 1, message = "未登录" },
+                    Data = new { error = 1, message = "请先登录" },
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }

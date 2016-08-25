@@ -440,6 +440,7 @@ namespace Agile.API.Helpers
                 {
                     token = token,
                     userid = userid,
+                    username= request.username,
                     error = 0
                 };
             }

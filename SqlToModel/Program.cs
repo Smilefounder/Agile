@@ -105,7 +105,7 @@ namespace SqlToModel
                     sb.AppendFormat("        [MaxLength({0})]\r\n", item.lengthx);
                 }
 
-                if (!item.isnullable)
+                if (item.isnullable == 0)
                 {
                     sb.AppendFormat("        [Required]\r\n");
                 }
@@ -134,7 +134,11 @@ namespace SqlToModel
 
         idatetime = 61,
 
-        idecimal = 106
+        idecimal = 106,
+
+        ilong = 127,
+
+        ibool = 104
     }
 
     public class tcolumn
@@ -163,6 +167,16 @@ namespace SqlToModel
                     case (int)xtypeenum.idecimal:
                         {
                             str = "decimal";
+                        }
+                        break;
+                    case (int)xtypeenum.ilong:
+                        {
+                            str = "long";
+                        }
+                        break;
+                    case (int)xtypeenum.ibool:
+                        {
+                            str = "bool";
                         }
                         break;
                 }
@@ -198,7 +212,7 @@ namespace SqlToModel
 
         public string collation { get; set; }
 
-        public bool isnullable { get; set; }
+        public int isnullable { get; set; }
 
         public int colid { get; set; }
     }

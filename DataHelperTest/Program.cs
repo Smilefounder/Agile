@@ -14,7 +14,15 @@ namespace DataHelperTest
         {
             //Save();
 
-            Update();
+            //Update();
+
+            var status = 1;
+            var options = new QueryOptions();
+            options.OrderByDesc<T_user>(w => new { w.Id });
+            options.Where<T_user>(w => w.Id == 1);
+            options.Where<T_user>(w => w.Status == status);
+
+            var list = QueryHelper.GetList<T_user>(options);
         }
 
         static void Save()
@@ -31,7 +39,7 @@ namespace DataHelperTest
                     UserPass = "reimu1118"
                 };
 
-                var rows = QueryHelper.Save<T_user>(model);
+                var rows = WriteHelper.Save<T_user>(model);
                 Console.WriteLine(rows);
             }
             catch (Exception ex)
@@ -55,7 +63,7 @@ namespace DataHelperTest
                     UserPass = "yyy"
                 };
 
-                var rows = QueryHelper.Update<T_user>(model);
+                var rows = WriteHelper.Update<T_user>(model);
                 Console.WriteLine(rows);
             }
             catch (Exception ex)

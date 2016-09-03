@@ -69,7 +69,7 @@ namespace Agile.API.Helpers
                 };
             }
 
-            QueryHelper.Delete<T_interface>(w => w.Code == request.code);
+            WriteHelper.Delete<T_interface>(w => w.Code == request.code);
             return new H10001Response
             {
                 error = 0
@@ -118,7 +118,7 @@ namespace Agile.API.Helpers
                 Name = request.name
             };
 
-            QueryHelper.Save<T_interface>(entity);
+            WriteHelper.Save<T_interface>(entity);
             return new H10001Response
             {
                 error = 0
@@ -169,7 +169,7 @@ namespace Agile.API.Helpers
             var options = new UpdateOptions();
             options.Where<T_interface>(w => w.Code == request.code);
 
-            QueryHelper.Update<T_interface>(entity, options);
+            WriteHelper.Update<T_interface>(entity, options);
             return new H10003Response
             {
                 error = 0
@@ -1670,7 +1670,7 @@ namespace Agile.API.Helpers
                 };
             }
 
-            QueryHelper.Save<T_visit>(new T_visit
+            WriteHelper.Save<T_visit>(new T_visit
             {
                 CreatedAt = DateTime.Now,
                 IPAddress = request.ipaddress,
@@ -2356,7 +2356,7 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static H10054Response H10054(H10054Request request)
         {
-            QueryHelper.Delete<Can_noresult>(w => w.ChnText == request.chntext);
+            WriteHelper.Delete<Can_noresult>(w => w.ChnText == request.chntext);
             return new H10054Response
             {
                 error = 0
@@ -2405,7 +2405,7 @@ namespace Agile.API.Helpers
                 UserId = request.userid.Value
             };
 
-            QueryHelper.Save<T_blacklist>(entity);
+            WriteHelper.Save<T_blacklist>(entity);
             return new H10055Response
             {
                 error = 0
@@ -2453,7 +2453,7 @@ namespace Agile.API.Helpers
                 UserId = request.userid.Value
             };
 
-            QueryHelper.Save<T_whitelist>(entity);
+            WriteHelper.Save<T_whitelist>(entity);
             return new H10056Response
             {
                 error = 0
@@ -2916,7 +2916,7 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static int H10069(int id)
         {
-            return QueryHelper.Delete<Can_vocabulary>(new Can_vocabulary
+            return WriteHelper.Delete<Can_vocabulary>(new Can_vocabulary
             {
                 Id = id
             });
@@ -2938,7 +2938,7 @@ namespace Agile.API.Helpers
                 CreatedAt = DateTime.Now
             };
 
-            return QueryHelper.Save<Can_vocabulary>(model);
+            return WriteHelper.Save<Can_vocabulary>(model);
         }
 
         /// <summary>
@@ -2964,7 +2964,7 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static int H10072(H10071ResponseListItem request)
         {
-            return QueryHelper.Update<Can_vocabulary>(new Can_vocabulary
+            return WriteHelper.Update<Can_vocabulary>(new Can_vocabulary
             {
                 CanPronounce = request.canpronounce,
                 CanText = request.cantext,
@@ -3025,7 +3025,7 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static int H10074(int id)
         {
-            return QueryHelper.Delete<Can_scene>(new Can_scene
+            return WriteHelper.Delete<Can_scene>(new Can_scene
             {
                 Id = id
             });
@@ -3044,7 +3044,7 @@ namespace Agile.API.Helpers
                 Name = request.name
             };
 
-            return QueryHelper.Save<Can_scene>(model);
+            return WriteHelper.Save<Can_scene>(model);
         }
 
         /// <summary>
@@ -3070,7 +3070,7 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static int H10077(H10076ResponseListItem request)
         {
-            return QueryHelper.Update<Can_scene>(new Can_scene
+            return WriteHelper.Update<Can_scene>(new Can_scene
             {
                 Name = request.name,
                 CreatedAt = request.createdat,
@@ -3247,7 +3247,7 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static int H10081(int id)
         {
-            return QueryHelper.Delete<Can_feedback>(new Can_feedback
+            return WriteHelper.Delete<Can_feedback>(new Can_feedback
             {
                 Id = id
             });
@@ -3260,7 +3260,7 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static int H10082(int id)
         {
-            return QueryHelper.Delete<Can_noresult>(new Can_noresult
+            return WriteHelper.Delete<Can_noresult>(new Can_noresult
             {
                 Id = id
             });
@@ -3365,7 +3365,7 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static int H10087(int id)
         {
-            return QueryHelper.Delete<Can_scenewordrelation>(new Can_scenewordrelation
+            return WriteHelper.Delete<Can_scenewordrelation>(new Can_scenewordrelation
             {
                 Id = id
             });

@@ -15,184 +15,6 @@ namespace Agile.Data.Helpers
 {
     public class QueryHelper
     {
-        public static int Save<T>(T obj)
-        {
-            var ttype = typeof(T);
-            var tps = ttype.GetProperties();
-
-            var idattr = default(TableFieldAttribute);
-            var idparameter = default(SqlParameter);
-            var idproperty = default(PropertyInfo);
-
-            var fields = new List<string>();
-            var parameters = new List<SqlParameter>();
-
-            foreach (var tp in tps)
-            {
-                var attr = tp.GetCustomAttribute(typeof(TableFieldAttribute)) as TableFieldAttribute;
-                if (attr == null)
-                {
-                    continue;
-                }
-
-                if (attr.IsPrimaryKey)
-                {
-                    idattr = attr;
-                    idproperty = tp;
-                    idparameter = CreateSqlParameter<T>(obj, tp, attr.MaxLength, true);
-                    parameters.Add(idparameter);
-                    continue;
-                }
-
-                fields.Add(tp.Name);
-                parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
-            }
-
-            var fieldstr = string.Join(",", fields.Select(o => string.Format("[{0}]", o)));
-            var parametestr = string.Join(",", fields.Select(o => string.Format("@{0}", o)));
-
-            var sqlstr = string.Format(" INSERT INTO {0}({1}) VALUES({2});SELECT @{3}=@@IDENTITY;", ttype.Name, fieldstr, parametestr, idproperty.Name);
-            var rows = DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
-            if (rows > 0)
-            {
-                try
-                {
-                    idproperty.SetValue(obj, idparameter.Value);
-                }
-                catch
-                {
-
-                }
-            }
-
-            return rows;
-        }
-
-        public static int Update<T>(T obj, UpdateOptions option)
-        {
-            var ttype = typeof(T);
-            var tps = ttype.GetProperties();
-            var fieldstr = "";
-            var parameters = new List<SqlParameter>();
-
-            var whereStr = ExpressionHelper.MakeWhereStr(option.WhereExpList.ToArray());
-            if (string.IsNullOrEmpty(whereStr))
-            {
-                throw new Exception("无法执行不带Where的Update语句");
-            }
-
-            var fields = ExpressionHelper.GetFields(option.SelectExp);
-            foreach (var f in fields)
-            {
-                var tp = tps.Where(w => w.Name == f).FirstOrDefault();
-                if (tp == null)
-                {
-                    continue;
-                }
-
-                var attr = tp.GetCustomAttribute(typeof(TableFieldAttribute)) as TableFieldAttribute;
-                if (attr == null || attr.IsPrimaryKey)
-                {
-                    continue;
-                }
-
-                fieldstr += String.Format("{0}=@{0},", tp.Name);
-                parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
-            }
-
-            var sqlstr = string.Format(" UPDATE {0} SET {1} WHERE {2}", ttype.Name, fieldstr, whereStr);
-            var rows = DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
-            return rows;
-        }
-
-        public static int Update<T>(T obj)
-        {
-            var ttype = typeof(T);
-            var tps = ttype.GetProperties();
-            var idproperty = default(PropertyInfo);
-
-            var fields = new List<string>();
-            var parameters = new List<SqlParameter>();
-
-            foreach (var tp in tps)
-            {
-                var attr = tp.GetCustomAttribute(typeof(TableFieldAttribute)) as TableFieldAttribute;
-                if (attr == null)
-                {
-                    continue;
-                }
-
-                if (attr.IsPrimaryKey)
-                {
-                    idproperty = tp;
-                    parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
-                    continue;
-                }
-
-                fields.Add(tp.Name);
-                parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
-            }
-
-            if (idproperty == null)
-            {
-                throw new Exception(string.Format("请先给{0}设置主键", ttype.Name));
-            }
-
-            var fieldstr = string.Join(",", fields.Select(o => string.Format("[{0}]=@{0}", o)));
-            var sqlstr = string.Format(" UPDATE {0} SET {1} WHERE {2}=@{2}", ttype.Name, fieldstr, idproperty.Name);
-            var rows = DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
-            return rows;
-        }
-
-        public static int Delete<T>(T obj)
-        {
-            var ttype = typeof(T);
-            var idproperty = default(PropertyInfo);
-            var parameters = new List<SqlParameter>();
-            var tps = ttype.GetProperties();
-            foreach (var tp in tps)
-            {
-                var attr = tp.GetCustomAttribute(typeof(TableFieldAttribute)) as TableFieldAttribute;
-                if (attr == null)
-                {
-                    continue;
-                }
-
-                if (attr.IsPrimaryKey)
-                {
-                    idproperty = tp;
-                    parameters.Add(CreateSqlParameter<T>(obj, tp, attr.MaxLength));
-                    break;
-                }
-            }
-
-            if (idproperty == null)
-            {
-                throw new Exception(string.Format("请先给{0}设置主键", ttype.Name));
-            }
-
-            var tkey = idproperty.Name;
-            var tvalue = idproperty.GetValue(obj, null);
-
-            var sqlstr = string.Format(" DELETE FROM {0} WHERE {1}=@{1}", ttype.Name, tkey);
-            var rows = DataHelper.ExecuteNonQuery(sqlstr, parameters.ToArray());
-            return rows;
-        }
-
-        public static int Delete<T>(Expression<Func<T, bool>> exp)
-        {
-            var ttype = typeof(T);
-            var whereStr = ExpressionHelper.MakeWhereStr(exp);
-            if (string.IsNullOrEmpty(whereStr))
-            {
-                throw new Exception("删除操作必须传入条件");
-            }
-
-            var sqlstr = string.Format(" DELETE FROM {0} WHERE {1}", ttype.Name);
-            var rows = DataHelper.ExecuteNonQuery(sqlstr);
-            return rows;
-        }
-
         public static List<T> GetList<T>(QueryOptions options)
         {
             return GetList<T>(new TopQueryOptions
@@ -232,7 +54,7 @@ namespace Agile.Data.Helpers
                 var whereStr = ExpressionHelper.MakeWhereStr(options.WhereExpList.ToArray());
                 if (!String.IsNullOrEmpty(whereStr))
                 {
-                    sb.AppendFormat(" WHERE {0}", whereStr);
+                    sb.AppendFormat(" WHERE 1=1 {0}", whereStr);
                 }
             }
 
@@ -273,7 +95,7 @@ namespace Agile.Data.Helpers
                 var whereStr = ExpressionHelper.MakeWhereStr(options.WhereExpList.ToArray());
                 if (!String.IsNullOrEmpty(whereStr))
                 {
-                    sb.AppendFormat(" WHERE {0}", whereStr);
+                    sb.AppendFormat(" WHERE 1=1 {0}", whereStr);
                 }
             }
 
@@ -351,7 +173,7 @@ namespace Agile.Data.Helpers
                 var whereStr = ExpressionHelper.MakeWhereStr(options.WhereExpList.ToArray());
                 if (!String.IsNullOrEmpty(whereStr))
                 {
-                    sb += String.Format(" WHERE {0}", whereStr);
+                    sb += String.Format(" WHERE 1=1 {0}", whereStr);
                 }
             }
 
@@ -429,57 +251,6 @@ namespace Agile.Data.Helpers
             }
 
             return sb.ToString();
-        }
-
-        private static SqlParameter CreateSqlParameter<T>(T obj, PropertyInfo p, int maxLength, bool isoutput = false)
-        {
-            var dbValue = p.GetValue(obj, null);
-            var dbType = DbTypeConverter(p.PropertyType);
-            if (dbValue == null)
-            {
-                dbValue = DBNull.Value;
-            }
-
-            var direction = ParameterDirection.Input;
-            if (isoutput)
-            {
-                direction = ParameterDirection.Output;
-            }
-
-            return new SqlParameter
-            {
-                Direction = direction,
-                ParameterName = "@" + p.Name,
-                DbType = dbType,
-                Size = maxLength,
-                Value = dbValue,
-                IsNullable = true
-            };
-        }
-
-        private static DbType DbTypeConverter(Type ttype)
-        {
-            if (ttype == typeof(bool))
-            {
-                return DbType.Boolean;
-            }
-
-            if (ttype == typeof(decimal))
-            {
-                return DbType.Decimal;
-            }
-
-            if (ttype == typeof(int))
-            {
-                return DbType.Int32;
-            }
-
-            if (ttype == typeof(DateTime))
-            {
-                return DbType.DateTime;
-            }
-
-            return DbType.String;
         }
     }
 

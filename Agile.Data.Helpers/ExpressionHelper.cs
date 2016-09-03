@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,11 +20,29 @@ namespace Agile.Data.Helpers
                 var lambdaExp = exp as LambdaExpression;
                 if (lambdaExp != null)
                 {
+                    var unaryExp = lambdaExp.Body as UnaryExpression;
+                    if (unaryExp != null)
+                    {
+                        var memberExp2 = unaryExp.Operand as MemberExpression;
+                        if (memberExp2 != null)
+                        {
+                            names.Add(memberExp2.Member.Name);
+                        }
+                    }
+
+                    var newExp = lambdaExp.Body as NewExpression;
+                    if (newExp != null)
+                    {
+                        foreach (var member in newExp.Members)
+                        {
+                            names.Add(member.Name);
+                        }
+                    }
+
                     var memberExp = lambdaExp.Body as MemberExpression;
                     if (memberExp != null)
                     {
-                        var ttype = memberExp.Type;
-                        if (ttype == typeof(string) || ttype.IsValueType)
+                        if (memberExp.Type == typeof(string) || memberExp.Type.IsValueType)
                         {
                             names.Add(memberExp.Member.Name);
                         }
@@ -53,6 +73,7 @@ namespace Agile.Data.Helpers
             var binaryExp = exp as BinaryExpression;
             if (binaryExp != null)
             {
+                sb += " AND (";
                 ExpressionRouter(binaryExp.Left, ref sb);
 
                 var expType = ExpressionTypeConverter(binaryExp.NodeType);
@@ -62,6 +83,7 @@ namespace Agile.Data.Helpers
                 }
 
                 ExpressionRouter(binaryExp.Right, ref sb);
+                sb += ") ";
                 return;
             }
 
@@ -75,9 +97,27 @@ namespace Agile.Data.Helpers
             var constantExp = exp as ConstantExpression;
             if (constantExp != null)
             {
-                sb += "'" + constantExp.Value.ToString() + "'";
+                ConstantExpressionValueConverter(constantExp, ref sb);
                 return;
             }
+        }
+
+        private static void ConstantExpressionValueConverter(ConstantExpression constantExp, ref string sb)
+        {
+            var typeName = constantExp.Type.Name;
+            if (typeName == typeof(int).Name || typeName == typeof(long).Name || typeName == typeof(decimal).Name)
+            {
+                sb += constantExp.Value;
+                return;
+            }
+
+            if (typeName == typeof(DateTime).Name)
+            {
+                var dt = (DateTime)constantExp.Value;
+                sb += "'" + dt.ToString("yyyy-MM-dd HH:mm:ss") + "'";
+            }
+
+            sb += "'" + constantExp.Value.ToString() + "'";
         }
 
         private static string ExpressionTypeConverter(ExpressionType expType)

@@ -24,6 +24,7 @@
     <div class="newline"></div>
     <div>
         <button class="button" onclick="loaddata(this);">查询</button>
+        <button class="button-reverse" onclick="clearnoresult(this);">清理重复数据</button>
     </div>
     <div class="newline"></div>
     <div style="color:#ff0080;">查询结果</div>
@@ -35,6 +36,38 @@
     $(function () {
         loaddata();
     })
+
+    function clearnoresult(sender) {
+        $(sender).attr("disabled", "disabled");
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Reimu/ClearNoResult")',
+            success: function (response) {
+                $(sender).removeAttr("disabled");
+                if (response.error != 0) {
+                    var message = "操作失败，请稍后再试";
+                    if (response.message) {
+                        message = response.message;
+                    }
+
+                    alert(message);
+                    return;
+                }
+
+                if (response.message) {
+                    alert(response.message);
+                }
+                else {
+                    alert("已清理！");
+                }
+                loaddata();
+            },
+            error: function () {
+                $(sender).removeAttr("disabled");
+                alert("清理失败");
+            }
+        });
+    }
 
     function loaddata(sender, page, pagesize) {
         if (!page) {

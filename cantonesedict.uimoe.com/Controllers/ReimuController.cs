@@ -740,5 +740,55 @@ namespace cantonesedict.uimoe.com.Controllers
             return Json(response);
         }
 
+
+        [HttpPost]
+        public ActionResult ClearVocabulary()
+        {
+            var response = HBaseResponse.Faild;
+
+            try
+            {
+                var rows = LogicHelper.H10089();
+                if (rows > 0)
+                {
+                    response = new HBaseResponse
+                    {
+                        error = 0,
+                        message = string.Format("已清理{0}条重复数据", rows)
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(response);
+        }
+
+        [HttpPost]
+        public ActionResult ClearNoResult()
+        {
+            var response = HBaseResponse.Faild;
+
+            try
+            {
+                var rows = LogicHelper.H10090();
+                if (rows > 0)
+                {
+                    response = new HBaseResponse
+                    {
+                        error = 0,
+                        message = string.Format("已清理{0}条重复数据", rows)
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(response);
+        }
     }
 }

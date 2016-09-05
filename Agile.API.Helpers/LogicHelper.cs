@@ -440,7 +440,7 @@ namespace Agile.API.Helpers
                 {
                     token = token,
                     userid = userid,
-                    username= request.username,
+                    username = request.username,
                     error = 0
                 };
             }
@@ -3392,6 +3392,64 @@ namespace Agile.API.Helpers
 
             var list = DataHelper.ExecuteList<GroupItemDto>(sqlstr, sp);
             return list.FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 粤语词典 - 清理重复词汇
+        /// </summary>
+        public static int H10089()
+        {
+            var ids = new List<int>();
+            var recordlist = DataHelper.ExecuteList<Can_vocabulary>("SELECT Id,ChnText,CanPronounce FROM Can_vocabulary;");
+            foreach (var item in recordlist)
+            {
+                var sameItems = recordlist.Where(w => w.ChnText == item.ChnText && w.CanPronounce == item.CanPronounce).OrderByDescending(o => o.Id).ToList();
+                if (sameItems.Count > 1)
+                {
+                    for (var i = 1; i < sameItems.Count; i++)
+                    {
+                        ids.Add(sameItems[i].Id);
+                    }
+                }
+            }
+
+            if (ids.Count == 0)
+            {
+                return 0;
+            }
+
+            var sqlstr = string.Format("DELETE FROM Can_vocabulary WHERE Id IN({0});", string.Join(",", ids));
+            var rows = DataHelper.ExecuteNonQuery(sqlstr);
+            return rows;
+        }
+
+        /// <summary>
+        /// 粤语词典 - 清理重复无数据
+        /// </summary>
+        public static int H10090()
+        {
+            var ids = new List<int>();
+            var recordlist = DataHelper.ExecuteList<Can_noresult>("SELECT Id,ChnText FROM Can_noresult;");
+            foreach (var item in recordlist)
+            {
+                var sameItems = recordlist.Where(w => w.ChnText == item.ChnText).OrderByDescending(o => o.Id).ToList();
+                if (sameItems.Count > 1)
+                {
+                    for (var i = 1; i < sameItems.Count; i++)
+                    {
+                        ids.Add(sameItems[i].Id);
+                    }
+                }
+            }
+
+            if (ids.Count == 0)
+            {
+                return 0;
+            }
+
+            var sqlstr = string.Format("DELETE FROM Can_noresult WHERE Id IN({0});", string.Join(",", ids));
+            var rows = DataHelper.ExecuteNonQuery(sqlstr);
+            return rows;
         }
     }
 }

@@ -16,13 +16,53 @@ namespace DataHelperTest
 
             //Update();
 
-            var status = 1;
-            var options = new QueryOptions();
-            options.OrderByDesc<T_user>(w => new { w.Id });
-            options.Where<T_user>(w => w.Id == 1);
-            options.Where<T_user>(w => w.Status == status);
+            Query("reimu", 1, 1);
+        }
 
-            var list = QueryHelper.GetList<T_user>(options);
+        private static void Query(string username, int? status, int? orderby)
+        {
+            var options = new QueryOptions();
+            if (orderby.HasValue)
+            {
+                switch (orderby.Value)
+                {
+                    case 1:
+                        {
+                            options.OrderByDesc<T_user>(w => new { w.UserName, w.CreatedAt });
+                        }
+                        break;
+                    default:
+                        {
+                            options.OrderByDesc<T_user>(w => w.Id);
+                        }
+                        break;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                options.Where<T_user>(w => w.UserName == username);
+            }
+
+            if (status.HasValue)
+            {
+                options.Where<T_user>(w => w.Status == status.Value);
+            }
+
+            var list = new List<T_user>();
+            try
+            {
+                list = QueryHelper.GetList<T_user>(options);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            list.ForEach(f =>
+            {
+                Console.WriteLine("{0} {1} {2}", f.Id, f.UserName, f.Status);
+            });
         }
 
         static void Save()
@@ -44,7 +84,7 @@ namespace DataHelperTest
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -68,7 +108,7 @@ namespace DataHelperTest
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
             }
         }
     }

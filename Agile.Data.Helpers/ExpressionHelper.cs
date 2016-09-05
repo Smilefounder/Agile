@@ -100,6 +100,13 @@ namespace Agile.Data.Helpers
                 ConstantExpressionValueConverter(constantExp, ref sb);
                 return;
             }
+
+            var unaryExp = exp as UnaryExpression;
+            if (unaryExp != null)
+            {
+                UnaryExpressionValueConverter(unaryExp, ref sb);
+                return;
+            }
         }
 
         private static void ConstantExpressionValueConverter(ConstantExpression constantExp, ref string sb)
@@ -115,9 +122,32 @@ namespace Agile.Data.Helpers
             {
                 var dt = (DateTime)constantExp.Value;
                 sb += "'" + dt.ToString("yyyy-MM-dd HH:mm:ss") + "'";
+                return;
             }
 
-            sb += "'" + constantExp.Value.ToString() + "'";
+            if (typeName.Contains("<>"))
+            {
+                sb += "'" + constantExp.Value + "'";
+            }
+
+            sb += "'" + constantExp.Value + "'";
+        }
+
+        private static void UnaryExpressionValueConverter(UnaryExpression unaryExp, ref string sb)
+        {
+            var memberExp = unaryExp.Operand as MemberExpression;
+            if (memberExp == null)
+            {
+                return;
+            }
+
+            var constantExp = memberExp.Expression as ConstantExpression;
+            if (constantExp == null)
+            {
+                return;
+            }
+
+            ConstantExpressionValueConverter(constantExp, ref sb);
         }
 
         private static string ExpressionTypeConverter(ExpressionType expType)

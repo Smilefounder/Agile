@@ -34,7 +34,14 @@ namespace Agile.Data.Helpers
                 cmd.CommandText = sqlstr;
                 cmd.Parameters.AddRange(sps);
 
-                return cmd.ExecuteNonQuery();
+                try
+                {
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message + "\r\nSQL:" + sqlstr);
+                }
             }
         }
 
@@ -49,7 +56,14 @@ namespace Agile.Data.Helpers
                 cmd.CommandText = sqlstr;
                 cmd.Parameters.AddRange(sps);
 
-                return cmd.ExecuteNonQuery();
+                try
+                {
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message + "\r\nSQL:" + sqlstr);
+                }
             }
         }
 
@@ -63,7 +77,14 @@ namespace Agile.Data.Helpers
                 cmd.CommandText = sqlstr;
                 cmd.Parameters.AddRange(sps);
 
-                return cmd.ExecuteScalar();
+                try
+                {
+                    return cmd.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message + "\r\nSQL:" + sqlstr);
+                }
             }
         }
 
@@ -78,7 +99,14 @@ namespace Agile.Data.Helpers
                 cmd.CommandText = sqlstr;
                 cmd.Parameters.AddRange(sps);
 
-                return cmd.ExecuteScalar();
+                try
+                {
+                    return cmd.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message + "\r\nSQL:" + sqlstr);
+                }
             }
         }
 
@@ -88,7 +116,14 @@ namespace Agile.Data.Helpers
             adapter.SelectCommand.Parameters.AddRange(sps);
 
             var table = new DataTable();
-            adapter.Fill(table);
+            try
+            {
+                adapter.Fill(table);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message + "\r\nSQL:" + sqlstr);
+            }
 
             return table;
         }
@@ -100,7 +135,14 @@ namespace Agile.Data.Helpers
             adapter.SelectCommand.Parameters.AddRange(sps);
 
             var table = new DataTable();
-            adapter.Fill(table);
+            try
+            {
+                adapter.Fill(table);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message + "\r\nSQL:" + sqlstr);
+            }
 
             return table;
         }

@@ -113,6 +113,11 @@ namespace www.uimoe.com.Controllers
             return View();
         }
 
+        public ActionResult SqlToModel()
+        {
+            return View();
+        }
+
         public ActionResult Md5()
         {
             return View();

@@ -148,6 +148,7 @@
     <Content Include="Assets\Images\c2.png" />
     <Content Include="Assets\Images\c3.png" />
     <Content Include="Assets\Images\ModelToSql1.jpg" />
+    <Content Include="Assets\Images\SqlToModel1.jpg" />
     <Content Include="Assets\Images\tenpay.jpg" />
     <Content Include="Assets\Images\alipay.jpg" />
     <Content Include="Assets\Images\UME_browser1.jpg" />
@@ -235,6 +236,7 @@
     <Content Include="Assets\Files\ModelToSql.rar" />
     <Content Include="Assets\Files\UME_Music.rar" />
     <Content Include="Assets\Files\UME_browser.rar" />
+    <Content Include="Assets\Files\SqlToModel.rar" />
     <None Include="Properties\PublishProfiles\www.uimoe.com.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -297,6 +299,7 @@
     <Content Include="Views\App\UMEVocabulary.cshtml" />
     <Content Include="Views\App\NewProject.cshtml" />
     <Content Include="Views\App\IOSClient.cshtml" />
+    <Content Include="Views\App\SqlToModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "吃！";
+}
+
+<div id="container1" class="container"></div>
+
+@section scripts
+{
+    <script>
+        $(function () {
+            loaddata();
+        });
+
+        function loaddata(url, page, pagesize) {
+            if (!url) {
+                url = '@Url.Content("~/Home/GetIndex")';
+            }
+
+            if (!page || isNaN(page)) {
+                page = 1;
+            }
+
+            if (!pagesize || isNaN(pagesize)) {
+                pagesize = 10;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: { page: page, pagesize: pagesize },
+                complete: function (xhr, status) {
+                    if (status != "success") {
+                        return;
+                    }
+
+                    $("#container1").html(xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

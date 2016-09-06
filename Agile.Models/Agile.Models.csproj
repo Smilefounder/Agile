@@ -59,6 +59,7 @@
     <Compile Include="Can_testoption.cs" />
     <Compile Include="Can_vocabulary.cs" />
     <Compile Include="Can_word.cs" />
+    <Compile Include="Fod_collection.cs" />
     <Compile Include="HAHA_collection.cs" />
     <Compile Include="LYN_archive.cs" />
     <Compile Include="LYN_comment.cs" />

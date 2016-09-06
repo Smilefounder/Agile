@@ -73,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlToModel", "SqlToModel\Sq
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelToDbContext", "ModelToDbContext\ModelToDbContext.csproj", "{CDBB0A92-75E7-4A45-8A4E-5928255A68BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "food.uimoe.com", "food.uimoe.com\food.uimoe.com.csproj", "{0C8D04CE-8BC8-4EDA-B8E4-3B5EE1743E4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -199,6 +201,10 @@ Global
 		{CDBB0A92-75E7-4A45-8A4E-5928255A68BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDBB0A92-75E7-4A45-8A4E-5928255A68BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDBB0A92-75E7-4A45-8A4E-5928255A68BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C8D04CE-8BC8-4EDA-B8E4-3B5EE1743E4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C8D04CE-8BC8-4EDA-B8E4-3B5EE1743E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C8D04CE-8BC8-4EDA-B8E4-3B5EE1743E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C8D04CE-8BC8-4EDA-B8E4-3B5EE1743E4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -237,5 +243,6 @@ Global
 		{800E53F9-FE66-40A6-96EA-341A0BEFDAAD} = {64830A38-D31C-459B-A785-78FBF5D99F56}
 		{91995EAB-2BE5-47FC-B1C4-A7F57ABA3EBA} = {C7365BAE-86CA-486E-AF35-65B0D98931E3}
 		{CDBB0A92-75E7-4A45-8A4E-5928255A68BB} = {C7365BAE-86CA-486E-AF35-65B0D98931E3}
+		{0C8D04CE-8BC8-4EDA-B8E4-3B5EE1743E4C} = {64830A38-D31C-459B-A785-78FBF5D99F56}
 	EndGlobalSection
 EndGlobal

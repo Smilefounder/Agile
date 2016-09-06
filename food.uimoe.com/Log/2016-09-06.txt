@@ -1,0 +1,143 @@
+﻿2016-09-06 11:03:19
+System.InvalidOperationException: ConnectionString 属性尚未初始化。
+   在 System.Data.SqlClient.SqlConnection.PermissionDemand()
+   在 System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 74
+   在 Agile.Data.Helpers.QueryHelper.GetPagedList[T](PagedQueryOptions options) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 187
+   在 food.uimoe.com.Controllers.HomeController.GetIndex(Nullable`1 page, Nullable`1 pagesize) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\food.uimoe.com\Controllers\HomeController.cs:行号 33
+
+2016-09-06 11:03:36
+System.InvalidOperationException: ConnectionString 属性尚未初始化。
+   在 System.Data.SqlClient.SqlConnection.PermissionDemand()
+   在 System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 74
+   在 Agile.Data.Helpers.QueryHelper.GetPagedList[T](PagedQueryOptions options) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 187
+   在 food.uimoe.com.Controllers.HomeController.GetIndex(Nullable`1 page, Nullable`1 pagesize) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\food.uimoe.com\Controllers\HomeController.cs:行号 33
+
+2016-09-06 11:05:58
+System.InvalidOperationException: ConnectionString 属性尚未初始化。
+   在 System.Data.SqlClient.SqlConnection.PermissionDemand()
+   在 System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 74
+   在 Agile.Data.Helpers.QueryHelper.GetPagedList[T](PagedQueryOptions options) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 187
+   在 food.uimoe.com.Controllers.HomeController.GetIndex(Nullable`1 page, Nullable`1 pagesize) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\food.uimoe.com\Controllers\HomeController.cs:行号 33
+
+2016-09-06 11:06:45
+System.InvalidOperationException: ConnectionString 属性尚未初始化。
+   在 System.Data.SqlClient.SqlConnection.PermissionDemand()
+   在 System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 74
+   在 Agile.Data.Helpers.QueryHelper.GetPagedList[T](PagedQueryOptions options) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 187
+   在 food.uimoe.com.Controllers.HomeController.GetIndex(Nullable`1 page, Nullable`1 pagesize) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\food.uimoe.com\Controllers\HomeController.cs:行号 33
+
+2016-09-06 11:06:48
+System.InvalidOperationException: ConnectionString 属性尚未初始化。
+   在 System.Data.SqlClient.SqlConnection.PermissionDemand()
+   在 System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 74
+   在 Agile.Data.Helpers.QueryHelper.GetPagedList[T](PagedQueryOptions options) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\QueryHelper.cs:行号 187
+   在 food.uimoe.com.Controllers.HomeController.GetIndex(Nullable`1 page, Nullable`1 pagesize) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\food.uimoe.com\Controllers\HomeController.cs:行号 33
+
+2016-09-06 11:14:03
+System.InvalidOperationException: ConnectionString 属性尚未初始化。
+   在 System.Data.SqlClient.SqlConnection.PermissionDemand()
+   在 System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteNonQuery(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 31
+   在 Agile.Data.Helpers.WriteHelper.Save[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\WriteHelper.cs:行号 73
+   在 food.uimoe.com.Controllers.HomeController.PostImg(String filename, String postedBy, String weiboUrl, String labels) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\food.uimoe.com\Controllers\HomeController.cs:行号 55
+
+2016-09-06 11:14:09
+System.InvalidOperationException: ConnectionString 属性尚未初始化。
+   在 System.Data.SqlClient.SqlConnection.PermissionDemand()
+   在 System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteNonQuery(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 31
+   在 Agile.Data.Helpers.WriteHelper.Save[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\WriteHelper.cs:行号 73
+   在 food.uimoe.com.Controllers.HomeController.PostImg(String filename, String postedBy, String weiboUrl, String labels) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\food.uimoe.com\Controllers\HomeController.cs:行号 55
+
+2016-09-06 11:21:42
+System.InvalidOperationException: ConnectionString 属性尚未初始化。
+   在 System.Data.SqlClient.SqlConnection.PermissionDemand()
+   在 System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteNonQuery(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 31
+   在 Agile.Data.Helpers.WriteHelper.Save[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\WriteHelper.cs:行号 73
+   在 food.uimoe.com.Controllers.HomeController.PostImg(String filename, String postedBy, String weiboUrl, String labels) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\food.uimoe.com\Controllers\HomeController.cs:行号 55
+
+2016-09-06 11:21:45
+System.InvalidOperationException: ConnectionString 属性尚未初始化。
+   在 System.Data.SqlClient.SqlConnection.PermissionDemand()
+   在 System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteNonQuery(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 31
+   在 Agile.Data.Helpers.WriteHelper.Save[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\WriteHelper.cs:行号 73
+   在 food.uimoe.com.Controllers.HomeController.PostImg(String filename, String postedBy, String weiboUrl, String labels) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\food.uimoe.com\Controllers\HomeController.cs:行号 55
+
+2016-09-06 11:22:21
+System.InvalidOperationException: ConnectionString 属性尚未初始化。
+   在 System.Data.SqlClient.SqlConnection.PermissionDemand()
+   在 System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteNonQuery(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 31
+   在 Agile.Data.Helpers.WriteHelper.Save[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\WriteHelper.cs:行号 73
+   在 food.uimoe.com.Controllers.HomeController.PostImg(String filename, String postedBy, String weiboUrl, String labels) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\food.uimoe.com\Controllers\HomeController.cs:行号 55
+
+2016-09-06 11:23:22
+System.InvalidOperationException: ConnectionString 属性尚未初始化。
+   在 System.Data.SqlClient.SqlConnection.PermissionDemand()
+   在 System.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteNonQuery(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 31
+   在 Agile.Data.Helpers.WriteHelper.Save[T](T obj) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\WriteHelper.cs:行号 73
+   在 food.uimoe.com.Controllers.HomeController.PostImg(String filename, String postedBy, String weiboUrl, String labels) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\food.uimoe.com\Controllers\HomeController.cs:行号 55
+

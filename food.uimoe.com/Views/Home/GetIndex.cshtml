@@ -1,0 +1,66 @@
+﻿@model Agile.Dtos.PagedListDto<Agile.Models.Fod_collection>
+@{
+    Layout = null;
+}
+
+
+
+@if (Model.RecordList != null && Model.RecordList.Count > 0)
+{
+    <ul class="list-group">
+        @foreach (var item in Model.RecordList)
+        {
+            <li class="list-group-item">
+                <img style="width:100%;" src="@Url.Content("~/Content/Images/Thumb/" + item.ImageUrl)" />
+                <div>
+                    @if (string.IsNullOrEmpty(item.Postedby))
+                    {
+                        <span>匿名</span>
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(item.WeiboUrl))
+                        {
+                            <span>@item.Postedby</span>
+                        }
+                        else
+                        {
+                            <a href="@item.WeiboUrl" target="_blank">@item.Postedby</a>
+                        }
+                    }
+                </div>
+                <div>@item.Labels</div>
+                <div>@item.CreatedAt.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")</div>
+            </li>
+        }
+    </ul>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <div>
+                <div style="float:left;">
+                    第&nbsp;<span>@Model.Page</span>/<span>@Model.PageCount</span>&nbsp;页&nbsp;
+                    共&nbsp;<span>@Model.RecordCount</span>&nbsp;条记录
+                </div>
+                <div style="float:right;">
+                    @if (Model.Page > 1)
+                    {
+                        <a href="javascript:void(0);" onclick="loaddata(null,'@(Model.Page-1)','@Model.PageSize');">上一页</a>
+                    }
+
+                    @if (Model.Page < Model.PageCount)
+                    {
+                        <a href="javascript:void(0);" onclick="loaddata(null,'@(Model.Page+1)','@Model.PageSize');">下一页</a>
+                    }
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </li>
+    </ul>
+}
+else
+{
+    <ul class="list-group">
+        <li class="list-group-item">未找到相关数据</li>
+    </ul>
+}

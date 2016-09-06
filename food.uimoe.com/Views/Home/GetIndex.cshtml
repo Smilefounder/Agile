@@ -3,8 +3,6 @@
     Layout = null;
 }
 
-
-
 @if (Model.RecordList != null && Model.RecordList.Count > 0)
 {
     <ul class="list-group">
@@ -13,24 +11,27 @@
             <li class="list-group-item">
                 <img style="width:100%;" src="@Url.Content("~/Content/Images/Thumb/" + item.ImageUrl)" />
                 <div>
-                    @if (string.IsNullOrEmpty(item.Postedby))
-                    {
-                        <span>匿名</span>
-                    }
-                    else
-                    {
-                        if (string.IsNullOrEmpty(item.WeiboUrl))
+                    <div><span>@item.Wt</span>x<span>@item.Ht</span></div>
+                    <div>
+                        @if (string.IsNullOrEmpty(item.Postedby))
                         {
-                            <span>@item.Postedby</span>
+                            <span>匿名</span>
                         }
                         else
                         {
-                            <a href="@item.WeiboUrl" target="_blank">@item.Postedby</a>
+                            if (string.IsNullOrEmpty(item.WeiboUrl))
+                            {
+                                <span>@item.Postedby</span>
+                            }
+                            else
+                            {
+                                <a href="@item.WeiboUrl" target="_blank">@item.Postedby</a>
+                            }
                         }
-                    }
+                    </div>
+                    <div>@item.Labels</div>
+                    <div>@item.CreatedAt.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")</div>
                 </div>
-                <div>@item.Labels</div>
-                <div>@item.CreatedAt.GetValueOrDefault().ToString("yyyy-MM-dd HH:mm:ss")</div>
             </li>
         }
     </ul>

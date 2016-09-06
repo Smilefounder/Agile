@@ -6,51 +6,51 @@
 
 @section styles
 {
-<style type="text/css">
-    .form {
-        margin: 10px;
-    }
-
-    .form-control {
-        margin: 10px;
-    }
-
-    .button-reverse {
-        background-color: #ff8080;
-        border: 0;
-        border-radius: 3px;
-        color: #fff;
-        padding: 5px;
-    }
-
-    .button, .text {
-        background-color: #fff0f0;
-        border: 1px solid #ff8080;
-        border-radius: 3px;
-        color: #ff8080;
-        padding: 5px;
-    }
-
-        .button:hover, .button-reverse:hover {
-            cursor: pointer;
-            opacity: 0.8;
+    <style type="text/css">
+        .form {
+            margin: 10px;
         }
 
-        .text:focus {
-            box-shadow: 0 0 2px #ff8080;
+        .form-control {
+            margin: 10px;
         }
 
-    .label {
-        display: none;
-        position: fixed;
-        z-index: 10010;
-        color: #d5d5d5;
-        text-shadow: 0 0 2px #000;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        font-weight: bold;
-        writing-mode: vertical-lr;
-    }
-</style>
+        .button-reverse {
+            background-color: #ff8080;
+            border: 0;
+            border-radius: 3px;
+            color: #fff;
+            padding: 5px;
+        }
+
+        .button, .text {
+            background-color: #fff0f0;
+            border: 1px solid #ff8080;
+            border-radius: 3px;
+            color: #ff8080;
+            padding: 5px;
+        }
+
+            .button:hover, .button-reverse:hover {
+                cursor: pointer;
+                opacity: 0.8;
+            }
+
+            .text:focus {
+                box-shadow: 0 0 2px #ff8080;
+            }
+
+        .label {
+            display: none;
+            position: fixed;
+            z-index: 10010;
+            color: #d5d5d5;
+            text-shadow: 0 0 2px #000;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-weight: bold;
+            writing-mode: vertical-lr;
+        }
+    </style>
 }
 
 <div>
@@ -91,7 +91,8 @@
                 return;
             }
 
-            var left = 385;
+            var offsetx = 0.5 * (document.documentElement.clientWidth - 1000);
+            var left = 238 + offsetx;
             var top = 495 - 4 * text1.value.length;
 
             var label1 = document.getElementById("label1");
@@ -110,4 +111,3 @@
         view.showText(button1);
     }
 </script>
-

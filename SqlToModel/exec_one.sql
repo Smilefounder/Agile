@@ -16,7 +16,7 @@ SET @SB+= '    public class '+@TName+CHAR(10);
 SET @SB+= '    {'+CHAR(10);
 WHILE @IDX2<=@CNT2
 BEGIN
-SELECT TOP 1 @NAME=Q.name,@XTYPE=(CASE Q.xtype WHEN 56 THEN 'int' WHEN 61 THEN 'DateTime' ELSE 'string' END),@LENGTH=CAST(Q.[length] AS NVARCHAR(10)),@COLLATION=Q.collation FROM (SELECT ROW_NUMBER() OVER(ORDER BY colorder) AS RW,name,xtype,[length],collation FROM syscolumns where id=OBJECT_ID(@TName)) AS Q WHERE Q.RW=@IDX2;
+SELECT TOP 1 @NAME=Q.name,@XTYPE=(CASE Q.xtype WHEN 48 THEN 'byte' WHEN 56 THEN 'int' WHEN 61 THEN 'DateTime' WHEN 104 THEN 'bool' WHEN 106 THEN 'decimal' WHEN 127 THEN 'long' ELSE 'string' END),@LENGTH=CAST(Q.[length] AS NVARCHAR(10)),@COLLATION=Q.collation FROM (SELECT ROW_NUMBER() OVER(ORDER BY colorder) AS RW,name,xtype,[length],collation FROM syscolumns where id=OBJECT_ID(@TName)) AS Q WHERE Q.RW=@IDX2;
 SET @SB+= '        public '+@XTYPE+' '+@NAME+' {get;set;}'+CHAR(10)+CHAR(10);
 SET @IDX2+=1;
 END

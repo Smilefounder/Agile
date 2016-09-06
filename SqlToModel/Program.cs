@@ -128,17 +128,19 @@ namespace SqlToModel
 
     public enum xtypeenum
     {
-        invarchar = 231,
+        ibyte = 48,
 
         iint = 56,
 
         idatetime = 61,
 
+        ibool = 104,
+
         idecimal = 106,
 
         ilong = 127,
 
-        ibool = 104
+        invarchar = 231
     }
 
     public class tcolumn
@@ -177,6 +179,11 @@ namespace SqlToModel
                     case (int)xtypeenum.ibool:
                         {
                             str = "bool";
+                        }
+                        break;
+                    case (int)xtypeenum.ibyte:
+                        {
+                            str = "byte";
                         }
                         break;
                 }

@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "上传文件";
+}
+
+<div style="width:400px;margin:0 auto;">
+    <div>
+        <h3><span class="glyphicon glyphicon-plus">上传文件</span></h3>
+        <h4>上传你的文件</h4>
+    </div>
+    <div class="newline"></div>
+    <div class="splitter-d"></div>
+    <div class="newline"></div>
+    <div class="form-group">
+        <input id="imgfileinput" onchange="filechanged(this)" class="form-control" type="file" />
+    </div>
+    <button class="btn btn-success" onclick="trytopost()">上传</button>
+</div>
+
+<script type="text/javascript">
+    function trytopost() {
+        var file1 = document.getElementById("imgfileinput");
+        if (file1.files.length === 0) {
+            alert("请选择要上传的文件");
+            return;
+        }
+
+        $("#usertabmaskdiv1").show();
+        $("#loadingdiv").html('<span class="loading"></span> 正在上传，稍等哦').show();
+
+        var url = '@Url.Content("~/Home/UpdateFile")';
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = null;
+                try {
+                    response = JSON.parse(xhr.responseText);
+                }
+                catch (e) {
+
+                }
+
+                if (response) {
+                    $("#usertabmaskdiv1").hide();
+                    $("#loadingdiv").html('').hide();
+                    if (response.error != 0) {
+                        alert(response.message);
+                    }
+                    else {
+                        //将上传后的文件名放到隐藏域
+                        $("#imgfile").val(response.data);
+                        alert("上传成功！");
+                    }
+                }
+                else {
+                    $("#usertabmaskdiv1").hide();
+                    $("#loadingdiv").html('').hide();
+                    alert("操作失败，请稍后重试");
+                }
+            }
+        }
+
+        var data = new FormData();
+        data.append("file1", file1.files[0]);
+        xhr.send(data);
+    }
+
+    function filechanged(sender) {
+        if (sender.files.length === 0) {
+            alert("请选择文件");
+            return;
+        }
+
+        var uploadexts = '.txt,.html,.jpg,.jpeg,.png,.gif,.rar';
+        var filename = sender.value;
+        var fileext = filename.substr(filename.lastIndexOf(".")).toLowerCase();
+        var idx = uploadexts.indexOf(fileext);
+        if (idx < 0) {
+            alert("不支持的格式，只支持" + uploadexts + "，当前文件格式：" + fileext);
+            return;
+        }
+    };
+</script>

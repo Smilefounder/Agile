@@ -10,15 +10,18 @@
     <div class="newline"></div>
     <div class="splitter-d"></div>
     <div class="newline"></div>
+    <form id="form1">
+        <input id="filehd1" name="filehd1" type="hidden" />
+    </form>
     <div class="form-group">
-        <input id="imgfileinput" onchange="filechanged(this)" class="form-control" type="file" />
+        <input id="fileinput1" onchange="filechanged(this)" class="form-control" type="file" />
     </div>
     <button class="btn btn-success" onclick="trytopost()">上传</button>
 </div>
 
 <script type="text/javascript">
     function trytopost() {
-        var file1 = document.getElementById("imgfileinput");
+        var file1 = document.getElementById("fileinput1");
         if (file1.files.length === 0) {
             alert("请选择要上传的文件");
             return;
@@ -48,7 +51,7 @@
                     }
                     else {
                         //将上传后的文件名放到隐藏域
-                        $("#imgfile").val(response.data);
+                        $("#filehd1").val(response.data);
                         alert("上传成功！");
                     }
                 }

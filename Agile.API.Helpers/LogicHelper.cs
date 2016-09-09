@@ -3493,7 +3493,7 @@ namespace Agile.API.Helpers
         /// <returns></returns>
         public static List<GroupItemDto> H10093(int? take)
         {
-            var sqlstr = "SELECT TOP(@Take) ChnText AS IName,(CAST(COUNT(1) AS DECIMAL(18,2))) AS ICount FROM Can_query GROUP BY ChnText;";
+            var sqlstr = "SELECT * FROM (SELECT TOP(@Take) ChnText AS IName,(CAST(COUNT(1) AS DECIMAL(18,2))) AS ICount FROM Can_query GROUP BY ChnText) AS Q ORDER BY ICount DESC;";
             var sp1 = new SqlParameter("@Take", SqlDbType.Int, 11);
             sp1.Value = take.GetValueOrDefault(10);
 

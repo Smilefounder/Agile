@@ -108,6 +108,9 @@ namespace mp.uimoe.com.Controllers
                 input = textrequest.Content
             });
 
+            //保存查询记录
+            ThreadPool.QueueUserWorkItem(new WaitCallback(RecordQueryUseThread), textrequest.Content);
+
             var textresponse = textresponsebase as H10014Response;
             if (textresponse == null ||
                 textresponse.groups == null ||
@@ -148,6 +151,24 @@ namespace mp.uimoe.com.Controllers
             }
             catch
             { }
+        }
+
+        public void RecordQueryUseThread(object state)
+        {
+            var chnText = state as string;
+            if (string.IsNullOrEmpty(chnText))
+            {
+                return;
+            }
+
+            try
+            {
+                LogicHelper.H10091(chnText);
+            }
+            catch
+            {
+
+            }
         }
     }
 }

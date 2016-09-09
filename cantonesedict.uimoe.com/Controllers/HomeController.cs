@@ -165,6 +165,9 @@ namespace cantonesedict.uimoe.com.Controllers
                 });
             }
 
+            //保存查询记录
+            ThreadPool.QueueUserWorkItem(new WaitCallback(RecordQueryUseThread), input);
+
             return Json(response);
         }
 

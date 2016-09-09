@@ -90,6 +90,9 @@ namespace cantonesedict.uimoe.com.Controllers
                 });
             }
 
+            //保存查询记录
+            ThreadPool.QueueUserWorkItem(new WaitCallback(RecordQueryUseThread), input);
+
             return View(vm);
         }
 
@@ -380,36 +383,25 @@ namespace cantonesedict.uimoe.com.Controllers
             return View(response);
         }
 
-        private static List<H10037ResponseListItem> _sceneList;
-
-        private static List<H10037ResponseListItem> SceneList
-        {
-            get
-            {
-                if (_sceneList == null)
-                {
-                    try
-                    {
-                        var responsebase = LogicHelper.H10037(WebHelper.ParseFromRequest<H10037Request>());
-                        var response = responsebase as H10037Response;
-                        if (response != null && response.error == 0)
-                        {
-                            _sceneList = response.data;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        LogHelper.Write(ex.ToString());
-                    }
-                }
-
-                return _sceneList = _sceneList != null ? _sceneList : new List<H10037ResponseListItem>();
-            }
-        }
-
         public ActionResult Scene()
         {
-            return View(SceneList);
+            var vm = new List<H10037ResponseListItem>();
+
+            try
+            {
+                var responsebase = LogicHelper.H10037(WebHelper.ParseFromRequest<H10037Request>());
+                var response = responsebase as H10037Response;
+                if (response != null && response.error == 0)
+                {
+                    vm = response.data;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
         }
 
         public ActionResult SceneVocabulary()
@@ -538,6 +530,24 @@ namespace cantonesedict.uimoe.com.Controllers
             try
             {
                 LogicHelper.H10040(request);
+            }
+            catch
+            {
+
+            }
+        }
+
+        public void RecordQueryUseThread(object state)
+        {
+            var chnText = state as string;
+            if (string.IsNullOrEmpty(chnText))
+            {
+                return;
+            }
+
+            try
+            {
+                LogicHelper.H10091(chnText);
             }
             catch
             {
@@ -870,6 +880,38 @@ namespace cantonesedict.uimoe.com.Controllers
             }
 
             return Json(new { error = 1, message = "操作失败，请稍后再试" });
+        }
+
+        public ActionResult GetHot()
+        {
+            var vm = new List<GroupItemDto>();
+
+            try
+            {
+                vm = LogicHelper.H10093(10);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
+        }
+
+        public ActionResult GetNew()
+        {
+            var vm = new List<H10018ResponseListItem>();
+
+            try
+            {
+                vm = LogicHelper.H10092(10);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
         }
     }
 }

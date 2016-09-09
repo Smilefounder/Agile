@@ -330,6 +330,10 @@
     <Content Include="Views\Reimu\UpdateCategoryVocabulary.cshtml" />
     <Content Include="Views\Reimu\CategoryVocabulary.cshtml" />
     <Content Include="Views\Reimu\CategoryVocabulary_pl.cshtml" />
+    <Content Include="Views\Home\GetHot.cshtml" />
+    <Content Include="Views\Home\GetNew.cshtml" />
+    <Content Include="Views\Reimu\Query.cshtml" />
+    <Content Include="Views\Reimu\Query_pl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

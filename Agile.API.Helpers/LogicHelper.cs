@@ -3451,5 +3451,111 @@ namespace Agile.API.Helpers
             var rows = DataHelper.ExecuteNonQuery(sqlstr);
             return rows;
         }
+
+        /// <summary>
+        /// 保存查询记录
+        /// </summary>
+        /// <param name="chnText"></param>
+        /// <returns></returns>
+        public static int H10091(string chnText)
+        {
+            if (string.IsNullOrEmpty(chnText))
+            {
+                return -1;
+            }
+
+            return WriteHelper.Save<Can_query>(new Can_query
+            {
+                ChnText = chnText,
+                CreatedAt = DateTime.Now
+            });
+        }
+
+        /// <summary>
+        /// 查询最近添加
+        /// </summary>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        public static List<H10018ResponseListItem> H10092(int? take)
+        {
+            var sqlstr = "SELECT TOP(@Take) CanPronounce,CanText,CanVoice,ChnText FROM CAN_vocabulary ORDER BY Id DESC;";
+            var sp1 = new SqlParameter("@Take", SqlDbType.Int, 11);
+            sp1.Value = take.GetValueOrDefault(10);
+
+            var list = DataHelper.ExecuteList<H10018ResponseListItem>(sqlstr, sp1);
+            return list;
+        }
+
+        /// <summary>
+        /// 查询查询最多
+        /// </summary>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        public static List<GroupItemDto> H10093(int? take)
+        {
+            var sqlstr = "SELECT TOP(@Take) ChnText AS IName,(CAST(COUNT(1) AS DECIMAL(18,2))) AS ICount FROM Can_query GROUP BY ChnText;";
+            var sp1 = new SqlParameter("@Take", SqlDbType.Int, 11);
+            sp1.Value = take.GetValueOrDefault(10);
+
+            var list = DataHelper.ExecuteList<GroupItemDto>(sqlstr, sp1);
+            return list;
+        }
+
+        /// <summary>
+        /// 粤语词典 - 删除查询记录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int H10094(int id)
+        {
+            return WriteHelper.Delete<Can_query>(new Can_query
+            {
+                Id = id
+            });
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取用户查询记录
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public static H10080Response H10095(H10080Request request)
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat(" SELECT *,ROW_NUMBER() OVER(ORDER BY Id DESC) AS RW FROM Can_query WHERE 1=1");
+
+            if (!string.IsNullOrEmpty(request.chntext))
+            {
+                sb.AppendFormat(" AND ChnText LIKE N'%{0}%'", request.chntext);
+            }
+
+            if (request.createdat.HasValue)
+            {
+                sb.AppendFormat(" AND DATEDIFF(DAY,CreatedAt,'{0}')=0", request.createdat.Value.ToString("yyyy-MM-dd"));
+            }
+
+            var sqlstr = sb.ToString();
+            var sqlstr2 = string.Format("SELECT COUNT(1) FROM ({0}) AS Q", sqlstr);
+            var obj = DataHelper.ExecuteScalar(sqlstr2);
+            var count = Convert.ToInt32(obj);
+
+            var page = request.page.GetValueOrDefault(1);
+            var pagesize = request.pagesize.GetValueOrDefault(10);
+            var begin = pagesize * (page - 1);
+            var end = pagesize * page;
+            var sqlstr3 = string.Format("SELECT * FROM ({0}) AS Q WHERE Q.RW>{1} AND Q.RW<={2}", sqlstr, begin, end);
+            var pagedlist = DataHelper.ExecuteList<H10080ResponseListItem>(sqlstr3);
+            return new H10080Response
+            {
+                error = 0,
+                data = new PagedListDto<H10080ResponseListItem>
+                {
+                    Page = page,
+                    PageSize = pagesize,
+                    RecordCount = count,
+                    RecordList = pagedlist ?? new List<H10080ResponseListItem>()
+                }
+            };
+        }
     }
 }

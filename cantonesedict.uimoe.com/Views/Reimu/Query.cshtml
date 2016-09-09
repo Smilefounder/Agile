@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "用户查询记录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="padding:10px;color:#22b14c;">
+    <div style="color:#ff0080;">查询条件</div>
+    <div style="height:2px;width:100%;border-bottom:1px dotted #ff0080;"></div>
+    <div class="newline"></div>
+    <form id="form1">
+        <table class="table2">
+            <tr>
+                <th style="width:20%;">字词：</th>
+                <td style="width:30%;">
+                    <input id="chntext" name="chntext" type="text" class="input" />
+                </td>
+                <th style="width:20%;">时间：</th>
+                <td>
+                    <input id="createdat" name="createdat" type="text" class="input" />
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div class="newline"></div>
+    <div>
+        <button class="button" onclick="loaddata(this);">查询</button>
+    </div>
+    <div class="newline"></div>
+    <div style="color:#ff0080;">查询结果</div>
+    <div style="height:2px;width:100%;border-bottom:1px dotted #ff0080;"></div>
+    <div id="tablediv1"></div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        loaddata();
+    })
+
+    function loaddata(sender, page, pagesize) {
+        if (!page) {
+            page = 1;
+        }
+
+        if (!pagesize) {
+            pagesize = 10;
+        }
+
+        var datastr = $("#form1").serialize();
+        if (datastr) {
+            datastr += '&page=' + page + '&pagesize=' + pagesize;
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Content("~/Reimu/Query_pl")',
+            data: datastr,
+            complete: function (xhr, status) {
+                if (status != "success") {
+                    return;
+                }
+
+                $("#tablediv1").html(xhr.responseText);
+            }
+        });
+    }
+</script>

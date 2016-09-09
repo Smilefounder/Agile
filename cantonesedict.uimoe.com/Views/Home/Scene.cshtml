@@ -5,8 +5,22 @@
 
 <div class="weui_tab_bd">
     <div class="weui_cells weui_cells_access">
+        <a href="@Url.Content("~/Home/GetHot")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>查询最多</p>
+            </div>
+            <div class="weui_cell_ft">+</div>
+        </a>
+        <a href="@Url.Content("~/Home/GetNew")" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>最近添加</p>
+            </div>
+            <div class="weui_cell_ft">+</div>
+        </a>
+    </div>
+    <div class="weui_cells weui_cells_access">
         @if (Model == null || Model.Count() == 0)
-        {
+            {
             <a href="javascript:void(0);" class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p>未找到相关记录</p>
@@ -20,12 +34,10 @@
             foreach (var item in Model)
             {
                 <a href="@Url.Content("~/Home/SceneVocabulary?sceneid=" + item.id)" class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                <p>@item.name</p>
-                </div>
-                <div class="weui_cell_ft">
-                    @item.total
-                </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>@item.name</p>
+                    </div>
+                    <div class="weui_cell_ft">@item.total</div>
                 </a>
             }
         }

@@ -790,5 +790,62 @@ namespace cantonesedict.uimoe.com.Controllers
 
             return Json(response);
         }
+
+        public ActionResult Query()
+        {
+            return View();
+        }
+
+        public ActionResult Query_pl()
+        {
+            var vm = new H10080Response
+            {
+                error = 0,
+                data = new PagedListDto<H10080ResponseListItem>()
+            };
+
+            try
+            {
+                var request = WebHelper.ParseFromRequest<H10080Request>();
+                vm = LogicHelper.H10095(request);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteQuery()
+        {
+            var response = new HBaseResponse
+            {
+                error = 1,
+                message = "操作失败，请稍后再试"
+            };
+
+            var id = 0;
+            int.TryParse(Request.Params["id"], out id);
+
+            try
+            {
+                var rows = LogicHelper.H10094(id);
+                if (rows > 0)
+                {
+                    response = new HBaseResponse
+                    {
+                        error = 0
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(response);
+        }
     }
 }

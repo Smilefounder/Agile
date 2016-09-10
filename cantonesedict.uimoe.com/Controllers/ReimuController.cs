@@ -34,9 +34,15 @@ namespace cantonesedict.uimoe.com.Controllers
                 var list = LogicHelper.H10067();
                 foreach (var item in list)
                 {
-                    if (item.IName == "feedbackcount")
+                    if (item.IName == "todayquerycount")
                     {
-                        vm.feedbackcount = Convert.ToInt32(item.ICount);
+                        vm.todayquerycount = Convert.ToInt32(item.ICount);
+                        continue;
+                    }
+
+                    if (item.IName == "querycount")
+                    {
+                        vm.querycount = Convert.ToInt32(item.ICount);
                         continue;
                     }
 
@@ -61,12 +67,6 @@ namespace cantonesedict.uimoe.com.Controllers
                     if (item.IName == "sentencecount")
                     {
                         vm.sentencecount = Convert.ToInt32(item.ICount);
-                        continue;
-                    }
-
-                    if (item.IName == "usercount")
-                    {
-                        vm.usercount = Convert.ToInt32(item.ICount);
                         continue;
                     }
                 }

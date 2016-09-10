@@ -2835,9 +2835,9 @@ namespace Agile.API.Helpers
             sb.AppendFormat(" UNION\r\n");
             sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'sentencecount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)>3\r\n");
             sb.AppendFormat(" UNION\r\n");
-            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'usercount' AS IName FROM T_user WHERE Domain={0}\r\n", (int)DomainEnum.cantonesedict);
+            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'querycount' AS IName FROM Can_query\r\n");
             sb.AppendFormat(" UNION\r\n");
-            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'feedbackcount' AS IName FROM CAN_feedback WHERE DATEDIFF(DAY,GETDATE(),CreatedAt)=0\r\n");
+            sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'todayquerycount' AS IName FROM Can_query WHERE DATEDIFF(DAY,GETDATE(),CreatedAt)=0\r\n");
             sb.AppendFormat(" UNION\r\n");
             sb.AppendFormat(" SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'noresultcount' AS IName FROM CAN_noresult\r\n");
 

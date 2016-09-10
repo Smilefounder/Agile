@@ -15,9 +15,9 @@ namespace cantonesedict.uimoe.com.ViewModels.Reimu
 
         public int sentencecount { get; set; }
 
-        public int usercount { get; set; }
+        public int querycount { get; set; }
 
-        public int feedbackcount { get; set; }
+        public int todayquerycount { get; set; }
 
         public int noresultcount { get; set; }
     }

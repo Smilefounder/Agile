@@ -182,7 +182,7 @@ namespace cantonesedict.uimoe.com.Controllers
 
             try
             {
-                var chntext2 = WebHelper.UrlEncode(chntext);
+                var chntext2 = Server.UrlEncode(chntext);
                 var str = CantoneseDictionary.GetFromWeb(chntext2);
                 if (!string.IsNullOrEmpty(str))
                 {

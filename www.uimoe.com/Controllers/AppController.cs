@@ -2,7 +2,9 @@
 using Agile.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using www.uimoe.com.Helpers;
 
 namespace www.uimoe.com.Controllers
 {
@@ -196,6 +198,84 @@ namespace www.uimoe.com.Controllers
         public ActionResult IOSClient()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult ClipImage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ClipImage(int? rows, int? cols, string imgfile)
+        {
+            var rows2 = rows.GetValueOrDefault();
+            if (rows2 < 1 || rows2 > 9)
+            {
+                return Json(new { error = 1, message = "rows应该是1~9之间的整数" });
+            }
+
+            var cols2 = cols.GetValueOrDefault();
+            if (cols2 < 1 || cols2 > 9)
+            {
+                return Json(new { error = 1, message = "cols应该是1~9之间的整数" });
+            }
+
+            try
+            {
+                var folder = Server.MapPath("~/Uploads");
+                var filename = System.IO.Path.Combine(new string[] { folder, imgfile });
+                ImageHelper.Clip(filename, rows2, cols2);
+                return Json(new { error = 0, message = "裁剪完成" });
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(new { error = 1, message = "操作失败，请稍后再试" });
+        }
+
+        [HttpPost]
+        public ActionResult UpdateFile()
+        {
+            var file1 = Request.Files["file1"];
+            if (file1 == null)
+            {
+                return Json(new { error = 1, message = "未接收到文件" });
+            }
+
+            var extlist = new string[] { ".jpg", ".png" };
+            var ext = System.IO.Path.GetExtension(file1.FileName);
+            if (!extlist.Contains(ext.ToLower()))
+            {
+                return Json(new { error = 1, message = String.Format("不支持的文件格式：{0},请上传以下格式的文件：{1}", ext, String.Join(",", extlist)) });
+            }
+
+            var kbsize = 1.0 * file1.ContentLength / 1024;
+            if (kbsize > 320)
+            {
+                return Json(new { error = 1, message = String.Format("最多只能上传320KB大小的图片,当前文件大小：{0}", kbsize) });
+            }
+
+            var folder = Server.MapPath("~/Uploads");
+            if (!System.IO.Directory.Exists(folder))
+            {
+                try
+                {
+                    System.IO.Directory.CreateDirectory(folder);
+                }
+                catch
+                {
+                    return Json(new { error = 1, message = "保存文件失败了" });
+                }
+            }
+
+            var filename = String.Format("{0}{1}", Guid.NewGuid().ToString(), ext);
+            var fullname = System.IO.Path.Combine(new string[] { folder, filename });
+
+            file1.SaveAs(fullname);
+            return Json(new { error = 0, data = filename });
         }
     }
 }

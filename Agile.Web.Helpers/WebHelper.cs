@@ -65,11 +65,6 @@ namespace Agile.Web.Helpers
             return entity;
         }
 
-        public static string UrlEncode(string input)
-        {
-            return HttpUtility.UrlEncode(input, Encoding.GetEncoding("GBK"));
-        }
-
         public static string ToRequestStr<T>(T entity)
             where T : class
         {

@@ -732,7 +732,7 @@ namespace Agile.API.Helpers
                 {
                     canpronounce = o.canpronounce,
                     cantext = o.cantext,
-                    canvoice = o.canvoice,
+                    canvoice = o.canvoice
                 }).ToList();
 
                 foreach (var i in items)
@@ -3556,6 +3556,40 @@ namespace Agile.API.Helpers
                     RecordList = pagedlist ?? new List<H10080ResponseListItem>()
                 }
             };
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取所有词汇
+        /// </summary>
+        /// <returns></returns>
+        public static List<KeyValueDto> H10096()
+        {
+            var sqlstr = "SELECT CAST(Id AS NVARCHAR(11)) AS IKey ,CanPronounce AS IValue FROM Can_vocabulary WHERE LEN(ChnText)=1;";
+            var recordlist = DataHelper.ExecuteList<KeyValueDto>(sqlstr);
+            return recordlist;
+        }
+
+        /// <summary>
+        /// 粤语词典 - 更新mediaid
+        /// </summary>
+        /// <returns></returns>
+        public static bool H10097(int id, string mediaId)
+        {
+            var sqlstr = "UPDATE Can_vocabulary SET MediaId=@MediaId WHERE Id=@Id;";
+            var rows = DataHelper.ExecuteNonQuery(sqlstr, new { MediaId = mediaId, Id = id });
+            return rows > 0;
+        }
+
+        /// <summary>
+        /// 粤语词典 - 获取单个词汇
+        /// </summary>
+        /// <param name="chntext"></param>
+        /// <returns></returns>
+        public static List<KeyValueDto> H10098(string chntext)
+        {
+            var sqlstr = "SELECT CAST(Id AS NVARCHAR(11)) AS IKey ,CanPronounce AS IValue FROM Can_vocabulary WHERE ChnText=@ChnText;";
+            var recordlist = DataHelper.ExecuteList<KeyValueDto>(sqlstr, new { ChnText = chntext });
+            return recordlist;
         }
     }
 }

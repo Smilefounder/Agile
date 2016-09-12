@@ -11,11 +11,20 @@ using System.Threading;
 using System.Web.Mvc;
 using Agile.Web.Helpers;
 using System.Collections.Generic;
+using Agile.Dtos;
 
 namespace mp.uimoe.com.Controllers
 {
     public class HomeController : Controller
     {
+        private const string mpName = "CantoneseDictionary";
+
+        private const string mpId = "gh_6d1dc1e90f30";
+
+        private const string appId = "wx1e67f96f78645efc";
+
+        private const string appSecret = "cc1c60cbfb37609e32fb136b37b34a0c";
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -80,7 +89,21 @@ namespace mp.uimoe.com.Controllers
 
                 if (msgType == "text")
                 {
-                    HandleTextRequest(xml, response);
+                    var vr = new MP_VoiceResponse
+                    {
+                        FromUserName = requestbase.ToUserName,
+                        ToUserName = requestbase.FromUserName,
+                        MsgType = "voice",
+                        CreateTime = timestamp > int.MaxValue ? int.MaxValue : Convert.ToInt32(timestamp)
+                    };
+
+                    HandleTextRequest(xml, response, vr);
+
+                    if (!string.IsNullOrEmpty(vr.MediaId))
+                    {
+                        return Content(WeixinHelper.BuildContentResponse(vr));
+                    }
+
                     return Content(WeixinHelper.BuildContentResponse(response));
                 }
             }
@@ -92,7 +115,7 @@ namespace mp.uimoe.com.Controllers
             return Content(WeixinHelper.BuildContentResponse(response));
         }
 
-        private void HandleTextRequest(string xml, MP_TextResponse response)
+        private void HandleTextRequest(string xml, MP_TextResponse response, MP_VoiceResponse vresponse)
         {
             response.Content = "暂不支持的输入";
 
@@ -101,6 +124,31 @@ namespace mp.uimoe.com.Controllers
             if (textrequest == null)
             {
                 return;
+            }
+
+            var isvoice = false;
+            if (textrequest.Content.StartsWith("#") && textrequest.Content.Length == 2)
+            {
+                isvoice = true;
+                textrequest.Content = textrequest.Content.Substring(1);
+            }
+
+            if (textrequest.Content.StartsWith("@"))
+            {
+                textrequest.Content = textrequest.Content.Substring(1);
+                if (textrequest.Content.ToLower() == "uploadvoice")
+                {
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(UploadVoiceUseThread), null);
+                    response.Content = "已启动更新全部发音素材任务";
+                    return;
+                }
+
+                if (textrequest.Content.Length == 1)
+                {
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(UploadSingleVoiceUseThread), textrequest.Content);
+                    response.Content = "已启动更新单个发音素材任务";
+                    return;
+                }
             }
 
             var textresponsebase = LogicHelper.H10014(new H10014Request
@@ -125,6 +173,36 @@ namespace mp.uimoe.com.Controllers
                 return;
             }
 
+            if (textresponse.noresult != null && textresponse.noresult.Any())
+            {
+                ThreadPool.QueueUserWorkItem(new WaitCallback(SaveNoResultUseThread), textresponse.noresult);
+            }
+
+            if (isvoice)
+            {
+                if (textresponse.groups != null &&
+                    textresponse.groups.Count > 0 &&
+                    textresponse.groups[0].items != null &&
+                    textresponse.groups[0].items.Count > 0)
+                {
+                    response.Content = "未找到发音文件";
+
+                    var canpronounce = textresponse.groups[0].items[0].canpronounce;
+                    if (!string.IsNullOrEmpty(canpronounce))
+                    {
+                        var folder = Server.MapPath("~/Content/voice");
+                        var filepath = System.IO.Path.Combine(new string[] { folder, canpronounce.Trim() + ".wav" });
+                        var mediaid = WeixinHelper.UploadTempFile(filepath, UploadFileTypeEnum.voice, appId, appSecret);
+                        if (!string.IsNullOrEmpty(mediaid))
+                        {
+                            vresponse.MediaId = mediaid;
+                        }
+                    }
+
+                    return;
+                }
+            }
+
             foreach (var g in textresponse.groups)
             {
                 var plist = g.items.Select(o => o.canpronounce);
@@ -135,11 +213,6 @@ namespace mp.uimoe.com.Controllers
             sb.AppendFormat("--------------------\r\n");
             sb.AppendFormat("<a href='http://cantonesedict.uimoe.com/Home/Index?input={0}'>点这里查看发音</a>\r\n", Server.UrlEncode(textrequest.Content));
             response.Content = sb.ToString();
-
-            if (textresponse.noresult != null && textresponse.noresult.Any())
-            {
-                ThreadPool.QueueUserWorkItem(new WaitCallback(SaveNoResultUseThread), textresponse.noresult);
-            }
         }
 
         private void SaveNoResultUseThread(object state)
@@ -168,6 +241,64 @@ namespace mp.uimoe.com.Controllers
             catch
             {
 
+            }
+        }
+
+        public void UploadVoiceUseThread(object state)
+        {
+            var words = new List<KeyValueDto>();
+            try
+            {
+                words = LogicHelper.H10096();
+            }
+            catch
+            { }
+
+            UploadVoice(words.ToArray());
+        }
+
+        public void UploadSingleVoiceUseThread(object state)
+        {
+            var chntext = state as string;
+            if (string.IsNullOrEmpty(chntext))
+            {
+                return;
+            }
+
+            var words = new List<KeyValueDto>();
+            try
+            {
+                words = LogicHelper.H10098(chntext);
+            }
+            catch
+            { }
+
+            UploadVoice(words.ToArray());
+        }
+
+        public void UploadVoice(params KeyValueDto[] words)
+        {
+            var folder = Server.MapPath("~/Content/voice");
+            foreach (var w in words)
+            {
+                var filepath = System.IO.Path.Combine(new string[] { folder, w.IValue.Trim() + ".wav" });
+                if (!System.IO.File.Exists(filepath))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    var mediaid = WeixinHelper.UploadFile(filepath, UploadFileTypeEnum.voice, appId, appSecret);
+                    if (!string.IsNullOrEmpty(mediaid))
+                    {
+                        LogicHelper.H10097(Convert.ToInt32(w.IKey), mediaid);
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
             }
         }
     }

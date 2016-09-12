@@ -1,0 +1,184 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppDetailLayout.cshtml";
+    ViewBag.apptypedisplay = "网页小工具";
+    ViewBag.apptitle = "图片切片";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+}
+
+<form id="form1">
+    <div class="form-group">
+        <label>行</label>
+        <input class="form-control" id="rows" name="rows" type="text" />
+        <label>列</label>
+        <input class="form-control" id="cols" name="cols" type="text" />
+    </div>
+    <input id="imgfile" name="imgfile" type="hidden" />
+</form>
+<div class="form-group">
+    <label>上传图片</label>
+    <input id="imgfileinput" onchange="filechanged(this)" class="form-control" type="file" />
+</div>
+<div class="newline"></div>
+<button class="btn btn-success" onclick="trytopost()">切片</button>
+<div class="newline"></div>
+<div id="imgpreviewdiv" style="display:none;">
+    <img id="img1" style="max-width:100%;" src="#" />
+</div>
+<div id="imgviewdiv" style="display:none;">
+    <img id="img1" style="max-width:100%;" src="#" />
+</div>
+
+<script type="text/javascript">
+    function trytopost() {
+        var rows = $("#rows").val();
+        if ($.trim(rows).length == 0) {
+            alert("必须输入行数");
+            return;
+        }
+
+        if (isNaN($.trim(rows))) {
+            alert("行数必须输入整数");
+            return;
+        }
+
+        rows = parseInt(rows);
+        if (rows > 9) {
+            alert("最大支持9行");
+            return;
+        }
+
+        var cols = $("#cols").val();
+        if ($.trim(cols).length == 0) {
+            alert("必须输入列数");
+            return;
+        }
+
+        if ($.trim(cols).length == 0) {
+            alert("必须输入列数");
+            return;
+        }
+
+        if (isNaN($.trim(cols))) {
+            alert("列数必须输入整数");
+            return;
+        }
+
+        cols = parseInt(cols);
+        if (cols > 9) {
+            alert("最大支持9列");
+            return;
+        }
+
+        var file1 = document.getElementById("imgfileinput");
+        if (file1.files.length === 0) {
+            alert("请选择要上传的图片");
+            return;
+        }
+
+        $("#usertabmaskdiv1").show();
+        $("#loadingdiv").html('<span class="loading"></span> 正在上传，稍等哦').show();
+
+        var url = '@Url.Content("~/App/UpdateFile")';
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = null;
+                try {
+                    response = JSON.parse(xhr.responseText);
+                }
+                catch (e) {
+
+                }
+
+                if (response) {
+                    if (response.error != 0) {
+                        $("#usertabmaskdiv1").hide();
+                        $("#loadingdiv").html('').hide();
+                        alert(response.message);
+                    }
+                    else {
+                        //将上传后的文件名放到隐藏域
+                        $("#imgfile").val(response.data);
+
+                        //上传文件成功后再发一次请求去获取裁剪的图片部分
+                        var url2 = '@Url.Content("~/App/ClipImage")';
+                        $.post(url2, $("#form1").serialize(), function (response2) {
+                            $("#usertabmaskdiv1").hide();
+                            $("#loadingdiv").html('').hide();
+                            alert(response2.message);
+                            if (response2.error == 0) {
+                                $("#imgpreviewdiv").hide();
+                                $("#imgviewdiv").show();
+
+                                var filename = $("#imgfile").val();
+                                var idx = filename.lastIndexOf(".");
+                                var ext = filename.substr(idx);
+                                var sb = '';
+                                for (var i = 0; i < rows ; i++) {
+                                    sb += '<div style="display:flex;">';
+
+                                    for (var j = 0; j < cols; j++) {
+                                        var filename2 = filename.replace(ext, "_" + i + "x" + j + ext);
+                                        sb += '<div style="flex:1;padding:2px;border:1px solid #fff;margin:2px;">';
+                                        sb += '    <img style="width:100%;" src="@Url.Content("~/Uploads/")' + filename2 + '" />';
+                                        sb += '</div>';
+                                    }
+
+                                    sb += '</div>';
+                                }
+
+                                $("#imgviewdiv").html(sb);
+                                $("#imgfile").val("");
+                            }
+                        }, "json")
+                    }
+                }
+                else {
+                    $("#usertabmaskdiv1").hide();
+                    $("#loadingdiv").html('').hide();
+                    alert("操作失败，请稍后重试");
+                }
+            }
+        }
+
+        var data = new FormData();
+        data.append("file1", file1.files[0]);
+        xhr.send(data);
+    }
+
+    function filechanged(sender) {
+        if (sender.files.length === 0) {
+            alert("请选择文件");
+            return;
+        }
+
+        var uploadexts = '.jpg,.png';
+        var filename = sender.value;
+        var fileext = filename.substr(filename.lastIndexOf(".")).toLowerCase();
+        var idx = uploadexts.indexOf(fileext);
+        if (idx < 0) {
+            alert("不支持的格式，只支持.jpg,.png，当前文件格式：" + fileext);
+            return;
+        }
+
+
+        var file1 = sender.files[0];
+        var kbsize = 1.0 * file1.size / 1024;
+        if (kbsize > 320) {
+            alert("很抱歉，最多只能上传320KB大小的图片,当前文件大小:" + kbsize + "KB");
+            return;
+        };
+
+        var reader1 = new FileReader();
+        reader1.readAsDataURL(file1);
+        reader1.onload = function (e) {
+            document.getElementById("img1").src = e.target.result;
+            $("#imgpreviewdiv").show();
+        };
+    };
+</script>

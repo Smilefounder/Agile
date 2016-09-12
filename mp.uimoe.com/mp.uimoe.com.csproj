@@ -144,6 +144,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\WeixinHelper.cs" />
+    <Compile Include="Models\MP_AccessTokenRequest.cs" />
+    <Compile Include="Models\MP_AccessTokenResponse.cs" />
     <Compile Include="Models\MP_AuthorizeRequest.cs" />
     <Compile Include="Models\MP_ClickRequest.cs" />
     <Compile Include="Models\MP_EventRequestBase.cs" />
@@ -159,9 +161,12 @@
     <Compile Include="Models\MP_TextRequest.cs" />
     <Compile Include="Models\MP_TextResponse.cs" />
     <Compile Include="Models\MP_UnSubscribeRequest.cs" />
+    <Compile Include="Models\MP_UploadFileResponse.cs" />
+    <Compile Include="Models\MP_UploadTempFileResponse.cs" />
     <Compile Include="Models\MP_VideoRequest.cs" />
     <Compile Include="Models\MP_ViewRequest.cs" />
     <Compile Include="Models\MP_VoiceRequest.cs" />
+    <Compile Include="Models\MP_VoiceResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

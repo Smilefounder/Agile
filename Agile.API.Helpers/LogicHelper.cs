@@ -3591,5 +3591,61 @@ namespace Agile.API.Helpers
             var recordlist = DataHelper.ExecuteList<KeyValueDto>(sqlstr, new { ChnText = chntext });
             return recordlist;
         }
+
+        /// <summary>
+        /// uimoe - 创建软件需求
+        /// </summary>
+        /// <param name="apptype"></param>
+        /// <param name="appdesc"></param>
+        /// <param name="email"></param>
+        /// <param name="phoneNum"></param>
+        /// <returns></returns>
+        public static HBaseResponse H10099(int? apptype, string appdesc, string email, string phoneNum)
+        {
+            var response = HBaseResponse.Faild;
+            if (string.IsNullOrEmpty(appdesc))
+            {
+                response.message = "需求描述不能为空";
+                return response;
+            }
+
+            if (appdesc.Length < 50 || appdesc.Length > 200)
+            {
+                response.message = "需求描述限50~200字";
+                return response;
+            }
+
+            if (string.IsNullOrEmpty(email))
+            {
+                response.message = "邮箱不能为空";
+                return response;
+            }
+
+            if (string.IsNullOrEmpty(phoneNum))
+            {
+                response.message = "手机号不能为空";
+                return response;
+            }
+
+            var rows = WriteHelper.Save<UME_newapp>(new UME_newapp
+            {
+                AppDesc = appdesc,
+                AppType = apptype,
+                CreatedAt = DateTime.Now,
+                Email = email,
+                PhoneNum = phoneNum
+            });
+
+            if (rows > 0)
+            {
+                response = new HBaseResponse
+                {
+                    error = 0,
+                    message = "提交成功，稍后您将收到邮件回复"
+                };
+            }
+
+            return response;
+        }
     }
 }

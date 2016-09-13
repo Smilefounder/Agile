@@ -79,6 +79,7 @@
     <Compile Include="T_visit.cs" />
     <Compile Include="T_whitelist.cs" />
     <Compile Include="UME_app.cs" />
+    <Compile Include="UME_newapp.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Agile.Attributes\Agile.Attributes.csproj">

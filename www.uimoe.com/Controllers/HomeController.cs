@@ -96,5 +96,27 @@ namespace www.uimoe.com.Controllers
 
             return View(vm);
         }
+
+        [HttpGet]
+        public ActionResult NewApp()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult NewApp(int? apptype, string appdesc, string email, string phoneNum)
+        {
+            try
+            {
+                var response = LogicHelper.H10099(apptype, appdesc, email, phoneNum);
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(new { error = 1, message = "操作失败，请稍后再试" });
+        }
     }
 }

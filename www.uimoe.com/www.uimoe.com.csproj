@@ -302,6 +302,7 @@
     <Content Include="Views\App\IOSClient.cshtml" />
     <Content Include="Views\App\SqlToModel.cshtml" />
     <Content Include="Views\App\ClipImage.cshtml" />
+    <Content Include="Views\Home\NewApp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

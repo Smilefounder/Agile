@@ -75,11 +75,11 @@
             <p class="weui_tabbar_label">查询</p>
         </a>
         @*<a class="weui_tabbar_item" id="voicea" href="javascript:void(0);" onclick="voiceclicked(this)">
-            <div class="weui_tabbar_icon">
-                <img style="width:100%;" src="@Url.Content("~/Assets/Images/ting.jpg")" />
-            </div>
-            <p id="voicep" class="weui_tabbar_label">语音</p>
-        </a>*@
+                <div class="weui_tabbar_icon">
+                    <img style="width:100%;" src="@Url.Content("~/Assets/Images/ting.jpg")" />
+                </div>
+                <p id="voicep" class="weui_tabbar_label">语音</p>
+            </a>*@
         <a id="appbaritem2" class="weui_tabbar_item" href="@Url.Content("~/Home/Scene")">
             <div class="weui_tabbar_icon">
                 <img alt="" src="@Url.Content("~/Assets/icon_nav_tab.png")">
@@ -233,7 +233,8 @@
         $("#usercontroldiv1").scrollTop(document.getElementById("usercontroldiv1").scrollHeight);
     }
 
-    function play(pronounce, voice) {
+    function play(sender, pronounce, voice) {
+        $(sender).attr('src', '@Url.Content("~/Assets/Images/loading.gif")');
         var urls = [];
         if (voice) {
             url.push(voice);
@@ -253,6 +254,7 @@
         };
         player1.onended = function () {
             if (idx < urls.length - 1) {
+                sender.src = '@Url.Content("~/Assets/Images/loading.gif")';
                 player1.src = urls[idx];
                 try {
                     player1.play();
@@ -260,6 +262,9 @@
                 catch (e) {
                     weuialert("播放音频失败");
                 }
+            }
+            else {
+                $(sender).attr('src', '@Url.Content("~/Assets/Images/voice.gif")');
             }
         };
 

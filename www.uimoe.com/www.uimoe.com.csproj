@@ -303,9 +303,11 @@
     <Content Include="Views\App\SqlToModel.cshtml" />
     <Content Include="Views\App\ClipImage.cshtml" />
     <Content Include="Views\Home\NewApp.cshtml" />
+    <Content Include="Views\Home\NewAd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\ad\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

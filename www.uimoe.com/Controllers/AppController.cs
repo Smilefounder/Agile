@@ -1,4 +1,6 @@
-﻿using Agile.Cache;
+﻿using Agile.API.Dtos;
+using Agile.API.Helpers;
+using Agile.Cache;
 using Agile.Helpers;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,21 @@ namespace www.uimoe.com.Controllers
 {
     public class AppController : Controller
     {
+        public AppController()
+        {
+            var ad = new H10100ResponseListItem();
+            try
+            {
+                ad = LogicHelper.H10100();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            ViewBag.ad = ad;
+        }
+
         public ActionResult ChooseColor()
         {
             return View();

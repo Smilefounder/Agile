@@ -74,7 +74,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '',
+            url: '@Url.Content("~/Home/NewApp")',
             data: $("#form1").serialize(),
             complete: function (xhr, status) {
                 var message = "操作失败，请稍后再试";

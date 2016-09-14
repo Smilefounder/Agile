@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_WithFrameLayout.cshtml";
+    var ad = ViewBag.ad as Agile.API.Dtos.H10100ResponseListItem;
 }
 
 @RenderSection("styles", required: false)
@@ -30,6 +31,21 @@
         <div id="tenpaydiv" style="display:none;">
             <img style="max-width:100%;" src="@Url.Content("~/Assets/Images/tenpay.jpg")" />
         </div>
+        @if (ad != null && !string.IsNullOrEmpty(ad.Url))
+        {
+            <div class="newline"></div>
+            <div style="height:40px;line-height:40px;">
+                <span style="color:#22b14c;">广告</span>
+            </div>
+            <div class="splitter-d"></div>
+            <div class="newline"></div>
+            <div>
+                <img style="width:100%;" src="@Url.Content("~/Content/ad/"+ad.Cover)" onclick="window.open('@ad.Url', '_blank');" />
+                <div style="position:relative;margin-top:-28px;padding-left:5px;background-color:rgba(255,255,255,0.8);width:100%;height:28px;line-height:28px;">
+                    <a href="@ad.Url" target="_blank" title="@ad.Title">￥<span>@ad.Price</span>&nbsp;<span>@ad.TitleDisplay</span></a>
+                </div>
+            </div>
+        }
     </div>
     <div style="clear:both;"></div>
 </div>

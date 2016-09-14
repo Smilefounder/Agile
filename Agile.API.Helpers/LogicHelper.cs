@@ -3647,5 +3647,70 @@ namespace Agile.API.Helpers
 
             return response;
         }
+
+        public static H10100ResponseListItem H10100()
+        {
+            var sqlstr = "SELECT TOP 1 * FROM UME_ad ORDER BY NEWID()";
+            var one = DataHelper.ExecuteOne<H10100ResponseListItem>(sqlstr);
+            return one;
+        }
+
+        /// <summary>
+        /// 新增广告
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="url"></param>
+        /// <param name="imgfile"></param>
+        /// <param name="price"></param>
+        /// <param name="rate"></param>
+        /// <returns></returns>
+        public static HBaseResponse H10101(string title, string url, string imgfile, decimal? price, decimal? rate)
+        {
+            var response = HBaseResponse.Faild;
+            if (string.IsNullOrEmpty(title))
+            {
+                response.message = "标题不能为空";
+                return response;
+            }
+
+            if (title.Length < 2 || title.Length > 50)
+            {
+                response.message = "需求描述限2~50字";
+                return response;
+            }
+
+            if (string.IsNullOrEmpty(url))
+            {
+                response.message = "推广链接不能为空";
+                return response;
+            }
+
+            if (string.IsNullOrEmpty(imgfile))
+            {
+                response.message = "推广图片不能为空";
+                return response;
+            }
+
+            var rows = WriteHelper.Save<UME_ad>(new UME_ad
+            {
+                Cover = imgfile,
+                CreatedAt = DateTime.Now,
+                Price = price,
+                Rate = rate,
+                Title = title,
+                Url = url
+            });
+
+            if (rows > 0)
+            {
+                response = new HBaseResponse
+                {
+                    error = 0,
+                    message = "发布成功"
+                };
+            }
+
+            return response;
+        }
     }
 }

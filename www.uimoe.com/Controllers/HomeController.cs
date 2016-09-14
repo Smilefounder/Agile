@@ -118,5 +118,39 @@ namespace www.uimoe.com.Controllers
 
             return Json(new { error = 1, message = "操作失败，请稍后再试" });
         }
+
+        [HttpGet]
+        public ActionResult NewAd()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult NewAd(string title, string url, string imgfile, decimal? price, decimal? rate)
+        {
+            try
+            {
+                var folder1 = Server.MapPath("~/Uploads");
+                var file1 = System.IO.Path.Combine(new string[] { folder1, imgfile });
+                if (!System.IO.File.Exists(file1))
+                {
+                    return Json(new { error = 1, message = "找不到文件：" + imgfile });
+                }
+
+                //复制到广告目录下
+                var folder2 = Server.MapPath("~/Content/ad");
+                var file2 = System.IO.Path.Combine(new string[] { folder2, imgfile });
+                System.IO.File.Copy(file1, file2, true);
+
+                var response = LogicHelper.H10101(title, url, imgfile, price, rate);
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return Json(new { error = 1, message = "操作失败，请稍后再试" });
+        }
     }
 }

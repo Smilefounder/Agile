@@ -1,0 +1,174 @@
+﻿@{
+    Layout = "~/Views/Shared/_WithFrameLayout.cshtml";
+}
+
+@section styles
+{
+    <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+}
+
+<div class="newline"></div>
+<form id="form1">
+    <input id="imgfile" name="imgfile" type="hidden" />
+    <div class="form-group">
+        <label for="title">广告标题*</label>
+        <textarea id="title" name="title" class="form-control" placeholder="广告标题，2~50字" style="height:100px;"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="url">推广链接*</label>
+        <input id="url" name="url" class="form-control" type="email" placeholder="必填" />
+    </div>
+    <div class="form-group">
+        <label for="price">价格</label>
+        <input id="price" name="price" class="form-control" type="text" placeholder="可不填" />
+    </div>
+    <div class="form-group">
+        <label for="rate">提成率</label>
+        <input id="rate" name="rate" class="form-control" type="text" placeholder="可不填" />
+    </div>
+</form>
+<div class="form-group">
+    <label>推广图片*</label>
+    <input id="imgfileinput" onchange="filechanged(this)" class="form-control" type="file" />
+</div>
+<div class="newline"></div>
+<div id="imgpreviewdiv" style="display:none;">
+    <img id="img1" style="max-width:100%;" src="#" />
+</div>
+<div class="newline"></div>
+<button class="btn btn-success" onclick="trytopost(this)">提交</button>
+
+<script>
+    function trytopost(sender) {
+        var title = $.trim($("#title").val());
+        if (!title) {
+            alert("请填写标题");
+            return;
+        }
+
+        if (title.length < 2 || title.length > 50) {
+            alert("需求描述限输入2~50字,你目前输入了" + title.length + "字");
+            return;
+        }
+
+        var url = $.trim($("#url").val());
+        if (!url) {
+            alert("请填写推广链接");
+            return;
+        }
+
+        var file1 = document.getElementById("imgfileinput");
+        if (file1.files.length === 0) {
+            alert("请选择要上传的图片");
+            return;
+        }
+
+        $("#usertabmaskdiv1").show();
+        $("#loadingdiv").html('<span class="loading"></span> 正在上传，稍等哦').show();
+
+        var url = '@Url.Content("~/App/UpdateFile")';
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = null;
+                try {
+                    response = JSON.parse(xhr.responseText);
+                }
+                catch (e) {
+
+                }
+
+                if (response) {
+                    if (response.error != 0) {
+                        $("#usertabmaskdiv1").hide();
+                        $("#loadingdiv").html('').hide();
+                        alert(response.message);
+                    }
+                    else {
+                        //将上传后的文件名放到隐藏域
+                        $("#imgfile").val(response.data);
+
+                        //上传文件成功后再发一次请求去获取裁剪的图片部分
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Content("~/Home/NewAd")',
+                            data: $("#form1").serialize(),
+                            complete: function (xhr, status) {
+                                var message = "操作失败，请稍后再试";
+                                if (status != "success") {
+                                    alert(message);
+                                    return;
+                                }
+
+                                var response = {};
+                                try {
+                                    response = JSON.parse(xhr.responseText);
+                                }
+                                catch (e) {
+                                }
+
+                                if (!response) {
+                                    alert(message);
+                                    return;
+                                }
+
+                                if (response.message) {
+                                    message = response.message;
+                                }
+
+                                alert(message);
+                                if (response.error == 0) {
+                                    $("#title").val("");
+                                    $("#url").val("");
+                                    $("#price").val("");
+                                    $("#rate").val("");
+                                }
+                            }
+                        });
+                    }
+                }
+                else {
+                    $("#usertabmaskdiv1").hide();
+                    $("#loadingdiv").html('').hide();
+                    alert("操作失败，请稍后重试");
+                }
+            }
+        }
+
+        var data = new FormData();
+        data.append("file1", file1.files[0]);
+        xhr.send(data);
+    }
+
+    function filechanged(sender) {
+        if (sender.files.length === 0) {
+            alert("请选择文件");
+            return;
+        }
+
+        var uploadexts = '.jpg,.png';
+        var filename = sender.value;
+        var fileext = filename.substr(filename.lastIndexOf(".")).toLowerCase();
+        var idx = uploadexts.indexOf(fileext);
+        if (idx < 0) {
+            alert("不支持的格式，只支持.jpg,.png，当前文件格式：" + fileext);
+            return;
+        }
+
+
+        var file1 = sender.files[0];
+        var kbsize = 1.0 * file1.size / 1024;
+        if (kbsize > 320) {
+            alert("很抱歉，最多只能上传320KB大小的图片,当前文件大小:" + kbsize + "KB");
+            return;
+        };
+
+        var reader1 = new FileReader();
+        reader1.readAsDataURL(file1);
+        reader1.onload = function (e) {
+            document.getElementById("img1").src = e.target.result;
+            $("#imgpreviewdiv").show();
+        };
+    };
+</script>

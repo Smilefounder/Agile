@@ -33,6 +33,19 @@
 
 <script type="text/javascript">
     $(function () {
+        var day = '@ViewBag.day';
+        day = parseInt(day);
+
+        if (!day) {
+            day = 0;
+        }
+
+        if (day == 1) {
+            var dt = new Date();
+            var dtstr = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+            $("#createdat").val(dtstr);
+        }
+
         loaddata();
     })
 

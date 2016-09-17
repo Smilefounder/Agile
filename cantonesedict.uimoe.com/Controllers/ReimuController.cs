@@ -82,6 +82,7 @@ namespace cantonesedict.uimoe.com.Controllers
         #region 词汇
         public ActionResult Vocabulary()
         {
+            ViewBag.len = Request.Params["len"];
             return View();
         }
 
@@ -793,6 +794,10 @@ namespace cantonesedict.uimoe.com.Controllers
 
         public ActionResult Query()
         {
+            int day;
+            int.TryParse(Request.Params["day"], out day);
+
+            ViewBag.day = day;
             return View();
         }
 

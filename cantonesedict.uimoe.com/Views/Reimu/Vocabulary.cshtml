@@ -55,6 +55,16 @@
 
 <script type="text/javascript">
     $(function () {
+        var len = '@ViewBag.len';
+        len = parseInt(len);
+        if (!len) {
+            len = 0;
+        }
+
+        if (len == 1 || len == 2 || len == 3) {
+            $("#textlength").val(len);
+        }
+
         loaddata();
     })
 

@@ -1,0 +1,80 @@
+﻿@model Agile.Dtos.PagedListDto<Agile.API.Dtos.H10102ResponseListItem>
+@{
+    Layout = null;
+}
+
+<table class="table table-bordered table-striped table-hover">
+    <tr>
+        <th>用户</th>
+        <th>来源</th>
+        <th>金额</th>
+        <th>时间</th>
+    </tr>
+    @if (Model.RecordList.Count == 0)
+    {
+        <tr>
+            <td colspan="4">
+                <div style="text-align:center;">未找到相关数据</div>
+            </td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model.RecordList)
+        {
+            <tr>
+                <td>@item.name</td>
+                <td>@item.sourcedisplay</td>
+                <td>￥<span>@item.money</span></td>
+                <td>@item.createdat.ToString("yyyy-MM-dd HH:mm:ss")</td>
+            </tr>
+        }
+    }
+</table>
+<div class="newline"></div>
+<div style="height:32px;line-height:32px;">
+    <div style="float:left;text-align:left;">第<span>@Model.Page</span>/<span>@Model.PageCount</span>页&nbsp;共<span>@Model.RecordCount</span>条记录</div>
+    <div style="float:right;">
+        <button class="btn btn-default" onclick="view.chagepage(this,'1','@Model.PageSize','@Model.PageCount');">首页</button>
+        <button class="btn btn-default" onclick="view.chagepage(this,'@(Model.Page-1)','@Model.PageSize','@Model.PageCount');">上一页</button>
+        <button class="btn btn-default" onclick="view.chagepage(this,'@(Model.Page+1)','@Model.PageSize','@Model.PageCount');">下一页</button>
+        <button class="btn btn-default" onclick="view.chagepage(this,'@Model.PageCount','@Model.PageSize','@Model.PageCount');">尾页</button>
+        <input id="pageinput1" type="text" class="form-control" style="width:88px;display:inline-block;" placeholder="输入页码" />
+        <button class="btn btn-success" onclick="view.chagepage(this, null, '@Model.PageSize', '@Model.PageCount')">跳转</button>
+    </div>
+    <div style="clear:both;"></div>
+</div>
+
+<script type="text/javascript">
+    var view = {
+        chagepage: function (sender, page, pagesize, pagecount) {
+            if (!page) {
+                var pageinput1 = document.getElementById("pageinput1");
+                page1 = pageinput1.value;
+                if (!page1 || isNaN(page1)) {
+                    pageinput1.focus();
+                    return;
+                }
+
+                if (page1 > pagecount) {
+                    pageinput1.focus();
+                    return;
+                }
+
+                page = page1;
+            }
+
+            if (page < 1) {
+                alert("没有上一页了");
+                return;
+            }
+
+            if (page > pagecount) {
+                alert("没有下一页了");
+                return;
+            }
+
+            loaddata(sender, page, pagesize);
+        }
+    };
+</script>

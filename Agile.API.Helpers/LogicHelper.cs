@@ -3712,5 +3712,29 @@ namespace Agile.API.Helpers
 
             return response;
         }
+
+        public static PagedListDto<H10102ResponseListItem> H10102(int? page, int? pagesize)
+        {
+            var options = new PagedQueryOptions
+            {
+                Page = page.GetValueOrDefault(1),
+                PageSize = pagesize.GetValueOrDefault(10)
+            };
+
+            var pagedlist = QueryHelper.GetPagedList<UME_donate>(options);
+            return new PagedListDto<H10102ResponseListItem>
+            {
+                Page = pagedlist.Page,
+                PageSize = pagedlist.PageSize,
+                RecordCount = pagedlist.RecordCount,
+                RecordList = pagedlist.RecordList.Select(o => new H10102ResponseListItem
+                {
+                    createdat = o.CreatedAt.GetValueOrDefault(),
+                    money = o.Money.GetValueOrDefault(),
+                    name = string.Format("{0}({1})", o.NickName, StringHelper.ReplaceWithStar(o.Name)),
+                    source = o.Source.GetValueOrDefault()
+                }).ToList()
+            };
+        }
     }
 }

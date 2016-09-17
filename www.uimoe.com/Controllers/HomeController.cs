@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Agile.Web.Helpers;
+using Agile.Dtos;
 
 namespace www.uimoe.com.Controllers
 {
@@ -151,6 +153,31 @@ namespace www.uimoe.com.Controllers
             }
 
             return Json(new { error = 1, message = "操作失败，请稍后再试" });
+        }
+
+        public ActionResult Donate()
+        {
+            return View();
+        }
+
+        public ActionResult Donate_pl()
+        {
+            var vm = new PagedListDto<H10102ResponseListItem>
+            {
+                RecordList = new List<H10102ResponseListItem>()
+            };
+
+            try
+            {
+                var request = WebHelper.ParseFromRequest<HPagedListRequest>();
+                vm = LogicHelper.H10102(request.page, request.pagesize);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Write(ex.ToString());
+            }
+
+            return View(vm);
         }
     }
 }

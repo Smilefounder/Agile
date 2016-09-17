@@ -80,6 +80,7 @@
     <Compile Include="T_whitelist.cs" />
     <Compile Include="UME_ad.cs" />
     <Compile Include="UME_app.cs" />
+    <Compile Include="UME_donate.cs" />
     <Compile Include="UME_newapp.cs" />
   </ItemGroup>
   <ItemGroup>

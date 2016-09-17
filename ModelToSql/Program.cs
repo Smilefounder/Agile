@@ -110,7 +110,7 @@ namespace ModelToSql
 
             else if (ptstr.Contains(typeof(decimal).FullName))
             {
-                fieldstr += string.Format("DECIMAL({0},2) ", field.MaxLength);
+                fieldstr += string.Format("DECIMAL({0},2) ", field.MaxLength > 0 ? field.MaxLength : 18);
             }
 
             else if (ptstr.Contains(typeof(DateTime).FullName))

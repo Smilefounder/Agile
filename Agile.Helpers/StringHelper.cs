@@ -372,6 +372,51 @@ namespace Agile.Helpers
 
             return dt;
         }
+
+        /// <summary>
+        /// 获取星号替换的字符
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="starCount"></param>
+        /// <returns></returns>
+        public static string ReplaceWithStar(string input, int starCount = 4)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return "";
+            }
+
+            var replacestr = GetRepeatedChar(starCount);
+            if (input.Length <= 4)
+            {
+                return replacestr;
+            }
+
+            if (input.Length <= 5)
+            {
+                return input[0] + replacestr;
+            }
+
+            var mid = Convert.ToInt32(Math.Ceiling(0.5 * input.Length));
+            return input.Substring(0, mid - 2) + replacestr + input.Substring(mid + 2);
+        }
+
+        /// <summary>
+        /// 获取重复的字符
+        /// </summary>
+        /// <param name="count"></param>
+        /// <param name="ch"></param>
+        /// <returns></returns>
+        public static string GetRepeatedChar(int count, char ch = '*')
+        {
+            var sb = new StringBuilder();
+            for (var i = 00; i < count; i++)
+            {
+                sb.Append(ch);
+            }
+
+            return sb.ToString();
+        }
     }
 
     /// <summary>

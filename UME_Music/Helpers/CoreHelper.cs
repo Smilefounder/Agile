@@ -224,7 +224,7 @@ namespace UME_Music.Helpers
         /// <param name="e"></param>
         private static void Player_MediaFailed(object sender, ExceptionEventArgs e)
         {
-            LogHelper.Write("播放失败：" + Player.Source.LocalPath);
+            LogHelper.WriteAsync("播放失败：" + Player.Source.LocalPath);
 
             //清除播放器状态
             PlayerState = null;
@@ -237,7 +237,7 @@ namespace UME_Music.Helpers
         /// <param name="e"></param>
         private static void Player_MediaEnded(object sender, EventArgs e)
         {
-            LogHelper.Write("播放结束：" + Player.Source.LocalPath);
+            LogHelper.WriteAsync("播放结束：" + Player.Source.LocalPath);
 
             //清除播放器状态
             PlayerState = null;
@@ -468,7 +468,7 @@ namespace UME_Music.Helpers
         /// <param name="e"></param>
         private static void Player_MediaOpened(object sender, EventArgs e)
         {
-            LogHelper.Write("播放开始：" + Player.Source.LocalPath);
+            LogHelper.WriteAsync("播放开始：" + Player.Source.LocalPath);
             var music = Musiclist.Where(w => w.FilePath == Player.Source.LocalPath).FirstOrDefault();
             if (music != null)
             {
@@ -543,7 +543,7 @@ namespace UME_Music.Helpers
                     }
                     catch (Exception ex)
                     {
-                        LogHelper.Write(f + ": " + ex.Message);
+                        LogHelper.WriteAsync(f + ": " + ex.Message);
                         continue;
                     }
                 }

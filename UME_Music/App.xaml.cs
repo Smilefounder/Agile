@@ -21,12 +21,12 @@ namespace UME_Music
 
         private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            LogHelper.Write(e.Exception.ToString());
+            LogHelper.WriteAsync(e.Exception.ToString());
         }
 
         private void App_Exit(object sender, ExitEventArgs e)
         {
-            LogHelper.Write("程序退出");
+            LogHelper.WriteAsync("程序退出");
 
             var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             var repositoryDirectory = System.IO.Path.Combine(new string[] { baseDirectory, "Repository" });
@@ -70,7 +70,7 @@ namespace UME_Music
 
         private void App_Startup(object sender, StartupEventArgs e)
         {
-            LogHelper.Write("程序启动");
+            LogHelper.WriteAsync("程序启动");
 
             var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             var musiclistfilepath = System.IO.Path.Combine(new string[] { baseDirectory, "Repository", "Musiclist.ume" });

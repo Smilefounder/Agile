@@ -1,0 +1,76 @@
+﻿@model Agile.Dtos.PagedListDto<Agile.API.Dtos.H10033ResponseListItem>
+@{
+    Layout = null;
+}
+
+@if (Model.RecordList != null || Model.RecordList.Count > 0)
+{
+    <ul class="ul1">
+        @foreach (var item in Model.RecordList)
+        {
+            <li class="list-group-item" href="javascript:void(0);">
+                <div>
+                    <div><h3>@item.title</h3></div>
+                    <div>发布于<span>@item.createdat.GetValueOrDefault().ToString("yyyy-MM-dd")</span></div>
+                    <div class="newline"></div>
+                    <div class="splitter-d"></div>
+                    <div class="newline"></div>
+                    <div>
+                        <img style="max-width:100%;" src="@Url.Content("~/Content/Images/Thumb/" + item.filename)" />
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+        <div style="clear:both;"></div>
+        <div style="height:32px;line-height:32px;">
+            <div style="float:left;text-align:left;">第<span>@Model.Page</span>/<span>@Model.PageCount</span>页&nbsp;共<span>@Model.RecordCount</span>条记录</div>
+            <div style="float:right;margin-right:10px;">
+                <button class="btn btn-default" onclick="view.chagepage(this,'1','@Model.PageSize','@Model.PageCount');">首页</button>
+                <button class="btn btn-default" onclick="view.chagepage(this,'@(Model.Page-1)','@Model.PageSize','@Model.PageCount');">上一页</button>
+                <button class="btn btn-default" onclick="view.chagepage(this,'@(Model.Page+1)','@Model.PageSize','@Model.PageCount');">下一页</button>
+                <button class="btn btn-default" onclick="view.chagepage(this,'@Model.PageCount','@Model.PageSize','@Model.PageCount');">尾页</button>
+                <input id="pageinput1" type="text" class="form-control" style="width:88px;display:inline-block;" placeholder="输入页码" />
+                <button class="btn btn-success" onclick="view.chagepage(this, null, '@Model.PageSize', '@Model.PageCount')">跳转</button>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+}
+else
+{
+    <a class="list-group-item">未找到相关记录</a>
+}
+
+<script type="text/javascript">
+    var view = {
+        chagepage: function (sender, page, pagesize, pagecount) {
+            if (!page) {
+                var pageinput1 = document.getElementById("pageinput1");
+                page1 = pageinput1.value;
+                if (!page1 || isNaN(page1)) {
+                    pageinput1.focus();
+                    return;
+                }
+
+                if (page1 > pagecount) {
+                    pageinput1.focus();
+                    return;
+                }
+
+                page = page1;
+            }
+
+            if (page < 1) {
+                alert("没有上一页了");
+                return;
+            }
+
+            if (page > pagecount) {
+                alert("没有下一页了");
+                return;
+            }
+
+            loaddata(sender, page, pagesize);
+        }
+    };
+</script>

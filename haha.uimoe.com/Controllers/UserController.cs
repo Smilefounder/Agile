@@ -98,7 +98,7 @@ namespace haha.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             //开启线程保存最热哈哈

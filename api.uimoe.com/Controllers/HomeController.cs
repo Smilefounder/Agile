@@ -44,7 +44,7 @@ namespace api.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             if (response == null)
@@ -82,7 +82,7 @@ namespace api.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             if (response == null)
@@ -132,7 +132,7 @@ namespace api.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 return View(new UpdateInterfaceVM());
             }
         }
@@ -155,7 +155,7 @@ namespace api.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             if (response == null)
@@ -184,7 +184,7 @@ namespace api.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             if (response == null)
@@ -470,11 +470,6 @@ namespace api.uimoe.com.Controllers
                             response = LogicHelper.H10032(WebHelper.ParseFromRequest<H10032Request>());
                             break;
                         }
-                    case "H10033":
-                        {
-                            response = LogicHelper.H10033(WebHelper.ParseFromRequest<H10033Request>());
-                            break;
-                        }
                     case "H10034":
                         {
                             response = LogicHelper.H10034(WebHelper.ParseFromRequest<H10034Request>());
@@ -504,7 +499,7 @@ namespace api.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             if (response == null)

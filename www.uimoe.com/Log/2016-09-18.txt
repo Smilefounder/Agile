@@ -1,0 +1,14 @@
+﻿2016-09-18 09:32:28
+System.Exception: Invalid column name 'Status'.
+SQL:SELECT COUNT(1) FROM NASA_img WHERE Status=0
+   在 Agile.Data.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 86
+   在 Agile.API.Helpers.LogicHelper.H10033(H10033Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.API.Helpers\LogicHelper.cs:行号 1496
+   在 www.uimoe.com.Controllers.AppController.GetNASA() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.uimoe.com\Controllers\AppController.cs:行号 83
+
+2016-09-18 09:35:46
+System.Exception: Invalid column name 'Status'.
+SQL:SELECT COUNT(1) FROM NASA_img WHERE Status=0
+   在 Agile.Data.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.Data.Helpers\DataHelper.cs:行号 86
+   在 Agile.API.Helpers.LogicHelper.H10033(H10033Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\Agile.API.Helpers\LogicHelper.cs:行号 1496
+   在 www.uimoe.com.Controllers.AppController.GetNASA() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\www.uimoe.com\Controllers\AppController.cs:行号 86
+

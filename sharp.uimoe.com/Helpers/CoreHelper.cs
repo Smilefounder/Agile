@@ -53,7 +53,7 @@ namespace sharp.uimoe.com.Helpers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return obj;
@@ -100,7 +100,7 @@ namespace sharp.uimoe.com.Helpers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return obj;
@@ -147,7 +147,7 @@ namespace sharp.uimoe.com.Helpers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return obj;

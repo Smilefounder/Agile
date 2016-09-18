@@ -2,6 +2,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@RenderSection("styles", required: false)
 <style type="text/css">
     .loading {
         background: url(@Url.Content("~/Assets/loading.gif"));
@@ -12,7 +13,7 @@
 </style>
 
 <nav class="navbar navbar-default">
-    <div style="width:400px;margin:0 auto;">
+    <div style="width:1025px;margin:0 auto;">
         <div style="float:left;">
             <a class="navbar-brand" href="@Url.Content("~/Home/Index")">NASA图片精选</a>
         </div>
@@ -24,12 +25,8 @@
     </div>
 </nav>
 
-@RenderBody()
-
-<div style="height:40px;width:100%;"></div>
-<div style="position:fixed;bottom:0;border-top:1px solid #d5d5d5;background-color:#f0f0f0;width:100%;">
-    <div style="text-align:center;height:32px;line-height:32px;width:400px;margin:0 auto;">
-        <a target="_blank" href="http://www.uimoe.com">uimoe design</a> all rights reserved.
-        <a target="_blank" href="http://www.miitbeian.gov.cn">赣ICP备16000344号</a>
-    </div>
+<div style="width:1025px;margin:0 auto;">
+    @RenderBody()
 </div>
+
+@RenderSection("scripts", required: false)

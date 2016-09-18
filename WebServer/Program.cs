@@ -30,7 +30,7 @@ namespace WebServer
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             Console.ReadKey();

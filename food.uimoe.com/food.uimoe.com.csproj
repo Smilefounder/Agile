@@ -157,18 +157,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Thumb\" />
+    <Folder Include="Helpers\" />
     <Folder Include="Infrastructure\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Agile.Data.Helpers\Agile.Data.Helpers.csproj">
-      <Project>{36ae6e88-5247-42dc-be02-46ec03556cba}</Project>
-      <Name>Agile.Data.Helpers</Name>
+    <ProjectReference Include="..\Agile.API.Dtos\Agile.API.Dtos.csproj">
+      <Project>{9db18edf-b447-4f64-8da6-86bac8cee0e3}</Project>
+      <Name>Agile.API.Dtos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Agile.API.Helpers\Agile.API.Helpers.csproj">
+      <Project>{e1015345-16fd-4174-a81d-cee55b20d533}</Project>
+      <Name>Agile.API.Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Agile.Dtos\Agile.Dtos.csproj">
       <Project>{40bae020-6862-4b12-989c-754055de1561}</Project>
@@ -178,9 +182,9 @@
       <Project>{535e896a-71fb-42a0-a79e-1225aed49489}</Project>
       <Name>Agile.Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Agile.Models\Agile.Models.csproj">
-      <Project>{961a023e-e40e-4c62-8851-87e6388d7f35}</Project>
-      <Name>Agile.Models</Name>
+    <ProjectReference Include="..\Agile.Web.Helpers\Agile.Web.Helpers.csproj">
+      <Project>{F8D9F19B-B68F-4807-995E-0173187CC34A}</Project>
+      <Name>Agile.Web.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

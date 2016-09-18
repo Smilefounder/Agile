@@ -189,7 +189,7 @@ namespace mp.uimoe.com.Helpers
             catch
             { }
 
-            LogHelper.Write(response.errcode + ":" + response.errmsg);
+            LogHelper.WriteAsync(response.errcode + ":" + response.errmsg);
 
             if (response == null || string.IsNullOrEmpty(response.media_id))
             {

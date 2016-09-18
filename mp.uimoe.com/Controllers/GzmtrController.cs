@@ -84,7 +84,7 @@ namespace mp.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return Content(WeixinHelper.BuildContentResponse(response));

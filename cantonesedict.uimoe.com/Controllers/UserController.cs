@@ -48,7 +48,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View(vm);
@@ -103,7 +103,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View(vm);
@@ -151,7 +151,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View(response);
@@ -190,7 +190,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View(vm);
@@ -233,7 +233,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return Json(response);
@@ -275,7 +275,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View(vm);
@@ -317,7 +317,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View(vm);
@@ -360,7 +360,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View(vm);
@@ -378,7 +378,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 return Json(new { error = 1, message = ex.Message });
             }
 
@@ -397,7 +397,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 return Json(new { error = 1, message = ex.Message });
             }
 
@@ -416,7 +416,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 return Json(new { error = 1, message = ex.Message });
             }
 
@@ -460,7 +460,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View(vm);
@@ -484,7 +484,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View(response);
@@ -502,7 +502,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 return Json(new { error = 1, message = ex.Message });
             }
 
@@ -549,7 +549,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View(response);
@@ -566,7 +566,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return Json(new { error = 0 });
@@ -590,7 +590,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return Json(new { error = 0 });
@@ -616,7 +616,7 @@ namespace cantonesedict.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 return Json(new { error = 1, message = ex.Message });
             }
 

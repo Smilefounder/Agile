@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    @RenderSection("styles", false)
     <style type="text/css">
         .newline {
             width: 100%;
@@ -14,7 +15,19 @@
     </style>
 </head>
 <body>
-    <div class="container-fluid">
+    <nav class="navbar navbar-default">
+        <div style="width:1025px;margin:0 auto;">
+            <div style="float:left;">
+                <a class="navbar-brand" href="@Url.Content("~/Home/Index")">吃吃吃！</a>
+            </div>
+            <div style="float:right;">
+                <a class="navbar-brand" target="_blank" href="@Url.Content("~/Home/PostImg")">投稿</a>
+                <a class="navbar-brand" target="_blank" href="http://weibo.com/ssitmo">微博</a>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </nav>
+    <div style="width:1025px;margin:0 auto;">
         @RenderBody()
     </div>
 </body>

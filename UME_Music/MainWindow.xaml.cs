@@ -33,7 +33,7 @@ namespace UME_Music
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Write(ex.ToString());
+                    LogHelper.WriteAsync(ex.ToString());
                     UIHelper.ShowMessage(ex.Message);
                 }
 
@@ -49,7 +49,7 @@ namespace UME_Music
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Write(ex.ToString());
+                    LogHelper.WriteAsync(ex.ToString());
                     UIHelper.ShowMessage(ex.Message);
                 }
 

@@ -1,8 +1,8 @@
-﻿using Agile.Data.Helpers;
+﻿using Agile.API.Dtos;
+using Agile.API.Helpers;
 using Agile.Dtos;
 using Agile.Helpers;
-using Agile.Models;
-using food.uimoe.com.Helpers;
+using Agile.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,24 +19,19 @@ namespace food.uimoe.com.Controllers
 
         public ActionResult GetIndex(int? page, int? pagesize)
         {
-            var vm = new PagedListDto<Fod_collection>
+            var vm = new PagedListDto<H10103ResponseListItem>
             {
-                RecordList = new List<Fod_collection>()
+                RecordList = new List<H10103ResponseListItem>()
             };
 
             try
             {
-                var options = new PagedQueryOptions
-                {
-                    Page = page.GetValueOrDefault(1),
-                    PageSize = pagesize.GetValueOrDefault(10),
-                };
-
-                vm = QueryHelper.GetPagedList<Fod_collection>(options);
+                var request = WebHelper.ParseFromRequest<HPagedListRequest>();
+                vm = LogicHelper.H10103(request.page, request.pagesize);
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View(vm);
@@ -61,26 +56,14 @@ namespace food.uimoe.com.Controllers
                 System.IO.File.Copy(filepath, filepath2);
                 ImageHelper.MakeThumbnail(filepath, filepath3, 480, true, out ht, out wt);
 
-                var rows = WriteHelper.Save<Fod_collection>(new Fod_collection
-                {
-                    CreatedAt = DateTime.Now,
-                    ImageUrl = imgfile,
-                    Postedby = postedBy,
-                    WeiboUrl = weiboUrl,
-                    Labels = labels,
-                    Ht = ht,
-                    Wt = wt,
-                    Status = 0
-                });
-
-                if (rows > 0)
+                if (LogicHelper.H10104(imgfile, postedBy, weiboUrl, labels, ht, wt))
                 {
                     return Json(new { error = 0, message = "感谢您的投递，图片将在首页显示" });
                 }
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return Json(new { error = 1, message = "操作失败，请稍后再试" });

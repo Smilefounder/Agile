@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "~/Views/Shared/_WithFrameLayout.cshtml";
+    ViewBag.Title = "吃！";
 }
 
 @section styles
@@ -11,11 +11,11 @@
 <form id="form1">
     <input id="imgfile" name="imgfile" type="hidden" />
     <div class="form-group">
-        <label for="title">广告标题*</label>
+        <label for="title">标题*</label>
         <textarea id="title" name="title" class="form-control" placeholder="广告标题，2~50字" style="height:100px;"></textarea>
     </div>
     <div class="form-group">
-        <label for="url">推广链接*</label>
+        <label for="url">链接*</label>
         <input id="url" name="url" class="form-control" type="email" placeholder="必填" />
     </div>
     <div class="form-group">
@@ -53,7 +53,7 @@
 
         var url = $.trim($("#url").val());
         if (!url) {
-            alert("请填写推广链接");
+            alert("请填写链接");
             return;
         }
 
@@ -88,11 +88,9 @@
                     else {
                         //将上传后的文件名放到隐藏域
                         $("#imgfile").val(response.data);
-
-                        //上传文件成功后再发一次请求去获取裁剪的图片部分
                         $.ajax({
                             type: 'POST',
-                            url: '@Url.Content("~/Home/NewAd")',
+                            url: '@Url.Content("~/Home/NewBuy")',
                             data: $("#form1").serialize(),
                             complete: function (xhr, status) {
                                 var message = "操作失败，请稍后再试";

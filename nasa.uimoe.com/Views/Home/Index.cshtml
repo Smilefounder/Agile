@@ -1,62 +1,59 @@
-﻿@model Agile.API.Dtos.H10033Response
-@{
+﻿@{
     Layout = "~/Views/Shared/_WithNavigatorLayout.cshtml";
 }
 
-<div style="width:400px;margin:0 auto;">
-    <ul class="list-group">
-        <li class="list-group-item">
-            <div>来源于&nbsp;<a target="_blank" href="https://twitter.com/NASA">@@NASA</a>&nbsp;和&nbsp;<a target="_blank" href="http://weibo.com/nasawatch">@@NASA中文</a>&nbsp;，图转侵删。</div>
-        </li>
-    </ul>
-    <div class="list-group">
-        @if (Model.data.RecordList == null || Model.data.RecordList.Count == 0)
-        {
-            <a class="list-group-item">未找到相关记录</a>
+@section styles
+{
+    <style type="text/css">
+        .ul1 {
+            list-style: none;
+            display: inline;
         }
-        else
-        {
-            foreach (var item in Model.data.RecordList)
-            {
-                <a class="list-group-item" href="javascript:void(0);">
-                    <div>
-                        <div><h3>@item.title</h3></div>
-                        <div>发布于<span>@item.createdat.GetValueOrDefault().ToString("yyyy-MM-dd")</span></div>
-                        <div class="newline"></div>
-                        <div class="splitter-d"></div>
-                        <div class="newline"></div>
-                        <div>
-                            <img style="max-width:100%;" src="@Url.Content("~/Uploads/" + item.filename)" />
-                        </div>
-                    </div>
-                </a>
+
+            .ul1 li {
+                float: left;
+                width: 250px;
+                margin-right: 5px;
+                margin-bottom: 5px;
             }
+    </style>
+}
+
+<div id="container1"></div>
+<div class="well">来源于&nbsp;<a target="_blank" href="https://twitter.com/NASA">@@NASA</a>&nbsp;和&nbsp;<a target="_blank" href="http://weibo.com/nasawatch">@@NASA中文</a>&nbsp;，图转侵删。</div>
+
+@section scripts
+{
+    <script>
+        window.onload = function () {
+            loaddata();
         }
-    </div>
-    @if (Model.data.RecordList != null || Model.data.RecordList.Any())
-    {
-        <ul class="list-group">
-            <li class="list-group-item">
-                <div>
-                    <div style="float:left;">
-                        第&nbsp;<span>@Model.data.Page</span>/<span>@Model.data.PageCount</span>&nbsp;页&nbsp;
-                        共&nbsp;<span>@Model.data.RecordCount</span>&nbsp;条记录
-                    </div>
-                    <div style="float:right;">
-                        @if (Model.data.Page > 1)
-                        {
-                            <a href="@Url.Content("~/Home/Index?page="+(Model.data.Page-1)+"&pagesize="+Model.data.PageSize)">上一页</a>
-                        }
 
-                        @if (Model.data.Page < Model.data.PageCount)
-                        {
-                            <a href="@Url.Content("~/Home/Index?page="+(Model.data.Page+1)+"&pagesize="+Model.data.PageSize)">下一页</a>
-                        }
-                    </div>
-                    <div style="clear:both;"></div>
-                </div>
+        function loaddata(url, page, pagesize) {
+            if (!url) {
+                url = '@Url.Content("~/Home/GetIndex")';
+            }
 
-            </li>
-        </ul>
-    }
-</div>
+            if (!page || isNaN(page)) {
+                page = 1;
+            }
+
+            if (!pagesize || isNaN(pagesize)) {
+                pagesize = 10;
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: { page: page, pagesize: pagesize },
+                complete: function (xhr, status) {
+                    if (status != "success") {
+                        return;
+                    }
+
+                    $("#container1").html(xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

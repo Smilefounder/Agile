@@ -142,7 +142,7 @@ namespace UME_Music.UserControls
                     }
                     catch (Exception ex)
                     {
-                        LogHelper.Write(f + ": " + ex.Message);
+                        LogHelper.WriteAsync(f + ": " + ex.Message);
                     }
                 }
             }

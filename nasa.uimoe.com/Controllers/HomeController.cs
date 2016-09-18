@@ -18,40 +18,27 @@ namespace nasa.uimoe.com.Controllers
         [FreeAccess]
         public ActionResult Index()
         {
-            var response = default(H10033Response);
+            return View();
+        }
+
+        [FreeAccess]
+        public ActionResult GetIndex()
+        {
+            var vm = new PagedListDto<H10033ResponseListItem>
+            {
+                RecordList=new List<H10033ResponseListItem>()
+            };
 
             try
             {
-                var responsebase = LogicHelper.H10033(WebHelper.ParseFromRequest<H10033Request>());
-                response = responsebase as H10033Response;
+                vm = LogicHelper.H10033(WebHelper.ParseFromRequest<H10033Request>());
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
-            if (response == null)
-            {
-                response = new H10033Response
-                {
-                    data = new PagedListDto<H10033ResponseListItem>
-                    {
-                        RecordList = new List<H10033ResponseListItem>()
-                    }
-                };
-            }
-
-            var username = Session["username"] as string;
-            var loged = String.IsNullOrEmpty(username) ? "0" : "1";
-            ViewBag.loged = loged;
-
-            var isPhoneRequest = StringHelper.IsPhoneRequest(Request.UserAgent);
-            if (isPhoneRequest)
-            {
-                return View("Index_m", response);
-            }
-
-            return View(response);
+            return View(vm);
         }
 
         [HttpGet]
@@ -65,6 +52,21 @@ namespace nasa.uimoe.com.Controllers
         {
             try
             {
+                var filepath = System.IO.Path.Combine(new string[] { Server.MapPath("~/Uploads"), vm.imgfile });
+                if (!System.IO.File.Exists(filepath))
+                {
+                    return Json(new { error = 1, message = "未找到文件：" + vm.imgfile });
+                }
+
+                var filepath2 = System.IO.Path.Combine(new string[] { Server.MapPath("~/Content/Images"), vm.imgfile });
+                var filepath3 = System.IO.Path.Combine(new string[] { Server.MapPath("~/Content/Images/Thumb"), vm.imgfile });
+
+                var ht = 0;
+                var wt = 0;
+
+                System.IO.File.Copy(filepath, filepath2);
+                ImageHelper.MakeThumbnail(filepath, filepath3, 480, true, out ht, out wt);
+
                 var responsebase = LogicHelper.H10034(new H10034Request
                 {
                     title = vm.imgtitle,
@@ -80,7 +82,7 @@ namespace nasa.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return Json(new { error = 1, message = "操作失败，请稍后再试" });

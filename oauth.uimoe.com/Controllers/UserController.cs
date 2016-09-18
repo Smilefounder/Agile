@@ -50,7 +50,7 @@ namespace oauth.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return Json(new { error = 1, message = "操作失败，请稍后再试" });
@@ -85,7 +85,7 @@ namespace oauth.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return Json(response);

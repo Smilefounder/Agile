@@ -7,6 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="@Url.Content("~/Assets/bootstrap-3.3.5-dist/css/bootstrap.min.css")" rel="stylesheet" />
+    @RenderSection("styles", required: false)
     <style type="text/css">
         .splitter-d, .splitter-s {
             width: 100%;

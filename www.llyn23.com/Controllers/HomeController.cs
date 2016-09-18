@@ -62,7 +62,7 @@ namespace www.llyn23.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             if (StringHelper.IsPhoneRequest(Request.UserAgent))
@@ -86,7 +86,7 @@ namespace www.llyn23.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 return View(new H10006Response
                 {
                     data = new List<H10006ResponseListItem>()
@@ -122,7 +122,7 @@ namespace www.llyn23.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 return View(new H10007Response
                 {
                     data = new List<H10007ResponseListItem>()
@@ -146,7 +146,7 @@ namespace www.llyn23.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 return View(new H10008Response
                 {
                     data = new H10008ResponseListItem()
@@ -176,7 +176,7 @@ namespace www.llyn23.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 return Json(new { error = 1, message = "操作失败，请稍后再试" });
             }
         }
@@ -205,7 +205,7 @@ namespace www.llyn23.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 return View(new H10012Response
                 {
                     data = new List<H10012ResponseListItem>()

@@ -55,7 +55,7 @@ namespace haha.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return View("~/Views/Home/GetNewList.cshtml", response);

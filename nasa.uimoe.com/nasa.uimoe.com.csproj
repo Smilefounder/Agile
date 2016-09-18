@@ -247,10 +247,11 @@
     <Content Include="Views\Shared\_WithNavigatorLayout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\PostImg.cshtml" />
-    <Content Include="Views\Home\Index_m.cshtml" />
+    <Content Include="Views\Home\GetIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

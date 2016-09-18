@@ -140,7 +140,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -303,13 +302,15 @@
     <Content Include="Views\App\SqlToModel.cshtml" />
     <Content Include="Views\App\ClipImage.cshtml" />
     <Content Include="Views\Home\NewApp.cshtml" />
-    <Content Include="Views\Home\NewAd.cshtml" />
     <Content Include="Views\Home\Donate.cshtml" />
     <Content Include="Views\Home\Donate_pl.cshtml" />
+    <Content Include="Views\App\Food.cshtml" />
+    <Content Include="Views\App\Buy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\ad\" />
+    <Folder Include="Helpers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

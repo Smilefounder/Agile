@@ -1,32 +1,15 @@
-﻿using Agile.API.Dtos;
-using Agile.API.Helpers;
-using Agile.Cache;
+﻿using Agile.Cache;
 using Agile.Helpers;
+using Agile.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using www.uimoe.com.Helpers;
 
 namespace www.uimoe.com.Controllers
 {
     public class AppController : Controller
     {
-        public AppController()
-        {
-            var ad = new H10100ResponseListItem();
-            try
-            {
-                ad = LogicHelper.H10100();
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Write(ex.ToString());
-            }
-
-            ViewBag.ad = ad;
-        }
-
         public ActionResult ChooseColor()
         {
             return View();
@@ -83,6 +66,16 @@ namespace www.uimoe.com.Controllers
         }
 
         public ActionResult NASA()
+        {
+            return View();
+        }
+
+        public ActionResult Food()
+        {
+            return View();
+        }
+
+        public ActionResult Buy()
         {
             return View();
         }
@@ -178,7 +171,7 @@ namespace www.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return Json(new { error = 0, data = words });
@@ -247,7 +240,7 @@ namespace www.uimoe.com.Controllers
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
             }
 
             return Json(new { error = 1, message = "操作失败，请稍后再试" });

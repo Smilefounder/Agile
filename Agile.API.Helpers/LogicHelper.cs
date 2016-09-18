@@ -1480,7 +1480,7 @@ namespace Agile.API.Helpers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public static HBaseResponse H10033(H10033Request request)
+        public static PagedListDto<H10033ResponseListItem> H10033(H10033Request request)
         {
             if (!request.page.HasValue)
             {
@@ -1508,16 +1508,12 @@ namespace Agile.API.Helpers
 
             sqlstr = "SELECT * FROM (SELECT *,ROW_NUMBER() OVER(ORDER BY ID DESC) AS RW FROM NASA_img WHERE Status=0) AS Q WHERE Q.RW>@begin AND Q.RW<=@end";
             var recordlist = DataHelper.ExecuteList<H10033ResponseListItem>(sqlstr, splist.ToArray());
-            return new H10033Response
+            return new PagedListDto<H10033ResponseListItem>
             {
-                error = 0,
-                data = new PagedListDto<H10033ResponseListItem>
-                {
-                    Page = request.page.Value,
-                    PageSize = request.pagesize.Value,
-                    RecordCount = recordcount > Int64.MaxValue ? Int64.MaxValue : Convert.ToInt64(recordcount),
-                    RecordList = recordlist
-                }
+                Page = request.page.Value,
+                PageSize = request.pagesize.Value,
+                RecordCount = recordcount > Int64.MaxValue ? Int64.MaxValue : Convert.ToInt64(recordcount),
+                RecordList = recordlist
             };
         }
 
@@ -3648,11 +3644,33 @@ namespace Agile.API.Helpers
             return response;
         }
 
-        public static H10100ResponseListItem H10100()
+        /// <summary>
+        /// 获取随机广告
+        /// </summary>
+        /// <returns></returns>
+        public static PagedListDto<H10100ResponseListItem> H10100(int? page, int? pagesize)
         {
-            var sqlstr = "SELECT TOP 1 * FROM UME_ad ORDER BY NEWID()";
-            var one = DataHelper.ExecuteOne<H10100ResponseListItem>(sqlstr);
-            return one;
+            var options = new PagedQueryOptions
+            {
+                Page = page.GetValueOrDefault(1),
+                PageSize = pagesize.GetValueOrDefault(10)
+            };
+
+            var pagedlist = QueryHelper.GetPagedList<UME_ad>(options);
+            return new PagedListDto<H10100ResponseListItem>
+            {
+                Page = pagedlist.Page,
+                PageSize = pagedlist.PageSize,
+                RecordCount = pagedlist.RecordCount,
+                RecordList = pagedlist.RecordList.Select(o => new H10100ResponseListItem
+                {
+                    Cover = o.Cover,
+                    Price = o.Price.GetValueOrDefault(),
+                    Rate = o.Rate.GetValueOrDefault(),
+                    Title = o.Title,
+                    Url = o.Title
+                }).ToList()
+            };
         }
 
         /// <summary>
@@ -3713,6 +3731,12 @@ namespace Agile.API.Helpers
             return response;
         }
 
+        /// <summary>
+        /// 获取打赏列表
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
         public static PagedListDto<H10102ResponseListItem> H10102(int? page, int? pagesize)
         {
             var options = new PagedQueryOptions
@@ -3735,6 +3759,57 @@ namespace Agile.API.Helpers
                     source = o.Source.GetValueOrDefault()
                 }).ToList()
             };
+        }
+
+        /// <summary>
+        /// 获取食物列表
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public static PagedListDto<H10103ResponseListItem> H10103(int? page, int? pagesize)
+        {
+            var options = new PagedQueryOptions
+            {
+                Page = page.GetValueOrDefault(1),
+                PageSize = pagesize.GetValueOrDefault(10)
+            };
+
+            var pagedlist = QueryHelper.GetPagedList<Fod_collection>(options);
+            return new PagedListDto<H10103ResponseListItem>
+            {
+                Page = pagedlist.Page,
+                PageSize = pagedlist.PageSize,
+                RecordCount = pagedlist.RecordCount,
+                RecordList = pagedlist.RecordList.Select(o => new H10103ResponseListItem
+                {
+                    CreatedAt = o.CreatedAt,
+                    Ht = o.Ht,
+                    ImageUrl = o.ImageUrl,
+                    Labels = o.Labels,
+                    Postedby = o.Postedby,
+                    Status = o.Status,
+                    WeiboUrl = o.WeiboUrl,
+                    Wt = o.Wt
+                }).ToList()
+            };
+        }
+
+        public static bool H10104(string imgfile, string postedBy, string weiboUrl, string labels, int? ht, int? wt)
+        {
+            var rows = WriteHelper.Save<Fod_collection>(new Fod_collection
+            {
+                CreatedAt = DateTime.Now,
+                ImageUrl = imgfile,
+                Postedby = postedBy,
+                WeiboUrl = weiboUrl,
+                Labels = labels,
+                Ht = ht,
+                Wt = wt,
+                Status = 0
+            });
+
+            return rows > 0;
         }
     }
 }

@@ -67,7 +67,7 @@ namespace database.uimoe.com.Attributes
             }
             catch (Exception ex)
             {
-                LogHelper.Write(ex.ToString());
+                LogHelper.WriteAsync(ex.ToString());
                 filterContext.Result = new JsonResult
                 {
                     Data = response,

@@ -8,7 +8,7 @@
     <ul class="ul1">
         @foreach (var item in Model.RecordList)
         {
-            <li class="list-group-item" href="javascript:void(0);">
+            <li class="list-group-item">
                 <div>
                     <div><h3>@item.title</h3></div>
                     <div>发布于<span>@item.createdat.GetValueOrDefault().ToString("yyyy-MM-dd")</span></div>
@@ -65,7 +65,7 @@ else
                 return;
             }
 
-            if (page > pagecount) {
+            if (parseInt(page) > parseInt(pagecount)) {
                 alert("没有下一页了");
                 return;
             }

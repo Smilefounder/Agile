@@ -1,5 +1,4 @@
-﻿using Agile.Attributes;
-using Agile.Dtos;
+﻿using Agile.Dtos;
 using Agile.API.Dtos;
 using Agile.Helpers;
 using Agile.API.Helpers;
@@ -7,7 +6,6 @@ using nasa.uimoe.com.ViewModels.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Agile.Web.Helpers;
 
@@ -15,13 +13,11 @@ namespace nasa.uimoe.com.Controllers
 {
     public class HomeController : Controller
     {
-        [FreeAccess]
         public ActionResult Index()
         {
             return View();
         }
 
-        [FreeAccess]
         public ActionResult GetIndex()
         {
             var vm = new PagedListDto<H10033ResponseListItem>

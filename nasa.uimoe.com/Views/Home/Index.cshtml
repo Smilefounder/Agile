@@ -16,11 +16,16 @@
                 margin-right: 5px;
                 margin-bottom: 5px;
             }
+
+                .ul1 li:hover {
+                    background-color: #f0f0f0;
+                    cursor:pointer;
+                }
     </style>
 }
 
+<div class="well" style="margin-right:10px;">来源于&nbsp;<a target="_blank" href="https://twitter.com/NASA">@@NASA</a>&nbsp;和&nbsp;<a target="_blank" href="http://weibo.com/nasawatch">@@NASA中文</a>&nbsp;，图转侵删。</div>
 <div id="container1"></div>
-<div class="well">来源于&nbsp;<a target="_blank" href="https://twitter.com/NASA">@@NASA</a>&nbsp;和&nbsp;<a target="_blank" href="http://weibo.com/nasawatch">@@NASA中文</a>&nbsp;，图转侵删。</div>
 
 @section scripts
 {
@@ -29,7 +34,7 @@
             loaddata();
         }
 
-        function loaddata(url, page, pagesize) {
+        function loaddata(sender, page, pagesize, url) {
             if (!url) {
                 url = '@Url.Content("~/Home/GetIndex")';
             }

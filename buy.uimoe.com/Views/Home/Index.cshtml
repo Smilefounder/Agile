@@ -16,6 +16,11 @@
                 margin-right: 5px;
                 margin-bottom: 5px;
             }
+
+                .ul1 li:hover {
+                    background-color: #f0f0f0;
+                    cursor: pointer;
+                }
     </style>
 }
 
@@ -28,7 +33,7 @@
             loaddata();
         });
 
-        function loaddata(url, page, pagesize) {
+        function loaddata(sender, page, pagesize, url) {
             if (!url) {
                 url = '@Url.Content("~/Home/GetIndex")';
             }

@@ -329,10 +329,6 @@
       <Project>{a0456b6f-ce1e-48dc-bc27-a6e038988383}</Project>
       <Name>Agile.Attributes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Agile.Cache\Agile.Cache.csproj">
-      <Project>{b5fa12eb-1073-4a4c-821b-2b51330e47f2}</Project>
-      <Name>Agile.Cache</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Agile.Data.Helpers\Agile.Data.Helpers.csproj">
       <Project>{36ae6e88-5247-42dc-be02-46ec03556cba}</Project>
       <Name>Agile.Data.Helpers</Name>

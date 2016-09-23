@@ -48,6 +48,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -142,6 +146,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CantoneseHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Home\CantoneseTestVM.cs" />
     <Compile Include="ViewModels\Home\FeedbackVM.cs" />
@@ -246,6 +251,7 @@
     <Content Include="Assets\bootstrap-3.3.5-dist\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\cantonesedict.uimoe.com.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Libraries\HtmlAgilityPack.dll" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -356,10 +362,6 @@
       <Project>{a0456b6f-ce1e-48dc-bc27-a6e038988383}</Project>
       <Name>Agile.Attributes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Agile.Cache\Agile.Cache.csproj">
-      <Project>{b5fa12eb-1073-4a4c-821b-2b51330e47f2}</Project>
-      <Name>Agile.Cache</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Agile.Data.Helpers\Agile.Data.Helpers.csproj">
       <Project>{36ae6e88-5247-42dc-be02-46ec03556cba}</Project>
       <Name>Agile.Data.Helpers</Name>
@@ -371,6 +373,10 @@
     <ProjectReference Include="..\Agile.Helpers\Agile.Helpers.csproj">
       <Project>{535e896a-71fb-42a0-a79e-1225aed49489}</Project>
       <Name>Agile.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Agile.Static\Agile.Static.csproj">
+      <Project>{19501932-7c27-401a-97a9-0bf4ad510e87}</Project>
+      <Name>Agile.Static</Name>
     </ProjectReference>
     <ProjectReference Include="..\Agile.Web.Helpers\Agile.Web.Helpers.csproj">
       <Project>{f8d9f19b-b68f-4807-995e-0173187cc34a}</Project>

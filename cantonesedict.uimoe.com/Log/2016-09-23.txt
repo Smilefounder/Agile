@@ -1,0 +1,140 @@
+﻿2016-09-23 17:35:15
+System.Exception: An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL: SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'wordcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=1
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'termcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=2 OR LEN(Q.ChnText)=3
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'sentencecount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)>3
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'querycount' AS IName FROM Can_query
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'todayquerycount' AS IName FROM Can_query WHERE DATEDIFF(DAY,GETDATE(),CreatedAt)=0
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'noresultcount' AS IName FROM CAN_noresult
+
+   在 Agile.Data.Helpers.DataHelper.ExecuteDataTable(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.Data.Helpers\DataHelper.cs:行号 114
+   在 Agile.Data.Helpers.DataHelper.ExecuteList[T](String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.Data.Helpers\DataHelper.cs:行号 152
+   在 Agile.API.Helpers.LogicHelper.H10067() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2823
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.Statistics() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 32
+
+2016-09-23 17:35:15
+System.Exception: An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL: SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'wordcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=1
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'termcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=2 OR LEN(Q.ChnText)=3
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'sentencecount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)>3
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'querycount' AS IName FROM Can_query
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'todayquerycount' AS IName FROM Can_query WHERE DATEDIFF(DAY,GETDATE(),CreatedAt)=0
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'noresultcount' AS IName FROM CAN_noresult
+
+   在 Agile.Data.Helpers.DataHelper.ExecuteDataTable(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.Data.Helpers\DataHelper.cs:行号 125
+   在 Agile.Data.Helpers.DataHelper.ExecuteList[T](String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.Data.Helpers\DataHelper.cs:行号 152
+   在 Agile.API.Helpers.LogicHelper.H10067() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2838
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.Statistics() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 24
+
+2016-09-23 17:35:17
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.Data.Helpers\DataHelper.cs:行号 74
+   在 Agile.API.Helpers.LogicHelper.H10095(H10080Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.API.Helpers\LogicHelper.cs:行号 3532
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.Query_pl() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 813
+ClientConnectionId:a2d091a2-c891-407d-b539-a6bc305d29d5
+Error Number:15350,State:1,Class:14
+
+2016-09-23 17:35:19
+System.Exception: An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL: SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'wordcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=1
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'termcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=2 OR LEN(Q.ChnText)=3
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'sentencecount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)>3
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'querycount' AS IName FROM Can_query
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'todayquerycount' AS IName FROM Can_query WHERE DATEDIFF(DAY,GETDATE(),CreatedAt)=0
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'noresultcount' AS IName FROM CAN_noresult
+
+   在 Agile.Data.Helpers.DataHelper.ExecuteDataTable(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.Data.Helpers\DataHelper.cs:行号 125
+   在 Agile.Data.Helpers.DataHelper.ExecuteList[T](String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.Data.Helpers\DataHelper.cs:行号 152
+   在 Agile.API.Helpers.LogicHelper.H10067() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2838
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.Statistics() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 32
+
+2016-09-23 17:35:19
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.Data.Helpers\DataHelper.cs:行号 74
+   在 Agile.API.Helpers.LogicHelper.H10068(H10068Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2883
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.Vocabulary_pl() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 98
+ClientConnectionId:a2d091a2-c891-407d-b539-a6bc305d29d5
+Error Number:15350,State:1,Class:14
+
+2016-09-23 17:36:06
+System.Exception: An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL: SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'wordcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=1
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'termcount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)=2 OR LEN(Q.ChnText)=3
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'sentencecount' AS IName FROM (SELECT DISTINCT ChnText FROM CAN_vocabulary) AS Q WHERE LEN(Q.ChnText)>3
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'querycount' AS IName FROM Can_query
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'todayquerycount' AS IName FROM Can_query WHERE DATEDIFF(DAY,GETDATE(),CreatedAt)=0
+ UNION
+ SELECT CAST(COUNT(1) AS DECIMAL(18,2)) AS ICount,'noresultcount' AS IName FROM CAN_noresult
+
+   在 Agile.Data.Helpers.DataHelper.ExecuteDataTable(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.Data.Helpers\DataHelper.cs:行号 125
+   在 Agile.Data.Helpers.DataHelper.ExecuteList[T](String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.Data.Helpers\DataHelper.cs:行号 152
+   在 Agile.API.Helpers.LogicHelper.H10067() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2838
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.Statistics() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 32
+
+2016-09-23 17:36:06
+System.Data.SqlClient.SqlException (0x80131904): An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   在 System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   在 System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   在 System.Data.SqlClient.SqlConnection.Open()
+   在 Agile.Data.Helpers.DataHelper.ExecuteScalar(String sqlstr, SqlParameter[] sps) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.Data.Helpers\DataHelper.cs:行号 74
+   在 Agile.API.Helpers.LogicHelper.H10068(H10068Request request) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile.API.Helpers\LogicHelper.cs:行号 2883
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.Vocabulary_pl() 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 98
+ClientConnectionId:bf3fffbe-a73e-41b7-a454-025da30701f6
+Error Number:15350,State:1,Class:14
+
+2016-09-23 17:36:13
+System.Net.WebException: 远程服务器返回错误: (500) 内部服务器错误。
+   在 System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest& request)
+   在 System.Net.WebClient.DownloadString(Uri address)
+   在 System.Net.WebClient.DownloadString(String address)
+   在 cantonesedict.uimoe.com.Helpers.CantoneseHelper.GetFromWeb(String chntext) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Helpers\CantoneseHelper.cs:行号 15
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.GetVocabularyRef(String chntext) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 185
+
+2016-09-23 17:37:08
+System.Net.WebException: 远程服务器返回错误: (500) 内部服务器错误。
+   在 System.Net.WebClient.DownloadDataInternal(Uri address, WebRequest& request)
+   在 System.Net.WebClient.DownloadString(Uri address)
+   在 System.Net.WebClient.DownloadString(String address)
+   在 cantonesedict.uimoe.com.Helpers.CantoneseHelper.GetFromWeb(String chntext) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Helpers\CantoneseHelper.cs:行号 15
+   在 cantonesedict.uimoe.com.Controllers.ReimuController.GetVocabularyRef(String chntext) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\ReimuController.cs:行号 185
+

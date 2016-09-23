@@ -1,5 +1,4 @@
-﻿using Agile.Cache;
-using Agile.Helpers;
+﻿using Agile.Helpers;
 using Agile.Web.Helpers;
 using System;
 using System.Collections.Generic;
@@ -167,7 +166,7 @@ namespace www.uimoe.com.Controllers
             var words = new List<string>();
             try
             {
-                words = ChineseDictionary.GetWords(input);
+                throw new Exception("分词功能暂时关闭");
             }
             catch (Exception ex)
             {

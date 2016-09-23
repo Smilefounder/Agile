@@ -1,9 +1,9 @@
 ﻿using Agile.API.Dtos;
 using Agile.API.Helpers;
 using Agile.Attributes;
-using Agile.Cache;
 using Agile.Dtos;
 using Agile.Helpers;
+using Agile.Static;
 using Agile.Web.Helpers;
 using cantonesedict.uimoe.com.ViewModels;
 using cantonesedict.uimoe.com.ViewModels.Home;

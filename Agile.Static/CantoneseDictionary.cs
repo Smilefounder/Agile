@@ -1,12 +1,10 @@
-﻿using HtmlAgilityPack;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Agile.Cache
+namespace Agile.Static
 {
     public class CantoneseDictionary
     {
@@ -55,34 +53,6 @@ namespace Agile.Cache
             return "";
         }
 
-        public static string GetFromWeb(string chntext)
-        {
-            var url = String.Format("http://m.yueyv.cn/?keyword={0}", chntext);
-            var str = new WebClient().DownloadString(url);
-            var doc = new HtmlDocument();
-            doc.LoadHtml(str);
-
-            var node = doc.DocumentNode.SelectSingleNode("/html/body/div[2]/div");
-            if (node == null)
-            {
-                return null;
-            }
-
-            var sb = "";
-            foreach (var child in node.ChildNodes)
-            {
-                if (child.Name.ToUpper() == "AUDIO")
-                {
-                    var src = child.GetAttributeValue("src", "");
-                    src = src.Replace("voice/","");
-                    src = src.Replace(".mp3", "");
-                    sb += src + " ";
-                }
-            }
-
-            return sb;
-        }
-
         private static Dictionary<string, List<string>> _instance = null;
 
         private static Dictionary<string, List<string>> Instance
@@ -93,7 +63,7 @@ namespace Agile.Cache
                 {
                     _instance = new Dictionary<string, List<string>>();
 
-                    var dictfile = System.IO.Path.Combine(new string[] { AppDomain.CurrentDomain.BaseDirectory, "CantoneseDict", "Dict.dct" });
+                    var dictfile = System.IO.Path.Combine(new string[] { AppDomain.CurrentDomain.BaseDirectory, "CantoneseDict", "Dict.txt" });
                     if (!System.IO.File.Exists(dictfile))
                     {
                         return _instance;

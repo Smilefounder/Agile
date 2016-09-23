@@ -1,14 +1,14 @@
 ﻿using Agile.API.Dtos;
 using Agile.API.Helpers;
 using Agile.Attributes;
-using Agile.Cache;
 using Agile.Dtos;
 using Agile.Helpers;
+using Agile.Static;
 using Agile.Web.Helpers;
+using cantonesedict.uimoe.com.Helpers;
 using cantonesedict.uimoe.com.ViewModels.Reimu;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -183,8 +183,8 @@ namespace cantonesedict.uimoe.com.Controllers
 
             try
             {
-                var chntext2 = Server.UrlEncode(chntext);
-                var str = CantoneseDictionary.GetFromWeb(chntext2);
+                var chntext2 = HttpUtility.UrlEncode(chntext, Encoding.GetEncoding("gbk")).ToUpper();
+                var str = CantoneseHelper.GetFromWeb(chntext2);
                 if (!string.IsNullOrEmpty(str))
                 {
                     response = new HBaseResponse

@@ -198,6 +198,54 @@ namespace mp.uimoe.com.Helpers
 
             return response.media_id;
         }
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="access_token"></param>
+        /// <param name="openid"></param>
+        /// <param name="lang"></param>
+        /// <returns></returns>
+        public static MP_GetUserInfoResponse GetUserInfo(string access_token,string openid,string lang)
+        {
+            var response = new MP_GetUserInfoResponse
+            {
+                errcode = 40013,
+                errmsg = "invalid appid"
+            };
+
+            var url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang={2}";
+            url = string.Format(url, access_token, openid, lang);
+
+            try
+            {
+                var responsestr = new WebClient().DownloadString(url);
+                response = SerializeHelper.ParseFromJson<MP_GetUserInfoResponse>(responsestr);
+            }
+            catch
+            { }
+
+            return response;
+        }
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="appid"></param>
+        /// <param name="appSecret"></param>
+        /// <param name="openid"></param>
+        /// <param name="lang"></param>
+        /// <returns></returns>
+        public static MP_GetUserInfoResponse GetUserInfo(string appid,string appSecret, string openid, string lang)
+        {
+            var token = GetAccessToken(appid, appSecret);
+            if (string.IsNullOrEmpty(token))
+            {
+                return null;
+            }
+
+            return GetUserInfo(token, openid, lang);
+        }
     }
 
     public enum UploadFileTypeEnum

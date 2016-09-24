@@ -17,13 +17,17 @@ namespace mp.uimoe.com.Controllers
 {
     public class HomeController : Controller
     {
-        private const string mpName = "CantoneseDictionary";
+        private const string mpCnName = "粤语词典";
+
+        private const string mpEnName = "CantoneseDictionary";
 
         private const string mpId = "gh_6d1dc1e90f30";
 
         private const string appId = "wx1e67f96f78645efc";
 
         private const string appSecret = "cc1c60cbfb37609e32fb136b37b34a0c";
+
+        private const string lang = "zh_CN";
 
         [HttpGet]
         public ActionResult Index()
@@ -135,8 +139,33 @@ namespace mp.uimoe.com.Controllers
 
             if (textrequest.Content.StartsWith("@"))
             {
-                textrequest.Content = textrequest.Content.Substring(1);
-                if (textrequest.Content.ToLower() == "uploadvoice")
+                textrequest.Content = textrequest.Content.Substring(1).ToLower();
+                if (textrequest.Content == "myinfo")
+                {
+                    var userinfo = WeixinHelper.GetUserInfo(appId, appSecret, textrequest.FromUserName, lang);
+                    if (userinfo == null)
+                    {
+                        response.Content = "获取我的账号信息失败";
+                        return;
+                    }
+
+                    var myinfostr = new StringBuilder();
+                    myinfostr.AppendFormat("errcode：{0}\r\n", userinfo.errcode);
+                    myinfostr.AppendFormat("errmsg：{0}\r\n", userinfo.errmsg);
+                    myinfostr.AppendFormat("--------------------\r\n", userinfo.errmsg);
+                    myinfostr.AppendFormat("openid：{0}\r\n", userinfo.openid);
+                    myinfostr.AppendFormat("unionid：{0}\r\n", userinfo.unionid);
+                    myinfostr.AppendFormat("openid：{0}\r\n", userinfo.openid);
+                    myinfostr.AppendFormat("国家：{0}\r\n", userinfo.country);
+                    myinfostr.AppendFormat("省份：{0}\r\n", userinfo.province);
+                    myinfostr.AppendFormat("城市：{0}\r\n", userinfo.city);
+                    myinfostr.AppendFormat("性别：{0}\r\n", userinfo.sex == 1 ? "男" : "女");
+                    myinfostr.AppendFormat("头像：{0}\r\n", userinfo.headimgurl);
+                    response.Content = myinfostr.ToString();
+                    return;
+                }
+
+                if (textrequest.Content == "uploadvoice")
                 {
                     ThreadPool.QueueUserWorkItem(new WaitCallback(UploadVoiceUseThread), null);
                     response.Content = "已启动更新全部发音素材任务";

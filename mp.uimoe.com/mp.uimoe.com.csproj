@@ -149,6 +149,7 @@
     <Compile Include="Models\MP_AuthorizeRequest.cs" />
     <Compile Include="Models\MP_ClickRequest.cs" />
     <Compile Include="Models\MP_EventRequestBase.cs" />
+    <Compile Include="Models\MP_GetUserInfoResponse.cs" />
     <Compile Include="Models\MP_ImageRequest.cs" />
     <Compile Include="Models\MP_LinkRequest.cs" />
     <Compile Include="Models\MP_LocationEventRequest.cs" />

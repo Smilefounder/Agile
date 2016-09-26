@@ -25,6 +25,6 @@ namespace Agile.Models
         public string UserAgent { get; set; }
 
         [TableField]
-        public string Status { get; set; }
+        public int? Status { get; set; }
     }
 }

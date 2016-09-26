@@ -1,0 +1,46 @@
+﻿@model Agile.API.Dtos.H10014Response
+@{
+    Layout = null;
+}
+
+@if (Model.groups == null || Model.groups.Count == 0)
+{
+    <div class="weui_cells weui_cells_access">
+        <a href="@Url.Content("~/Home/Feedback?chntext="+ViewBag.input)" class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>
+                    没有查询到相关记录,你可以点此反馈
+                </p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+    </div>
+}
+else
+{
+    <div class="weui_cells weui_cells_access">
+        @foreach (var item in Model.groups)
+        {
+            <a href="javascript:void(0);" class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>
+                        <div>
+                            [普]<span>@item.chntext</span>
+                        </div>
+                        <div class="newline"></div>
+                        @foreach (var gp in item.items)
+                        {
+                            <div>
+                                <span>[粤]@gp.cantext</span>&nbsp;<span>[音]@gp.canpronounce</span>
+                                <img onclick="play(this,'@gp.canpronounce','@gp.canvoice')" src="@Url.Content("~/Assets/Images/voice.gif")" />
+                            </div>
+                        }
+                    </p>
+                </div>
+                <div class="weui_cell_ft">
+                </div>
+            </a>
+        }
+    </div>
+}

@@ -341,6 +341,7 @@
     <Content Include="Views\Home\GetNew.cshtml" />
     <Content Include="Views\Reimu\Query.cshtml" />
     <Content Include="Views\Reimu\Query_pl.cshtml" />
+    <Content Include="Views\Home\GetIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

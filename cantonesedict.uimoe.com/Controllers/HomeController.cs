@@ -24,93 +24,26 @@ namespace cantonesedict.uimoe.com.Controllers
     {
         public ActionResult Index()
         {
-            var vm = new IndexVM
-            {
-                Data = new List<IndexGroupItemVM>()
-            };
-
-            var input = Request.Params["input"];
-            if (String.IsNullOrEmpty(input))
-            {
-                return View(vm);
-            }
-
-            try
-            {
-                input = Server.UrlDecode(input);
-
-                vm.Input = input;
-                var h10014responsebase = LogicHelper.H10014(new H10014Request
-                {
-                    input = input
-                });
-
-                var h10014response = h10014responsebase as H10014Response;
-                if (h10014response != null)
-                {
-                    if (h10014response.groups != null && h10014response.groups.Any())
-                    {
-                        foreach (var g in h10014response.groups)
-                        {
-                            vm.Data.Add(new IndexGroupItemVM
-                            {
-                                RW = g.rw,
-                                ChnText = g.chntext,
-                                Items = g.items.Select(o => new IndexListItemVM
-                                {
-                                    CanPronounce = o.canpronounce,
-                                    CanText = o.cantext,
-                                    CanVoice = o.canvoice
-                                }).ToList()
-                            });
-                        }
-                    }
-
-                    if (h10014response.noresult != null && h10014response.noresult.Any())
-                    {
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(SaveNoResultUseThread), h10014response.noresult);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteAsync(ex.Message);
-            }
-
-            //查询获得积分
-            var userinfo = Session["userinfo"] as UserInfoVM;
-            if (userinfo != null)
-            {
-                ThreadPool.QueueUserWorkItem(new WaitCallback(MakeScoreUseThread), new H10040Request
-                {
-                    canrepeat = 1,
-                    score = 1,
-                    way = (int)ScoreListItemWayEnum.Query,
-                    userid = userinfo.UserId
-                });
-            }
-
-            //保存查询记录
-            ThreadPool.QueueUserWorkItem(new WaitCallback(RecordQueryUseThread), input);
-
-            return View(vm);
+            ViewBag.input = Request.Params["input"];
+            return View();
         }
 
-        [HttpPost]
         public ActionResult GetIndex()
         {
-            var input = Request.Params["input"];
-            if (string.IsNullOrEmpty(input))
-            {
-                return Json(new { error = 1, message = "请输入参数：input" });
-            }
-
             var response = new H10014Response
             {
                 error = 0,
                 noresult = new List<string>(),
                 groups = new List<H10014ResponseGroupItem>()
             };
+
+            var input = Request.Params["input"];
+            ViewBag.input = input;
+
+            if (string.IsNullOrEmpty(input))
+            {
+                return View(response);
+            }
 
             try
             {
@@ -168,7 +101,7 @@ namespace cantonesedict.uimoe.com.Controllers
             //保存查询记录
             ThreadPool.QueueUserWorkItem(new WaitCallback(RecordQueryUseThread), input);
 
-            return Json(response);
+            return View(response);
         }
 
         private void SaveNoResultUseThread(object state)

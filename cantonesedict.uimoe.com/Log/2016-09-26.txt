@@ -1,0 +1,192 @@
+﻿2016-09-26 11:24:13
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:24:16
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:24:18
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:24:19
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:24:20
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:24:20
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:24:21
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:24:21
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:24:21
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:24:21
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:25:22
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:25:28
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:27:47
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:27:49
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:27:50
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:27:50
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:27:50
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:27:50
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:27:56
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:28:00
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 cantonesedict.uimoe.com.Controllers.HomeController.Feedback(FeedbackVM vm) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\HomeController.cs:行号 557
+
+2016-09-26 11:28:03
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 cantonesedict.uimoe.com.Controllers.HomeController.Feedback(FeedbackVM vm) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\HomeController.cs:行号 557
+
+2016-09-26 11:28:09
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 cantonesedict.uimoe.com.Controllers.HomeController.Feedback(FeedbackVM vm) 位置 C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\cantonesedict.uimoe.com\Controllers\HomeController.cs:行号 557
+
+2016-09-26 11:28:17
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:28:24
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:30:23
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一二三'
+
+2016-09-26 11:30:27
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一二三'
+
+2016-09-26 11:30:32
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:34
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:35
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:35
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:35
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:35
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:36
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:37
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:37
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:37
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:38
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:38
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:39
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:30:43
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:37:29
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:37:29
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:49:09
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'四'
+
+2016-09-26 11:49:11
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:49:13
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:49:14
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:49:16
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+
+2016-09-26 11:56:16
+An attempt to attach an auto-named database for file C:\Users\Reimu\Documents\Visual Studio 2015\Projects\Agile\Agile\database.uimoe.com\App_Data\Agile.mdf failed. A database with the same name exists, or specified file cannot be opened, or it is located on UNC share.
+SQL:SELECT * FROM CAN_vocabulary WHERE ChnText=N'一'
+

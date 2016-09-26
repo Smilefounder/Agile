@@ -1,5 +1,4 @@
-﻿@model cantonesedict.uimoe.com.ViewModels.Home.IndexVM
-@{
+﻿@{
     Layout = "~/Views/Shared/_WithBottomAppBarLayout.cshtml";
 }
 
@@ -7,62 +6,25 @@
     <div class="weui_cell">
         <div class="weui_cell_hd"><label class="weui_label">字词</label></div>
         <div class="weui_cell_bd weui_cell_primary">
-            <input id="queryinput" type="text" placeholder="请输入要翻译的字词（最多20字）" pattern="*" class="weui_input" value="@Model.Input">
+            <input id="queryinput" type="text" placeholder="请输入要翻译的字词（最多20字）" pattern="*" class="weui_input" value="@ViewBag.input">
         </div>
     </div>
 </div>
 <div class="weui_btn_area">
-    <a href="javascript:" class="weui_btn weui_btn_primary" onclick="tryquery(this)">查询</a>
+    <a id="querya1" href="javascript:" class="weui_btn weui_btn_primary" onclick="tryquery(this)">查询</a>
 </div>
+<div id="resultdiv1"></div>
 
-@if (Model.Data == null || Model.Data.Count == 0)
-{
-    if (!String.IsNullOrEmpty(Model.Input))
-    {
-        <div class="weui_cells weui_cells_access">
-            <a href="@Url.Content("~/Home/Feedback?chntext="+Model.Input)" class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>
-                        没有查询到相关记录,你可以点此反馈
-                    </p>
-                </div>
-                <div class="weui_cell_ft">
-                </div>
-            </a>
-        </div>
-    }
-}
-else
-{
-    <div class="weui_cells weui_cells_access">
-        @foreach (var item in Model.Data)
-        {
-            <a href="javascript:void(0);" class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>
-                        <div>
-                            [普]<span>@item.ChnText</span>
-                        </div>
-                        <div class="newline"></div>
-                        @foreach (var gp in item.Items)
-                        {
-                            <div>
-                                <span>[粤]@gp.CanText</span>&nbsp;<span>[音]@gp.CanPronounce</span>
-                                <img onclick="play(this,'@gp.CanPronounce','@gp.CanVoice')" src="@Url.Content("~/Assets/Images/voice.gif")" />
-                            </div>
-                        }
-                    </p>
-                </div>
-                <div class="weui_cell_ft">
-                </div>
-            </a>
-        }
-    </div>
-}
 
 <script type="text/javascript">
     window.onload = function () {
         showhighlight("appbaritem1");
+        var input = '@ViewBag.input';
+        if (input) {
+            $("#queryinput").val(input);
+            var sender = document.getElementById("querya1"); 
+            tryquery(sender);
+        }
     }
 
     function tryquery(sender) {
@@ -72,6 +34,20 @@ else
             return;
         }
 
-        window.location.href = '@Url.Content("~/")' + 'Home/Index?input=' + encodeURI(input);
+        $(sender).html('<img src="@Url.Content("~/Assets/Images/loading.gif")" />&nbsp;查询');
+        $.ajax({
+            url: '@Url.Content("~/Home/GetIndex")',
+            type: 'GET',
+            data: { input: encodeURI(input) },
+            complete: function (xhr, status) {
+                $(sender).html("查询");
+                if (status != "success") {
+                    weuialert("网络连接失败！");
+                    return;
+                }
+
+                $("#resultdiv1").html(xhr.responseText);
+            }
+        });
     }
 </script>

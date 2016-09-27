@@ -132,6 +132,8 @@ namespace www.llyn23.com.Controllers
 
         public ActionResult ArchiveDetail()
         {
+            var vm = new H10008ResponseListItem();
+
             int id;
             int.TryParse(Request.Params["id"], out id);
 
@@ -142,16 +144,21 @@ namespace www.llyn23.com.Controllers
                     id = id
                 });
 
-                return View(response);
+                var h10008response = response as H10008Response;
+                if (h10008response != null &&
+                    h10008response.error == 0 &&
+                    h10008response.data != null &&
+                    h10008response.data.id > 0)
+                {
+                    vm = h10008response.data;
+                }
             }
             catch (Exception ex)
             {
                 LogHelper.WriteAsync(ex.ToString());
-                return View(new H10008Response
-                {
-                    data = new H10008ResponseListItem()
-                });
             }
+
+            return View(vm);
         }
 
         [HttpGet]

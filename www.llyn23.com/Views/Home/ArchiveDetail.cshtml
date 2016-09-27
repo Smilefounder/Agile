@@ -1,26 +1,34 @@
-﻿@model Agile.API.Dtos.H10008Response
+﻿@model Agile.API.Dtos.H10008ResponseListItem
 @{
     Layout = "~/Views/Shared/_WithNavigatorLayout.cshtml";
 }
 
 <div style="width:1000px;margin:0 auto;">
-    <div style="float:left;width:700px;">
-        <ul class="list-group">
-            <li class="list-group-item active">
-                @Model.data.title
-            </li>
-            <li class="list-group-item">
-                <div>发布于<span>@Model.data.createdat.GetValueOrDefault().ToString("yyyy-MM-dd")</span></div>
-                <div class="newline"></div>
-                <div class="splitter-d"></div>
-                <div class="newline"></div>
-                <div>@Html.Raw(Model.data.content)</div>
-            </li>
-        </ul>
-    </div>
-    <div style="margin-left:720px;">
-        @Html.Action("LeaveComment", "Home", new { id = Model.data.id })
-        @Html.Action("RecentCommentList", "Home", new { id = Model.data.id })
-    </div>
-    <div style="clear:both;"></div>
+    <ul class="list-group">
+        <li class="list-group-item active">
+            <div style="float:left;">@Model.title</div>
+            <div style="float:right;"><a class="a1" href="#ds-thread">查看评论</a></div>
+            <div style="clear:both;"></div>
+        </li>
+        <li class="list-group-item">
+            <div>发布于<span>@Model.createdat.GetValueOrDefault().ToString("yyyy-MM-dd")</span></div>
+            <div class="newline"></div>
+            <div class="splitter-d"></div>
+            <div class="newline"></div>
+            <div>@Html.Raw(Model.content)</div>
+        </li>
+    </ul>
+    <div id="ds-thread" class="ds-thread" data-thread-key="@Model.id" data-title="@Model.title" data-url="@Url.Content("~/Home/ArchiveDetail?id="+Model.id)"></div>
 </div>
+
+<script type="text/javascript">
+    var duoshuoQuery = { short_name: "llyn23" };
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript'; ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>

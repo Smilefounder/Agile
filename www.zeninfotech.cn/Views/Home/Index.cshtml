@@ -1,0 +1,338 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>允悠科技 - Zen Inc.</title>
+    <link href="@Url.Content("~/Assets/ivm/bootstrap.css")" rel='stylesheet' type='text/css' />
+    <script src="@Url.Content("~/Assets/ivm/jquery-1.11.0.min.js")"></script>
+    <link href="@Url.Content("~/Assets/ivm/style.css")" rel='stylesheet' type='text/css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <link href='http://fonts.useso.com/css?family=Dancing+Script:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="@Url.Content("~/Assets/ivm/move-top.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Assets/ivm/easing.js")"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a href="index.html"><img src="@Url.Content("~/Assets/Images/logo.png")" alt=""></a>
+                </div>
+                <span class="menu"></span>
+                <div class="clear"></div>
+                <div class="navigation">
+                    <ul class="navig">
+                        <li class="active"><a href="@Url.Content("~/Home/Index")">主页</a></li>
+                        <li><a target="_blank" href="@Url.Content("~/Home/Product")">安觅思</a></li>
+                        <li><a target="_blank" href="@Url.Content("~/Home/Product")">烟雾报警器</a></li>
+                        <li><a target="_blank" href="@Url.Content("~/Home/About")">关于</a></li>
+                    </ul>
+                </div>
+                <script>
+                    $("span.menu").click(function () {
+                        $("ul.navig").slideToggle("slow", function () {
+                        });
+                    });
+                </script>
+
+                <div class="clearfix"> </div>
+            </div>
+            <div class="login">
+                <style>
+                    .img1 {
+                        width: 367px;
+                        height: 259px;
+                    }
+
+                    .bizmail_loginpanel {
+                        font-size: 12px;
+                        width: auto;
+                        height: auto;
+                        border: 1px solid #cccccc;
+                        background: #ffffff;
+                    }
+
+                    .bizmail_LoginBox {
+                        padding: 10px 15px;
+                    }
+
+                    .bizmail_loginpanel h3 {
+                        padding-bottom: 5px;
+                        margin: 0 0 5px 0;
+                        border-bottom: 1px solid #cccccc;
+                        font-size: 14px;
+                    }
+
+                    .bizmail_loginpanel form {
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    .bizmail_loginpanel input.text {
+                        font-size: 12px;
+                        width: 100px;
+                        height: 20px;
+                        margin: 0 2px;
+                        border: 1px solid #C3C3C3;
+                        border-color: #7C7C7C #C3C3C3 #C3C3C3 #9A9A9A;
+                        margin-left: 10px;
+                    }
+
+                    .bizmail_loginpanel .bizmail_column {
+                        height: 28px;
+                    }
+
+                        .bizmail_loginpanel .bizmail_column label {
+                            display: block;
+                            float: left;
+                            width: 30px;
+                            height: 24px;
+                            line-height: 24px;
+                            font-size: 12px;
+                        }
+
+                        .bizmail_loginpanel .bizmail_column .bizmail_inputArea {
+                            float: left;
+                        }
+
+                        .bizmail_loginpanel .bizmail_column span {
+                            font-size: 12px;
+                            word-wrap: break-word;
+                            margin-left: 2px;
+                            line-height: 200%;
+                        }
+
+                    .bizmail_loginpanel .bizmail_SubmitArea {
+                        margin-left: 30px;
+                        clear: both;
+                    }
+
+                        .bizmail_loginpanel .bizmail_SubmitArea a {
+                            font-size: 12px;
+                            margin-left: 5px;
+                        }
+
+                    .bizmail_loginpanel select {
+                        width: 110px;
+                        height: 20px;
+                        margin: 0 2px;
+                    }
+                </style>
+                <script type="text/javascript" src="http://exmail.qq.com/zh_CN/htmledition/js_biz/outerlogin.js" charset="gb18030"></script>
+                <script type="text/javascript">
+                    writeLoginPanel({ domainlist: "invenmotion.com", mode: "vertical" });
+                </script>
+                <script>
+                    $("ul.navig li.bold a").click(function () {
+                        $(".login").slideToggle("slow", function () {
+                        });
+                    });
+                </script>
+            </div>
+            <div class="banner">
+                <div class="row banner-row">
+                    <div class="col-md-6 banner-row-left">
+                        <img src="@Url.Content("~/Assets/ivm/title.png")" width="514" height="208" />
+                    </div>
+                    <div class="col-md-6 banner-row-left banner-row-right">
+                        <h2>允悠科技 ZEN</h2>
+                        <p>
+                            2016年4月成立于上海浦东，前身为苏州创动智能科技有限公司工业传感器事业部。公司以LORA/4G通讯技术为基础，融合低功耗蓝牙、GPS定位、MEMS传感器与移动互联网云服务等技术，深耕医用物联网领域，致力成为世界一流的物联网终端设备生产和系统集成服务提供商，以创新的O2O商业模式推动物联网在医疗及城市建设领域的应用与推广，使科技于点滴处服务并改变生活。
+                        </p>
+                        <div class="buttons">
+                            <input type="button" onclick="open('@Url.Content("~/Home/Product")','_blank')" value="烟雾报警器" />
+                            <input type="button" onclick="open('@Url.Content("~/Home/Product")','_blank')" value="BLE低功耗蓝牙" class="act" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="about-us">
+        <div class="container">
+            <div class="row about-below-content">
+                <div class="col-md-4 about-content-below-left">
+                    <h3>
+                        <span class="firstword">物联网应用技术</span>
+                    </h3>
+                    <p> 物联网是新一代信息技术的重要组成部分,也是“信息化”时代的重要发展阶段.</p>
+                </div>
+                <div class="col-md-4 about-content-below-left">
+                    <h3>
+                        <span class="firstword">Lora技术</span>
+                    </h3>
+                    <p>lora是一种无线调制的方式，对比传统调制技术，在抑制同频干扰方面优势比较明显，解决了传统设计方案无法同时兼顾距离、抗扰和功耗的不足,应用于远距离传输且对可靠性要求高的场合中.</p>
+                </div>
+                <div class="col-md-4 about-content-below-left">
+                    <h3>
+                        <span class="firstword">语音识别技术</span>
+                    </h3>
+                    <p>其目标是将人类的语音中的词汇内容转换为计算机可读的输入，例如按键、二进制编码或者字符序列.</p>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+    <div class="slider-start" id="service">
+        <div class="container">
+
+            <div class="slider-content">
+                <div class="slider-heading">
+                    <h3> 我们的产品与服务</h3>
+                    <p>
+                        基于低功耗传感器和BLE低功耗蓝牙通信技术，结合创新应用，将带来全新体验！
+                    </p>
+                    <p> 烟雾报警器 </p>
+                    <p> BLE低功耗蓝牙</p>
+                </div>
+                <div class="wmuSlider example1">
+                    <article style="position: absolute; width: 100%; opacity: 0;">
+                        <div class="banner">
+                            <a href="weichat/default.html"><img class="img1" src="@Url.Content("~/Assets/Images/p1.png")" alt="" /></a>
+                        </div>
+                    </article>
+                    <article style="position: relative; width: 100%; opacity: 1;">
+
+                        <div class="banner">
+                            <a href="weichat/default.html"><img class="img1" src="@Url.Content("~/Assets/Images/p2.png")" alt="" /> </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <script src="@Url.Content("~/Assets/ivm/jquery.wmuSlider.js")"></script>
+            <script>
+                $('.example1').wmuSlider();
+            </script>
+        </div>
+    </div>
+    <div class="container">
+        <div class="testimonals" id="features">
+            <div class="slide-content-class3">
+                <h3>创新服务生活！</h3>
+            </div>
+            <div class="row slide-content-class4">
+                <div class="col-md-6 slide-content-class4-left">
+                    <i class="ser-a"></i>
+                    <div class="services-column-row-left">
+                        <h3>Lora定位器</h3>
+                        <p>实现免SIM卡数据传输</p>
+                        <p>超长续航时间与极远通讯距离</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-md-6 slide-content-class4-left">
+                    <i class="ser-b"></i>
+                    <div class="services-column-row-left">
+                        <h3>云服务/数据库及网站建设</h3>
+                        <p>支持PC/移动端接入、APP定制</p>
+                        <p>完整的全系统解决方案</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row slide-content-class4">
+                <div class="col-md-6 slide-content-class4-left">
+                    <i class="ser-c"></i>
+                    <div class="services-column-row-left">
+                        <h3>Lora基站系统</h3>
+                        <p>基于Lora技术</p>
+                        <p>远程、低功耗</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-md-6 slide-content-class4-left">
+                    <i class="ser-d"></i>
+                    <div class="services-column-row-left">
+                        <h3>智慧城市/社区系统集成</h3>
+                        <p>物业管理/社会服务资源整合</p>
+                        <p>社区社交及电商平台</p>
+                        <p>公共事业管理</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row slide-content-class4">
+                <div class="col-md-6 slide-content-class4-left">
+                    <i class="ser-e"></i>
+                    <div class="services-column-row-left">
+                        <h3>4G点对点图传系统</h3>
+                        <p>基于LTE（4G）技术</p>
+                        <p>高速图像传输</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-us" style="background:#F6F6F6">
+        <div class="container">
+            <div class="row about-below-content">
+                <h3>
+                    <span class="firstword">使命</span> 愿景
+                </h3>
+                <div class="col-md-4 about-content-below-left">
+
+                    <img src="@Url.Content("~/Assets/ivm/responsive01.png")" />
+                    <h3>
+                        使命
+                    </h3>
+                    <p>助力智慧城市建设，使科技服务并改变生活.</p>
+                </div>
+                <div class="col-md-4 about-content-below-left">
+                    <img src="@Url.Content("~/Assets/ivm/connect.png")" />
+                    <h3>
+                        愿景
+                    </h3>
+                    <p>成为世界一流的物联网系统集成服务商.</p>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+    <div class="contact" id="contact">
+        <div class="container">
+            <div class="row contact-row">
+                <div class="col-md-6 contact-row-left">
+                    <h3>联系我们 </h3>
+                    <p>欢迎致电与我们取得联系.</p>
+                    <p class="add-mark"><span><img src="@Url.Content("~/Assets/ivm/ad-sy.png")" /></span>地址：上海市浦东新区浙桥路289号碧云公馆二座A1006</p>
+                    <p class="ema-mark"><span><img src="@Url.Content("~/Assets/ivm/ema-sy.png")" /></span>邮编：201206</p>
+                    <p class="cel-mark"><span><img src="@Url.Content("~/Assets/ivm/cel-sy.png")" /></span>电话：021-60457701</p>
+                    <p class="cel-mark"><span><img src="@Url.Content("~/Assets/ivm/cel-sy.png")" /></span>传真：021-60457701</p>
+                </div>
+                <div class="col-md-6 contact-row-right">
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="footer-top"><p>Copyright &copy; @(DateTime.Now.Year).ZEN Inc. All rights reserved.<a target="_blank" href="@Url.Content("~/Home/Index")">允悠科技</a></p></div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $().UItoTop({ easingType: 'easeOutQuart' });
+                });
+            </script>
+            <a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+
+        </div>
+    </div>
+    <div style="display:none">
+        <script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script>
+    </div>
+</body>
+</html>

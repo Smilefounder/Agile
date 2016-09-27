@@ -77,6 +77,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "buy.uimoe.com", "buy.uimoe.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agile.Static", "Agile.Static\Agile.Static.csproj", "{19501932-7C27-401A-97A9-0BF4AD510E87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "www.zeninfotech.cn", "www.zeninfotech.cn\www.zeninfotech.cn.csproj", "{6175C641-B60A-470E-AE96-5A8EA81FAB0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -211,6 +213,10 @@ Global
 		{19501932-7C27-401A-97A9-0BF4AD510E87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19501932-7C27-401A-97A9-0BF4AD510E87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19501932-7C27-401A-97A9-0BF4AD510E87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6175C641-B60A-470E-AE96-5A8EA81FAB0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6175C641-B60A-470E-AE96-5A8EA81FAB0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6175C641-B60A-470E-AE96-5A8EA81FAB0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6175C641-B60A-470E-AE96-5A8EA81FAB0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -251,5 +257,6 @@ Global
 		{0C8D04CE-8BC8-4EDA-B8E4-3B5EE1743E4C} = {64830A38-D31C-459B-A785-78FBF5D99F56}
 		{39D453D8-4C8B-4D52-8485-09913FCF60ED} = {64830A38-D31C-459B-A785-78FBF5D99F56}
 		{19501932-7C27-401A-97A9-0BF4AD510E87} = {B58D0617-C18D-495F-9413-C67E9D31F98F}
+		{6175C641-B60A-470E-AE96-5A8EA81FAB0E} = {64830A38-D31C-459B-A785-78FBF5D99F56}
 	EndGlobalSection
 EndGlobal
